@@ -46,6 +46,8 @@ export interface User {
   };
   roles: string[];
   coins: number;
+  creationDate?: Date;
+  lastUpdateDate?: Date;
 }
 
 export interface Site {

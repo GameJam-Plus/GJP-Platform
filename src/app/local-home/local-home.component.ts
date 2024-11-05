@@ -825,9 +825,9 @@ export class LocalHomeComponent implements OnDestroy {
 
   exportJammers()
   {
-    let rows = "#, Name, Email, Discord, Team\n";
+    let rows = "#; Name; Email; Discord; Team; Creation Date; Last Update\n";
     this.jammers.forEach((jammer, index) => {
-      rows += `${index + 1}, ${jammer.name}, ${jammer.email}, ${jammer.discordUsername}, ${jammer.team ? jammer.team.name : 'None'}\n`;
+      rows += `${index + 1}; ${jammer.name}; ${jammer.email}; ${jammer.discordUsername}; ${jammer.team ? jammer.team.name : 'None'}; ${jammer.creationDate}; ${jammer.lastUpdateDate}\n`;
     });
     rows = rows.trim();
 
