@@ -21,6 +21,7 @@ submission_route.get('/get-submissions-by-jam/:jamId', submissionController.getS
 submission_route.get('/get-submission/:id', submissionController.getSubmission);
 submission_route.get('/get-submission-name/:name', submissionController.getSubmissionName);
 submission_route.get('/get-submissions', submissionController.getSubmissions);
+submission_route.get('/get-submissions-data/:jamId', submissionController.getSubmissionsData);
 submission_route.get('/get-submissions-site-name/:name', submissionController.getSubmissionsSiteName);
 submission_route.get('/get-new-evaluation', submissionController.setEvaluatorToSubmission);
 submission_route.delete('/delete-submission/:id', submissionController.deleteSubmission);

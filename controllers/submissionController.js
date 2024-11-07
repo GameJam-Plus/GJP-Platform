@@ -4,9 +4,11 @@ const Category = require('../models/categoryModel');
 const GameJam = require('../models/gameJamEventModel');
 const Jam = require('../models/jamModel');
 const Site = require('../models/siteModel');
+const SiteOnJam = require('../models/siteOnJamModel');
 const Region = require('../models/regionModel');
 const Team = require('../models/teamModel');
 const User = require('../models/userModel');
+const UserOnJam = require('../models/userOnJamModel');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const Theme = require('../models/themeModel')
@@ -370,10 +372,62 @@ const getSubmission = async (req, res) => {
 
 const getSubmissions = async (req, res) => {
     try {
+        console.log("GET SUBMISSIONS");
         const allSubmissions = await Submission.find({});
         res.status(200).send({ success: true, msg: 'Se han encontrado entregas en el sistema', data: allSubmissions });
     } catch (error) {
         res.status(400).send({ success: false, msg: error.message });
+    }
+};
+
+const getSubmissionsData = async (req, res) => {
+    try{
+        const jamId = req.params.jamId;
+        let activeJammers = new Array();
+        let inactiveJammers = new Array();
+        let errors = new Array();
+        const jammerInfo = await UserOnJam.find({ jamId: jamId });
+        for(let i = 0; i < jammerInfo.length; ++i)
+        {
+            try{
+                let jammer = await User.findById(jammerInfo[i].userId);
+                let site = await Site.findById(jammerInfo[i].siteId);
+                let team = await Team.findOne({ "jammers._id": jammerInfo[i].userId });
+                let submission;
+                if(team) submission = await Submission.findOne({ teamId: team._id });
+
+                jammer = jammer.toObject();
+                jammer.jammerData = jammerInfo[i].jammerData;
+                jammer.siteName = site.name;
+                jammer.countryName = site.country.name;
+                jammer.countryCode = site.country.code;
+                
+                if(team && submission && submission.incubation)
+                {
+                    jammer.teamName = team.teamName;
+                    jammer.submissionTitle = submission.title;
+                    jammer.submissionLink = submission.link;
+                    jammer.pitchLink = submission.pitch;
+                    jammer.incubation = submission.incubation;
+                    activeJammers.push(jammer);
+                }
+                else
+                {
+                    inactiveJammers.push(jammer);
+                }
+            }
+            catch(error)
+            {
+                errors.push({
+                    userId: jammerInfo[i].userId,
+                    message: error.message
+                })
+            }
+        }
+
+        res.status(200).send({ success: true, data: {jammers: activeJammers, errors: errors} });
+    } catch (error) {
+        res.status(400).send({ success: false, message: error.message });
     }
 };
 
@@ -731,6 +785,7 @@ module.exports = {
     getSubmissionByTeam,
     getSubmissionsBySite,
     getSubmissionsByJam,
+    getSubmissionsData,
     getCurrentTeamSubmission,
     getSubmission,
     getSubmissions,
