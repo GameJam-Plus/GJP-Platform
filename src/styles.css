@@ -341,3 +341,8 @@ h4, h5, h6
 .not-allowed{
   cursor: not-allowed;
 }
+
+.table-large{
+  table-layout: fixed;
+  word-wrap: break-word;
+}

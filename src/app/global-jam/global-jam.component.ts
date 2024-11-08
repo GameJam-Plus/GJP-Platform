@@ -10,7 +10,11 @@ import { ActivatedRoute } from '@angular/router';
 import { environment } from '../../environments/environment.prod';
 import { CommonModule, formatDate } from '@angular/common';
 import { MessagesComponent } from '../messages/messages.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { saveAs } from 'file-saver';
 import * as moment from 'moment-timezone';
+
+import { faFileCsv } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-global-jam',
@@ -19,6 +23,7 @@ import * as moment from 'moment-timezone';
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
+    FontAwesomeModule,
     MessagesComponent
   ],
   templateUrl: './global-jam.component.html',
@@ -44,6 +49,10 @@ export class GlobalJamComponent {
   inactiveSites: any[] = [];
   submissions: any[] = [];
   teamColors: any = {};
+  activeUsersRequest: string = '';
+  activeUsers: any[] = [];
+
+  faFileCsv = faFileCsv;
 
   @Input() page: string = '';
 
@@ -168,6 +177,24 @@ export class GlobalJamComponent {
     }
   }
 
+  getActiveUsers()
+  {
+    if(this.activeJam?._id)
+    {
+      this.activeUsersRequest = "LOADING...";
+      this.submissionService.getSubmissionsData(this.activeJam._id).subscribe({
+        next: (data) => {
+          this.activeUsersRequest = '';
+          console.log(data.jammers[0]);
+          this.activeUsers = data.jammers;
+        },
+        error: (error) => {
+          this.message.showMessage("Error", error.error.message);
+        }
+      });
+    }
+  }
+
   patchJamForm(): void{
     this.jamForm.setValue({
       title: this.activeJam?.title,
@@ -189,7 +216,17 @@ export class GlobalJamComponent {
     this.jamForm.controls['public'].setValue(value);
   }
 
+  exportJammers()
+  {
+    let rows = "#; Name; Email; Discord; Site; Country; Team; Game Title; Link to Game; Link to Pitch\n";
+    this.activeUsers.forEach((jammer, index) => {
+      rows += `${index + 1}; ${jammer.name}; ${jammer.email}; ${jammer.discordUsername}; ${jammer.siteName}; ${jammer.countryName}; ${jammer.teamName}; ${jammer.submissionLink}; ${jammer.pitchLink}\n`;
+    });
+    rows = rows.trim();
 
+    let blob = new Blob([rows], {type: 'text/csv;charset=utf-8'});
+    saveAs(blob, "jammers.csv");
+  }
 
   createJam(): void{
     this.jamService.createJam({

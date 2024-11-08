@@ -241,6 +241,44 @@
 
 <div *ngIf="activeJam && page == 'jam-jammers'" class="w-100 p-5">
   <h1 class="text-center">Active Jammers</h1>
+  <button class="btn btn-black btn-block" (click)="getActiveUsers()">LOAD JAMMERS</button>
+  <div class="d-block text-center my-3" *ngIf="activeUsersRequest"><b>{{ activeUsersRequest }}</b></div>
+
+  <button class="btn btn-black my-1" (click)="exportJammers()" *ngIf="activeUsers.length > 0">
+    <fa-icon [icon]="faFileCsv" class="fa-2x"></fa-icon><br>
+    Export Jammers
+  </button>
+
+  <table class="table table-stripped rounded table-large" *ngIf="activeUsers.length > 0">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Discord</th>
+        <th scope="col">Site Name</th>
+        <th scope="col">Country</th>
+        <th scope="col">Team</th>
+        <th scope="col">Game Title</th>
+        <th scope="col">Link to Game</th>
+        <th scope="col">Link to Pitch</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let jammer of activeUsers; index as j">
+        <th scope="row">{{ j + 1 }}</th>
+        <td>{{ jammer.name }}</td>
+        <td><a [href]="'mailto:'+jammer.email">{{ jammer.email }}</a></td>
+        <td>{{ jammer.discordUsername }}</td>
+        <td>{{ jammer.siteName }}</td>
+        <td>{{ jammer.countryName }}</td>
+        <td>{{ jammer.teamName }}</td>
+        <td>{{ jammer.submissionTitle }}</td>
+        <td><a [href]="jammer.submissionLink">{{ jammer.submissionLink }}</a></td>
+        <td><a [href]="jammer.pitchLink">{{ jammer.pitchLink }}</a></td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
 <div *ngIf="activeJam && page == 'jam-submissions'" class="w-100 p-5">

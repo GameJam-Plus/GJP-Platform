@@ -43,6 +43,12 @@ export class SubmissionService {
     );
   }
 
+  getSubmissionsData(jamId: string): Observable<any> {
+    return this.http.get<any>(`${ this.url }get-submissions-data/${jamId}`).pipe(
+      map(response => response.data)
+    );
+  }
+
   updateSubmission(url: string, team: Submission): Observable<any> {
     return this.http.put(url, team, { withCredentials: true });
   }
