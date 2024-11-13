@@ -258,8 +258,10 @@
         <th scope="col">Discord</th>
         <th scope="col">Site Name</th>
         <th scope="col">Country</th>
+        <th scole="col">Region</th>
         <th scope="col">Team</th>
         <th scope="col">Game Title</th>
+        <th scope="col">Incubation</th>
         <th scope="col">Link to Game</th>
         <th scope="col">Link to Pitch</th>
       </tr>
@@ -272,8 +274,24 @@
         <td>{{ jammer.discordUsername }}</td>
         <td>{{ jammer.siteName }}</td>
         <td>{{ jammer.countryName }}</td>
+        <td>{{ jammer.regionName }}</td>
         <td>{{ jammer.teamName }}</td>
         <td>{{ jammer.submissionTitle }}</td>
+        <td>YES</td>
+        <td><a [href]="jammer.submissionLink">{{ jammer.submissionLink }}</a></td>
+        <td><a [href]="jammer.pitchLink">{{ jammer.pitchLink }}</a></td>
+      </tr>
+      <tr *ngFor="let jammer of inactiveUsers; index as j" class="table-secondary">
+        <th scope="row">{{ j + 1 }}</th>
+        <td>{{ jammer.name }}</td>
+        <td><a [href]="'mailto:'+jammer.email">{{ jammer.email }}</a></td>
+        <td>{{ jammer.discordUsername }}</td>
+        <td>{{ jammer.siteName }}</td>
+        <td>{{ jammer.countryName }}</td>
+        <td>{{ jammer.regionName }}</td>
+        <td>{{ jammer.teamName }}</td>
+        <td>{{ jammer.submissionTitle }}</td>
+        <td>NO</td>
         <td><a [href]="jammer.submissionLink">{{ jammer.submissionLink }}</a></td>
         <td><a [href]="jammer.pitchLink">{{ jammer.pitchLink }}</a></td>
       </tr>

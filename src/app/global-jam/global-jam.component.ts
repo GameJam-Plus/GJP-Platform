@@ -51,6 +51,7 @@ export class GlobalJamComponent {
   teamColors: any = {};
   activeUsersRequest: string = '';
   activeUsers: any[] = [];
+  inactiveUsers: any[] = [];
 
   faFileCsv = faFileCsv;
 
@@ -185,8 +186,8 @@ export class GlobalJamComponent {
       this.submissionService.getSubmissionsData(this.activeJam._id).subscribe({
         next: (data) => {
           this.activeUsersRequest = '';
-          console.log(data.jammers[0]);
-          this.activeUsers = data.jammers;
+          this.activeUsers = data.activeJammers;
+          this.inactiveUsers = data.inactiveJammers;
         },
         error: (error) => {
           this.message.showMessage("Error", error.error.message);
@@ -218,9 +219,12 @@ export class GlobalJamComponent {
 
   exportJammers()
   {
-    let rows = "#; Name; Email; Discord; Site; Country; Team; Game Title; Link to Game; Link to Pitch\n";
+    let rows = "#; Name; Email; Discord; Site; Country; Region; Team; Game Title; Link to Game; Link to Pitch; Incubation\n";
     this.activeUsers.forEach((jammer, index) => {
-      rows += `${index + 1}; ${jammer.name}; ${jammer.email}; ${jammer.discordUsername}; ${jammer.siteName}; ${jammer.countryName}; ${jammer.teamName}; ${jammer.submissionLink}; ${jammer.pitchLink}\n`;
+      rows += `${index + 1}; ${jammer.name}; ${jammer.email}; ${jammer.discordUsername}; ${jammer.siteName}; ${jammer.countryName}; ${jammer.regionName}; ${jammer.teamName}; ${jammer.submissionTitle}, ${jammer.submissionLink}; ${jammer.pitchLink}; YES\n`;
+    });
+    this.inactiveUsers.forEach((jammer, index) => {
+      rows += `${index + 1}; ${jammer.name}; ${jammer.email}; ${jammer.discordUsername}; ${jammer.siteName}; ${jammer.countryName}; ${jammer.regionName}; ${jammer.teamName}; ${jammer.submissionTitle}, ${jammer.submissionLink}; ${jammer.pitchLink}; NO\n`;
     });
     rows = rows.trim();
 
