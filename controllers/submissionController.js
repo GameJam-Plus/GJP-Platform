@@ -392,29 +392,44 @@ const getSubmissionsData = async (req, res) => {
             try{
                 let jammer = await User.findById(jammerInfo[i].userId);
                 let site = await Site.findById(jammerInfo[i].siteId);
+                let region = await Region.findById(site.regionId);
                 let team = await Team.findOne({ "jammers._id": jammerInfo[i].userId });
                 let submission;
                 if(team) submission = await Submission.findOne({ teamId: team._id });
 
                 jammer = jammer.toObject();
                 jammer.jammerData = jammerInfo[i].jammerData;
+                jammer.regionName = region.name;
                 jammer.siteName = site.name;
                 jammer.countryName = site.country.name;
                 jammer.countryCode = site.country.code;
-                
-                if(team && submission && submission.incubation)
+
+                if(team)
                 {
                     jammer.teamName = team.teamName;
-                    jammer.submissionTitle = submission.title;
-                    jammer.submissionLink = submission.link;
-                    jammer.pitchLink = submission.pitch;
-                    jammer.incubation = submission.incubation;
-                    activeJammers.push(jammer);
                 }
                 else
                 {
-                    inactiveJammers.push(jammer);
+                    jammer.teamName = "NONE";
                 }
+
+                if(submission)
+                {
+                    jammer.submissionTitle = submission.title;
+                    jammer.submissionLink = submission.link ? submission.link : "NONE";
+                    jammer.pitchLink = submission.pitch ? submission.pitch : "NONE";
+                    jammer.incubation = submission.incubation;
+                }
+                else
+                {
+                    jammer.submissionTitle = "NONE";
+                    jammer.submissionLink = "NONE";
+                    jammer.pitchLink = "NONE";
+                    jammer.incubation = false;
+                }
+
+                if(jammer.incubation) activeJammers.push(jammer);
+                else inactiveJammers.push(jammer);
             }
             catch(error)
             {
@@ -425,7 +440,7 @@ const getSubmissionsData = async (req, res) => {
             }
         }
 
-        res.status(200).send({ success: true, data: {jammers: activeJammers, errors: errors} });
+        res.status(200).send({ success: true, data: {activeJammers: activeJammers, inactiveJammers: inactiveJammers, errors: errors} });
     } catch (error) {
         res.status(400).send({ success: false, message: error.message });
     }
