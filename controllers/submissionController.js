@@ -110,17 +110,19 @@ const updatePitch = async(req, res) => {
         const teamId = req.body.teamId;
 
         console.log(req.body);
+
+        let updateValue = {};
+        updateValue.pitch = req.body.link;
+        updateValue.pitchTimeDelta = req.body.pitchTimeDelta;
+        if(req.body.incubation) updateValue.incubation = req.body.incubation;
+        if(req.body.acceleration) updateValue.acceleration = req.body.acceleration;
+        updateValue.pitchTime = new Date();
         
         await Submission.updateOne({
             jamId: jamId,
             siteId: siteId,
             teamId: teamId
-        },{
-            pitch: req.body.link,
-            pitchTimeDelta: req.body.pitchTimeDelta,
-            incubation: req.body.incubation,
-            pitchTime: new Date()
-        });
+        }, updateValue );
 
         const submission = await Submission.findOne({
             jamId: jamId,
@@ -419,6 +421,7 @@ const getSubmissionsData = async (req, res) => {
                     jammer.submissionLink = submission.link ? submission.link : "NONE";
                     jammer.pitchLink = submission.pitch ? submission.pitch : "NONE";
                     jammer.incubation = submission.incubation;
+                    jammer.acceleration = submission.acceleration;
                 }
                 else
                 {
@@ -426,6 +429,7 @@ const getSubmissionsData = async (req, res) => {
                     jammer.submissionLink = "NONE";
                     jammer.pitchLink = "NONE";
                     jammer.incubation = false;
+                    jammer.acceleration = false;
                 }
 
                 if(jammer.incubation) activeJammers.push(jammer);

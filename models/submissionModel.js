@@ -88,6 +88,9 @@ const submissionSchema = mongoose.Schema({
     incubation: {
         type: Boolean
     },
+    acceleration: {
+        type: Boolean
+    },
     submissionTime: {
         type: Date,
         required: true
