@@ -226,6 +226,7 @@ export interface Submission {
   link: string;
   pitch?: string;
   incubation?: boolean;
+  acceleration?: boolean;
   description: string;
   themes: string[];
   categories: string[];

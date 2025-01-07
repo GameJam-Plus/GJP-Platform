@@ -219,12 +219,16 @@ export class GlobalJamComponent {
 
   exportJammers()
   {
-    let rows = "#; Name; Email; Discord; Site; Country; Region; Team; Game Title; Link to Game; Link to Pitch; Incubation\n";
+    let rows = "#; Name; Email; Discord; Site; Country; Region; Team; Game Title; Link to Game; Link to Pitch; Incubation; Acceleration\n";
     this.activeUsers.forEach((jammer, index) => {
-      rows += `${index + 1}; ${jammer.name}; ${jammer.email}; ${jammer.discordUsername}; ${jammer.siteName}; ${jammer.countryName}; ${jammer.regionName}; ${jammer.teamName}; ${jammer.submissionTitle}, ${jammer.submissionLink}; ${jammer.pitchLink}; YES\n`;
+      const incubation = jammer.incubation ? 'YES' : 'NO';
+      const acceleration = jammer.acceleration ? 'YES' : 'NO';
+      rows += `${index + 1}; ${jammer.name}; ${jammer.email}; ${jammer.discordUsername}; ${jammer.siteName}; ${jammer.countryName}; ${jammer.regionName}; ${jammer.teamName}; ${jammer.submissionTitle}; ${jammer.submissionLink}; ${jammer.pitchLink}; ${incubation}; ${acceleration}\n`;
     });
     this.inactiveUsers.forEach((jammer, index) => {
-      rows += `${index + 1}; ${jammer.name}; ${jammer.email}; ${jammer.discordUsername}; ${jammer.siteName}; ${jammer.countryName}; ${jammer.regionName}; ${jammer.teamName}; ${jammer.submissionTitle}, ${jammer.submissionLink}; ${jammer.pitchLink}; NO\n`;
+      const incubation = jammer.incubation ? 'YES' : 'NO';
+      const acceleration = jammer.acceleration ? 'YES' : 'NO';
+      rows += `${index + 1}; ${jammer.name}; ${jammer.email}; ${jammer.discordUsername}; ${jammer.siteName}; ${jammer.countryName}; ${jammer.regionName}; ${jammer.teamName}; ${jammer.submissionTitle}; ${jammer.submissionLink}; ${jammer.pitchLink}; ${incubation}; ${acceleration}\n`;
     });
     rows = rows.trim();
 

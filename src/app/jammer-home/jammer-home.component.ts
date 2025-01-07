@@ -182,7 +182,7 @@ export class JammerHomeComponent implements OnInit {
 
     this.pitchForm = this.fb.group({
       link: ['', Validators.required],
-      incubation: false
+      acceleration: false
     });
 
     let tzOffset = 180; // 3 hours * 60 minutes - BRT
@@ -712,7 +712,7 @@ export class JammerHomeComponent implements OnInit {
 
       for(let s = 0; s < this.jam.stages.length; ++s)
       {
-        if(this.jam.stages[s].stageName == "GameJam")
+        if(this.jam.stages[s].stageName == "Semifinal Submission")
         {
           let endDate = new Date(this.jam.stages[s].endDate);
           endDate = new Date(endDate.getTime() - (180 * 60000));
@@ -744,7 +744,7 @@ export class JammerHomeComponent implements OnInit {
 
       for(let s = 0; s < this.jam.stages.length; ++s)
       {
-        if(this.jam.stages[s].stageName == "GameJam")
+        if(this.jam.stages[s].stageName == "Semifinal Submission")
         {
           let endDate = new Date(this.jam.stages[s].endDate);
           endDate = new Date(endDate.getTime() - (180 * 60000) + (48*60*60*1000));
@@ -898,7 +898,7 @@ export class JammerHomeComponent implements OnInit {
 
       this.pitchForm.setValue({
         link: submission.pitch? submission.pitch : '',
-        incubation: submission.incubation? submission.incubation: false
+        acceleration: submission.acceleration? submission.acceleration: false
       });
 
       console.log(submission);
@@ -976,7 +976,7 @@ export class JammerHomeComponent implements OnInit {
         siteId: this.site._id,
         teamId: this.team._id,
         link: this.pitchForm.get('link')?.value,
-        incubation: this.pitchForm.get('incubation')?.value,
+        acceleration: this.pitchForm.get('acceleration')?.value,
         pitchTimeDelta: this.getRelativePitchDelta()
       }
       console.log(pitch);

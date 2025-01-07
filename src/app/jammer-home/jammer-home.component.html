@@ -50,7 +50,10 @@
   <!-- #endregion -->
 
   <div *ngIf="jam && site && jammerData" class="row w-100 p-3">
+
+    <!--
     <div class="p-3 mb-2 darkbg d-block text-white text-center timer">{{ deltaTime }}</div>
+    -->
 
     <!-- #region NAV BAR -->
     <div id="localHomeNavBar" class="col-2 container-fluid">
@@ -487,8 +490,8 @@
 
             <hr class="my-2">
             <h2>PITCH SUBMISSÃO</h2>
-            <div *ngIf="getRelativePitchDelta() > 0">
-              <b>{{ formatTimeDelta(getRelativePitchDelta())}}</b>
+            <div *ngIf="getRelativeTimeDelta() > 0">
+              <b>{{ formatTimeDelta(getRelativeTimeDelta())}}</b>
             </div>
 
             <form (submit)="savePitch()" class="rounded shadow m-2 bg-light p-4" [formGroup]="pitchForm" enctype="multipart/form-data">
@@ -498,20 +501,20 @@
                 <input type="text" class="form-control form-control-lg" placeholder="https://www.youtube.com/my-pitch-video" formControlName="link">
               </div>
 
-              <h3>Você deseja ir para a etapa de incubação?</h3>
+              <h3>Você deseja ir para a etapa de aceleração?</h3>
 
               <div class="form-group border p-2">
-                Ao marcar isso, você reconhece que a próxima etapa exige que você continue trabalhando no seu jogo e na apresentação, e faça outra submissão em janeiro.
-                <label for="incubation">Você deseja ir para a etapa de incubação?</label>
-                <select class="form-control" formControlName="incubation">
+                Ao marcar isso, você reconhece que a próxima etapa exige que você continue trabalhando no seu jogo e na apresentação, e faça outra submissão em abril.
+                <label for="acceleration">Você deseja ir para a etapa de aceleração?</label>
+                <select class="form-control" formControlName="acceleration">
                   <option value="" disabled selected hidden>Selecciona una opción</option>
                   <option value="true">SIM</option>
                   <option value="false">NÃO</option>
                 </select>
               </div>
 
-              <button type="submit" *ngIf="getRelativePitchDelta() > 0" class="btn btn-black col-12">ENVIAR PITCH</button>
-              <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getRelativePitchDelta() < 0">ENVIOS FECHADOS</div>
+              <button type="submit" *ngIf="getRelativeTimeDelta() > 0" class="btn btn-black col-12">ENVIAR PITCH</button>
+              <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getRelativeTimeDelta() < 0">ENVIOS FECHADOS</div>
             </form>
           </div>
 
@@ -694,8 +697,8 @@
 
             <hr class="my-2">
             <h2>PITCH SUBMISSION</h2>
-            <div *ngIf="getRelativePitchDelta() > 0">
-              <b>{{ formatTimeDelta(getRelativePitchDelta())}}</b>
+            <div *ngIf="getRelativeTimeDelta() > 0">
+              <b>{{ formatTimeDelta(getRelativeTimeDelta())}}</b>
             </div>
             <form (submit)="savePitch()" class="rounded shadow m-2 bg-light p-4" [formGroup]="pitchForm" enctype="multipart/form-data">
               <div class="form-group col-12"> <!-- LINK -->
@@ -704,20 +707,20 @@
                 <input type="text" class="form-control form-control-lg" placeholder="https://www.youtube.com/my-pitch-video" formControlName="link">
               </div>
 
-              <h3>Do you wish to move forward to the incubation stage?</h3>
+              <h3>Do you wish to move forward to the acceleration stage?</h3>
 
               <div class="form-group p-2 border">
-                By marking this you acknowledge that the next stage requires you to keep working on your game and pitch, and make another submission on January.
-                <label for="incubation">Do you wish to move forward to the incubation stage?</label>
-                <select class="form-control" formControlName="incubation">
+                By marking this you acknowledge that the next stage requires you to keep working on your game and pitch, and make another submission on April.
+                <label for="incubation">Do you wish to move forward to the acceleration stage?</label>
+                <select class="form-control" formControlName="acceleration">
                   <option value="" disabled selected hidden>Select an option</option>
                   <option value="true">YES</option>
                   <option value="false">NO</option>
                 </select>
               </div>
 
-              <button type="submit" *ngIf="getRelativePitchDelta() > 0" class="btn btn-black col-12">ENVIAR PITCH</button>
-              <div class="d-block p-3 text-center bg-secondary" *ngIf="getRelativePitchDelta() < 0">SUBMISSIONS CLOSED</div>
+              <button type="submit" *ngIf="getRelativeTimeDelta() > 0" class="btn btn-black col-12">ENVIAR PITCH</button>
+              <div class="d-block p-3 text-center bg-secondary" *ngIf="getRelativeTimeDelta() < 0">SUBMISSIONS CLOSED</div>
             </form>
           </div>
 
@@ -900,8 +903,9 @@
 
             <hr class="my-2">
             <h2>ENVÍO DE PITCH</h2>
-            <div *ngIf="getRelativePitchDelta() > 0">
-              <b>{{ formatTimeDelta(getRelativePitchDelta())}}</b>
+            <!-- <div *ngIf="getRelativePitchDelta() > 0"> -->
+            <div *ngIf="getRelativeTimeDelta() > 0">
+              <b>{{ formatTimeDelta(getRelativeTimeDelta())}}</b>
             </div>
             <form (submit)="savePitch()" class="rounded shadow m-2 bg-light p-4" [formGroup]="pitchForm" enctype="multipart/form-data">
               <div class="form-group col-12"> <!-- LINK -->
@@ -910,20 +914,20 @@
                 <input type="text" class="form-control form-control-lg" placeholder="https://www.youtube.com/my-pitch-video" formControlName="link">
               </div>
 
-              <h3>¿Deseas participar en la etapa de incubación?</h3>
+              <h3>¿Deseas participar en la etapa de aceleración?</h3>
 
               <div class="p-2 border form-group">
-                Al marcar esto reconocemos que la próxima etapa requiere que continuemos trabajando nuestro juego y pitch, y que hagamos otro envío en Enero.
-                <label for="incubation">¿Quieren ir a la etapa de incubación?</label>
-                <select class="form-control" formControlName="incubation">
+                Al marcar esto reconocemos que la próxima etapa requiere que continuemos trabajando nuestro juego y pitch, y que hagamos otro envío en Abril.
+                <label for="incubation">¿Quieren ir a la etapa de aceleración?</label>
+                <select class="form-control" formControlName="acceleration">
                   <option value="" disabled selected hidden>Selecciona una opción</option>
                   <option value="true">SÍ</option>
                   <option value="false">NO</option>
                 </select>
               </div>
 
-              <button type="submit" *ngIf="getRelativePitchDelta() > 0" class="btn btn-black col-12">ENVIAR PITCH</button>
-              <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getRelativePitchDelta() < 0">ENVÍOS CERRADOS</div>
+              <button type="submit" *ngIf="getRelativeTimeDelta() > 0" class="btn btn-black col-12">ENVIAR PITCH</button>
+              <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getRelativeTimeDelta() < 0">ENVÍOS CERRADOS</div>
             </form>
           </div>
         </div>
