@@ -697,6 +697,7 @@ export class JammerHomeComponent implements OnInit {
   {
     if(this.jam && this.site && this.team)
     {
+      /*
       if(this.site.customSubmissionTime)
       {
         let endDate = new Date(this.site.customSubmissionTime);
@@ -704,6 +705,7 @@ export class JammerHomeComponent implements OnInit {
         let delta = endDate.getTime() - now.getTime();
         return delta;
       }
+      */
 
       let now = new Date();
       let offset = now.getTimezoneOffset() * 60000;
