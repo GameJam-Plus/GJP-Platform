@@ -387,6 +387,7 @@ const getSubmissionsData = async (req, res) => {
         const jamId = req.params.jamId;
         let activeJammers = new Array();
         let inactiveJammers = new Array();
+        let submissionData = new Array();
         let errors = new Array();
         const jammerInfo = await UserOnJam.find({ jamId: jamId });
         for(let i = 0; i < jammerInfo.length; ++i)
@@ -422,6 +423,8 @@ const getSubmissionsData = async (req, res) => {
                     jammer.pitchLink = submission.pitch ? submission.pitch : "NONE";
                     jammer.incubation = submission.incubation;
                     jammer.acceleration = submission.acceleration;
+                    jammer.submissionTime = submission.submissionTime;
+                    jammer.pitchTime = submission.pitchTime;
                 }
                 else
                 {
@@ -444,7 +447,46 @@ const getSubmissionsData = async (req, res) => {
             }
         }
 
-        res.status(200).send({ success: true, data: {activeJammers: activeJammers, inactiveJammers: inactiveJammers, errors: errors} });
+        const submissions = await Submission.find({
+            jamId: jamId
+        });
+
+        for(let i = 0; i < submissions.length; ++i)
+        {
+            try
+            {
+                const teamId = submissions[i].teamId;
+                const siteId = submissions[i].siteId;
+                const team = await Team.findOne({ _id: teamId });
+                const site = await Site.findOne({ _id: siteId });
+                const regionId = site.regionId;
+                const region = await Region.findOne({ _id: regionId });
+
+                submissionData.push({
+                    submissionId: submissions[i]._id,
+                    region: region.name,
+                    country: site.country.name,
+                    site: site.name,
+                    team: team.teamName,
+                    contactId: submissions[i].contact._id,
+                    contactName: submissions[i].contact.name,
+                    contactEmail: submissions[i].contact.email,
+                    title: submissions[i].title,
+                    link: submissions[i].link,
+                    pitch: submissions[i].pitch,
+                    incubation: submissions[i].incubation,
+                    acceleration: submissions[i].acceleration,
+                    submissionTime: submissions[i].submissionTime,
+                    pitchTime: submissions[i].pitchTime  
+                });
+            }
+            catch(error)
+            {
+                console.log(error.message);
+            }
+        }
+
+        res.status(200).send({ success: true, data: {activeJammers: activeJammers, inactiveJammers: inactiveJammers, submissions: submissionData, errors: errors} });
     } catch (error) {
         res.status(400).send({ success: false, message: error.message });
     }
