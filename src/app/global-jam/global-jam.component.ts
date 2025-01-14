@@ -52,6 +52,7 @@ export class GlobalJamComponent {
   activeUsersRequest: string = '';
   activeUsers: any[] = [];
   inactiveUsers: any[] = [];
+  submissionsData: any[] = [];
 
   faFileCsv = faFileCsv;
 
@@ -188,6 +189,8 @@ export class GlobalJamComponent {
           this.activeUsersRequest = '';
           this.activeUsers = data.activeJammers;
           this.inactiveUsers = data.inactiveJammers;
+          this.submissionsData = data.submissions;
+          console.log(data.submissions.length);
         },
         error: (error) => {
           this.message.showMessage("Error", error.error.message);
@@ -234,6 +237,36 @@ export class GlobalJamComponent {
 
     let blob = new Blob([rows], {type: 'text/csv;charset=utf-8'});
     saveAs(blob, "jammers.csv");
+  }
+
+  exportSubmissions()
+  {
+    let rows = "#; Id; Region; Country; Site; Team; Leader Name; Leader Email; Game Title; Link to Game; Link to Pitch; Incubation; Acceleration; Submission Date; Submission Time; Pitch Date; Pitch Time\n";
+    this.submissionsData.forEach((s, i) => {
+      const incubation = s.incubation ? 'YES' : 'NO';
+      const acceleration = s.acceleration ? 'YES' : 'NO';
+      let submissionDate = 'NONE';
+      let submissionTime = 'NONE';
+
+      if(s.submissionTime)
+      {
+        submissionDate = s.submissionTime.split('T')[0];
+        submissionTime = s.submissionTime.split('T')[1].slice(0, -5);
+      }
+
+      let pitchDate = 'NONE';
+      let pitchTime = 'NONE';
+
+      if(s.pitchTime)
+      {
+        pitchDate = s.pitchTime.split('T')[0];
+        pitchTime = s.pitchTime.split('T')[1].slice(0, -5);
+      }
+      rows += `${i}; ${s.submissionId}; ${s.region}; ${s.country}; ${s.site}; ${s.team}; ${s.contactName}; ${s.contactEmail}; ${s.title}; ${s.link}; ${s.pitch}; ${incubation}; ${acceleration}; ${submissionDate}; ${submissionTime}; ${pitchDate}; ${pitchTime}\n`;
+    });
+
+    let blob = new Blob([rows], {type: 'text/csv;charset=utf-8'});
+    saveAs(blob, "submissions.csv");
   }
 
   createJam(): void{

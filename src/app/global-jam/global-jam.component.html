@@ -249,6 +249,11 @@
     Export Jammers
   </button>
 
+  <button class="btn btn-black my-1" (click)="exportSubmissions()" *ngIf="submissionsData.length > 0">
+    <fa-icon [icon]="faFileCsv" class="fa-2x"></fa-icon><br>
+    Export Submissions
+  </button>
+
   <table class="table table-stripped rounded table-large" *ngIf="activeUsers.length > 0">
     <thead>
       <tr>
