@@ -456,7 +456,8 @@
               <b>{{ s.teamName }}</b><br>
               <a [href]="s.link" target="_blank">{{ s.link }}</a><br>
               <a [href]="s.pitch" target="_blank" *ngIf="s.pitch">{{ s.pitch }}</a><br>
-              Going to Incubation? <span *ngIf="s.incubation">YES</span> <span *ngIf="!s.incubation">NO</span>
+              Going to Incubation? <span *ngIf="s.incubation">YES</span> <span *ngIf="!s.incubation">NO</span><br>
+              Going to Acceleration? <span *ngIf="s.acceleration">YES</span> <span *ngIf="!s.acceleration">NO</span>
             </div>
           </div>
         </div>
