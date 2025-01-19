@@ -249,11 +249,6 @@
     Export Jammers
   </button>
 
-  <button class="btn btn-black my-1" (click)="exportSubmissions()" *ngIf="submissionsData.length > 0">
-    <fa-icon [icon]="faFileCsv" class="fa-2x"></fa-icon><br>
-    Export Submissions
-  </button>
-
   <table class="table table-stripped rounded table-large" *ngIf="activeUsers.length > 0">
     <thead>
       <tr>
@@ -307,6 +302,12 @@
 <div *ngIf="activeJam && page == 'jam-submissions'" class="w-100 p-5">
   <h1 class="text-center">Submissions</h1>
   <button class="btn btn-black btn-block" (click)="getSubmissions()">LOAD SUBMISSIONS</button>
+
+  <button class="btn btn-black my-1" (click)="exportSubmissions()" *ngIf="submissions.length > 0">
+    <fa-icon [icon]="faFileCsv" class="fa-2x"></fa-icon><br>
+    Export Submissions
+  </button>
+
   <div class="row m-2">
     <div *ngFor="let s of submissions" class="p-2 col-4">
       <div class="rounded shadow bg-light text-center p-4">

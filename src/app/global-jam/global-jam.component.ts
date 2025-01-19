@@ -241,8 +241,8 @@ export class GlobalJamComponent {
 
   exportSubmissions()
   {
-    let rows = "#; Id; Region; Country; Site; Team; Leader Name; Leader Email; Game Title; Link to Game; Link to Pitch; Incubation; Acceleration; Submission Date; Submission Time; Pitch Date; Pitch Time\n";
-    this.submissionsData.forEach((s, i) => {
+    let rows = "#; Id; Region; Country; Site; Team; Leader Name; Leader Email; Game Title; Link to Game; Link to Pitch; Theme 1; Theme 2; Theme 3; Theme 4; Theme 5; Category 1; Category 2; Category 3; Category 4; Category 5; Incubation; Acceleration; Submission Date; Submission Time; Pitch Date; Pitch Time\n";
+    this.submissions.forEach((s, i) => {
       const incubation = s.incubation ? 'YES' : 'NO';
       const acceleration = s.acceleration ? 'YES' : 'NO';
       let submissionDate = 'NONE';
@@ -257,12 +257,39 @@ export class GlobalJamComponent {
       let pitchDate = 'NONE';
       let pitchTime = 'NONE';
 
+      let themes = '';
+      for(let t = 0; t < 5; ++t)
+      {
+        if(s.themes.length > t)
+        {
+          themes += s.themes[t] + ';';
+        }
+        else
+        {
+          themes += ' ;';
+        }
+      }
+
+
+      let categories = '';
+      for(let c = 0; c < 5; ++c)
+      {
+        if(s.categories.length > c)
+        {
+          categories += s.categories[c] + ';';
+        }
+        else
+        {
+          categories += ' ;';
+        }
+      }
+
       if(s.pitchTime)
       {
         pitchDate = s.pitchTime.split('T')[0];
         pitchTime = s.pitchTime.split('T')[1].slice(0, -5);
       }
-      rows += `${i}; ${s.submissionId}; ${s.region}; ${s.country}; ${s.site}; ${s.team}; ${s.contactName}; ${s.contactEmail}; ${s.title}; ${s.link}; ${s.pitch}; ${incubation}; ${acceleration}; ${submissionDate}; ${submissionTime}; ${pitchDate}; ${pitchTime}\n`;
+      rows += `${i}; ${s._id}; ${s.region}; ${s.country}; ${s.site}; ${s.teamName}; ${s.contact.name}; ${s.contact.email}; ${s.title}; ${s.link}; ${s.pitch}; ${themes} ${categories} ${incubation}; ${acceleration}; ${submissionDate}; ${submissionTime}; ${pitchDate}; ${pitchTime}\n`;
     });
 
     let blob = new Blob([rows], {type: 'text/csv;charset=utf-8'});
