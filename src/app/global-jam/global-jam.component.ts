@@ -241,7 +241,26 @@ export class GlobalJamComponent {
 
   exportSubmissions()
   {
-    let rows = "#; Id; Region; Country; Site; Team; Leader Name; Leader Email; Game Title; Link to Game; Link to Pitch; Theme 1; Theme 2; Theme 3; Theme 4; Theme 5; Category 1; Category 2; Category 3; Category 4; Category 5; Incubation; Acceleration; Submission Date; Submission Time; Pitch Date; Pitch Time\n";
+    let themesTitles = new Array();
+    let themesHeader = '';
+    for(let t = 0; t < this.activeJam!.themes.length; ++t)
+    {
+      themesTitles.push(this.activeJam!.themes[t].titleEN);
+      themesHeader += 'Theme:' + this.activeJam!.themes[t].titleEN + ';';
+    }
+
+    let categoriesTitles = new Array();
+    let categoriesHeader = '';
+    for(let c = 0; c < this.activeJam!.themes.length; ++c)
+    {
+      categoriesTitles.push(this.activeJam!.categories[c].titleEN);
+      categoriesHeader += 'Category:' + this.activeJam!.categories[c].titleEN + ';';
+    }
+
+    let genreTitles = ["Action", "Adventure", "Educational", "Hypercasual", "Multiplayer", "Narrative", "Platforming", "Puzzle", "Runner", "Sandbox", "Shooter"];
+    let genreHeader = "Genre: Action; Genre: Adventure; Genre: Educational; Genre: Hypercasual; Genre: Multiplayer; Genre: Narrative; Genre: Platforming; Genre: Puzzle; Genre: Runner; Genre: Sandbox; Genre: Shooter;"
+
+    let rows = `#; Id; Region; Country; Site; Team; Leader Name; Leader Email; Game Title; Link to Game; Description; Link to Pitch; Themes; ${themesHeader} Categories; ${categoriesHeader} Genres; ${genreHeader} Incubation; Acceleration; Submission Date; Submission Time; Pitch Date; Pitch Time\n`;
     this.submissions.forEach((s, i) => {
       const incubation = s.incubation ? 'YES' : 'NO';
       const acceleration = s.acceleration ? 'YES' : 'NO';
@@ -258,29 +277,48 @@ export class GlobalJamComponent {
       let pitchTime = 'NONE';
 
       let themes = '';
-      for(let t = 0; t < 5; ++t)
+      let themesSummary = '';
+      for(let t = 0; t < themesTitles.length; ++t)
       {
-        if(s.themes.length > t)
+        if(s.themes.includes(themesTitles[t]))
         {
-          themes += s.themes[t] + ';';
+          themes += 'YES;';
+          themesSummary += themesTitles[t] + ', ';
         }
         else
         {
-          themes += ' ;';
+          themes += 'NO;';
         }
       }
 
 
       let categories = '';
-      for(let c = 0; c < 5; ++c)
+      let categoriesSummary = '';
+      for(let c = 0; c < categoriesTitles.length; ++c)
       {
-        if(s.categories.length > c)
+        if(s.categories.includes(categoriesTitles[c]))
         {
-          categories += s.categories[c] + ';';
+          categories += 'YES;';
+          categoriesSummary += categoriesTitles[c] + ', '
         }
         else
         {
-          categories += ' ;';
+          categories += 'NO;';
+        }
+      }
+
+      let genres = '';
+      let genreSummary = '';
+      for(let g = 0; g < genreTitles.length; ++g)
+      {
+        if(s.genres.includes(genreTitles[g]))
+        {
+          genres += 'YES;';
+          genreSummary += genreTitles[g] + ',';
+        }
+        else
+        {
+          genres += 'NO;';
         }
       }
 
@@ -289,7 +327,11 @@ export class GlobalJamComponent {
         pitchDate = s.pitchTime.split('T')[0];
         pitchTime = s.pitchTime.split('T')[1].slice(0, -5);
       }
-      rows += `${i}; ${s._id}; ${s.region}; ${s.country}; ${s.site}; ${s.teamName}; ${s.contact.name}; ${s.contact.email}; ${s.title}; ${s.link}; ${s.pitch}; ${themes} ${categories} ${incubation}; ${acceleration}; ${submissionDate}; ${submissionTime}; ${pitchDate}; ${pitchTime}\n`;
+      let description = s.description;
+      description = description.replace(/;/g, ',');
+      description = description.replace(/\n/g, '.');
+      if(s.title == "The Chill Protector") console.log(description);
+      rows += `${i}; ${s._id}; ${s.region}; ${s.country}; ${s.site}; ${s.teamName}; ${s.contact.name}; ${s.contact.email}; ${s.title}; ${s.link}; ${description}; ${s.pitch}; ${themesSummary} ; ${themes} ${categoriesSummary} ; ${categories} ${genreSummary} ; ${genres} ${incubation}; ${acceleration}; ${submissionDate}; ${submissionTime}; ${pitchDate}; ${pitchTime}\n`;
     });
 
     let blob = new Blob([rows], {type: 'text/csv;charset=utf-8'});
