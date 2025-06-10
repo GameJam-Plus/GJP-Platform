@@ -13,7 +13,7 @@ const { deepEqual } = require('assert');
 const crypto = require('node:crypto');
 
 const registerUser = async (req, res) => {
-    const { name, email, region, site, team, roles, coins, discordUsername } = req.body;
+    const { name, email, region, site, team, roles, coins, discordUsername, genre, socialMedia } = req.body;
 
     try {
         // Validar email
@@ -43,6 +43,8 @@ const registerUser = async (req, res) => {
             roles: roles,
             coins: coins,
             discordUsername: discordUsername,
+            genre: genre,
+            socialMedia: socialMedia,
             creationDate: new Date()
         });
 
@@ -57,7 +59,7 @@ const registerUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
     const { id } = req.params;
-    const { name, email, region, site, team, roles, coins, discordUsername } = req.body;
+    const { name, email, region, site, team, roles, coins, discordUsername, genre, socialMedia } = req.body;
     try {
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return res.status(400).json({ success: false, message: 'Invalid user ID.' });
@@ -88,6 +90,8 @@ const updateUser = async (req, res) => {
         if (roles) existingUser.roles = roles;
         if (coins) existingUser.coins = coins;
         if (discordUsername) existingUser.discordUsername = discordUsername;
+        if (genre) existingUser.genre = genre;
+        if (socialMedia) existingUser.socialMedia = socialMedia;
         if(existingUser.roles.includes('Jammer')){
             const query = { 'jammers._id': id };
 
@@ -411,6 +415,8 @@ const registerUsersFromCSV = async (req, res) => {
                             name: jammerInfo[j].name,
                             email: jammerInfo[j].email.toLowerCase().trim(),
                             discordUsername: jammerInfo[j].discordUsername,
+                            genre: jammerInfo[j].genre,
+                            socialMedia: jammerInfo[j].socialMedia,
                             roles: ['Jammer'],
                             creationDate: currentDate,
                             lastUpdateDate: currentDate

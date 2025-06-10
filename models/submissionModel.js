@@ -104,6 +104,34 @@ const submissionSchema = mongoose.Schema({
     },
     pitchTimeDelta: {
         type: Number
+    },
+    accelerationTime: {
+        type: Date
+    },
+    accelerationTimeDelta: {
+        type: Number
+    },
+    accelerationBuildLink: {
+        type: String
+    },
+    accelerationPitchVideo: {
+        type: String
+    },
+    accelerationGameplayVideo: {
+        type: String
+    },
+    accelerationSoundtrack: {
+        type: String
+    },
+    accelerationPlatforms: [{
+        type: String,
+        required: true
+    }],
+    recommendationAcceleration: {
+        type: Number,
+    },
+    enjoymentAcceleration: {
+        type: Number,
     }
 });
 

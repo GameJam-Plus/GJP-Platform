@@ -14,6 +14,7 @@ const submissionController = require('../controllers/submissionController');
 
 submission_route.post('/create-submission', upload.none(), submissionController.createSubmission);
 submission_route.post('/update-pitch', upload.none(), submissionController.updatePitch);
+submission_route.post('/update-acceleration', upload.none(), submissionController.updateAcceleration);
 submission_route.put('/update-submission/:id', upload.none(), submissionController.updateSubmission);
 submission_route.get('/get-submission-by-team/:teamId', submissionController.getSubmissionByTeam);
 submission_route.get('/get-submissions-by-site/:siteId/:jamId', submissionController.getSubmissionsBySite);

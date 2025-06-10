@@ -53,13 +53,15 @@ const createTeam = async (req, res) => {
             creatorUser: {
                 userId: creatorUser._id,
                 name: creatorUser.name,
-                email: creatorUser.email
+                email: creatorUser.email,
+                discordUsername: creatorUser.discordUsername
             },
             creationDate: new Date(),
             lastUpdatedUser: {
                 userId: creatorUser._id,
                 name: creatorUser.name,
-                email: creatorUser.email
+                email: creatorUser.email,
+                discordUsername: creatorUser.discordUsername
             },
             lastUpdateDate: new Date()
         });
@@ -269,6 +271,42 @@ const removeJammerFromTeam = async (req, res) => {
     }
 };
 
+const getCurrentTeamUsers = async (req, res) => {
+    const teamId = req.params.teamId;
+    
+    try {
+        const team = await Team.findById(teamId);
+        if (!team) {
+            return res.status(404).json({ success: false, message: "Team not found" });
+        }
+
+        // Get all user IDs from the team
+        const userIds = team.jammers.map(jammer => jammer._id);
+
+        // Get current user information from User collection
+        const currentUsers = await User.find({
+            _id: { $in: userIds }
+        });
+
+        // Map the current user data with their roles from the team
+        const usersWithRoles = currentUsers.map(user => {
+            const teamJammer = team.jammers.find(j => j._id.toString() === user._id.toString());
+            return {
+                ...user.toObject(),
+                role: teamJammer?.role || ''
+            };
+        });
+
+        res.status(200).json({ 
+            success: true, 
+            message: 'Current team users retrieved successfully', 
+            data: usersWithRoles 
+        });
+    } catch (error) {
+        res.status(400).json({ success: false, message: error.message });
+    }
+};
+
 module.exports = {
     createTeam,
     updateTeam,
@@ -277,5 +315,6 @@ module.exports = {
     deleteTeam,
     getTeamsBySite,
     addJammerToTeam,
-    removeJammerFromTeam
+    removeJammerFromTeam,
+    getCurrentTeamUsers
 };

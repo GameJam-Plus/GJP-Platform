@@ -136,6 +136,44 @@ const updatePitch = async(req, res) => {
     }
 }
 
+const updateAcceleration = async(req, res) => {
+    try
+    {
+        const jamId = req.body.jamId;
+        const siteId = req.body.siteId;
+        const teamId = req.body.teamId;
+
+        console.log(req.body);
+
+        let updateValue = {};
+        updateValue.accelerationBuildLink = req.body.accelerationBuildLink;
+        updateValue.accelerationPitchVideo = req.body.accelerationPitchVideo;
+        updateValue.accelerationGameplayVideo = req.body.accelerationGameplayVideo;
+        updateValue.accelerationSoundtrack = req.body.accelerationSoundtrack;
+        updateValue.accelerationPlatforms = req.body.accelerationPlatforms;
+        updateValue.accelerationTimeDelta = req.body.accelerationTimeDelta;
+        updateValue.accelerationTime = new Date();
+        updateValue.recommendationAcceleration = req.body.recommendationAcceleration;
+        updateValue.enjoymentAcceleration = req.body.enjoymentAcceleration;
+        
+        await Submission.updateOne({
+            jamId: jamId,
+            siteId: siteId,
+            teamId: teamId
+        }, updateValue );
+
+        const submission = await Submission.findOne({
+            jamId: jamId,
+            siteId: siteId,
+            teamId: teamId
+        });
+        
+        return res.status(200).json({ success: true, data: submission });
+    } catch(error) {
+        return res.status(400).json({ success: false, message: error.message });
+    }
+}
+
 const getSubmissionByTeam = async(req, res) => {
     try { 
         let submission = await Submission.findOne({ teamId: req.params.teamId });
@@ -847,6 +885,7 @@ const getRatingsEvaluator = async (req, res) => {
 module.exports = {
     createSubmission,
     updatePitch,
+    updateAcceleration,
     updateSubmission,
     getSubmissionByTeam,
     getSubmissionsBySite,
