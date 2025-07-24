@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Team } from '../../types';
+import { Team, User } from '../../types';
 import { map } from 'rxjs/operators';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
@@ -61,6 +62,12 @@ export class TeamService {
   
   getTeamsSite(url: string): Observable<Team[]> { 
     return this.http.get<any>(url).pipe( 
+      map(response => response.data)
+    );
+  }
+
+  getJammersPerTeam(url: string): Observable<User[]> {
+    return this.http.get<any>(url).pipe(
       map(response => response.data)
     );
   }

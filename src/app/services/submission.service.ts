@@ -4,6 +4,7 @@ import { Rating, Submission } from '../../types';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment.prod';
+import { response } from 'express';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +20,38 @@ export class SubmissionService {
     );
   }
 
-  updatePitch(pitch: any): Observable<Submission> {
+  updateGamejamPitch(pitch: any): Observable<Submission> {
     return this.http.post<any>(`${ this.url }update-pitch`, pitch, { withCredentials: true }).pipe(
+      map(response => response.data)
+    );
+  }
+
+  putGamejamPitch(submissionId: string, gamejamPitch: any): Observable<Submission> {
+    return this.http.put<any>(`${this.url}update-pitch/${submissionId}`, gamejamPitch, { withCredentials: true }).pipe(
+      map(response => response.data)
+    );
+  }
+
+  updateIncubation(incubation: any): Observable<Submission> {
+    return this.http.post<any>(`${ this.url }update-incubation`, incubation, { withCredentials: true }).pipe(
+      map(response => response.data)
+    );
+  }
+
+  updateIncubationPitch(pitchInc: any): Observable<Submission> {
+    return this.http.post<any>(`${ this.url }update-incubation-pitch`, pitchInc, { withCredentials: true }).pipe(
+      map(response => response.data)
+    );
+  }
+
+  updateAcceleration(acceleration: any): Observable<Submission> {
+    return this.http.post<any>(`${ this.url }update-acceleration`, acceleration, { withCredentials: true }).pipe(
+      map(response => response.data)
+    );
+  }
+
+  updateAccelerationPitch(pitchAcc: any): Observable<Submission> {
+    return this.http.post<any>(`${ this.url }update-acceleration`, pitchAcc, { withCredentials: true }).pipe(
       map(response => response.data)
     );
   }

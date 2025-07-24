@@ -1,5 +1,23 @@
 import { HttpContext, HttpHeaders, HttpParams } from '@angular/common/http';
 
+export enum JamStage {
+  PITCH_SUBMISSION = 'Pitch',
+  SEMIFINAL_SUBMISSION = 'Semifinal Submission',
+  
+  PRE_PRODUCTION = 'Pre-production',
+  REGISTER = 'Register',
+  GAMEJAM = 'GameJam',
+  GAMEJAM_SUBMISSION = 'GameJam Submission',
+  INCUBATION = 'Incubation',
+  INCUBATION_SUBMISSION = 'Incubation Submission',
+  INCUBATION_EVALUATION = 'Incubation Evaluation',
+  CONTINENTAL_SEMIFINAL = 'Continental Semifinal',
+  ACCELERATION = 'Acceleration',
+  ACCELERATION_SUBMISSION = 'Acceleration Submission',
+  ACCELERATION_EVALUATION = 'Acceleration Evaluation',
+  GLOBAL_FINAL = 'Global Final'
+}
+
 export interface Options {
   headers?:
     | HttpHeaders
@@ -32,6 +50,8 @@ export interface User {
   name: string;
   email: string;
   discordUsername: string;
+  gender?: string;
+  socialMedia?: string;
   region?: {
     _id: string;
     name: string;
@@ -45,6 +65,7 @@ export interface User {
     name: string;
   };
   roles: string[];
+  role?: string;
   coins: number;
   creationDate?: Date;
   lastUpdateDate?: Date;
@@ -213,36 +234,102 @@ export interface Chat {
 }
 
 export interface Submission {
+  // General information
   _id?: string;
   jamId: string,
   siteId: string,
   teamId: string,
-  title: string;
-  contact: {
+  jammerId: string,
+
+  // Informations for the gamejam form
+  gamejamTitle: string;
+  gamejamContact: {
     _id: string,
     name: string,
     email: string
   },
-  link: string;
-  pitch?: string;
-  incubation?: boolean;
-  acceleration?: boolean;
-  description: string;
-  themes: string[];
-  categories: string[];
-  topics: string[];
-  genres: string[];
-  platforms: string[];
-  graphics: string;
-  engine: string;
-  recommendation: number;
-  enjoyment: number;
-  suggestions: string;
-  authorization: boolean;
-  submissionTime: Date;
-  submissionDelta: number;
-  pitchTimeDelta?: number;
-  pitchTime?: Date;
+  gamejamBuild: string;
+  gamejamDescription: string;
+  gamejamThemes: string[];
+  gamejamCategories: string[];
+  gamejamTopics: string[];
+  gamejamGenres: string[];
+  gamejamPlatforms: string[];
+  gamejamGraphics: string;
+  gamejamEngine: string;
+  goingToIncubation: boolean;
+  gamejamAuthorization: boolean;
+  gamejamRecommendation: number;
+  gamejamEnjoyment: number;
+  gamejamSuggestions: string;
+  gamejamSubmissionTime: Date;
+  gamejamSubmissionDelta: number;
+  
+  // Informations for the gamejam pitch form
+  gamejamPitch?: string;
+  gamejamPitchJammerId?: string,
+  gamejamPitchTime?: Date;
+  gamejamPitchDelta?: number;
+  
+  // Informations for the incubation form
+  incubationJammerId?: string,
+  incubationTitle?: string;
+  incubationContact?: {
+    _id?: string,
+    name?: string,
+    email?: string
+  },
+  incubationBuild?: string;
+  incubationDescription?: string;
+  incubationThemes?: string[];
+  incubationCategories?: string[];
+  incubationTopics?: string[];
+  incubationGenres?: string[];
+  incubationPlatforms?: string[];
+  incubationGraphics?: string;
+  incubationEngine?: string;
+  goingToAcceleration?: boolean;
+  incubationAuthorization?: boolean;
+  incubationRecommendation?: number;
+  incubationEnjoyment?: number;
+  incubationSuggestions?: string;
+  incubationSubmissionTime?: Date;
+  incubationSubmissionDelta?: number;  
+
+  // Informations for the incubation pitch form
+  incubationPitch?: string;
+  incubationPitchJammerId?: string,
+  incubationPitchTime?: Date;
+  incubationPitchDelta?: number;
+
+  // Informations for the acceleration form
+  accelerationJammerId?: string,
+  accelerationTime?: Date;
+  accelerationTimeDelta?: number;
+  accelerationBuild?: string;
+  accelerationDescription?: string;
+  accelerationThemes?: string[];
+  accelerationCategories?: string[];
+  accelerationTopics?: string[];
+  accelerationGenres?: string[];
+  accelerationPlatforms?: string[];
+  accelerationGraphics?: string;
+  accelerationEngine?: string;
+  accelerationAuthorization?: boolean;
+  accelerationRecommendation?: number;
+  accelerationEnjoyment?: number;
+  accelerationSuggestions?: string;
+  accelerationSubmissionTime?: Date;
+  accelerationSubmissionDelta?: number;
+
+  accelerationGameplayVideo?: string; // Remove later
+  accelerationSoundtrack?: string; // Remove later
+
+  // Informations for the acceleration pitch form
+  accelerationPitch?: string;
+  accelerationPitchJammerId?: string,
+  accelerationPitchTime?: Date;
+  accelerationPitchDelta?: number;
 }
 
 export interface Rating {

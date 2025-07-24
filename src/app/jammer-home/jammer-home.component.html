@@ -6,7 +6,7 @@
 
     <div class="row">
       <div class="col-3 border">
-        <h2>Regions</h2>
+        <h2>Regions:</h2>
         <div *ngFor="let region of regions" class="p-2" (click)="selectRegion(region)">
           <div class="card p-2 shadow pointer">
             <h3>{{ region.name }}</h3>
@@ -301,226 +301,357 @@
           </div>
         </div>
 
-        <div *ngIf="submission" class="p-4">
-          <div *ngIf="submission.submissionDelta > 0" class="d-block bg-success my-2 p-4 text-white">
-            <h2  >Submission Status: VALID</h2>
+        <!-- Submissions Status -->
+        <div *ngIf="team" class="p-4">
+          <!-- TODO: ADD PT AND ES LANGUAGES, THE ONE WITH STUFF IS IN EN-->
+          <!-- Portuguese -->
+          <div *ngIf="site.language == 'PT'">
+
           </div>
-          <div *ngIf="submission.submissionDelta < 0" class="d-block bg-danger my-2 p-4 text-white">
-            <h2  >Submission Status: LATE</h2>
+
+          <!-- English -->
+          <div *ngIf="site.language == 'PT'">
+            <!-- Game Submission Status -->
+            <div *ngIf="isStageActive(JamStages.GAMEJAM) || hasStagePassed(JamStages.GAMEJAM)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.GAMEJAM)">
+              <h2 class="text-white">
+                Game Submission Status: 
+                <ng-container [ngSwitch]="true">
+                  <span *ngSwitchCase="hasSubmittedGame()">VALID</span>
+                  <span *ngSwitchCase="!hasSubmittedGame() && getStageTimeDelta(JamStages.GAMEJAM) > 0">PENDING</span>
+                  <span *ngSwitchCase="!hasSubmittedGame() && getStageTimeDelta(JamStages.GAMEJAM) < 0">LATE</span>
+                  <span *ngSwitchDefault>NOT AVAILABLE</span>
+                </ng-container>
+              </h2>
+              <p class="text-white" *ngIf="hasSubmittedGame() && submission">Submitted on: {{ submission.gamejamSubmissionTime | date:'medium' }}</p>
+            </div>
+
+            <!-- Pitch Submission Status -->
+            <div *ngIf="isStageActive(JamStages.PITCH_SUBMISSION) || hasStagePassed(JamStages.PITCH_SUBMISSION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.PITCH_SUBMISSION)">
+              <h2 class="text-white">
+                Pitch Submission Status: 
+                <ng-container [ngSwitch]="true">
+                  <span *ngSwitchCase="hasSubmittedPitch()">VALID</span>
+                  <span *ngSwitchCase="!hasSubmittedPitch() && getStageTimeDelta(JamStages.PITCH_SUBMISSION) > 0">PENDING</span>
+                  <span *ngSwitchCase="!hasSubmittedPitch() && getStageTimeDelta(JamStages.PITCH_SUBMISSION) < 0">LATE</span>
+                  <span *ngSwitchDefault>NOT AVAILABLE</span>
+                </ng-container>
+              </h2>
+              <p class="text-white" *ngIf="hasSubmittedPitch() && submission">Submitted on: {{ submission.gamejamPitchTime | date:'medium' }}</p>
+            </div>
+
+            <!-- Acceleration Submission Status -->
+            <div *ngIf="isStageActive(JamStages.ACCELERATION_SUBMISSION) || hasStagePassed(JamStages.ACCELERATION_SUBMISSION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.ACCELERATION_SUBMISSION)">
+              <h2 class="text-white">
+                Acceleration Submission Status: 
+                <ng-container [ngSwitch]="true">
+                  <span *ngSwitchCase="hasSubmittedAcceleration()">VALID</span>
+                  <span *ngSwitchCase="!hasSubmittedAcceleration() && getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION) > 0">PENDING</span>
+                  <span *ngSwitchCase="!hasSubmittedAcceleration() && getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION) < 0">LATE</span>
+                  <span *ngSwitchDefault>NOT AVAILABLE</span>
+                </ng-container>
+              </h2>
+              <p class="text-white" *ngIf="hasSubmittedAcceleration() && submission">Submitted on: {{ submission.accelerationTime | date:'medium' }}</p>
+            </div>
+          </div>
+
+          <!-- Spanish -->
+          <div *ngIf="site.language == 'ES'">
+
           </div>
         </div>
 
+        <!-- Forms -->
         <div *ngIf="team">
-          <div *ngIf="site.language == 'PT'"> <!-- SUBMISSION FORM IN PORTUGUESE -->
-            <h2 *ngIf="getRelativeTimeDelta() > 0" class="text-success">No Prazo - {{ formatTimeDelta( getRelativeTimeDelta() ) }}</h2>
-            <h2 *ngIf="getRelativeTimeDelta() < 0">Envios Fechados</h2>
-            <div class="info m-3 p-4">
-              <p class="py-2">
-                Antes de enviar seu jogo, certifique-se de ler as <b><a href="/rules" target="_blank">Regras e Regulamentos</a></b>.<br>
-                Revise todos os pontos desta lista de verificação antes de fazer sua submissão:
-              </p>
+          <div *ngIf="site.language == 'PT'"> <!-- SUBMISSIONS IN PORTUGUESE -->
+            <div *ngIf="isStageActiveWithDelay(JamStages.GAMEJAM)"> <!-- FIRST SUBMISSION FORM -->
+              <hr class="my-2">
+              <h2>SUBMISSÃO DO JOGO</h2>
+              <div *ngIf="getStageTimeDelta(JamStages.GAMEJAM) > 0">
+                <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.GAMEJAM))}}</b>
+              </div>
+              <div class="info m-3 p-4">
+                <p class="py-2">
+                  Antes de enviar seu jogo, certifique-se de ler as <b><a href="/rules" target="_blank">Regras e Regulamentos</a></b>.<br>
+                  Revise todos os pontos desta lista de verificação antes de fazer sua submissão:
+                </p>
 
-              <ul>
-                <li>Todos os membros da minha equipe entraram no <b><a href="https://itch.io/jam/gamejamplus-2425" target="_blank">itch.io oficial</a> da GameJam+</b></li>
-                <li>Nosso jogo já foi enviado para a itch.io oficial da GameJam+</li>
-                <li>A página do jogo é pública</li>
-                <li>A versão do jogo é jogável</li>
-                <li>Adicionamos capturas de tela, uma descrição, tags e todas as informações necessárias para jogar nosso jogo</li>
-              </ul>
-            </div>
-            <form (submit)="saveSubmission()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionForm" enctype="multipart/form-data">
-              <div class="row">
-                <div class="form-group col-12"> <!-- TITLE -->
-                  <label for="title" class="required">Título do seu jogo</label>
-                  <input type="text" class="form-control form-control-lg" placeholder="Next GOTY" formControlName="title">
-                </div>
+                <ul>
+                  <li>Todos os membros da minha equipe entraram no <b><a href="https://itch.io/jam/gamejamplus-2425" target="_blank">itch.io oficial</a> da GameJam+</b></li>
+                  <li>Nosso jogo já foi enviado para a itch.io oficial da GameJam+</li>
+                  <li>A página do jogo é pública</li>
+                  <li>A versão do jogo é jogável</li>
+                  <li>Adicionamos capturas de tela, uma descrição, tags e todas as informações necessárias para jogar nosso jogo</li>
+                </ul>
+              </div>
 
-                <div class="form-group col-6"> <!-- LINK -->
-                  <label for="link" class="required">Link para a página do seu jogo no itch.io</label>
-                  <input type="url" class="form-control" placeholder="https://myteam.itch.io/mygame" formControlName="link">
-                </div>
-
-                <div class="form-group col-6"> <!-- CONTACT -->
-                  <label for="contact" class="required">
-                    Quem é a pessoa responsável pela equipe?
-                    <a matTooltip="Esse membro da equipe será o ponto de contato para o GJ+ caso precisemos entrar em contato." class="tooltip-trigger">?</a>
-                  </label>
-                  <select class="form-control" formControlName="contact">
-                    <option value="" disabled selected hidden>Selecione um membro da equipe</option>
-                    <option *ngFor="let jammer of team.jammers; index as i" [value]="i">
-                      {{ jammer.name }} - {{ jammer.email }}
-                    </option>
-                  </select>
-                </div>
-
-                <div class="form-group col-12"> <!-- DESCRIPTION -->
-                  <label for="description" class="required">Escreva aqui uma breve descrição do seu jogo</label>
-                  <textarea class="form-control" formControlName="description" rows="5"></textarea>
-                </div>
-
-                <div class="form-group col-6"> <!-- GENRE -->
-                  <label for="genre">Quais são os gêneros do seu jogo?</label>
-                  <select class="form-select" #selectGenre (change)="setGameGenre(selectGenre.selectedOptions)" multiple>
-                    <option value="Action">Ação</option>
-                    <option value="Adventure">Aventura</option>
-                    <option value="Educational">Educacional</option>
-                    <option value="Hypercasual">Hipercasual</option>
-                    <option value="Multiplayer">Multijogador</option>
-                    <option value="Narrative">Narrativa</option>
-                    <option value="Platforming">Plataforma</option>
-                    <option value="Puzzle">Puzzle</option>
-                    <option value="Runner">Runner</option>
-                    <option value="Sandbox">Sandbox</option>
-                    <option value="Shooter">Shooter</option>
-                  </select>
-                </div>
-
-                <div class="form-group col-6"> <!-- TOPICS -->
-                  <label for="topic">
-                    Seu jogo aborda algum dos seguintes tópicos?
-                    <a matTooltip="A abordagem pode ser na narrativa, jogabilidade, arte ou outros. Você pode marcar mais de uma opção." class="tooltip-trigger">?</a>
-                  </label>
-                  <select class="form-select" #selectTopic (change)="setGameTopics(selectTopic.selectedOptions)" multiple>
-                    <option value="Business">Negócios</option>
-                    <option value="Sustentability">Sustentabilidade</option>
-                    <option value="Educational">Educacional</option>
-                    <option value="For Children">Para Crianças</option>
-                    <option value="Diversity">Diversidade</option>
-                    <option value="Environment">Meio Ambiente</option>
-                    <option value="Originary/Native People">Povos Originários/Nativos</option>
-                    <option value="Historical Facts">Fatos Históricos</option>
-                    <option value="Health">Saúde</option>
-                    <option value="Inclussion and Accessibility">Inclusão e Acessibilidade</option>
-                    <option value="Folk Tales">Contos Folclóricos</option>
-                    <option value="Finantial Education">Educação Financeira</option>
-                    <option value="Music or Rhythm">Música ou Ritmo</option>
-                    <option value="Mental Health">Saúde Mental</option>
-                  </select>
-                </div>
-
-                <div class="form-group col-4"> <!-- THEMES -->
-                  <label for="Themes" class="required">Em quais TEMAS seu jogo está registrado?</label>
-                  <select class="form-select" #selectThemes (change)="setGameThemes(selectThemes.selectedOptions)" multiple>
-                    <option *ngFor="let theme of jam.themes; index as i" [value]="theme.titleEN">{{ theme.titlePT }}</option>
-                  </select>
-                </div>
-
-                <div class="form-group col-4"> <!-- CATEGORIES -->
-                  <label for="Categories">CATEGORIA onde seu jogo compite?</label>
-                  <select class="form-select" #selectCategories (change)="setGameCategories(selectCategories.selectedOptions)" multiple>
-                    <option *ngFor="let category of jam.categories; index as i" [value]="category.titleEN">{{ category.titlePT }}</option>
-                  </select>
-                </div>
-
-                <div class="form-group col-4"> <!-- PLATFORMS -->
-                  <label for="Platforms" class="required">Para quais plataformas foi desenvolvido?</label>
-                  <select class="form-select" #selectPlatforms (change)="setGamePlatforms(selectPlatforms.selectedOptions)" multiple>
-                    <option value="PC">PC</option>
-                    <option value="Console">Console</option>
-                    <option value="Mobile">Mobile</option>
-                    <option value="VR/AR">VR/AR</option>
-                    <option value="Board Game">Jogo de Tabuleiro</option>
-                    <option value="Other">Outro</option>
-                  </select>
-                </div>
-
-                <div class="form-group col-6"> <!-- GRAPHICS -->
-                  <label for="Graphics" class="required">Que tipo de gráficos o seu jogo usa?</label>
-                  <select class="form-select" formControlName="graphics">
-                    <option value="2D">2D</option>
-                    <option value="2.5D">2.5D</option>
-                    <option value="3D">3D</option>
-                    <option value="Other">Otro</option>
-                  </select>
-                </div>
-
-                <div class="form-group col-6"> <!-- ENGINE -->
-                  <label for="Engine" class="required">Qual motor foi usado nesta build?</label>
-                  <select class="form-select" formControlName="engine">
-                    <option value="Unity">Unity</option>
-                    <option value="Unreal">Unreal</option>
-                    <option value="Godot">Godot</option>
-                    <option value="GameMaker">GameMaker</option>
-                    <option value="Construct">Construct</option>
-                    <option value="RPGMaker">RPGMaker</option>
-                    <option value="Other">Otro</option>
-                  </select>
-                </div>
-
-                <div class="form-group col-6"> <!-- RECOMMENDATION -->
-                  <label for="Recommendation" class="required">De 0 a 10, você recomendaria o GameJamPlus a um amigo?</label>
-                  <input type="number" class="form-control" min="0" max="10" step="1" value="5" formControlName="recommendation">
-                </div>
-
-                <div class="form-group col-6"> <!-- ENJOYMENT -->
-                  <label for="Enjoyment" class="required">De 0 a 10, como foi sua experiência durante o GameJamPlus? Você gostou?</label>
-                  <input type="number" class="form-control" min="0" max="10" step="1" value="5" formControlName="enjoyment">
-                </div>
-
-                <div class="form-group col-12"> <!-- SUGGESTIONS -->
-                  <label for="Suggestions">
-                    Você tem alguma outra consideração, dica, reclamação ou qualquer outra coisa que gostaria de compartilhar conosco?
-                    <a matTooltip="Por favor, não seja maldoso =)" class="tooltip-trigger">?</a>
-                  </label>
-                  <textarea rows="5" class="form-control" formControlName="suggestions"></textarea>
-                </div>
-
-                <div class="form-group col-12"> <!-- AUTHORIZATION -->
-                  <label for="Authorization" class="required">
-                    Autorizo o uso e o processamento dos dados fornecidos por mim ao GameJam+, incluindo meus dados pessoais, para prospectar oportunidades de meu interesse, incluindo a transferência desses dados para terceiros, com o objetivo de me conectar a entidades e oportunidades no mercado de jogos digitais, nacional e internacionalmente, e segmentos relacionados.
-                  </label>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="authorization" value="Yes" formControlName="authorization" checked>
-                    <label class="form-check-label" for="autorizationYes">
-                      Sim
-                    </label>
+              <form (submit)="saveSubmission()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionGamejamForm" enctype="multipart/form-data">
+                <div class="row">
+                  <div class="form-group col-12"> <!-- TITLE -->
+                    <label for="title" class="required">Título do seu jogo</label>
+                    <input type="text" class="form-control form-control-lg" placeholder="Next GOTY" formControlName="title">
                   </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="authorization" value="No" formControlName="authorization">
-                    <label class="form-check-label" for="authorizationNo">
-                      Não
-                    </label>
+
+                  <div class="form-group col-6"> <!-- LINK -->
+                    <label for="link" class="required">Link para a página do seu jogo no itch.io</label>
+                    <input type="url" class="form-control" placeholder="https://myteam.itch.io/mygame" formControlName="link">
                   </div>
+
+                  <div class="form-group col-6"> <!-- CONTACT -->
+                    <label for="contact" class="required">
+                      Quem é a pessoa responsável pela equipe?
+                      <a matTooltip="Esse membro da equipe será o ponto de contato para o GJ+ caso precisemos entrar em contato." class="tooltip-trigger">?</a>
+                    </label>
+                    <select class="form-control" formControlName="contact">
+                      <option value="" disabled selected hidden>Selecione um membro da equipe</option>
+                      <option *ngFor="let jammer of team.jammers; index as i" [value]="i">
+                        {{ jammer.name }} - {{ jammer.email }}
+                      </option>
+                    </select>
+                  </div>
+
+                  <div class="form-group col-12"> <!-- DESCRIPTION -->
+                    <label for="description" class="required">Escreva aqui uma breve descrição do seu jogo</label>
+                    <textarea class="form-control" formControlName="description" rows="5"></textarea>
+                  </div>
+
+                  <div class="form-group col-6"> <!-- GENRE -->
+                    <label for="genre">Quais são os gêneros do seu jogo?</label>
+                    <select class="form-select" #selectGenre (change)="setGameGenre(selectGenre.selectedOptions)" multiple>
+                      <option value="Action">Ação</option>
+                      <option value="Adventure">Aventura</option>
+                      <option value="Educational">Educacional</option>
+                      <option value="Hypercasual">Hipercasual</option>
+                      <option value="Multiplayer">Multijogador</option>
+                      <option value="Narrative">Narrativa</option>
+                      <option value="Platforming">Plataforma</option>
+                      <option value="Puzzle">Puzzle</option>
+                      <option value="Runner">Runner</option>
+                      <option value="Sandbox">Sandbox</option>
+                      <option value="Shooter">Shooter</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group col-6"> <!-- TOPICS -->
+                    <label for="topic">
+                      Seu jogo aborda algum dos seguintes tópicos?
+                      <a matTooltip="A abordagem pode ser na narrativa, jogabilidade, arte ou outros. Você pode marcar mais de uma opção." class="tooltip-trigger">?</a>
+                    </label>
+                    <select class="form-select" #selectTopic (change)="setGameTopics(selectTopic.selectedOptions)" multiple>
+                      <option value="Business">Negócios</option>
+                      <option value="Sustentability">Sustentabilidade</option>
+                      <option value="Educational">Educacional</option>
+                      <option value="For Children">Para Crianças</option>
+                      <option value="Diversity">Diversidade</option>
+                      <option value="Environment">Meio Ambiente</option>
+                      <option value="Originary/Native People">Povos Originários/Nativos</option>
+                      <option value="Historical Facts">Fatos Históricos</option>
+                      <option value="Health">Saúde</option>
+                      <option value="Inclussion and Accessibility">Inclusão e Acessibilidade</option>
+                      <option value="Folk Tales">Contos Folclóricos</option>
+                      <option value="Finantial Education">Educação Financeira</option>
+                      <option value="Music or Rhythm">Música ou Ritmo</option>
+                      <option value="Mental Health">Saúde Mental</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group col-4"> <!-- THEMES -->
+                    <label for="Themes" class="required">Em quais TEMAS seu jogo está registrado?</label>
+                    <select class="form-select" #selectThemes (change)="setGameThemes(selectThemes.selectedOptions)" multiple>
+                      <option *ngFor="let theme of jam.themes; index as i" [value]="theme.titleEN">{{ theme.titlePT }}</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group col-4"> <!-- CATEGORIES -->
+                    <label for="Categories">CATEGORIA onde seu jogo compite?</label>
+                    <select class="form-select" #selectCategories (change)="setGameCategories(selectCategories.selectedOptions)" multiple>
+                      <option *ngFor="let category of jam.categories; index as i" [value]="category.titleEN">{{ category.titlePT }}</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group col-4"> <!-- PLATFORMS -->
+                    <label for="Platforms" class="required">Para quais plataformas foi desenvolvido?</label>
+                    <select class="form-select" #selectPlatforms (change)="setGamePlatforms(selectPlatforms.selectedOptions)" multiple>
+                      <option value="PC">PC</option>
+                      <option value="Console">Console</option>
+                      <option value="Mobile">Mobile</option>
+                      <option value="VR/AR">VR/AR</option>
+                      <option value="Board Game">Jogo de Tabuleiro</option>
+                      <option value="Other">Outro</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group col-6"> <!-- GRAPHICS -->
+                    <label for="Graphics" class="required">Que tipo de gráficos o seu jogo usa?</label>
+                    <select class="form-select" formControlName="graphics">
+                      <option value="2D">2D</option>
+                      <option value="2.5D">2.5D</option>
+                      <option value="3D">3D</option>
+                      <option value="Other">Otro</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group col-6"> <!-- ENGINE -->
+                    <label for="Engine" class="required">Qual motor foi usado nesta build?</label>
+                    <select class="form-select" formControlName="engine">
+                      <option value="Unity">Unity</option>
+                      <option value="Unreal">Unreal</option>
+                      <option value="Godot">Godot</option>
+                      <option value="GameMaker">GameMaker</option>
+                      <option value="Construct">Construct</option>
+                      <option value="RPGMaker">RPGMaker</option>
+                      <option value="Other">Otro</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group col-12"> <!-- GOING TO INCUBATION -->
+                    <label for="GoingToIncubation" class="required">Você deseja participar da etapa de INCUBAÇÃO?</label>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="goingToIncubation" [value]="true" formControlName="goingToIncubation" id="goingToIncubationYes">
+                      <label class="form-check-label" for="goingToIncubationYes">
+                        Sim
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="goingToIncubation" [value]="false" formControlName="goingToIncubation" id="goingToIncubationNo">
+                      <label class="form-check-label" for="goingToIncubationNo">
+                        Não
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="form-group col-6"> <!-- RECOMMENDATION -->
+                    <label for="Recommendation" class="required">De 0 a 10, você recomendaria o GameJamPlus a um amigo?</label>
+                    <input type="number" class="form-control" min="0" max="10" step="1" value="5" formControlName="recommendation">
+                  </div>
+
+                  <div class="form-group col-6"> <!-- ENJOYMENT -->
+                    <label for="Enjoyment" class="required">De 0 a 10, como foi sua experiência durante o GameJamPlus? Você gostou?</label>
+                    <input type="number" class="form-control" min="0" max="10" step="1" value="5" formControlName="enjoyment">
+                  </div>
+
+                  <div class="form-group col-12"> <!-- SUGGESTIONS -->
+                    <label for="Suggestions">
+                      Você tem alguma outra consideração, dica, reclamação ou qualquer outra coisa que gostaria de compartilhar conosco?
+                      <a matTooltip="Por favor, não seja maldoso =)" class="tooltip-trigger">?</a>
+                    </label>
+                    <textarea rows="5" class="form-control" formControlName="suggestions"></textarea>
+                  </div>
+
+                  <div class="form-group col-12"> <!-- AUTHORIZATION -->
+                    <label for="Authorization" class="required">
+                      Autorizo o uso e o processamento dos dados fornecidos por mim ao GameJam+, incluindo meus dados pessoais, para prospectar oportunidades de meu interesse, incluindo a transferência desses dados para terceiros, com o objetivo de me conectar a entidades e oportunidades no mercado de jogos digitais, nacional e internacionalmente, e segmentos relacionados.
+                    </label>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="authorization" value="Yes" formControlName="authorization">
+                      <label class="form-check-label" for="autorizationYes">
+                        Sim
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="authorization" value="No" formControlName="authorization">
+                      <label class="form-check-label" for="authorizationNo">
+                        Não
+                      </label>
+                    </div>
+                  </div>
+
+                  <button type="submit" class="btn btn-black col-12" *ngIf="getStageTimeDelta(JamStages.GAMEJAM) > 0">ENVIAR JOGO</button>
+                  <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.GAMEJAM) < 0">ENVIOS FECHADOS</div>
                 </div>
-
-                <button type="submit" class="btn btn-black col-12" *ngIf="getRelativeTimeDelta() > 0">ENVIAR JOGO</button>
-                <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getRelativeTimeDelta() < 0">ENVIOS FECHADOS</div>
-              </div>
-            </form>
-
-            <hr class="my-2">
-            <h2>PITCH SUBMISSÃO</h2>
-            <div *ngIf="getRelativeTimeDelta() > 0">
-              <b>{{ formatTimeDelta(getRelativeTimeDelta())}}</b>
+              </form>
             </div>
 
-            <form (submit)="savePitch()" class="rounded shadow m-2 bg-light p-4" [formGroup]="pitchForm" enctype="multipart/form-data">
-              <div class="form-group col-12"> <!-- LINK -->
-                Enviar um vídeo-pitch é obrigatório para avançar para a próxima etapa. <br>
-                <label for="title">Link para o seu video-pitch</label>
-                <input type="text" class="form-control form-control-lg" placeholder="https://www.youtube.com/my-pitch-video" formControlName="link">
+            <div *ngIf="isStageActiveWithDelay(JamStages.PITCH_SUBMISSION)"> <!-- PITCH SUBMISSION FORM -->
+              <hr class="my-2">
+              <h2>PITCH SUBMISSÃO</h2>
+              <div *ngIf="getRelativePitchDelta() > 0">
+                <b>{{ formatTimeDelta(getRelativePitchDelta())}}</b>
               </div>
 
-              <h3>Você deseja ir para a etapa de aceleração?</h3>
+              <form (submit)="savePitch()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionPitchGamejamForm" enctype="multipart/form-data">
+                <div class="form-group col-12"> <!-- LINK -->
+                  Enviar um vídeo-pitch é obrigatório para avançar para a próxima etapa. <br>
+                  <label for="title">Link para o seu video-pitch</label>
+                  <input type="text" class="form-control form-control-lg" placeholder="https://www.youtube.com/my-pitch-video" formControlName="link">
+                </div>
 
-              <div class="form-group border p-2">
-                Ao marcar isso, você reconhece que a próxima etapa exige que você continue trabalhando no seu jogo e na apresentação, e faça outra submissão em abril.
-                <label for="acceleration">Você deseja ir para a etapa de aceleração?</label>
-                <select class="form-control" formControlName="acceleration">
-                  <option value="" disabled selected hidden>Selecciona una opción</option>
-                  <option value="true">SIM</option>
-                  <option value="false">NÃO</option>
-                </select>
+                <h3>Você deseja ir para a etapa de aceleração?</h3>
+
+                <div class="form-group border p-2">
+                  Ao marcar isso, você reconhece que a próxima etapa exige que você continue trabalhando no seu jogo e na apresentação, e faça outra submissão em abril.
+                  <label for="acceleration">Você deseja ir para a etapa de aceleração?</label>
+                  <select class="form-control" formControlName="acceleration">
+                    <option value="" disabled selected hidden>Selecciona una opción</option>
+                    <option value="true">SIM</option>
+                    <option value="false">NÃO</option>
+                  </select>
+                </div>
+
+                <button type="submit" *ngIf="getRelativePitchDelta() > 0" class="btn btn-black col-12">ENVIAR PITCH</button>
+                <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getRelativePitchDelta() < 0">ENVIOS FECHADOS</div>
+              </form>
+            </div>
+
+            <div *ngIf="isStageActiveWithDelay(JamStages.ACCELERATION_SUBMISSION)"> <!-- ACCELERATION SUBMISSION FORM-->
+              <hr class="my-2">
+              <h2>SUBMISSÃO ACELERAÇÃO</h2>
+              <div *ngIf="getAccelerationTimeDelta() > 0">
+                <b>{{ formatTimeDelta(getAccelerationTimeDelta())}}</b>
               </div>
-
-              <button type="submit" *ngIf="getRelativeTimeDelta() > 0" class="btn btn-black col-12">ENVIAR PITCH</button>
-              <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getRelativeTimeDelta() < 0">ENVIOS FECHADOS</div>
-            </form>
+              <form (submit)="saveAcceleration()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionAccelerationForm" enctype="multipart/form-data">    
+                <div class="row">
+                  <div class="form-group col-12"> <!-- BUILD -->
+                    <label for="buildLink" class="required">Link para a build do seu jogo</label>
+                    <input type="url" class="form-control form-control-lg" placeholder="https://myteam.itch.io/mygame" formControlName="accelerationBuildLink">
+                  </div>
+                  
+                  <div class="form-group col-12"> <!-- PITCH -->
+                    <label for="pitchVideo" class="required">Link para o vídeo de pitch atualizado</label>
+                    <input type="url" class="form-control form-control-lg" placeholder="https://www.youtube.com/my-updated-pitch" formControlName="accelerationPitchVideo">
+                  </div>
+                  
+                  <div class="form-group col-12"> <!-- GAMEPLAY -->
+                    <label for="gameplayVideo" class="required">Link para o vídeo de gameplay</label>
+                    <input type="url" class="form-control form-control-lg" placeholder="https://www.youtube.com/my-gameplay" formControlName="accelerationGameplayVideo">
+                  </div>
+                  
+                  <div class="form-group col-12"> <!-- SOUNDTRACK -->
+                    <label for="soundtrack">Link para a trilha sonora (opcional)</label>
+                    <input type="url" class="form-control form-control-lg" placeholder="https://soundcloud.com/my-soundtrack" formControlName="accelerationSoundtrack">
+                  </div>
+                  
+                  <div class="form-group col-12"> <!-- PLATFORMS -->
+                    <label for="Platforms" class="required">Para quais plataformas foi desenvolvido?</label>
+                    <select class="form-select" #selectAccelerationPlatforms (change)="setAccelerationPlatforms(selectAccelerationPlatforms.selectedOptions)" multiple>
+                      <option value="PC">PC</option>
+                      <option value="Console">Console</option>
+                      <option value="Mobile">Mobile</option>
+                      <option value="VR/AR">VR/AR</option>
+                      <option value="Board Game">Jogo de Tabuleiro</option>
+                      <option value="Other">Outro</option>
+                    </select>
+                  </div>
+    
+                  <div class="form-group col-6"> <!-- RECOMMENDATION ACCELERATION -->
+                    <label for="RecommendationAcceleration" class="required">De 0 a 10, você recomendaria a Aceleração da GameJamPlus a um amigo?</label>
+                    <input type="number" class="form-control" min="0" max="10" step="1" value="5" formControlName="recommendationAcceleration">
+                  </div>
+    
+                  <div class="form-group col-6"> <!-- ENJOYMENT ACCELERATION -->
+                    <label for="EnjoymentAcceleration" class="required">De 0 a 10, como foi sua experiência durante a Aceleração da GameJamPlus? Você gostou?</label>
+                    <input type="number" class="form-control" min="0" max="10" step="1" value="5" formControlName="enjoymentAcceleration">
+                  </div>
+    
+                  <button type="submit" class="btn btn-black col-12" *ngIf="getAccelerationTimeDelta() > 0">ENVIAR SUBMISSÃO DE ACELERAÇÃO</button>
+                  <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getAccelerationTimeDelta() < 0">ENVIOS FECHADOS</div>
+                </div>
+              </form>
+            </div>
           </div>
-
-          <div *ngIf="site.language == 'EN'"> <!-- SUBMISSION FORM IN ENGLISH -->
-            <h2 *ngIf="getRelativeTimeDelta() > 0" class="text-success">On Time - {{ formatTimeDelta( getRelativeTimeDelta() ) }}</h2>
-            <h2 *ngIf="getRelativeTimeDelta() < 0" class="">Submissions Closed</h2>
+          
+          <div *ngIf="site.language == 'EN'"> <!-- SUBMISSIONS IN ENGLISH -->
+            <h2 *ngIf="getStageTimeDelta(JamStages.GAMEJAM) > 0" class="text-success">On Time - {{ formatTimeDelta( getStageTimeDelta(JamStages.GAMEJAM) ) }}</h2>
+            <h2 *ngIf="getStageTimeDelta(JamStages.GAMEJAM) < 0" class="">Submissions Closed</h2>
             <div class="info m-3 p-4">
               <p class="py-2">
                 Before submitting your game, make sure to read the <b><a href="/rules" target="_blank">Rules and Regulations</a></b>.<br>
@@ -535,7 +666,7 @@
                 <li>We have added screenshots, a description, tags, and all the information required to play our game.</li>
               </ul>
             </div>
-            <form (submit)="saveSubmission()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionForm" enctype="multipart/form-data">
+            <form (submit)="saveSubmission()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionGamejamForm" enctype="multipart/form-data">
               <div class="row">
                 <div class="form-group col-12"> <!-- TITLE -->
                   <label for="title" class="required">Title of your game</label>
@@ -690,8 +821,8 @@
                   </div>
                 </div>
 
-                <button type="submit" class="btn btn-black col-12" *ngIf="getRelativeTimeDelta() > 0">SEND GAME</button>
-                <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getRelativeTimeDelta() < 0">SUBMISSIONS CLOSED</div>
+                <button type="submit" class="btn btn-black col-12" *ngIf="getStageTimeDelta(JamStages.GAMEJAM) > 0">SEND GAME</button>
+                <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.GAMEJAM) < 0">SUBMISSIONS CLOSED</div>
               </div>
             </form>
 
@@ -700,7 +831,7 @@
             <div *ngIf="getRelativeTimeDelta() > 0">
               <b>{{ formatTimeDelta(getRelativeTimeDelta())}}</b>
             </div>
-            <form (submit)="savePitch()" class="rounded shadow m-2 bg-light p-4" [formGroup]="pitchForm" enctype="multipart/form-data">
+            <form (submit)="savePitch()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionPitchGamejamForm" enctype="multipart/form-data">
               <div class="form-group col-12"> <!-- LINK -->
                 Submitting a pitch is required to move forward to the next stage. <br>
                 <label for="title">Link to your video-pitch</label>
@@ -723,8 +854,8 @@
               <div class="d-block p-3 text-center bg-secondary" *ngIf="getRelativeTimeDelta() < 0">SUBMISSIONS CLOSED</div>
             </form>
           </div>
-
-          <div *ngIf="site.language == 'ES'"> <!-- SUBMISSION FORM IN SPANISH -->
+          
+          <div *ngIf="site.language == 'ES'"> <!-- SUBMISSIONS IN SPANISH -->
             <h2 *ngIf="getRelativeTimeDelta() > 0" class="text-success">A Tiempo - {{ formatTimeDelta( getRelativeTimeDelta() ) }}</h2>
             <h2 *ngIf="getRelativeTimeDelta() < 0">Envíos Cerrados</h2>
             <div class="info m-3 p-4">
@@ -741,7 +872,7 @@
                 <li>Añadimos capturas de pantalla, descripción, tags, y toda la información requerida para jugar nuestro juego.</li>
               </ul>
             </div>
-            <form (submit)="saveSubmission()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionForm" enctype="multipart/form-data">
+            <form (submit)="saveSubmission()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionGamejamForm" enctype="multipart/form-data">
               <div class="row">
                 <div class="form-group col-12"> <!-- TITLE -->
                   <label for="title" class="required">Título del juego</label>
@@ -907,7 +1038,7 @@
             <div *ngIf="getRelativeTimeDelta() > 0">
               <b>{{ formatTimeDelta(getRelativeTimeDelta())}}</b>
             </div>
-            <form (submit)="savePitch()" class="rounded shadow m-2 bg-light p-4" [formGroup]="pitchForm" enctype="multipart/form-data">
+            <form (submit)="savePitch()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionPitchGamejamForm" enctype="multipart/form-data">
               <div class="form-group col-12"> <!-- LINK -->
                 Enviar un pitch es obligatorio si quieres continuar a la próxima etapa. <br>
                 <label for="title">Link de su video-pitch</label>

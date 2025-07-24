@@ -9,36 +9,51 @@
           </button>
         </div>
         <div class="Card">
-
           <div class="Card-body">
             <form (submit)="submitForm()" [formGroup]="registerForm">
               <div class="row">
                 <div class="title">Register</div>
-                <div class="inputTitle">Email</div>
+                
+                <div class="inputTitle">Email *</div>
                 <div class="row">
                   <div class="form-group inputSpace">
                     <input #emailInput type="email" class="form-control" id="emailInput" required placeholder="Email" formControlName="email">
                   </div>
                 </div>
 
-                <div class="inputTitle">Full Name</div>
+                <div class="inputTitle">Full Name *</div>
                 <div class="row">
                   <div class="form-group inputSpace">
                     <input #nameInput class="form-control" id="nameInput" required placeholder="Full Name" formControlName="name">
                   </div>
                 </div>
 
-                <div class="inputTitle">Discord Username</div>
+                <div class="inputTitle">Discord Username *</div>
                 <div class="row">
                   <div class="form-group inputSpace">
                     <input #discordUsernameInput class="form-control" id="discordUsernameInput" required placeholder="Discord Username" formControlName="discordUsername">
                   </div>
                 </div>
 
-                <div *ngIf="errorMessage" class="error">
-                  {{ errorMessage }}
+                <div class="inputTitle">Gender *</div>
+                <div class="row">
+                  <div class="form-group inputSpace">
+                    <select #socialMediaInput class="form-control" id="genderInput" required formControlName="gender">
+                      <option value="" disabled selected>Select your gender</option>
+                      <option *ngFor="let option of genderOptions" [value]="option">
+                        {{ option }}
+                      </option>
+                    </select>
+                  </div>
                 </div>
 
+                <div class="inputTitle">Social Media</div>
+                <div class="row">
+                  <div class="form-group inputSpace">
+                    <input #socialMediaInput class="form-control" id="socialMediaInput" placeholder="Full Name" formControlName="socialMedia">
+                  </div>
+                </div>
+              
                 <div class="row">
                   <div class="registerBTN">
                     <button type="submit" class="btn btn-default registerFont">

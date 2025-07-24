@@ -109,7 +109,7 @@ export class JuezMainComponent implements OnInit {
                   this.games.push(
                     {
                       id: juego._id,
-                      name: juego.title,
+                      name: juego.gamejamTitle,
                       team: team.teamName
                     }
                   );
@@ -134,7 +134,7 @@ export class JuezMainComponent implements OnInit {
                   this.evaluations.push(
                     {
                       id: juego._id,
-                      name: juego.title,
+                      name: juego.gamejamTitle,
                       team: team.teamName
                     }
                   );
@@ -184,7 +184,7 @@ export class JuezMainComponent implements OnInit {
             this.games.push(
               {
                 id: juego._id,
-                name: juego.title,
+                name: juego.gamejamTitle,
                 team: team.teamName
               }
             );
