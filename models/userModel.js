@@ -14,6 +14,15 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    gender: {
+        type: String,
+        enum: ["Masculino", "Feminino", "Não-binário", "Prefiro não dizer", "Outro"],
+        required: true
+    },
+    socialMedia: {
+        type: String,
+        required: false
+    },
     region: {
         _id: { 
             type: mongoose.Schema.Types.ObjectId,
