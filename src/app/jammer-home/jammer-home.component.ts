@@ -57,60 +57,7 @@ const SUBMISSION_GRACE_PERIOD_MS = 48 * 60 * 60 * 1000;
 export class JammerHomeComponent implements OnInit, OnDestroy {
   @Input() user!: User;
   @ViewChild(MessagesComponent) message!: MessagesComponent;
-  @ViewChild('selectGenre') set selectGenre(content: ElementRef) {
-    if(content) {
-      for(let o = 0; o < content.nativeElement.length; ++o)
-      {
-        if(this.gameGenres.includes(content.nativeElement[o].value))
-          content.nativeElement[o].selected = true;
-      }
-    }
-  }
-  @ViewChild('selectTopic') set selectTopic(content: ElementRef) {
-    if(content) {
-      for(let o = 0; o < content.nativeElement.length; ++o)
-      {
-        if(this.gameTopics.includes(content.nativeElement[o].value))
-          content.nativeElement[o].selected = true;
-      }
-    }
-  }
-  @ViewChild('selectThemes') set selectTheme(content: ElementRef) {
-    if(content) {
-      for(let o = 0; o < content.nativeElement.length; ++o)
-      {
-        if(this.gameThemes.includes(content.nativeElement[o].value))
-          content.nativeElement[o].selected = true;
-      }
-    }
-  }
-  @ViewChild('selectCategories') set selectCategory(content: ElementRef) {
-    if(content) {
-      for(let o = 0; o < content.nativeElement.length; ++o)
-      {
-        if(this.gameCategories.includes(content.nativeElement[o].value))
-          content.nativeElement[o].selected = true;
-      }
-    }
-  }
-  @ViewChild('selectPlatforms') set selectPlatorm(content: ElementRef) {
-    if(content) {
-      for(let o = 0; o < content.nativeElement.length; ++o)
-      {
-        if(this.gamePlatforms.includes(content.nativeElement[o].value))
-          content.nativeElement[o].selected = true;
-      }
-    }
-  }
-  @ViewChild('selectAccelerationPlatforms') set selectAccelerationPlatform(content: ElementRef) {
-    if(content) {
-      for(let o = 0; o < content.nativeElement.length; ++o)
-      {
-        if(this.submissionAccelerationForm.get('accelerationPlatforms')?.value?.includes(content.nativeElement[o].value))
-          content.nativeElement[o].selected = true;
-      }
-    }
-  }
+
   regions: Region[] = [];
   sites: Site[] = [];
   countries: Country[] = [];
@@ -143,6 +90,63 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
   gameThemes: string[] = [];
   gameCategories: string[] = [];
   gamePlatforms: string[] = [];
+
+  availableGenres = [
+    "Action",
+    "Adventure",
+    "Educational",
+    "Hypercasual",
+    "Multiplayer",
+    "Narrative",
+    "Platforming",
+    "Puzzle",
+    "Runner",
+    "Sandbox",
+    "Shooter"
+  ]
+
+  availableTopics = [
+    "Business",
+    "Sustentability",
+    "Educational",
+    "For Children",
+    "Diversity",
+    "Environment",
+    "Originary/Native People",
+    "Historical Facts",
+    "Health",
+    "Inclussion and Accessibility",
+    "Folk Tales",
+    "Finantial Education",
+    "Music or Rhythm",
+    "Mental Health"
+  ]
+
+  availablePlatforms = [
+    "PC",
+    "Console",
+    "Mobile",
+    "VR/AR",
+    "Board Game",
+    "Other"
+  ]
+
+  availableGraphics = [
+    "2D",
+    "2.5D",
+    "3D",
+    "Other"
+  ]
+
+  availableEngines = [
+    "Unity",
+    "Unreal",
+    "Godot",
+    "GameMaker",
+    "Construct",
+    "RPGMaker",
+    "Other"
+  ]
 
   faCoffee = faCoffee;
   faCircleInfo = faCircleInfo;
@@ -187,56 +191,87 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void
   {
-    // TODO: Get the new forms values
     this.submissionGamejamForm = this.fb.group({
-      title: ['', Validators.required],
-      contact: ['', Validators.required],
-      link: ['', Validators.required],
-      description: ['', Validators.required],
-      graphics: ['', Validators.required],
-      engine: ['', Validators.required],
-      goingToIncubation: [false, Validators.required],
-      recommendation: '',
-      enjoyment: '',
-      suggestions: '',
-      authorization: ['', Validators.required]
+      gamejamTitle: ['', Validators.required],
+      gamejamBuild: ['', Validators.required],
+      gamejamContact: ['', Validators.required],
+      gamejamDescription: ['', Validators.required],
+      gamejamGenres: [[], Validators.required],
+      gamejamTopics: [[], Validators.required],
+      gamejamThemes: [[], Validators.required],
+      gamejamCategories: [[], Validators.required],
+      gamejamPlatforms: [[], Validators.required],
+      gamejamGraphics: ['', Validators.required],
+      gamejamEngine: ['', Validators.required],
+      goingToIncubation: [null, Validators.required],
+      gamejamRecommendation: [null],
+      gamejamEnjoyment: [null],
+      gamejamSuggestions: [''],
+      gamejamAuthorization: [null, Validators.required]
     });
 
     this.submissionPitchGamejamForm = this.fb.group({
-      link: ['', Validators.required],
-      acceleration: false
+      gamejamPitch: ['', 
+        [
+          Validators.required,
+          Validators.pattern(/^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(?:-nocookie)?\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|live\/|v\/)?)([\w\-]+)(\S+)?$/)
+        ]
+      ]
     });
 
     this.submissionIncubationForm = this.fb.group({
-      title: ['', Validators.required],
-      contact: ['', Validators.required],
-      link: ['', Validators.required],
-      description: ['', Validators.required],
-      graphics: ['', Validators.required],
-      engine: ['', Validators.required],
-      goingToIncubation: [false, Validators.required],
-      recommendation: '',
-      enjoyment: '',
-      suggestions: '',
-      authorization: ['', Validators.required]
+      incubationTitle: ['', Validators.required],
+      incubationBuild: ['', Validators.required],
+      incubationContact: ['', Validators.required],
+      incubationDescription: ['', Validators.required],
+      incubationGenres: [[], Validators.required],
+      incubationTopics: [[], Validators.required],
+      incubationThemes: [[], Validators.required],
+      incubationCategories: [[], Validators.required],
+      incubationPlatforms: [[], Validators.required],
+      incubationGraphics: ['', Validators.required],
+      incubationEngine: ['', Validators.required],
+      goingToAcceleration: [null, Validators.required],
+      incubationRecommendation: [null],
+      incubationEnjoyment: [null],
+      incubationSuggestions: [''],
+      incubationAuthorization: [null, Validators.required]
     });
 
     this.submissionPitchIncubationForm = this.fb.group({
-      incubationPitch: ['', Validators.required]
+      incubationPitch: ['', 
+        [
+          Validators.required,
+          Validators.pattern(/^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(?:-nocookie)?\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|live\/|v\/)?)([\w\-]+)(\S+)?$/)
+        ]
+      ]
     });
 
     this.submissionAccelerationForm = this.fb.group({
-      accelerationBuildLink: ['', Validators.required],
-      accelerationPitchVideo: ['', Validators.required],
-      accelerationGameplayVideo: ['', Validators.required],
-      accelerationSoundtrack: [''],
+      accelerationTitle: ['', Validators.required],
+      accelerationBuild: ['', Validators.required],
+      accelerationContact: ['', Validators.required],
+      accelerationDescription: ['', Validators.required],
+      accelerationGenres: [[], Validators.required],
+      accelerationTopics: [[], Validators.required],
+      accelerationThemes: [[], Validators.required],
+      accelerationCategories: [[], Validators.required],
       accelerationPlatforms: [[], Validators.required],
-      recommendationAcceleration: '',
-      enjoymentAcceleration: ''
+      accelerationGraphics: ['', Validators.required],
+      accelerationEngine: ['', Validators.required],
+      accelerationRecommendation: [''],
+      accelerationEnjoyment: [''],
+      accelerationSuggestions: [''],
+      accelerationAuthorization: [null, Validators.required]
     });
 
     this.submissionPitchAccelerationForm = this.fb.group({
-      accelerationPitch: ['', Validators.required]
+      accelerationPitch: ['', 
+        [
+          Validators.required,
+          Validators.pattern(/^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(?:-nocookie)?\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|live\/|v\/)?)([\w\-]+)(\S+)?$/)
+        ]
+      ]
     });
 
     let tzOffset = 180; // 3 hours * 60 minutes - BRT
@@ -342,7 +377,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
   {
     if(this.site && this.jam && this.team)
     {
-      console.log('Fetching submission for team:', this.team._id);
+      console.log('Fetching submission for team:', this.team.teamName,'/', this.team._id);
       this.submissionService.getSubmissionByTeam(this.team._id!).subscribe({
         next: (submission: Submission) => {
           this.submission = submission;
@@ -985,59 +1020,163 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
     if(this.jam && this.site && this.team)
     {
       let contact = -1;
-      for(let i = 0; i < this.team.jammers.length; ++i)
-      {
-        console.log('team.jammers[i]:', this.team.jammers[i]);
-        console.log('submission.gamejamContact:', submission.gamejamContact);
-        if(this.team.jammers[i]._id == submission.gamejamContact._id) contact = i
+
+      // GAMEJAM FORM
+      if(this.submission?.gamejamBuild) {
+        for(let i = 0; i < this.team.jammers.length; ++i)
+        {
+          if(this.team.jammers[i]._id == this.submission.gamejamContact._id) contact = i; break;
+        }
+        
+        this.submissionGamejamForm.patchValue({
+          gamejamTitle: submission.gamejamTitle,
+          gamejamBuild: submission.gamejamBuild,
+          gamejamContact: contact,
+          gamejamDescription: submission.gamejamDescription,
+          gamejamGenres: submission.gamejamGenres,
+          gamejamTopics: submission.gamejamTopics,
+          gamejamThemes: submission.gamejamThemes,
+          gamejamCategories: submission.gamejamCategories,
+          gamejamPlatforms: submission.gamejamPlatforms,
+          gamejamGraphics: submission.gamejamGraphics,
+          gamejamEngine: submission.gamejamEngine,
+          goingToIncubation: submission.goingToIncubation,
+          gamejamRecommendation: submission.gamejamRecommendation,
+          gamejamEnjoyment: submission.gamejamEnjoyment,
+          gamejamSuggestions: submission.gamejamSuggestions,
+          gamejamAuthorization: submission.gamejamAuthorization
+        });
+      }
+     
+      // GAMEJAM PITCH FORM
+      if(this.submission?.gamejamPitch) {
+        this.submissionPitchGamejamForm.patchValue({
+          gamejamPitch: submission.gamejamPitch
+        })
       }
 
-      this.gameGenres = submission.gamejamGenres;
-      this.gameTopics = submission.gamejamTopics;
-      this.gameThemes = submission.gamejamThemes;
-      this.gameCategories = submission.gamejamCategories;
-      this.gamePlatforms = submission.gamejamPlatforms;
+      // INCUBATION FORM
+      if(this.submission?.incubationBuild) {
+        for(let i = 0; i < this.team.jammers.length; ++i)
+        {
+          if(this.team.jammers[i]._id == this.submission.incubationContact?._id) contact = i; break;
+        }
 
-      this.submissionGamejamForm.setValue({
-        title: submission.gamejamTitle,
-        link: submission.gamejamBuild,
-        contact: contact,
-        description: submission.gamejamDescription,
-        graphics: submission.gamejamGraphics,
-        engine: submission.gamejamEngine,
-        goingToIncubation: submission.goingToIncubation,
-        recommendation: submission.gamejamRecommendation,
-        enjoyment: submission.gamejamEnjoyment,
-        suggestions: submission.gamejamSuggestions,
-        authorization: submission.gamejamAuthorization ? 'Yes' : 'No'
-      });
-
-      this.submissionPitchGamejamForm.setValue({
-        link: submission.gamejamPitch? submission.gamejamPitch : '',
-        acceleration: submission.goingToAcceleration? submission.goingToAcceleration: false
-      });
-      
-      // Patch acceleration form if acceleration data exists
-      if (submission.accelerationBuild) {
-        console.log('Loading existing acceleration data:', submission);
-        this.submissionAccelerationForm.patchValue({
-          accelerationBuildLink: submission.accelerationBuild,
-          accelerationPitchVideo: submission.accelerationPitch,
-          accelerationGameplayVideo: submission.accelerationGameplayVideo,
-          accelerationSoundtrack: submission.accelerationSoundtrack,
-          accelerationPlatforms: submission.accelerationPlatforms,
-          recommendationAcceleration: submission.accelerationRecommendation,
-          enjoymentAcceleration: submission.accelerationEnjoyment
+        this.submissionIncubationForm.patchValue({
+          incubationTitle: submission.incubationTitle,
+          incubationBuild: submission.incubationBuild,
+          incubationContact: contact,
+          incubationDescription: submission.incubationDescription,
+          incubationGenres: submission.incubationGenres,
+          incubationTopics: submission.incubationTopics,
+          incubationThemes: submission.incubationThemes,
+          incubationCategories: submission.incubationCategories,
+          incubationPlatforms: submission.incubationPlatforms,
+          incubationGraphics: submission.incubationGraphics,
+          incubationEngine: submission.incubationEngine,
+          goingToAcceleration: submission.goingToAcceleration,
+          incubationRecommendation: submission.incubationRecommendation,
+          incubationEnjoyment: submission.incubationEnjoyment,
+          incubationSuggestions: submission.incubationSuggestions,
+          incubationAuthorization: submission.incubationAuthorization
+        });
+      } else {
+        this.submissionIncubationForm.patchValue({
+          incubationTitle: submission.gamejamTitle,
+          incubationBuild: submission.gamejamBuild,
+          incubationContact: contact,
+          incubationDescription: submission.gamejamDescription,
+          incubationGenres: submission.gamejamGenres,
+          incubationTopics: submission.gamejamTopics,
+          incubationThemes: submission.gamejamThemes,
+          incubationCategories: submission.gamejamCategories,
+          incubationPlatforms: submission.gamejamPlatforms,
+          incubationGraphics: submission.gamejamGraphics,
+          incubationEngine: submission.gamejamEngine,
+          incubationRecommendation: submission.gamejamRecommendation,
+          incubationEnjoyment: submission.gamejamEnjoyment,
+          incubationSuggestions: submission.gamejamSuggestions,
         });
       }
 
-      console.log(submission);
+      // INCUBATION PITCH FORM
+      if(this.submission?.incubationPitch) {
+        this.submissionPitchIncubationForm.patchValue({
+          incubationPitch: submission.incubationPitch
+        });
+      } else {
+        this.submissionPitchIncubationForm.patchValue({
+          incubationPitch: submission.gamejamPitch
+        });
+      }
+
+      // ACCELERATION FORM
+      if(this.submission?.accelerationBuild) {
+        for(let i = 0; i < this.team.jammers.length; ++i)
+        {
+          if(this.team.jammers[i]._id == this.submission.accelerationContact?._id) contact = i; break;
+        }
+
+        this.submissionAccelerationForm.patchValue({
+          accelerationTitle: submission.accelerationTitle,
+          accelerationBuild: submission.accelerationBuild,
+          accelerationContact: contact,
+          accelerationDescription: submission.accelerationDescription,
+          accelerationGenres: submission.accelerationGenres,
+          accelerationTopics: submission.accelerationTopics,
+          accelerationThemes: submission.accelerationThemes,
+          accelerationCategories: submission.accelerationCategories,
+          accelerationPlatforms: submission.accelerationPlatforms,
+          accelerationGraphics: submission.accelerationGraphics,
+          accelerationEngine: submission.accelerationEngine,
+          accelerationRecommendation: submission.accelerationRecommendation,
+          accelerationEnjoyment: submission.accelerationEnjoyment,
+          accelerationSuggestions: submission.accelerationSuggestions,
+          accelerationAuthorization: submission.accelerationAuthorization
+        });
+      } else {
+        this.submissionAccelerationForm.patchValue({
+          accelerationTitle: submission.incubationTitle,
+          accelerationBuild: submission.incubationBuild,
+          accelerationContact: contact,
+          accelerationDescription: submission.incubationDescription,
+          accelerationGenres: submission.incubationGenres,
+          accelerationTopics: submission.incubationTopics,
+          accelerationThemes: submission.incubationThemes,
+          accelerationCategories: submission.incubationCategories,
+          accelerationPlatforms: submission.incubationPlatforms,
+          accelerationGraphics: submission.incubationGraphics,
+          accelerationEngine: submission.incubationEngine,
+          accelerationRecommendation: submission.incubationRecommendation,
+          accelerationEnjoyment: submission.incubationEnjoyment,
+          accelerationSuggestions: submission.incubationSuggestions,
+        });
+      }
+
+      // ACCELERATION PITCH FORM
+      if(this.submission?.accelerationPitch) {
+        this.submissionPitchAccelerationForm.patchValue({
+          accelerationPitch: submission.accelerationPitch
+        });
+      } else {
+        this.submissionPitchAccelerationForm.patchValue({
+          accelerationPitch: submission.incubationPitch
+        });
+      }
+
+      console.log("Patching with submission: ", submission);
     }
   }
 
-  // TODO: Add new functions for each form
-  // TODO: Handle the submission based on new variables in the schema
-  saveSubmission()
+  patchGamejamPitchForm(submission: any) {
+    if (submission && submission.gamejamPitch) {
+      this.submissionPitchGamejamForm.patchValue({
+        gamejamPitch: submission.gamejamPitch,
+      });
+    }
+  }
+
+  saveGamejamSubmission()
   {
     if(this.site && this.jam && this.team)
     {
@@ -1055,7 +1194,10 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
       }
       else
       {
-        const contactIndex: number = this.submissionGamejamForm.get('contact')?.value;
+        const formValues = this.submissionGamejamForm.value;
+
+        const contactIndex: number = formValues.gamejamContact;
+        
         const contact: any = {
           _id: this.team.jammers[contactIndex]._id,
           name: "",
@@ -1066,30 +1208,30 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
           jamId : this.jam._id!,
           siteId: this.site._id!,
           teamId: this.team._id!,
-          jammerId: this.user._id!,
-          gamejamTitle: this.submissionGamejamForm.get('title')?.value,
+          gamejamJammerId: this.user._id!,
+          gamejamTitle: formValues.gamejamTitle,
+          gamejamBuild: formValues.gamejamBuild,
           gamejamContact: contact,
-          gamejamBuild: this.submissionGamejamForm.get('link')?.value,
-          gamejamDescription: this.submissionGamejamForm.get('description')?.value,
-          gamejamThemes: this.gameThemes,
-          gamejamCategories: this.gameCategories,
-          gamejamGenres: this.gameGenres,
-          gamejamTopics: this.gameTopics,
-          gamejamPlatforms: this.gamePlatforms,
-          gamejamGraphics: this.submissionGamejamForm.get('graphics')?.value,
-          gamejamEngine: this.submissionGamejamForm.get('engine')?.value,
-          goingToIncubation: this.submissionGamejamForm.get('goingToIncubation')?.value,
-          gamejamRecommendation: this.submissionGamejamForm.get('recommendation')?.value,
-          gamejamEnjoyment: this.submissionGamejamForm.get('enjoyment')?.value,
-          gamejamSuggestions: this.submissionGamejamForm.get('suggestions')?.value,
-          gamejamAuthorization: this.submissionGamejamForm.get('authorization')?.value,
+          gamejamDescription: formValues.gamejamDescription,
+          gamejamGenres: formValues.gamejamGenres,
+          gamejamTopics: formValues.gamejamTopics,
+          gamejamThemes: formValues.gamejamThemes,
+          gamejamCategories: formValues.gamejamCategories,
+          gamejamPlatforms: formValues.gamejamPlatforms,
+          gamejamGraphics: formValues.gamejamGraphics,
+          gamejamEngine: formValues.gamejamEngine,
+          goingToIncubation: formValues.goingToIncubation,
+          gamejamRecommendation: formValues.gamejamRecommendation,
+          gamejamEnjoyment: formValues.gamejamEnjoyment,
+          gamejamSuggestions: formValues.gamejamSuggestions,
+          gamejamAuthorization: formValues.gamejamAuthorization,
           gamejamSubmissionTime: new Date(),
           gamejamSubmissionDelta: this.getStageTimeDelta(this.JamStages.GAMEJAM)
         };
 
         this.submissionService.createSubmission(submission).subscribe({
           next: (submission: Submission) => {
-            this.submission = submission;
+            this.getSubmission();
             this.patchSubmissionForm(submission);
             this.message.showMessage("Success", "Submission accepted");
           },
@@ -1100,52 +1242,33 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
       }
     }
   }
-//
-  savePitch()
+
+  savePitchGamejam()
   {
     if(this.jam && this.site && this.team)
     {
-      let pitch = {
-        jamId: this.jam._id,
-        siteId: this.site._id,
-        teamId: this.team._id,
-        link: this.submissionPitchGamejamForm.get('link')?.value,
-        acceleration: this.submissionPitchGamejamForm.get('acceleration')?.value,
-        pitchTimeDelta: this.getRelativePitchDelta()
+      if(!this.submissionPitchGamejamForm.valid)
+      {
+        this.submissionPitchGamejamForm.markAllAsTouched();
+        const errorMsg = this.getPitchErrorMessage();
+        this.message.showMessage("Error", errorMsg || "Please correct the highlighted fields");
       }
-      console.log(pitch);
-
-      this.submissionService.updateGamejamPitch(pitch).subscribe({
-        next: (submission: Submission) => {
-          this.submission = submission;
-            this.patchSubmissionForm(submission);
-            this.message.showMessage("Success", "Submission updated");
-        },
-        error: (error) => {
-          this.message.showMessage("Error", error.error.message);
+      else 
+      {
+        let pitch = {
+          jamId: this.jam._id,
+          siteId: this.site._id,
+          teamId: this.team._id,
+          gamejamPitchJammerId: this.user._id,
+          gamejamPitch: this.submissionPitchGamejamForm.get('gamejamPitch')?.value,
+          gamejamPitchTime: new Date(),
+          gamejamPitchDelta: this.getStageTimeDelta(this.JamStages.GAMEJAM_SUBMISSION)
         }
-      });
-    }
-  }
-// Update safeness of this function
-  saveGamejamPitch()
-  {
-    if(this.jam && this.site && this.team)
-    {
-      let gamejamPitch = {
-        link: this.submissionPitchGamejamForm.get('link')?.value,
-        jammerId: this.user._id,
-        acceleration: this.submissionPitchGamejamForm.get('acceleration')?.value,
-        pitchTimeDelta: this.getRelativePitchDelta()
-      }
-      console.log(gamejamPitch);
 
-      if (this.submission && this.submission._id) {
-        this.submissionService.putGamejamPitch(this.submission._id, gamejamPitch).subscribe({
-          next: (submission: Submission) => {
-            this.submission = submission;
-            this.patchSubmissionForm(submission);
-            this.message.showMessage("Success", "Submission updated");
+        this.submissionService.updateGamejamPitch(pitch).subscribe({
+          next: (submission: any) => {
+              this.patchGamejamPitchForm(submission);
+              this.message.showMessage("Success", "Submission updated");
           },
           error: (error) => {
             this.message.showMessage("Error", error.error.message);
@@ -1155,7 +1278,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  saveIncubation() {
+  saveIncubationSubmission() {
     if(this.jam && this.site && this.team) 
     {
       if(!this.submissionIncubationForm.valid) 
@@ -1172,7 +1295,51 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
       }
       else
       {
+        const formValues = this.submissionIncubationForm.value;
 
+        const contactIndex: number = formValues.incubationContact;
+        
+        const contact: any = {
+          _id: this.team.jammers[contactIndex]._id,
+          name: "",
+          email: ""
+        }
+
+        let incubationSubmission = {
+          jamId: this.jam._id!,
+          siteId: this.site._id!,
+          teamId: this.team._id!,
+          incubationJammerId: this.user._id!,
+          incubationTitle: formValues.incubationTitle,
+          incubationBuild: formValues.incubationBuild,
+          incubationContact: contact,
+          incubationDescription: formValues.incubationDescription,
+          incubationGenres: formValues.incubationGenres,
+          incubationTopics: formValues.incubationTopics,
+          incubationThemes: formValues.incubationThemes,
+          incubationCategories: formValues.incubationCategories,
+          incubationPlatforms: formValues.incubationPlatforms,
+          incubationGraphics: formValues.incubationGraphics,
+          incubationEngine: formValues.incubationEngine,
+          goingToAcceleration: formValues.goingToAcceleration,
+          incubationRecommendation: formValues.incubationRecommendation,
+          incubationEnjoyment: formValues.incubationEnjoyment,
+          incubationSuggestions: formValues.incubationSuggestions,
+          incubationAuthorization: formValues.incubationAuthorization,
+          incubationSubmissionTime: new Date(),
+          incubationSubmissionDelta: this.getStageTimeDelta(this.JamStages.INCUBATION)
+        };
+
+        this.submissionService.updateIncubation(incubationSubmission).subscribe({
+          next: (submission: Submission) => {
+            this.getSubmission();
+            this.patchSubmissionForm(submission);
+            this.message.showMessage("Success", "Incubation submission updated");
+          },
+          error: (error) => {
+            this.message.showMessage("Error", error.error.message);
+          }
+        })
       }
     }
   }
@@ -1194,16 +1361,30 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
       }
       else
       {
-        const incubationPitchData = {
+        const incubationPitch = {
+          jamId: this.jam._id,
+          siteId: this.site._id,
+          teamId: this.team._id,
           incubationPitchJammerId: this.user._id,
           incubationPitch: this.submissionPitchIncubationForm.get('incubationPitch')?.value,
           incubationPitchTime: new Date(),
-        }
+          incubationPitchDelta: this.getStageTimeDelta(this.JamStages.INCUBATION_SUBMISSION),
+        };
+
+        this.submissionService.updateIncubationPitch(incubationPitch).subscribe({
+          next: (submission: any) => {
+            this.patchGamejamPitchForm(submission);
+            this.message.showMessage("Success", "Submission updated");
+          },
+          error: (error) => {
+            this.message.showMessage("Error", error.error.message);
+          }
+        });
       }
     }
   }
   
-  saveAcceleration()
+  saveAccelerationSubmission()
   {
     if(this.jam && this.site && this.team)
     {
@@ -1238,7 +1419,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
 
         this.submissionService.updateAcceleration(acceleration).subscribe({
           next: (submission: Submission) => {
-            this.submission = submission;
+            this.getSubmission();
             this.patchSubmissionForm(submission);
             this.message.showMessage("Success", "Acceleration submission updated");
           },
@@ -1267,7 +1448,25 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
       }
       else
       {
+        const accelerationPitch = {
+          jamId: this.jam._id,
+          siteId: this.site._id,
+          teamId: this.team._id,
+          accelerationPitchJammerId: this.user._id,
+          accelerationPitch: this.submissionPitchAccelerationForm.get('accelerationPitch')?.value,
+          accelerationPitchTime: new Date(),
+          accelerationPitchDelta: this.getStageTimeDelta(this.JamStages.ACCELERATION_SUBMISSION),
+        }
 
+        this.submissionService.updateAccelerationPitch(accelerationPitch).subscribe({
+          next: (submission: any) => {
+            this.patchGamejamPitchForm(submission);
+            this.message.showMessage("Success", "Submission updated");
+          },
+          error: (error) => {
+            this.message.showMessage("Error", error.error.message);
+          }
+        });
       }
     }
   }
@@ -1305,28 +1504,43 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
             currentTime <= stageEndTime + SUBMISSION_GRACE_PERIOD_MS;
   }
 
-  hasSubmittedGame(): boolean {
-    return this.submission !== undefined && 
-           this.submission !== null && 
-           this.submission.gamejamBuild !== undefined && 
-           this.submission.gamejamBuild !== null && 
-           this.submission.gamejamBuild !== '';
-  }
+  hasSubmittedOn(stage: JamStage): boolean {
+    if (!this.submission) return false;
+    
+    switch (stage) {
+      case JamStage.GAMEJAM:
+        return this.submission.gamejamBuild !== undefined && 
+               this.submission.gamejamBuild !== null && 
+               this.submission.gamejamBuild !== '';
+      
+      case JamStage.GAMEJAM_SUBMISSION:
+        return this.submission.gamejamPitch !== undefined && 
+               this.submission.gamejamPitch !== null && 
+               this.submission.gamejamPitch !== '';
+      
+      case JamStage.INCUBATION:
+        return this.submission.incubationBuild !== undefined && 
+               this.submission.incubationBuild !== null && 
+               this.submission.incubationBuild !== '';
+      
+      case JamStage.INCUBATION_SUBMISSION:
+        return this.submission.incubationPitch !== undefined && 
+               this.submission.incubationPitch !== null && 
+               this.submission.incubationPitch !== '';
 
-  hasSubmittedPitch(): boolean {
-    return this.submission !== undefined && 
-           this.submission !== null && 
-           this.submission.gamejamPitch !== undefined && 
-           this.submission.gamejamPitch !== null && 
-           this.submission.gamejamPitch !== '';
-  }
+      case JamStage.ACCELERATION:
+        return this.submission.accelerationBuild !== undefined && 
+               this.submission.accelerationBuild !== null && 
+               this.submission.accelerationBuild !== '';
 
-  hasSubmittedAcceleration(): boolean {
-    return this.submission !== undefined && 
-           this.submission !== null && 
-           this.submission.accelerationBuild !== undefined && 
-           this.submission.accelerationBuild !== null && 
-           this.submission.accelerationBuild !== '';
+      case JamStage.ACCELERATION_SUBMISSION:
+        return this.submission.accelerationPitch !== undefined && 
+               this.submission.accelerationPitch !== null && 
+               this.submission.accelerationPitch !== '';       
+      
+      default:
+        return false;
+    }
   }
 
   hasStagePassed(stage: JamStage): boolean {
@@ -1341,32 +1555,63 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
     return hasPassed;
   }
 
-  // TODO: Put the other cases here
   getBackgroundClass(stage: JamStage): string {
     switch(stage) {
       case JamStage.GAMEJAM:
-        return this.hasSubmittedGame()
+        return this.hasSubmittedOn(this.JamStages.GAMEJAM)
           ? 'bg-success'
           : this.getStageTimeDelta(this.JamStages.GAMEJAM) > 0
             ? 'bg-warning'
             : 'bg-danger';
-      case JamStage.PITCH_SUBMISSION:
-        return this.hasSubmittedPitch()
+
+      case JamStage.GAMEJAM_SUBMISSION:
+        return this.hasSubmittedOn(this.JamStages.GAMEJAM_SUBMISSION)
           ? 'bg-success'
-          : this.getStageTimeDelta(this.JamStages.PITCH_SUBMISSION) > 0
+          : this.getStageTimeDelta(this.JamStages.GAMEJAM_SUBMISSION) > 0
             ? 'bg-warning'
             : 'bg-danger';
+
+      case JamStage.INCUBATION:
+        return this.hasSubmittedOn(this.JamStages.INCUBATION)
+          ? 'bg-success'
+          : this.getStageTimeDelta(this.JamStages.INCUBATION) > 0
+            ? 'bg-warning'
+            : 'bg-danger';
+
+      case JamStage.INCUBATION_SUBMISSION:
+        return this.hasSubmittedOn(this.JamStages.INCUBATION_SUBMISSION)
+          ? 'bg-success'
+          : this.getStageTimeDelta(this.JamStages.INCUBATION_SUBMISSION) > 0
+            ? 'bg-warning'
+            : 'bg-danger';
+
+      case JamStage.ACCELERATION:
+        return this.hasSubmittedOn(this.JamStages.ACCELERATION)
+          ? 'bg-success'
+          : this.getStageTimeDelta(this.JamStages.ACCELERATION) > 0
+            ? 'bg-warning'
+            : 'bg-danger';
+
       case JamStage.ACCELERATION_SUBMISSION:
-        return this.hasSubmittedAcceleration()
+        return this.hasSubmittedOn(this.JamStages.ACCELERATION_SUBMISSION)
           ? 'bg-success'
           : this.getStageTimeDelta(this.JamStages.ACCELERATION_SUBMISSION) > 0
             ? 'bg-warning'
-            : 'bg-danger';
-      
+            : 'bg-danger';   
       
       default:
         return '';
     }
+  }
+
+  // TODO: SUPPORT FOR OTHER LANGUAGES
+  // TODO: MAKE WORK FOR THE OTHER PITCH FORMS
+  getPitchErrorMessage(): string {
+    const control = this.submissionPitchGamejamForm.get('gamejamPitch');
+    if (!control) return '';
+    if (control.hasError('required')) return 'O link do pitch é requirido';
+    if (control.hasError('pattern')) return 'Por favor coloque uma URL do Youtube válida';
+    return '';
   }
 
   // getJamStageValues(stage: JamStage): Stage | null {

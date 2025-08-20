@@ -239,21 +239,21 @@ export interface Submission {
   jamId: string,
   siteId: string,
   teamId: string,
-  jammerId: string,
+  gamejamJammerId: string,
 
   // Informations for the gamejam form
   gamejamTitle: string;
+  gamejamBuild: string;
   gamejamContact: {
     _id: string,
     name: string,
     email: string
-  },
-  gamejamBuild: string;
+  };
   gamejamDescription: string;
+  gamejamGenres: string[];
+  gamejamTopics: string[];
   gamejamThemes: string[];
   gamejamCategories: string[];
-  gamejamTopics: string[];
-  gamejamGenres: string[];
   gamejamPlatforms: string[];
   gamejamGraphics: string;
   gamejamEngine: string;
@@ -274,17 +274,17 @@ export interface Submission {
   // Informations for the incubation form
   incubationJammerId?: string,
   incubationTitle?: string;
+  incubationBuild?: string;
   incubationContact?: {
     _id?: string,
     name?: string,
     email?: string
-  },
-  incubationBuild?: string;
+  };
   incubationDescription?: string;
+  incubationGenres?: string[];
+  incubationTopics?: string[];
   incubationThemes?: string[];
   incubationCategories?: string[];
-  incubationTopics?: string[];
-  incubationGenres?: string[];
   incubationPlatforms?: string[];
   incubationGraphics?: string;
   incubationEngine?: string;
@@ -303,15 +303,19 @@ export interface Submission {
   incubationPitchDelta?: number;
 
   // Informations for the acceleration form
-  accelerationJammerId?: string,
-  accelerationTime?: Date;
-  accelerationTimeDelta?: number;
+  accelerationJammerId?: string;
+  accelerationTitle?: string;
   accelerationBuild?: string;
+  accelerationContact?: {
+    _id?: string,
+    name?: string,
+    email?: string
+  };
   accelerationDescription?: string;
+  accelerationGenres?: string[];
+  accelerationTopics?: string[];
   accelerationThemes?: string[];
   accelerationCategories?: string[];
-  accelerationTopics?: string[];
-  accelerationGenres?: string[];
   accelerationPlatforms?: string[];
   accelerationGraphics?: string;
   accelerationEngine?: string;
