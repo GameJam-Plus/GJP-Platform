@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment.prod';
   providedIn: 'root'
 })
 export class UserService {
-  url : string = `https://${environment.apiUrl}:3000/api/user/`;
+  url : string = `https://${environment.apiUrl}/api/user/`;
 
   constructor(private http: HttpClient) {}
 
