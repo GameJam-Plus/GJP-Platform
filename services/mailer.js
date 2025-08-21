@@ -23,8 +23,7 @@ const sendEmail = async (email, subject, message, link) => {
                 user: process.env.EMAILUSER,
                 pass: process.env.EMAILPASSWORD
             },
-            secureConnection: false,
-            tls: { ciphers: 'SSLv3' }
+            secure: true            
         });
 
         console.log(transporter);
@@ -57,8 +56,7 @@ const sendScoree = async (email, subject, continuityPotential, audienceCompetito
                 user: process.env.EMAIL,
                 pass: process.env.EMAILPASSWORD
             },
-            secureConnection: false,
-            tls: { ciphers: 'SSLv3' }
+            secure: true
         });
 
         const htmlTemplate = await fs.promises.readFile('services/score_template.html', 'utf-8');
@@ -107,8 +105,7 @@ const sendScore = async (email, subject, score) => {
                 user: process.env.EMAIL,
                 pass: process.env.EMAILPASSWORD
             },
-            secureConnection: false,
-            tls: { ciphers: 'SSLv3' }
+            secure: true
         });
 
         const htmlTemplate = await fs.promises.readFile('services/score_template.html', 'utf-8');
