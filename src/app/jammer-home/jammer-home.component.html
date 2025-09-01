@@ -1,8 +1,8 @@
 <div>
   <!-- #region NO JAM -->
   <div *ngIf="!jam" class="warning p-5 text-center m-2">
-    <p>You haven't been assigned to a Site yet.</p>
-    <p>Select a site from the list below to proceed.</p>
+    <p>You haven't been assigned to a Venue yet.</p>
+    <p>Select a venue from the list below to proceed.</p>
 
     <div class="row">
       <div class="col-3 border">
@@ -15,7 +15,7 @@
       </div>
 
       <div *ngIf="selectedRegion" class="col-9">
-        <h2>Sites of {{ selectedRegion!.name }}</h2>
+        <h2>Venues of {{ selectedRegion!.name }}</h2>
         <div class="row">
           <div class="col-3" *ngFor="let site of filteredSites">
             <div class="card p-2 shadow minh-2">
@@ -28,10 +28,10 @@
                 <span *ngIf="site.open">Status: Open for registration</span>
               </p>
               <span *ngIf="site.open" style="flex-grow: 1;"></span>
-              <button *ngIf="site.open" class="btn btn-black align-bottom" (click)="joinSite(site)">Join site</button>
+              <button *ngIf="site.open" class="btn btn-black align-bottom" (click)="joinSite(site)">Join venue</button>
 
               <p *ngIf="!site.open">Status: Closed</p>
-              <p *ngIf="!site.open">Contact the site's organizers for more information on how to join this site</p>
+              <p *ngIf="!site.open">Contact the venue's organizers for more information on how to join this venue</p>
             </div>
           </div>
         </div>
@@ -59,7 +59,7 @@
     <div id="localHomeNavBar" class="col-2 container-fluid">
       <div class="navbutton navL1" data-toggle="collapse" data-target="#homeMenu">Home</div>
       <ul #homeMenu id="homeMenu" class="collapse">
-        <li class="navbutton navL2" (click)="page = 'site'">Site Info</li>
+        <li class="navbutton navL2" (click)="page = 'site'">Venue Info</li>
         <li class="navbutton navL2" (click)="page = 'jam'">Jam Info</li>
         <li class="navbutton navL2" (click)="page = 'games'">Games from Site</li>
         <!--<li class="navbutton navL2" (click)="page = 'news'">Notifications</li>-->
@@ -145,7 +145,7 @@
 
         <div class="row m-2 p-2 warning">
           <h3 class="col-12 text-center">Danger Zone</h3>
-          <button class="btn btn-danger m-2" (click)="exitSite()">Exit Site</button>
+          <button class="btn btn-danger m-2" (click)="exitSite()">Exit Venue</button>
         </div>
       </div>
 
@@ -223,7 +223,7 @@
       </div>
 
       <div *ngIf="page == 'games'" class="container container-lg p-3">
-        <h1>Games of this site</h1>
+        <h1>Games of this venue</h1>
         <button class="btn btn-black btn-block" (click)="getSubmissionsOfSite()">LOAD SUBMISSIONS</button>
         <div class="row m-2">
           <div *ngFor="let s of siteSubmissions" class="p-2 col-4">

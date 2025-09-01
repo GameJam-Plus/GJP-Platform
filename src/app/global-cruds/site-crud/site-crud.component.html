@@ -1,5 +1,5 @@
 <div class="w-100 p-5">
-  <h1 class="text-center">Sites</h1>
+  <h1 class="text-center">Venues</h1>
   <table class="table table-dark table-striped">
     <thead>
       <tr>
@@ -33,7 +33,7 @@
         </td>
         <td>
           <select name="filterModality" #filterModality class="form-select" (change)="setFilter('modality', filterModality.selectedOptions)" multiple>
-            <option value="on site">On Site</option>
+            <option value="on site">On Venue</option>
             <option value="online">Online</option>
             <option value="hybrid">Hybrid</option>
           </select>
@@ -109,7 +109,7 @@
     <form (submit)="saveSite()" [formGroup]="siteForm">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="createModalLabel">Save site</h5>
+          <h5 class="modal-title" id="createModalLabel">Save venue</h5>
         </div>
           <div class="modal-body container no-radius">
             <div class="row centerRow">
@@ -117,7 +117,7 @@
               <div class="formTitle">Region</div>
               <div class="row centerRow">
                 <select class="form-control formList" id="regions" required formControlName="region">
-                  <option value="" disabled selected hidden>Region of the site</option>
+                  <option value="" disabled selected hidden>Region of the venue</option>
                   <option *ngFor="let region of regions" [ngValue]="region">{{ region.name }}</option>
                 </select>
               </div>
@@ -125,7 +125,7 @@
               <div class="formTitle">Country</div>
               <div class="row centerRow">
                 <select class="form-control formList" id="countries" required formControlName="country">
-                  <option value="" disabled selected hidden>Country of the site</option>
+                  <option value="" disabled selected hidden>Country of the venue</option>
                   <option *ngFor="let country of countries" [ngValue]="country">{{ country.name }}</option>
                 </select>
               </div>
@@ -137,7 +137,7 @@
                 </div>
               </div>
 
-              <div class="formTitle">Site Name</div>
+              <div class="formTitle">Venue Name</div>
               <div class="row centerRow">
                 <div class="form-group formInput">
                   <input #createSiteInput class="form-control" id="createSiteNameInput" required placeholder="Name" formControlName="name">
@@ -150,7 +150,7 @@
                 <div class="form-group formInput">
                   <select #createModalityInput class="form-control" id="createSiteModalityInput" formControlName="modality">
                     <option value="" disabled selected hidden>Modality</option>
-                    <option value="on site">On Site</option>
+                    <option value="on site">On Venue</option>
                     <option value="online">Online</option>
                     <option value="hybrid">Hybrid</option>
                   </select>
