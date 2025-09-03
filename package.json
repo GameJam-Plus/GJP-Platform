@@ -28,6 +28,8 @@
     "@fortawesome/free-brands-svg-icons": "^6.4.2",
     "@fortawesome/free-regular-svg-icons": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
+    "@ngx-translate/core": "^17.0.0",
+    "@ngx-translate/http-loader": "^17.0.0",
     "@tinymce/tinymce-angular": "^8.0.1",
     "bootstrap": "^5.3.3",
     "events": "^3.3.0",

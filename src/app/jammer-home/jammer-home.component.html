@@ -86,15 +86,15 @@
             <div class="pseudocard inverted m-1 py-2 minh-3">
               <div class="row align-items-start">
                 <fa-icon [icon]="faLandmark" class="fa-2x col-4 text-right maxh-05"></fa-icon>
-                <h2 class="col-8 maxh-05">Location</h2>
+                <h2 class="col-8 maxh-05">{{ 'platform.jammer.home.venueinfo.location' | translate}}</h2>
                 <hr>
               </div>
 
               <div class="row align-items-end p-2">
-                <span class="col-4 text-right heavy mb-1">Country</span> <span class="col-8">{{ site.country.code }} - {{ site.country.name }}</span>
-                <span class="col-4 text-right heavy mb-1">City</span> <span class="col-8">{{ site.city }}</span>
-                <span class="col-4 text-right heavy mb-1" *ngIf="site.address">Address</span> <span class="col-8" *ngIf="site.address">{{ site.address }}</span>
-                <span class="col-4 text-right heavy mb-1" *ngIf="site.server">Server</span> <a [href]="formatURL(site.server)" target="_blank" class="col-8" *ngIf="site.server">{{ site.server }}</a>
+                <span class="col-4 text-right heavy mb-1">{{ 'platform.jammer.home.venueinfo.country' | translate}}</span> <span class="col-8">{{ site.country.code }} - {{ site.country.name }}</span>
+                <span class="col-4 text-right heavy mb-1">{{ 'platform.jammer.home.venueinfo.city' | translate}}</span> <span class="col-8">{{ site.city }}</span>
+                <span class="col-4 text-right heavy mb-1" *ngIf="site.address">{{ 'platform.jammer.home.venueinfo.address' | translate}}</span> <span class="col-8" *ngIf="site.address">{{ site.address }}</span>
+                <span class="col-4 text-right heavy mb-1" *ngIf="site.server">{{ 'platform.jammer.home.venueinfo.server' | translate}}</span> <a [href]="formatURL(site.server)" target="_blank" class="col-8" *ngIf="site.server">{{ site.server }}</a>
               </div>
             </div>
           </div>
@@ -103,15 +103,15 @@
             <div class="pseudocard inverted m-1 py-2 minh-3">
               <div class="row align-items-start">
                 <fa-icon [icon]="faPeopleRoof" class="fa-2x col-4 text-right maxh-05"></fa-icon>
-                <h2 class="col-8 maxh-05">Format</h2>
+                <h2 class="col-8 maxh-05">{{ 'platform.jammer.home.venueinfo.format' | translate}}</h2>
                 <hr>
               </div>
 
               <div class="row align-items-end p-2">
-                <span class="col-4 text-right heavy mb-1">Modality</span> <span class="col-8">{{ site.modality }}</span>
-                <span class="col-4 text-right heavy mb-1">Status</span> <span class="col-8">{{ site.open ? 'Open' : 'Closed' }}</span>
-                <span class="col-4 text-right heavy mb-1">Start</span> <span class="col-8">{{ site.startTime ? convertTo12h(site.startTime) : '' }}</span>
-                <span class="col-4 text-right heavy mb-1">Language</span> <span class="col-8">{{ site.language }}</span>
+                <span class="col-4 text-right heavy mb-1">{{ 'platform.jammer.home.venueinfo.modality' | translate}}</span> <span class="col-8">{{ site.modality }}</span>
+                <span class="col-4 text-right heavy mb-1">{{ 'platform.jammer.home.venueinfo.status' | translate}}</span> <span class="col-8">{{ site.open ? 'Open' : 'Closed' }}</span>
+                <span class="col-4 text-right heavy mb-1">{{ 'platform.jammer.home.venueinfo.start' | translate}}</span> <span class="col-8">{{ site.startTime ? convertTo12h(site.startTime) : '' }}</span>
+                <span class="col-4 text-right heavy mb-1">{{ 'platform.jammer.home.venueinfo.language' | translate}}</span> <span class="col-8">{{ site.language }}</span>
               </div>
             </div>
           </div>
@@ -120,7 +120,7 @@
             <div class="pseudocard inverted m-1 py-2 minh-3">
               <div class="row align-items-start">
                 <fa-icon [icon]="faEnvelope" class="fa-2x col-4 text-right maxh-05"></fa-icon>
-                <h2 class="col-8 maxh-05">Contact Info</h2>
+                <h2 class="col-8 maxh-05">{{ 'platform.jammer.home.venueinfo.contactinfo' | translate}}</h2>
                 <hr>
               </div>
 
