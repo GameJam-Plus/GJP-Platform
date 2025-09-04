@@ -1,4 +1,4 @@
-import { Resend } from "resend";
+const { Resend } = require('resend');
 const nodemailer = require('nodemailer');
 const fs = require('fs');
 const resend = new Resend(process.env.EMAILPASSWORD);
