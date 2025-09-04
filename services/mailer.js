@@ -1,5 +1,7 @@
+import { Resend } from "resend";
 const nodemailer = require('nodemailer');
 const fs = require('fs');
+const resend = new Resend(process.env.EMAILPASSWORD);
 
 function get(obj, desc) {
     var arr = desc.split(".");
@@ -16,31 +18,18 @@ function replaceTokens(HTML, replacements) {
 
 const sendEmail = async (email, subject, message, link) => {
     try {
-        let transporter = nodemailer.createTransport({
-            host: process.env.EMAILHOST,
-            port: process.env.SMTPPORT,
-            auth: {
-                user: process.env.EMAILUSER,
-                pass: process.env.EMAILPASSWORD
-            },
-            secure: true            
-        });
-
-        console.log(transporter);
-
         const htmlTemplate = await fs.promises.readFile('services/email_template.html', 'utf-8');
-
         const htmlContent = replaceTokens(htmlTemplate, { subject, message, link });
 
-        const mailOptions = {
+        const data = await resend.emails.send({
             from: process.env.EMAIL,
             to: email,
             subject: subject,
             html: htmlContent
-        };
+        });
 
-        await transporter.sendMail(mailOptions);
-        console.log("Email sent successfully!");
+        
+        console.log("Email sent successfully!\n", data);
     } catch (error) {
         console.log("Error sending the email: ", error);
     }
