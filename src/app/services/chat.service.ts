@@ -10,7 +10,7 @@ import { environment } from '../../environments/environment.prod';
 })
 export class ChatService {
 
-  private baseUrl = `http://${environment.apiUrl}:3000/api/chat/`;
+  private baseUrl = `${environment.apiUrl}:3000/api/chat/`;
 
   constructor(private http: HttpClient) {}
 
