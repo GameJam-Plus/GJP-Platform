@@ -148,7 +148,7 @@ const loginUser = async (req, res) => {
         let userId;
 
         if (!existingUser) {
-            const registerLink = `https://${process.env.URL}/register`;
+            const registerLink = `${process.env.URL}/register`;
             const subject = 'Login in GameJam Platform';
             const message = `Hi, click on this link to create an account:`;
             const link = registerLink;
@@ -161,7 +161,7 @@ const loginUser = async (req, res) => {
             userId = existingUser._id;
         
             const token = jwt.sign({ userId, roles }, 'MY_JWT_SECRET', { expiresIn: 6000000 });
-            const magicLink = `https://${process.env.URL}/api/user/magic-link/${token}`;
+            const magicLink = `${process.env.URL}/api/user/magic-link/${token}`;
             const subject = 'Login in GameJam Platform';
             const message = `Hi, click on this link to continue to the app:`;
             const link = magicLink;
@@ -184,7 +184,7 @@ const getLoginLink = async (req, res) => {
             const userId = user._id;
             const roles = user.roles;
             const token = jwt.sign({ userId, roles }, 'MY_JWT_SECRET', { expiresIn: 6000000 });
-            console.log(`https://${process.env.URL}/api/user/magic-link/${token}`);
+            console.log(`${process.env.URL}/api/user/magic-link/${token}`);
             
             return res.status(200).json({ success: true, message: "Link sent to console" });
         }
@@ -211,19 +211,19 @@ const magicLink = async (req, res) => {
             httpOnly: false
         });
         let redirectUrl
-        redirectUrl = `https://${process.env.URL}/home`;
+        redirectUrl = `${process.env.URL}/home`;
 
         const rolesToCheck = ["LocalOrganizer", "GlobalOrganizer","Judge","Jammer"];
         const hasAnyRole = rolesToCheck.some(role => roles.includes(role));
 
         if(!hasAnyRole){
-            return res.clearCookie('token').redirect(`https://${process.env.URL}/login`);
+            return res.clearCookie('token').redirect(`${process.env.URL}/login`);
         }
         return res.redirect(redirectUrl);
     } catch (error) {
         //console.error('Error processing token:', error);
         //res.status(400).json({ success: false, error: 'Error processing token' });
-        return res.clearCookie('token').redirect(`https://${process.env.URL}/login/error`);
+        return res.clearCookie('token').redirect(`${process.env.URL}/login/error`);
     }
 };
 
