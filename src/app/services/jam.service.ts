@@ -11,7 +11,7 @@ import { response } from 'express';
 })
 export class JamService {
 
-  url: string = `${environment.apiUrl}:3000/api/jam/`;
+  url: string = `${environment.apiUrl}/api/jam/`;
 
   constructor(private http: HttpClient) { }
 

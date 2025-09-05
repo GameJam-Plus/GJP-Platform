@@ -65,7 +65,7 @@ export class SiteCrudComponent implements OnInit {
 
   listRegions()
   {
-    this.regionService.getRegions(`${environment.apiUrl}:3000/api/region/get-regions`).subscribe({
+    this.regionService.getRegions(`${environment.apiUrl}/api/region/get-regions`).subscribe({
       next: (regions) => {
         this.regions = regions;
       },
@@ -77,7 +77,7 @@ export class SiteCrudComponent implements OnInit {
 
   listCountries()
   {
-    this.siteService.getCountries(`${environment.apiUrl}:3000/api/site/get-countries`).subscribe({
+    this.siteService.getCountries(`${environment.apiUrl}/api/site/get-countries`).subscribe({
       next: (countries) => {
         this.countries = countries;
       },
@@ -91,7 +91,7 @@ export class SiteCrudComponent implements OnInit {
   {
     //console.log("Fetching sites...");
     //let start = new Date();
-    this.siteService.getSites(`${environment.apiUrl}:3000/api/site/get-sites`).subscribe({
+    this.siteService.getSites(`${environment.apiUrl}/api/site/get-sites`).subscribe({
       next: (sites: Site[]) => {
         //let delta = (new Date()).getMilliseconds() - start.getMilliseconds();
         //console.log(`Sites loaded at ${delta / 1000} seconds`);
@@ -139,7 +139,7 @@ export class SiteCrudComponent implements OnInit {
     // TODO change this method to send full country struct
     if (this.siteForm.valid) {
       const siteId = this.selectedSite!._id;
-      const url = `${environment.apiUrl}:3000/api/site/update-site/${siteId}`;
+      const url = `${environment.apiUrl}/api/site/update-site/${siteId}`;
 
       console.log(this.siteForm.value["country"].name);
       this.siteService.updateSite(url, {
@@ -174,7 +174,7 @@ export class SiteCrudComponent implements OnInit {
       'Confirm Action',
       'If you delete this site, all its users will remain in the system. Proceed?',
       () => {
-        const url = `${environment.apiUrl}:3000/api/site/delete-site/${id}`;
+        const url = `${environment.apiUrl}/api/site/delete-site/${id}`;
 
         this.siteService.deleteSite(url).subscribe({
             next: (data) => {
@@ -192,7 +192,7 @@ export class SiteCrudComponent implements OnInit {
   addSite() {
     // TODO change this method to send full country struct
     if (this.siteForm.valid) {
-      this.siteService.createSite(`${environment.apiUrl}:3000/api/site/create-site`, {
+      this.siteService.createSite(`${environment.apiUrl}/api/site/create-site`, {
         name: this.siteForm.value["name"],
         modality: this.siteForm.value["modality"],
         regionId: this.siteForm.value["region"]?._id,
@@ -351,7 +351,7 @@ export class SiteCrudComponent implements OnInit {
   exportToPDF() {
     const doc = new jsPDF();
 
-    const url = `${environment.apiUrl}:3000/api/site/get-sites`;
+    const url = `${environment.apiUrl}/api/site/get-sites`;
     this.siteService.getSites(url).subscribe(
       (sites: Site[]) => {
         const data = sites.map(site => ({

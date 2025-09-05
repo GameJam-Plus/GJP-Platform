@@ -55,21 +55,21 @@ export class HomeComponent{
   }
 
   getUser() : void{
-    this.userService.getCurrentUser(`${environment.apiUrl}:3000/api/user/get-user`).subscribe({
+    this.userService.getCurrentUser(`${environment.apiUrl}/api/user/get-user`).subscribe({
       next: (user:User) =>{
         this.user = user;
         this.activeRole = user.roles[0]; // select the highest role as the active role
 
         if(user.site)
         {
-          this.siteService.getSite(`${environment.apiUrl}:3000/api/site/get-site/${user.site._id}`).subscribe({
+          this.siteService.getSite(`${environment.apiUrl}/api/site/get-site/${user.site._id}`).subscribe({
             next : (site: Site) => { this.site = site }
           });
         }
 
         if(user.region)
         {
-          this.regionService.getRegion(`${environment.apiUrl}:3000/api/region/get-region/${user.region._id}`).subscribe({
+          this.regionService.getRegion(`${environment.apiUrl}/api/region/get-region/${user.region._id}`).subscribe({
             next : (region: Region) => { this.region = region }
           });
         }
@@ -131,7 +131,7 @@ export class HomeComponent{
     {
       this.user.name = this.userForm.get('name')?.value;
       this.user.discordUsername = this.userForm.get('discordUsername')?.value;
-      this.userService.updateUser(`${environment.apiUrl}:3000/api/user/update-user/${this.user._id}`, this.user).subscribe({
+      this.userService.updateUser(`${environment.apiUrl}/api/user/update-user/${this.user._id}`, this.user).subscribe({
         next: (data) => {
           this.successMessage = "User updated successfully";
           this.getUser();
@@ -148,7 +148,7 @@ export class HomeComponent{
   }
 
   logOut(): void {
-    this.userService.logOutUser(`${environment.apiUrl}:3000/api/user/log-out-user`).subscribe({
+    this.userService.logOutUser(`${environment.apiUrl}/api/user/log-out-user`).subscribe({
       next: () => {
         this.router.navigate(['/login']);
       },

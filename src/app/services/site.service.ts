@@ -10,7 +10,7 @@ import { environment } from '../../environments/environment.prod';
 })
 export class SiteService {
 
-  url: string = `${environment.apiUrl}:3000/api/site/`;
+  url: string = `${environment.apiUrl}/api/site/`;
 
   constructor(private http: HttpClient) { }
 

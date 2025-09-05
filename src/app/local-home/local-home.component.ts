@@ -282,7 +282,7 @@ export class LocalHomeComponent implements OnDestroy {
 
   listRegions() : void
   {
-    const url = `${environment.apiUrl}:3000/api/region/get-regions`;
+    const url = `${environment.apiUrl}/api/region/get-regions`;
     this.regionService.getRegions(url).subscribe({
       next: (regions: Region[]) => {
         this.regions = regions;
@@ -296,7 +296,7 @@ export class LocalHomeComponent implements OnDestroy {
 
   listCountries(callback: Function) : void
   {
-    this.siteService.getCountries(`${environment.apiUrl}:3000/api/site/get-countries`).subscribe({
+    this.siteService.getCountries(`${environment.apiUrl}/api/site/get-countries`).subscribe({
       next: (countries) => {
         this.countries = countries;
         callback();
@@ -309,7 +309,7 @@ export class LocalHomeComponent implements OnDestroy {
 
   listSitesPerRegion() : void
   {
-    this.siteService.getSitesPerRegion(`${environment.apiUrl}:3000/api/site/get-sites-per-region/${this.user!.region!._id}`).subscribe({
+    this.siteService.getSitesPerRegion(`${environment.apiUrl}/api/site/get-sites-per-region/${this.user!.region!._id}`).subscribe({
       next: (sites: Site[]) => {
         this.sites = sites;
         this.loading = false;
@@ -412,7 +412,7 @@ export class LocalHomeComponent implements OnDestroy {
 
   getSite()
   {
-    const url = `${environment.apiUrl}:3000/api/site/get-site/${this.user!.site!._id}`;
+    const url = `${environment.apiUrl}/api/site/get-site/${this.user!.site!._id}`;
     this.siteService.getSite(url).subscribe({
       next: (site: Site) => {
         this.site = site;
@@ -428,7 +428,7 @@ export class LocalHomeComponent implements OnDestroy {
 
   listStaff() : void
   {
-    const url = `${environment.apiUrl}:3000/api/user/get-site-staff/${this.site!._id}`;
+    const url = `${environment.apiUrl}/api/user/get-site-staff/${this.site!._id}`;
     this.userService.getStaffPerSite(url).subscribe({
       next: (staff: User[]) => {
         this.staff = staff;
@@ -441,7 +441,7 @@ export class LocalHomeComponent implements OnDestroy {
 
   listJammers() : void
   {
-    const url = `${environment.apiUrl}:3000/api/user/get-jammers-per-site/${this.site!._id}/${this.jam!._id}`;
+    const url = `${environment.apiUrl}/api/user/get-jammers-per-site/${this.site!._id}/${this.jam!._id}`;
     this.userService.getJammersPerSite(url).subscribe({
       next: (jammers: User[]) => {
         this.jammers = jammers;
@@ -495,7 +495,7 @@ export class LocalHomeComponent implements OnDestroy {
             _id : region._id!,
             name : region.name
           };
-          this.userService.updateUser(`${environment.apiUrl}:3000/api/user/update-user/${this.user._id}`, this.user).subscribe({
+          this.userService.updateUser(`${environment.apiUrl}/api/user/update-user/${this.user._id}`, this.user).subscribe({
             next: (data) => {
               if(data.success)
               {
@@ -588,7 +588,7 @@ export class LocalHomeComponent implements OnDestroy {
         regionId: this.user.region!._id
       };
 
-      this.siteService.createSite(`${environment.apiUrl}:3000/api/site/create-site`, site).subscribe({
+      this.siteService.createSite(`${environment.apiUrl}/api/site/create-site`, site).subscribe({
         next: (data) => {
           this.assignSiteToUser(data.site);
         },
@@ -610,7 +610,7 @@ export class LocalHomeComponent implements OnDestroy {
       name: site.name
     };
 
-    this.userService.updateUser(`${environment.apiUrl}:3000/api/user/update-user/${this.user._id}`, this.user).subscribe({
+    this.userService.updateUser(`${environment.apiUrl}/api/user/update-user/${this.user._id}`, this.user).subscribe({
       next: (data) => {
         if(data.success)
         {
@@ -707,7 +707,7 @@ export class LocalHomeComponent implements OnDestroy {
         customSubmissionTime: customSubmissionTime ? customSubmissionTime : ''
       };
 
-      this.siteService.updateSite(`${environment.apiUrl}:3000/api/site/update-site/${this.site._id}`, site).subscribe({
+      this.siteService.updateSite(`${environment.apiUrl}/api/site/update-site/${this.site._id}`, site).subscribe({
         next: (data) => {
           this.message.showMessage("Success", data.message);
           this.site = data.site;
@@ -751,7 +751,7 @@ export class LocalHomeComponent implements OnDestroy {
       ()=>{
         if(jammer && this.site && this.jam)
         {
-          const url = `${environment.apiUrl}:3000/api/site/exit-site`;
+          const url = `${environment.apiUrl}/api/site/exit-site`;
             this.siteService.exitSite(url, {
               userId: jammer._id,
               siteId: this.site._id,

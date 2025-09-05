@@ -68,12 +68,12 @@ export class JuezMainComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
-    this.userService.getCurrentUser(`${environment.apiUrl}:3000/api/user/get-user`)
+    this.userService.getCurrentUser(`${environment.apiUrl}/api/user/get-user`)
     .subscribe(
       user => {
         this.userId = user._id;
-        const url = `${environment.apiUrl}:3000/api/submission/get-submissions-evaluator/${this.userId}`;
-        this.GameJamService.getTimeRemainingData(`${environment.apiUrl}:3000/api/game-jam/get-time-left-evaluator`)
+        const url = `${environment.apiUrl}/api/submission/get-submissions-evaluator/${this.userId}`;
+        this.GameJamService.getTimeRemainingData(`${environment.apiUrl}/api/game-jam/get-time-left-evaluator`)
         .subscribe(
           timeLeft => {
             const timeParts = timeLeft.split(':').map((part: string) => parseInt(part, 10));
@@ -103,7 +103,7 @@ export class JuezMainComponent implements OnInit {
         this.SubmissionService.getSubmissionsEvaluator(url).subscribe(
           (juegos: Submission[]) => {
             for (const juego of juegos){
-              const urlj = `${environment.apiUrl}:3000/api/team/get-team/` + juego.teamId
+              const urlj = `${environment.apiUrl}/api/team/get-team/` + juego.teamId
               this.TeamService.getTeamById(urlj).subscribe(
                 (team: Team) => {
                   this.games.push(
@@ -124,11 +124,11 @@ export class JuezMainComponent implements OnInit {
             console.error('Error al obtener juegos:', error);
           }
         );
-        const url1 = `${environment.apiUrl}:3000/api/submission/get-ratings-evaluator/${this.userId}`;
+        const url1 = `${environment.apiUrl}/api/submission/get-ratings-evaluator/${this.userId}`;
         this.SubmissionService.getSubmissionsEvaluator(url1).subscribe(
           (juegos: Submission[]) => {
             for (const juego of juegos){
-              const urlj = `${environment.apiUrl}:3000/api/team/get-team/` + juego.teamId
+              const urlj = `${environment.apiUrl}/api/team/get-team/` + juego.teamId
               this.TeamService.getTeamById(urlj).subscribe(
                 (team: Team) => {
                   this.evaluations.push(
@@ -158,7 +158,7 @@ export class JuezMainComponent implements OnInit {
   }
 
   logOut(){
-    this.userService.logOutUser(`${environment.apiUrl}:3000/api/user/log-out-user`)
+    this.userService.logOutUser(`${environment.apiUrl}/api/user/log-out-user`)
       .subscribe(
         () => {
           this.router.navigate(['/login']);
@@ -171,14 +171,14 @@ export class JuezMainComponent implements OnInit {
 
   getNewEvaluation() {
     this.loading = false;
-    this.SubmissionService.getCurrentTeamSubmission(`${environment.apiUrl}:3000/api/submission/get-new-evaluation`).subscribe(
+    this.SubmissionService.getCurrentTeamSubmission(`${environment.apiUrl}/api/submission/get-new-evaluation`).subscribe(
       (juego: Submission) => {
         const existingGame = this.games.find(game => game.id === juego._id);
         if (existingGame) {
           return;
         }
 
-        const urlj = `${environment.apiUrl}:3000/api/team/get-team/` + juego.teamId
+        const urlj = `${environment.apiUrl}/api/team/get-team/` + juego.teamId
         this.TeamService.getTeamById(urlj).subscribe(
           (team: Team) => {
             this.games.push(
@@ -273,7 +273,7 @@ export class JuezMainComponent implements OnInit {
       buildFeedback: this.buildFeedback,
       personalFeedback: this.personalFeedback
   };
-    this.SubmissionService.giveRating(`${environment.apiUrl}:3000/api/submission/give-rating`, rating).subscribe({
+    this.SubmissionService.giveRating(`${environment.apiUrl}/api/submission/give-rating`, rating).subscribe({
       next: (data) => {
         if (data.success) {
           this.loading = false;
@@ -290,14 +290,14 @@ export class JuezMainComponent implements OnInit {
   }
 
   private loadData() {
-    var url = `${environment.apiUrl}:3000/api/submission/get-submission/` + this.gameParameter;
+    var url = `${environment.apiUrl}/api/submission/get-submission/` + this.gameParameter;
     this.SubmissionService.getSubmission(url).subscribe(
       (game: any) => {
         this.gameLink = game.game;
         this.pitchLink = game.pitch;
         this.gameTitle = game.title;
 
-        const urlj = `${environment.apiUrl}:3000/api/team/get-team/` + game.teamId;
+        const urlj = `${environment.apiUrl}/api/team/get-team/` + game.teamId;
         this.TeamService.getTeamById(urlj).subscribe(
           (team: Team) => {
             this.teamName = team.teamName;
@@ -308,16 +308,16 @@ export class JuezMainComponent implements OnInit {
               email: jammer.email
             }));
 
-            const urlc = `${environment.apiUrl}:3000/api/category/get-category/` + game.categoryId;
+            const urlc = `${environment.apiUrl}/api/category/get-category/` + game.categoryId;
             this.CategoryService.getCategory(urlc).subscribe(
               (categories: Category) => {
                 this.categories = [categories.titleEN];
-                const urlt = `${environment.apiUrl}:3000/api/theme/get-theme/` + game.themeId;
+                const urlt = `${environment.apiUrl}/api/theme/get-theme/` + game.themeId;
                 this.ThemeService.getTheme(urlt).subscribe(
                   (theme: Theme) => {
                     this.themes = theme.titleEN !== undefined ? [theme.titleEN] : [];
 
-                    const ratingUrl = `${environment.apiUrl}:3000/api/submission/get-rating/` + game._id;
+                    const ratingUrl = `${environment.apiUrl}/api/submission/get-rating/` + game._id;
                     this.SubmissionService.getRating(ratingUrl).subscribe(
                       (rating: any) => {
 

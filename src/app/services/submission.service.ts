@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment.prod';
   providedIn: 'root'
 })
 export class SubmissionService {
-  url : string = `${environment.apiUrl}:3000/api/submission/`;
+  url : string = `${environment.apiUrl}/api/submission/`;
 
   constructor(private http: HttpClient) { }
 
