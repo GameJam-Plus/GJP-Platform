@@ -13,8 +13,12 @@ const upload = multer({ storage: storage });
 const submissionController = require('../controllers/submissionController');
 
 submission_route.post('/create-submission', upload.none(), submissionController.createSubmission);
-submission_route.post('/update-pitch', upload.none(), submissionController.updatePitch);
-submission_route.put('/update-submission/:id', upload.none(), submissionController.updateSubmission);
+submission_route.put('/update-gamejam-pitch', upload.none(), submissionController.updateGamejamPitch);
+submission_route.put('/update-incubation', upload.none(), submissionController.updateIncubation);
+submission_route.put('/update-incubation-pitch', upload.none(), submissionController.updateIncubationPitch);
+submission_route.put('/update-acceleration', upload.none(), submissionController.updateAcceleration);
+submission_route.put('/update-acceleration-pitch', upload.none(), submissionController.updateAccelerationPitch);
+
 submission_route.get('/get-submission-by-team/:teamId', submissionController.getSubmissionByTeam);
 submission_route.get('/get-submissions-by-site/:siteId/:jamId', submissionController.getSubmissionsBySite);
 submission_route.get('/get-submissions-by-jam/:jamId', submissionController.getSubmissionsByJam);

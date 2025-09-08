@@ -45,6 +45,8 @@ const registerUser = async (req, res) => {
             roles: roles,
             coins: coins,
             discordUsername: discordUsername,
+            genre: genre,
+            socialMedia: socialMedia,
             creationDate: new Date()
         });
 
@@ -60,6 +62,7 @@ const registerUser = async (req, res) => {
 const updateUser = async (req, res) => {
     const { id } = req.params;
     const { name, email, region, site, team, roles, coins, discordUsername, gender, socialMedia } = req.body;
+
     try {
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return res.status(400).json({ success: false, message: 'Invalid user ID.' });
