@@ -14,10 +14,10 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    genre: {
+    gender: {
         type: String,
-        required: false,
-        enum: ['Male', 'Female', 'Other', 'Prefer not to say']
+        enum: ["Masculino", "Feminino", "Não-binário", "Prefiro não dizer", "Outro"],
+        required: true
     },
     socialMedia: {
         type: String,

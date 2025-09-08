@@ -13,7 +13,7 @@ const { deepEqual } = require('assert');
 const crypto = require('node:crypto');
 
 const registerUser = async (req, res) => {
-    const { name, email, region, site, team, roles, coins, discordUsername, genre, socialMedia } = req.body;
+    const { name, email, region, site, team, roles, coins, discordUsername, gender, socialMedia } = req.body;
 
     try {
         // Validar email
@@ -37,6 +37,8 @@ const registerUser = async (req, res) => {
         const user = new User({
             name: name,
             email: email.toLowerCase().trim(),
+            gender: gender,
+            socialMedia: socialMedia.trim(),
             region: region ? { _id: region._id, name: region.name } : undefined,
             site: site ? { _id: site._id, name: site.name } : undefined,
             team: team ? { _id: team._id, name: team.name } : undefined,
@@ -59,7 +61,8 @@ const registerUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
     const { id } = req.params;
-    const { name, email, region, site, team, roles, coins, discordUsername, genre, socialMedia } = req.body;
+    const { name, email, region, site, team, roles, coins, discordUsername, gender, socialMedia } = req.body;
+
     try {
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return res.status(400).json({ success: false, message: 'Invalid user ID.' });
@@ -90,7 +93,7 @@ const updateUser = async (req, res) => {
         if (roles) existingUser.roles = roles;
         if (coins) existingUser.coins = coins;
         if (discordUsername) existingUser.discordUsername = discordUsername;
-        if (genre) existingUser.genre = genre;
+        if (gender) existingUser.gender = gender;
         if (socialMedia) existingUser.socialMedia = socialMedia;
         if(existingUser.roles.includes('Jammer')){
             const query = { 'jammers._id': id };
@@ -148,7 +151,7 @@ const loginUser = async (req, res) => {
         let userId;
 
         if (!existingUser) {
-            const registerLink = `http://${process.env.URL}/register`;
+            const registerLink = `${process.env.URL}/register`;
             const subject = 'Login in GameJam Platform';
             const message = `Hi, click on this link to create an account:`;
             const link = registerLink;
@@ -161,7 +164,7 @@ const loginUser = async (req, res) => {
             userId = existingUser._id;
         
             const token = jwt.sign({ userId, roles }, 'MY_JWT_SECRET', { expiresIn: 6000000 });
-            const magicLink = `http://${process.env.URL}/api/user/magic-link/${token}`;
+            const magicLink = `${process.env.URL}/api/user/magic-link/${token}`;
             const subject = 'Login in GameJam Platform';
             const message = `Hi, click on this link to continue to the app:`;
             const link = magicLink;
@@ -184,7 +187,7 @@ const getLoginLink = async (req, res) => {
             const userId = user._id;
             const roles = user.roles;
             const token = jwt.sign({ userId, roles }, 'MY_JWT_SECRET', { expiresIn: 6000000 });
-            console.log(`http://${process.env.URL}/api/user/magic-link/${token}`);
+            console.log(`${process.env.URL}/api/user/magic-link/${token}`);
             
             return res.status(200).json({ success: true, message: "Link sent to console" });
         }
@@ -211,19 +214,19 @@ const magicLink = async (req, res) => {
             httpOnly: false
         });
         let redirectUrl
-        redirectUrl = `http://${process.env.URL}/home`;
+        redirectUrl = `${process.env.URL}/home`;
 
         const rolesToCheck = ["LocalOrganizer", "GlobalOrganizer","Judge","Jammer"];
         const hasAnyRole = rolesToCheck.some(role => roles.includes(role));
 
         if(!hasAnyRole){
-            return res.clearCookie('token').redirect(`http://${process.env.URL}/login`);
+            return res.clearCookie('token').redirect(`${process.env.URL}/login`);
         }
         return res.redirect(redirectUrl);
     } catch (error) {
         //console.error('Error processing token:', error);
         //res.status(400).json({ success: false, error: 'Error processing token' });
-        return res.clearCookie('token').redirect(`http://${process.env.URL}/login/error`);
+        return res.clearCookie('token').redirect(`${process.env.URL}/login/error`);
     }
 };
 
@@ -415,8 +418,8 @@ const registerUsersFromCSV = async (req, res) => {
                             name: jammerInfo[j].name,
                             email: jammerInfo[j].email.toLowerCase().trim(),
                             discordUsername: jammerInfo[j].discordUsername,
-                            genre: jammerInfo[j].genre,
-                            socialMedia: jammerInfo[j].socialMedia,
+                            gender: jammerInfo[j].gender,
+                            socialMedia: jammerInfo[j].socialMedia.trim(),
                             roles: ['Jammer'],
                             creationDate: currentDate,
                             lastUpdateDate: currentDate
