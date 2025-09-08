@@ -21,15 +21,18 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     if(isPlatformBrowser(this.platformId)) {
-      const savedLanguage = localStorage.getItem('language');
-      const defaultLanguage = 'pt';
+      //const savedLanguage = localStorage.getItem('language');
+      const cultureLanguage = this.translate.getBrowserCultureLang();
+      const defaultLanguage = 'pt-BR';
 
-      this.translate.addLangs(['en', 'es', 'pt', 'zh']);
+      this.translate.addLangs(['en-US', 'es-MX', 'pt-BR', 'zh-CN']);
       this.translate.setFallbackLang(defaultLanguage);
 
-      if(savedLanguage) {
-        this.translate.use(savedLanguage);
+      if(cultureLanguage) {
+        console.log('Culture language used.');
+        this.translate.use(cultureLanguage);
       } else {
+        console.log('Default language used.');
         this.translate.use(defaultLanguage);
       }
     }

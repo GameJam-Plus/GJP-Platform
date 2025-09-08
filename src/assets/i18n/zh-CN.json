@@ -1,0 +1,91 @@
+{
+	"platform": {
+		"common": {
+			"by": "由",
+			"dangerzone": "危险区域",
+			"exitteam": "退出团队",
+			"exitvenue": "退出会场",
+			"late": "迟到",
+			"notavailable": "不详",
+			"pending": "待定",
+			"submittedon": "提交日期",
+			"valid": "有效"
+		},
+		"globalorganizer": {
+			"home": {
+				"activejam": {
+					"header": "活跃 GameJam 信息",
+					"title": "标题"
+				}
+			}
+		},
+		"jammer": {
+			"home": {
+				"gamesfromvenue": {
+					"gamesofthisvenue": "此场馆的游戏",
+					"loadsubmissions": "加载提交"
+				},
+				"jaminfo": {
+					"categories": "类别",
+					"currentstage": "现阶段",
+					"manual": "手动",
+					"notpublictext1": "主题和类别是保密的。",
+					"notpublictext2": "全球组织者将很快公布主题和类别，请稍后再查看。",
+					"stages": "阶段",
+					"stagetooltip": "所有阶段均从巴西时间（GMT-3）00:00:00开始，到11:59:59结束。",
+					"themes": "主题"
+				},
+				"venueinfo": {
+					"address": "地址",
+					"city": "城市",
+					"contactinfo": "联系信息",
+					"country": "国家",
+					"format": "格式",
+					"language": "语言",
+					"location": "地点",
+					"modality": "情态",
+					"server": "服务器",
+					"start": "开始",
+					"status": "地位"
+				}
+			},
+			"myjam": {
+				"mysubmission": {
+					"gamesubmissionstatus": "游戏提交状态：",
+					"mysubmission": "我的意见书",
+					"noteam": "您没有被分配到一个团队，请创建一个新团队或加入您所在场地的团队以提交比赛。"
+				},
+				"myteam": {
+					"joincode": "加入代码：",
+					"joincodetooltip": "将此代码分享给你的队友，邀请他们加入你的团队。",
+					"jointeam": "加入现有团队",
+					"myteam": "我的团队：",
+					"newteam": "创建新团队",
+					"noteamtext1": "你还没有团队。",
+					"noteamtext2": "创建新团队或使用秘密代码加入现有团队。",
+					"teamleader": "团队领导",
+					"teammembers": "团队成员",
+					"teamname": "团队名称：",
+					"updateteamname": "更新团队名称"
+				}
+			},
+			"navbar": {
+				"home": {
+					"gamesfromvenue": "场馆游戏",
+					"home": "主页",
+					"jaminfo": "即兴信息",
+					"venueinfo": "场馆信息"
+				},
+				"myjam": {
+					"feedback": "反馈",
+					"myjam": "我的收藏",
+					"mysubmission": "我的提交",
+					"myteam": "我的团队"
+				},
+				"rules": {
+					"rulesandconditions": "规则和条件"
+				}
+			}
+		}
+	}
+}

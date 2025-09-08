@@ -57,22 +57,22 @@
 
     <!-- #region NAV BAR -->
     <div id="localHomeNavBar" class="col-2 container-fluid">
-      <div class="navbutton navL1" data-toggle="collapse" data-target="#homeMenu">Home</div>
+      <div class="navbutton navL1" data-toggle="collapse" data-target="#homeMenu">{{ 'platform.jammer.navbar.home.home' | translate}}</div>
       <ul #homeMenu id="homeMenu" class="collapse">
-        <li class="navbutton navL2" (click)="page = 'site'">Venue Info</li>
-        <li class="navbutton navL2" (click)="page = 'jam'">Jam Info</li>
-        <li class="navbutton navL2" (click)="page = 'games'">Games from Site</li>
+        <li class="navbutton navL2" (click)="page = 'site'">{{ 'platform.jammer.navbar.home.venueinfo' | translate}}</li>
+        <li class="navbutton navL2" (click)="page = 'jam'">{{ 'platform.jammer.navbar.home.jaminfo' | translate}}</li>
+        <li class="navbutton navL2" (click)="page = 'games'">{{ 'platform.jammer.navbar.home.gamesfromvenue' | translate}}</li>
         <!--<li class="navbutton navL2" (click)="page = 'news'">Notifications</li>-->
       </ul>
 
-      <div class="navbutton navL1" data-toggle="collapse" data-target="#venueMenu">My Jam</div>
+      <div class="navbutton navL1" data-toggle="collapse" data-target="#venueMenu">{{ 'platform.jammer.navbar.myjam.myjam' | translate}}</div>
       <ul #venueMenu id="venueMenu" class="collapse">
-        <li class="navbutton navL2" (click)="page = 'team'">My Team</li>
-        <li class="navbutton navL2" (click)="page = 'submission'">My Submission</li>
-        <li class="navbutton navL2" (click)="page = 'feedback'">Feedback</li>
+        <li class="navbutton navL2" (click)="page = 'team'">{{ 'platform.jammer.navbar.myjam.myteam' | translate}}</li>
+        <li class="navbutton navL2" (click)="page = 'submission'">{{ 'platform.jammer.navbar.myjam.mysubmission' | translate}}</li>
+        <li class="navbutton navL2" (click)="page = 'feedback'">{{ 'platform.jammer.navbar.myjam.feedback' | translate}}</li>
       </ul>
 
-      <div class="navbutton navL1" (click)="page = 'rules'">Rules and Conditions</div>
+      <div class="navbutton navL1" (click)="page = 'rules'">{{ 'platform.jammer.navbar.rules.rulesandconditions' | translate}}</div>
     </div>
     <!-- #endregion -->
 
@@ -125,9 +125,9 @@
               </div>
 
               <div class="row align-items-end p-2">
-                <span class="col-4 text-right heavy mb-1 align-bottom" *ngIf="site.email">Email</span> <a *ngIf="site.email" [href]="'mailto:' + site.email" class="col-8">{{ site.email }}</a>
-                <span class="col-4 text-right heavy mb-1 align-bottom" *ngIf="site.phoneNumber">Phone</span> <span *ngIf="site.phoneNumber" class="col-8">{{ site.phoneNumber }}</span>
-                <span class="col-4 text-right heavy mb-1 align-bottom" *ngIf="site.website">Website</span> <a *ngIf="site.website" target="_blank" [href]="formatURL(site.website)" class="col-8">{{ site.website }}</a>
+                <span class="col-4 text-right heavy mb-1 align-bottom" *ngIf="site.email">{{ 'platform.jammer.home.venueinfo.email' | translate}}</span> <a *ngIf="site.email" [href]="'mailto:' + site.email" class="col-8">{{ site.email }}</a>
+                <span class="col-4 text-right heavy mb-1 align-bottom" *ngIf="site.phoneNumber">{{ 'platform.jammer.home.venueinfo.phone' | translate}}</span> <span *ngIf="site.phoneNumber" class="col-8">{{ site.phoneNumber }}</span>
+                <span class="col-4 text-right heavy mb-1 align-bottom" *ngIf="site.website">{{ 'platform.jammer.home.venueinfo.website' | translate}}</span> <a *ngIf="site.website" target="_blank" [href]="formatURL(site.website)" class="col-8">{{ site.website }}</a>
                 <fa-icon [icon]="faInstagram" class="col-4 text-right" *ngIf="site.instagram"></fa-icon><a *ngIf="site.instagram" [href]="formatURL(site.instagram)" class="col-8">{{ site.instagram }}</a>
                 <fa-icon [icon]="faWhatsapp" class="col-4 text-right" *ngIf="site.whatsapp"></fa-icon><a *ngIf="site.whatsapp" [href]="formatURL(site.whatsapp)" class="col-8">{{ site.whatsapp }}</a>
                 <fa-icon [icon]="faDiscord" class="col-4 text-right" *ngIf="site.discord"></fa-icon><a *ngIf="site.discord" [href]="formatURL(site.discord)" class="col-8">{{ site.discord }}</a>
@@ -144,8 +144,8 @@
         </div>
 
         <div class="row m-2 p-2 warning">
-          <h3 class="col-12 text-center">Danger Zone</h3>
-          <button class="btn btn-danger m-2" (click)="exitSite()">Exit Venue</button>
+          <h3 class="col-12 text-center">{{ 'platform.common.dangerzone' | translate}}</h3>
+          <button class="btn btn-danger m-2" (click)="exitSite()">{{ 'platform.common.exitvenue' | translate}}</button>
         </div>
       </div>
 
@@ -156,13 +156,13 @@
           <hr class="my-4">
 
           <div class="info d-block text-center p-5 mb-5" *ngIf="!jam.public">
-            <p>Themes and categories are secret.</p>
-            <p>Global Organizers will publish the themes and categories soon, check again later.</p>
+            <p>{{ 'platform.jammer.home.jaminfo.notpublictext1' | translate}}</p>
+            <p>{{ 'platform.jammer.home.jaminfo.notpublictext2' | translate}}</p>
           </div>
 
           <!-- THEMES -->
           <div class="row" *ngIf="jam.public">
-            <h2 class="col-12 text-center">Themes</h2>
+            <h2 class="col-12 text-center">{{ 'platform.jammer.home.jaminfo.themes' | translate}}</h2>
             <div class="col-md-4 p-2" *ngFor="let theme of jam.themes">
               <div class="card p-2 minh-2">
                 <h3 *ngIf="site.language == 'PT'" class="text-center">{{ theme.titlePT }}</h3>
@@ -175,9 +175,9 @@
 
                 <span style="flex-grow: 1;"></span>
 
-                <a *ngIf="site.language == 'PT'" href="{{ theme.manualPT }}" class="btn btn-black align-bottom">Manual</a>
-                <a *ngIf="site.language == 'ES'" href="{{ theme.manualES }}" class="btn btn-black align-bottom">Manual</a>
-                <a *ngIf="site.language == 'EN'" href="{{ theme.manualEN }}" class="btn btn-black align-bottom">Manual</a>
+                <a *ngIf="site.language == 'PT'" href="{{ theme.manualPT }}" class="btn btn-black align-bottom">{{ 'platform.jammer.home.jaminfo.manual' | translate}}</a>
+                <a *ngIf="site.language == 'ES'" href="{{ theme.manualES }}" class="btn btn-black align-bottom">{{ 'platform.jammer.home.jaminfo.manual' | translate}}</a>
+                <a *ngIf="site.language == 'EN'" href="{{ theme.manualEN }}" class="btn btn-black align-bottom">{{ 'platform.jammer.home.jaminfo.manual' | translate}}</a>
               </div>
             </div>
           </div>
@@ -186,7 +186,7 @@
 
           <!-- CATEGORIES -->
           <div class="row" *ngIf="jam.public">
-            <h2 class="col-12 text-center">Categories</h2>
+            <h2 class="col-12 text-center">{{ 'platform.jammer.home.jaminfo.categories' | translate}}</h2>
             <div class="col-md-4 p-2" *ngFor="let category of jam.categories">
               <div class="card p-2 minh-2">
                 <h3 *ngIf="site.language == 'PT'" class="text-center">{{ category.titlePT }}</h3>
@@ -199,9 +199,9 @@
 
                 <span style="flex-grow: 1;"></span>
 
-                <a *ngIf="site.language == 'PT'" href="{{ category.manualPT }}" class="btn btn-black align-bottom">Manual</a>
-                <a *ngIf="site.language == 'ES'" href="{{ category.manualES }}" class="btn btn-black align-bottom">Manual</a>
-                <a *ngIf="site.language == 'EN'" href="{{ category.manualEN }}" class="btn btn-black align-bottom">Manual</a>
+                <a *ngIf="site.language == 'PT'" href="{{ category.manualPT }}" class="btn btn-black align-bottom">{{ 'platform.jammer.home.jaminfo.manual' | translate}}</a>
+                <a *ngIf="site.language == 'ES'" href="{{ category.manualES }}" class="btn btn-black align-bottom">{{ 'platform.jammer.home.jaminfo.manual' | translate}}</a>
+                <a *ngIf="site.language == 'EN'" href="{{ category.manualEN }}" class="btn btn-black align-bottom">{{ 'platform.jammer.home.jaminfo.manual' | translate}}</a>
               </div>
             </div>
           </div>
@@ -210,12 +210,12 @@
 
           <!-- STAGES -->
           <div class="row pb-3 align-items-end">
-            <h2 class="col-12 text-center">Stages<a matTooltip="All stages start at 00:00:00 and end at 11:59:59 in Brazilian Time (GMT-3)." class="tooltip-trigger">?</a></h2>
+            <h2 class="col-12 text-center">{{ 'platform.jammer.home.jaminfo.stages' | translate}}<a matTooltip="{{ 'platform.jammer.home.jaminfo.stagetooltip' | translate}}" class="tooltip-trigger">?</a></h2>
             <div class="col-3 p-2" *ngFor="let stage of jam.stages">
               <div [ngClass]="getStageClass(stage)">
                 <h3 class="text-center">{{ stage.stageName }}</h3>
                 <p class="text-center">{{ formatDate(stage.startDate) }} - {{ formatDate(stage.endDate) }}</p>
-                <p class="text-center" *ngIf="isCurrentStage(stage)">Current Stage</p>
+                <p class="text-center" *ngIf="isCurrentStage(stage)">{{ 'platform.jammer.home.jaminfo.currentstage' | translate}}</p>
               </div>
             </div>
           </div>
@@ -223,13 +223,13 @@
       </div>
 
       <div *ngIf="page == 'games'" class="container container-lg p-3">
-        <h1>Games of this venue</h1>
-        <button class="btn btn-black btn-block" (click)="getSubmissionsOfSite()">LOAD SUBMISSIONS</button>
+        <h1>{{ 'platform.jammer.home.gamesfromvenue.gamesofthisvenue' | translate}}</h1>
+        <button class="btn btn-black btn-block" (click)="getSubmissionsOfSite()">{{ 'platform.jammer.home.gamesfromvenue.loadsubmissions' | translate}}</button>
         <div class="row m-2">
           <div *ngFor="let s of siteSubmissions" class="p-2 col-4">
             <div class="rounded shadow bg-light text-center p-4">
               <h2>{{ s.gamejamTitle }}</h2>
-              by<br>
+              {{ 'platform.common.by' | translate}}<br>
               <b>{{ s.teamName }}</b><br>
               <a [href]="s.gamejamBuild" target="_blank">{{ s.gamejamBuild }}</a><br>
             </div>
@@ -242,36 +242,36 @@
       <!-- #region JAM -->
       <div *ngIf="page == 'team'" class="container container-lg p-3">
         <div *ngIf="!team" class="warning text-center p-2">
-          <p>You don't have a team yet.</p>
-          <p>Create a new team or join an existing team with the secret code.</p>
-          <button class="btn btn-primary m-2" (click)="createTeam()">Create a new team</button>
-          <button class="btn btn-primary m-2" (click)="joinTeam()">Join an existing team</button>
+          <p>{{ 'platform.jammer.myjam.myteam.noteamtext1' | translate}}</p>
+          <p>{{ 'platform.jammer.myjam.myteam.noteamtext2' | translate}}</p>
+          <button class="btn btn-primary m-2" (click)="createTeam()">{{ 'platform.jammer.myjam.myteam.newteam' | translate}}</button>
+          <button class="btn btn-primary m-2" (click)="joinTeam()">{{ 'platform.jammer.myjam.myteam.jointeam' | translate}}</button>
         </div>
 
         <div *ngIf="team">
-          <h1 class="text-center">My Team: {{ team.teamName.toUpperCase() }}</h1>
+          <h1 class="text-center">{{ 'platform.jammer.myjam.myteam.myteam' | translate}} {{ team.teamName.toUpperCase() }}</h1>
 
           <div class="row mt-3">
             <div class="col-8">
-              <h3 class="text-center">Team Name:</h3>
+              <h3 class="text-center">{{ 'platform.jammer.myjam.myteam.teamname' | translate}}</h3>
               <div class="input-group input-group-lg">
                 <input type="text" class="form-control d-block" [(ngModel)]="team.teamName">
                 <div class="input-group-append">
-                  <button class="navbutton navL1 text-center" (click)="saveTeam()">Update Team Name</button>
+                  <button class="navbutton navL1 text-center" (click)="saveTeam()">{{ 'platform.jammer.myjam.myteam.updateteamname' | translate}}</button>
                 </div>
               </div>
             </div>
             <div class="col-4">
-              <h3 class="text-center">Join Code:</h3>
+              <h3 class="text-center">{{ 'platform.jammer.myjam.myteam.joincode' | translate}}</h3>
               <p class="text-center">
                 {{ team.teamCode }}
-                <a matTooltip="Share this code with your fellow jammers to invite them to your team." class="tooltip-trigger">?</a>
+                <a matTooltip="{{ 'platform.jammer.myjam.myteam.joincodetooltip' | translate}}" class="tooltip-trigger">?</a>
               </p>
             </div>
           </div>
 
 
-          <h2 class="text-center mt-3">Team Members</h2>
+          <h2 class="text-center mt-3">{{ 'platform.jammer.myjam.myteam.teammembers' | translate}}</h2>
           <hr>
           <div class="row">
             <div class="col-3 m-2" *ngFor="let jammer of team.jammers">
@@ -279,14 +279,14 @@
                 <h3>{{ jammer.name }}</h3>
                 <p><fa-icon [icon]="faEnvelope" class="mr-2"></fa-icon><a [href]="'mailto:' + jammer.email">{{ jammer.email }}</a></p>
                 <p><fa-icon [icon]="faDiscord" class="mr-2"></fa-icon> {{ jammer.discordUsername ? jammer.discordUsername : 'None' }}</p>
-                <p *ngIf="jammer.role && jammer.role === 'owner'">Team Leader</p>
+                <p *ngIf="jammer.role && jammer.role === 'owner'">{{ 'platform.jammer.myjam.myteam.teamleader' | translate}}</p>
               </div>
             </div>
           </div>
 
           <div class="row m-2 p-2 warning">
-            <h3 class="col-12 text-center">Danger Zone</h3>
-            <button class="btn btn-danger m-2" (click)="exitTeam()">Exit Team</button>
+            <h3 class="col-12 text-center">{{ 'platform.common.dangerzone' | translate}}</h3>
+            <button class="btn btn-danger m-2" (click)="exitTeam()">{{ 'platform.common.exitteam' | translate}}</button>
           </div>
         </div>
       </div>
@@ -303,102 +303,88 @@
 
         <!-- Submissions Status -->
         <div *ngIf="team" class="p-4">
-          <!-- TODO: ADD PT AND ES LANGUAGES, THE ONE WITH STUFF IS IN EN-->
-          <!-- Portuguese -->
-          <div *ngIf="site.language == 'EN'">
-
+          <!-- Gamejam Submission Status -->
+          <div *ngIf="isStageActive(JamStages.GAMEJAM) || hasStagePassed(JamStages.GAMEJAM)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.GAMEJAM)">
+            <h2 class="text-white">
+              {{ 'platform.jammer.myjam.mysubmission.gamesubmissionstatus' | translate}} 
+              <ng-container [ngSwitch]="true">
+                <span *ngSwitchCase="hasSubmittedOn(JamStages.GAMEJAM)">{{ 'platform.common.valid' | translate}}</span>
+                <span *ngSwitchCase="!hasSubmittedOn(JamStages.GAMEJAM) && getStageTimeDelta(JamStages.GAMEJAM) > 0">{{ 'platform.common.pending' | translate}}</span>
+                <span *ngSwitchCase="!hasSubmittedOn(JamStages.GAMEJAM) && getStageTimeDelta(JamStages.GAMEJAM) < 0">{{ 'platform.common.late' | translate}}</span>
+                <span *ngSwitchDefault>{{ 'platform.common.notavailable' | translate}}</span>
+              </ng-container>
+            </h2>
+            <p class="text-white" *ngIf="hasSubmittedOn(JamStages.GAMEJAM) && submission">{{ 'platform.common.submittedon' | translate}} {{ submission.gamejamSubmissionTime | date:'medium' }}</p>
           </div>
 
-          <!-- English -->
-          <div *ngIf="site.language == 'PT'">
-            <!-- Gamejam Submission Status -->
-            <div *ngIf="isStageActive(JamStages.GAMEJAM) || hasStagePassed(JamStages.GAMEJAM)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.GAMEJAM)">
-              <h2 class="text-white">
-                Status da submissão do jogo: 
-                <ng-container [ngSwitch]="true">
-                  <span *ngSwitchCase="hasSubmittedOn(JamStages.GAMEJAM)">VÁLIDO</span>
-                  <span *ngSwitchCase="!hasSubmittedOn(JamStages.GAMEJAM) && getStageTimeDelta(JamStages.GAMEJAM) > 0">PENDENTE</span>
-                  <span *ngSwitchCase="!hasSubmittedOn(JamStages.GAMEJAM) && getStageTimeDelta(JamStages.GAMEJAM) < 0">ATRASADO</span>
-                  <span *ngSwitchDefault>NÃO DISPONÍVEL</span>
-                </ng-container>
-              </h2>
-              <p class="text-white" *ngIf="hasSubmittedOn(JamStages.GAMEJAM) && submission">Enviado em: {{ submission.gamejamSubmissionTime | date:'medium' }}</p>
-            </div>
-
-            <!-- Gamejam Pitch Submission Status -->
-            <div *ngIf="isStageActive(JamStages.GAMEJAM_SUBMISSION) || hasStagePassed(JamStages.GAMEJAM_SUBMISSION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.GAMEJAM_SUBMISSION)">
-              <h2 class="text-white">
-                Status da submissão do pitch: 
-                <ng-container [ngSwitch]="true">
-                  <span *ngSwitchCase="hasSubmittedOn(JamStages.GAMEJAM_SUBMISSION)">VÁLIDO</span>
-                  <span *ngSwitchCase="!hasSubmittedOn(JamStages.GAMEJAM_SUBMISSION) && getStageTimeDelta(JamStages.GAMEJAM_SUBMISSION) > 0">PENDENTE</span>
-                  <span *ngSwitchCase="!hasSubmittedOn(JamStages.GAMEJAM_SUBMISSION) && getStageTimeDelta(JamStages.GAMEJAM_SUBMISSION) < 0">ATRASADO</span>
-                  <span *ngSwitchDefault>NÃO DISPONÍVEL</span>
-                </ng-container>
-              </h2>
-              <p class="text-white" *ngIf="hasSubmittedOn(JamStages.GAMEJAM_SUBMISSION) && submission">Enviado em: {{ submission.gamejamPitchTime | date:'medium' }}</p>
-            </div>
-
-            <!-- Incubation Submission Status -->
-            <div *ngIf="isStageActive(JamStages.INCUBATION) || hasStagePassed(JamStages.INCUBATION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.INCUBATION)">
-              <h2 class="text-white">
-                Status da submissão da incubação: 
-                <ng-container [ngSwitch]="true">
-                  <span *ngSwitchCase="hasSubmittedOn(JamStages.INCUBATION)">VÁLIDO</span>
-                  <span *ngSwitchCase="!hasSubmittedOn(JamStages.INCUBATION) && getStageTimeDelta(JamStages.INCUBATION) > 0">PENDENTE</span>
-                  <span *ngSwitchCase="!hasSubmittedOn(JamStages.INCUBATION) && getStageTimeDelta(JamStages.INCUBATION) < 0">ATRASADO</span>
-                  <span *ngSwitchDefault>NÃO DISPONÍVEL</span>
-                </ng-container>
-              </h2>
-              <p class="text-white" *ngIf="hasSubmittedOn(JamStages.INCUBATION) && submission">Enviado em: {{ submission.incubationSubmissionTime | date:'medium' }}</p>
-            </div>
-
-            <!-- Incubation Pitch Submission Status -->
-            <div *ngIf="isStageActive(JamStages.INCUBATION_SUBMISSION) || hasStagePassed(JamStages.INCUBATION_SUBMISSION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.INCUBATION_SUBMISSION)">
-              <h2 class="text-white">
-                Status da submissão do pitch da incubação: 
-                <ng-container [ngSwitch]="true">
-                  <span *ngSwitchCase="hasSubmittedOn(JamStages.INCUBATION_SUBMISSION)">VÁLIDO</span>
-                  <span *ngSwitchCase="!hasSubmittedOn(JamStages.INCUBATION_SUBMISSION) && getStageTimeDelta(JamStages.INCUBATION_SUBMISSION) > 0">PENDENTE</span>
-                  <span *ngSwitchCase="!hasSubmittedOn(JamStages.INCUBATION_SUBMISSION) && getStageTimeDelta(JamStages.INCUBATION_SUBMISSION) < 0">ATRASADO</span>
-                  <span *ngSwitchDefault>NÃO DISPONÍVEL</span>
-                </ng-container>
-              </h2>
-              <p class="text-white" *ngIf="hasSubmittedOn(JamStages.INCUBATION_SUBMISSION) && submission">Enviado em: {{ submission.incubationPitchTime | date:'medium' }}</p>
-            </div>
-
-            <!-- Acceleration Submission Status -->
-            <div *ngIf="isStageActive(JamStages.ACCELERATION) || hasStagePassed(JamStages.ACCELERATION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.ACCELERATION)">
-              <h2 class="text-white">
-                Status da submissão da aceleração: 
-                <ng-container [ngSwitch]="true">
-                  <span *ngSwitchCase="hasSubmittedOn(JamStages.ACCELERATION)">VÁLIDO</span>
-                  <span *ngSwitchCase="!hasSubmittedOn(JamStages.ACCELERATION) && getStageTimeDelta(JamStages.ACCELERATION) > 0">PENDENTE</span>
-                  <span *ngSwitchCase="!hasSubmittedOn(JamStages.ACCELERATION) && getStageTimeDelta(JamStages.ACCELERATION) < 0">ATRASADO</span>
-                  <span *ngSwitchDefault>NÃO DISPONÍVEL</span>
-                </ng-container>
-              </h2>
-              <p class="text-white" *ngIf="hasSubmittedOn(JamStages.ACCELERATION) && submission">Enviado em: {{ submission.accelerationSubmissionTime | date:'medium' }}</p>
-            </div>
-
-            <!-- Acceleration Pitch Submission Status -->
-            <div *ngIf="isStageActive(JamStages.ACCELERATION_SUBMISSION) || hasStagePassed(JamStages.ACCELERATION_SUBMISSION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.ACCELERATION_SUBMISSION)">
-              <h2 class="text-white">
-                Status da submissão do pitch da aceleração: 
-                <ng-container [ngSwitch]="true">
-                  <span *ngSwitchCase="hasSubmittedOn(JamStages.ACCELERATION_SUBMISSION)">VÁLIDO</span>
-                  <span *ngSwitchCase="!hasSubmittedOn(JamStages.ACCELERATION_SUBMISSION) && getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION) > 0">PENDENTE</span>
-                  <span *ngSwitchCase="!hasSubmittedOn(JamStages.ACCELERATION_SUBMISSION) && getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION) < 0">ATRASADO</span>
-                  <span *ngSwitchDefault>NÃO DISPONÍVEL</span>
-                </ng-container>
-              </h2>
-              <p class="text-white" *ngIf="hasSubmittedOn(JamStages.ACCELERATION_SUBMISSION) && submission">Enviado em: {{ submission.accelerationPitchTime | date:'medium' }}</p>
-            </div>
+          <!-- Gamejam Pitch Submission Status -->
+          <div *ngIf="isStageActive(JamStages.GAMEJAM_SUBMISSION) || hasStagePassed(JamStages.GAMEJAM_SUBMISSION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.GAMEJAM_SUBMISSION)">
+            <h2 class="text-white">
+              Status da submissão do pitch: 
+              <ng-container [ngSwitch]="true">
+                <span *ngSwitchCase="hasSubmittedOn(JamStages.GAMEJAM_SUBMISSION)">VÁLIDO</span>
+                <span *ngSwitchCase="!hasSubmittedOn(JamStages.GAMEJAM_SUBMISSION) && getStageTimeDelta(JamStages.GAMEJAM_SUBMISSION) > 0">PENDENTE</span>
+                <span *ngSwitchCase="!hasSubmittedOn(JamStages.GAMEJAM_SUBMISSION) && getStageTimeDelta(JamStages.GAMEJAM_SUBMISSION) < 0">ATRASADO</span>
+                <span *ngSwitchDefault>NÃO DISPONÍVEL</span>
+              </ng-container>
+            </h2>
+            <p class="text-white" *ngIf="hasSubmittedOn(JamStages.GAMEJAM_SUBMISSION) && submission">Enviado em: {{ submission.gamejamPitchTime | date:'medium' }}</p>
           </div>
-          
-          <!-- Spanish -->
-          <div *ngIf="site.language == 'ES'">
 
+          <!-- Incubation Submission Status -->
+          <div *ngIf="isStageActive(JamStages.INCUBATION) || hasStagePassed(JamStages.INCUBATION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.INCUBATION)">
+            <h2 class="text-white">
+              Status da submissão da incubação: 
+              <ng-container [ngSwitch]="true">
+                <span *ngSwitchCase="hasSubmittedOn(JamStages.INCUBATION)">VÁLIDO</span>
+                <span *ngSwitchCase="!hasSubmittedOn(JamStages.INCUBATION) && getStageTimeDelta(JamStages.INCUBATION) > 0">PENDENTE</span>
+                <span *ngSwitchCase="!hasSubmittedOn(JamStages.INCUBATION) && getStageTimeDelta(JamStages.INCUBATION) < 0">ATRASADO</span>
+                <span *ngSwitchDefault>NÃO DISPONÍVEL</span>
+              </ng-container>
+            </h2>
+            <p class="text-white" *ngIf="hasSubmittedOn(JamStages.INCUBATION) && submission">Enviado em: {{ submission.incubationSubmissionTime | date:'medium' }}</p>
+          </div>
+
+          <!-- Incubation Pitch Submission Status -->
+          <div *ngIf="isStageActive(JamStages.INCUBATION_SUBMISSION) || hasStagePassed(JamStages.INCUBATION_SUBMISSION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.INCUBATION_SUBMISSION)">
+            <h2 class="text-white">
+              Status da submissão do pitch da incubação: 
+              <ng-container [ngSwitch]="true">
+                <span *ngSwitchCase="hasSubmittedOn(JamStages.INCUBATION_SUBMISSION)">VÁLIDO</span>
+                <span *ngSwitchCase="!hasSubmittedOn(JamStages.INCUBATION_SUBMISSION) && getStageTimeDelta(JamStages.INCUBATION_SUBMISSION) > 0">PENDENTE</span>
+                <span *ngSwitchCase="!hasSubmittedOn(JamStages.INCUBATION_SUBMISSION) && getStageTimeDelta(JamStages.INCUBATION_SUBMISSION) < 0">ATRASADO</span>
+                <span *ngSwitchDefault>NÃO DISPONÍVEL</span>
+              </ng-container>
+            </h2>
+            <p class="text-white" *ngIf="hasSubmittedOn(JamStages.INCUBATION_SUBMISSION) && submission">Enviado em: {{ submission.incubationPitchTime | date:'medium' }}</p>
+          </div>
+
+          <!-- Acceleration Submission Status -->
+          <div *ngIf="isStageActive(JamStages.ACCELERATION) || hasStagePassed(JamStages.ACCELERATION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.ACCELERATION)">
+            <h2 class="text-white">
+              Status da submissão da aceleração: 
+              <ng-container [ngSwitch]="true">
+                <span *ngSwitchCase="hasSubmittedOn(JamStages.ACCELERATION)">VÁLIDO</span>
+                <span *ngSwitchCase="!hasSubmittedOn(JamStages.ACCELERATION) && getStageTimeDelta(JamStages.ACCELERATION) > 0">PENDENTE</span>
+                <span *ngSwitchCase="!hasSubmittedOn(JamStages.ACCELERATION) && getStageTimeDelta(JamStages.ACCELERATION) < 0">ATRASADO</span>
+                <span *ngSwitchDefault>NÃO DISPONÍVEL</span>
+              </ng-container>
+            </h2>
+            <p class="text-white" *ngIf="hasSubmittedOn(JamStages.ACCELERATION) && submission">Enviado em: {{ submission.accelerationSubmissionTime | date:'medium' }}</p>
+          </div>
+
+          <!-- Acceleration Pitch Submission Status -->
+          <div *ngIf="isStageActive(JamStages.ACCELERATION_SUBMISSION) || hasStagePassed(JamStages.ACCELERATION_SUBMISSION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.ACCELERATION_SUBMISSION)">
+            <h2 class="text-white">
+              Status da submissão do pitch da aceleração: 
+              <ng-container [ngSwitch]="true">
+                <span *ngSwitchCase="hasSubmittedOn(JamStages.ACCELERATION_SUBMISSION)">VÁLIDO</span>
+                <span *ngSwitchCase="!hasSubmittedOn(JamStages.ACCELERATION_SUBMISSION) && getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION) > 0">PENDENTE</span>
+                <span *ngSwitchCase="!hasSubmittedOn(JamStages.ACCELERATION_SUBMISSION) && getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION) < 0">ATRASADO</span>
+                <span *ngSwitchDefault>NÃO DISPONÍVEL</span>
+              </ng-container>
+            </h2>
+            <p class="text-white" *ngIf="hasSubmittedOn(JamStages.ACCELERATION_SUBMISSION) && submission">Enviado em: {{ submission.accelerationPitchTime | date:'medium' }}</p>
           </div>
         </div>
 
