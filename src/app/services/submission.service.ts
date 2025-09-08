@@ -10,7 +10,7 @@ import { response } from 'express';
   providedIn: 'root'
 })
 export class SubmissionService {
-  url : string = `http://${environment.apiUrl}:3000/api/submission/`;
+  url : string = `${environment.apiUrl}/api/submission/`;
 
   constructor(private http: HttpClient) { }
 

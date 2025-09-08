@@ -747,7 +747,7 @@ export class GlobalJamComponent {
   {
     if(site && this.activeJam)
     {
-      const url = `http://${environment.apiUrl}:3000/api/user/get-jammers-per-site/${site._id}/${this.activeJam._id}`;
+      const url = `${environment.apiUrl}/api/user/get-jammers-per-site/${site._id}/${this.activeJam._id}`;
       this.userService.getJammersPerSite(url).subscribe({
         next: (jammers: User[]) => {
           this.selectedJammers = jammers;

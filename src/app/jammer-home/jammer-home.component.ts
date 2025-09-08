@@ -293,7 +293,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
 
   listCountries(): void
   {
-    this.siteService.getCountries(`http://${environment.apiUrl}:3000/api/site/get-countries`).subscribe({
+    this.siteService.getCountries(`${environment.apiUrl}/api/site/get-countries`).subscribe({
       next: (countries) => {
         this.countries = countries;
       },
@@ -360,7 +360,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
   {
     if(this.site && this.jam)
     {
-      const url = `http://${environment.apiUrl}:3000/api/team/get-team/${this.user._id}/${this.site._id}/${this.jam._id}`;
+      const url = `${environment.apiUrl}/api/team/get-team/${this.user._id}/${this.site._id}/${this.jam._id}`;
       this.teamService.getTeam(url).subscribe({
         next: (team: Team) => {
           this.team = team;
@@ -395,7 +395,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
   {
     if(this.site && this.jam && this.user)
     {
-      const url = `http://${environment.apiUrl}:3000/api/team/create-team`;
+      const url = `${environment.apiUrl}/api/team/create-team`;
       const teamName = `${this.randomAdjectives[this.getRandomInt(0,50)]} ${this.randomColors[this.getRandomInt(0,10)]} ${this.randomPluralNouns[this.getRandomInt(0,50)]}`;
       const team: Team = {
         teamName: teamName,
@@ -431,7 +431,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
       "Join a Team",
       "Enter the team's secret code",
       (code: string) => {
-        const url = `http://${environment.apiUrl}:3000/api/team/join-jammer/${code}/${this.user._id}`;
+        const url = `${environment.apiUrl}/api/team/join-jammer/${code}/${this.user._id}`;
         this.teamService.addJammerToTeam(url).subscribe({
           next: (team: Team) => {
             this.team = team;
@@ -449,7 +449,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
     if(this.site && this.jam && this.team)
     {
       console.log(this.team.teamName);
-      const url = `http://${environment.apiUrl}:3000/api/team/update-team/${this.team._id}`;
+      const url = `${environment.apiUrl}/api/team/update-team/${this.team._id}`;
       this.teamService.updateTeam(url, this.team).subscribe({
         next: (data)=>{
           this.message.showMessage("Success", data.message);
@@ -463,7 +463,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
 
   listStaff() : void
   {
-    const url = `http://${environment.apiUrl}:3000/api/user/get-site-staff/${this.site!._id}`;
+    const url = `${environment.apiUrl}/api/user/get-site-staff/${this.site!._id}`;
     this.userService.getStaffPerSite(url).subscribe({
       next: (staff: User[]) => {
         this.staff = staff;
@@ -481,7 +481,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
 
   listRegions() : void
   {
-    const url = `http://${environment.apiUrl}:3000/api/region/get-regions`;
+    const url = `${environment.apiUrl}/api/region/get-regions`;
     this.regionService.getRegions(url).subscribe({
       next: (regions: Region[]) => {
         this.regions = regions;
@@ -495,7 +495,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
 
   listSites() : void
   {
-    const url = `http://${environment.apiUrl}:3000/api/site/get-sites-per-jam/open`;
+    const url = `${environment.apiUrl}/api/site/get-sites-per-jam/open`;
     this.siteService.getSitesPerJam(url).subscribe({
       next: (sites: Site[]) => {
         this.sites = sites;
@@ -520,7 +520,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
       "Confirm Action",
       `Join site ${site.name}?`,
       () => {
-        const url = `http://${environment.apiUrl}:3000/api/site/join-site`;
+        const url = `${environment.apiUrl}/api/site/join-site`;
         this.siteService.joinSite(url, {
           userId: this.user._id,
           siteId: site._id
@@ -548,7 +548,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
         (answer: string) => {
           if(this.site && this.jam && answer === this.site.name)
           {
-            const url = `http://${environment.apiUrl}:3000/api/site/exit-site`;
+            const url = `${environment.apiUrl}/api/site/exit-site`;
             this.siteService.exitSite(url, {
               userId: this.user._id,
               siteId: this.site._id,
@@ -585,7 +585,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
         (answer: string) => {
           if(this.team && answer === this.team.teamName)
           {
-            const url = `http://${environment.apiUrl}:3000/api/team/remove-jammer/${this.team._id}/${this.user._id}`;
+            const url = `${environment.apiUrl}/api/team/remove-jammer/${this.team._id}/${this.user._id}`;
             this.teamService.removeJammerFromTeam(url).subscribe({
               next: (data) => {
                 console.log(data);

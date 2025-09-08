@@ -54,8 +54,7 @@ export class TeamCrudComponent implements OnInit {
   }
 
   listTeams(){
-    const url = `http://${environment.apiUrl}:3000/api/team/get-teams`;
-    this.teamService.getTeams(url).subscribe({
+    this.teamService.getTeams(`${environment.apiUrl}/api/team/get-teams`).subscribe({
       next: (teams) => {
         this.teams = teams;
         console.log(this.teams);
@@ -67,7 +66,7 @@ export class TeamCrudComponent implements OnInit {
   }
 
   listSites(){
-    this.siteService.getSites(`http://${environment.apiUrl}:3000/api/site/get-sites`).subscribe({
+    this.siteService.getSites(`${environment.apiUrl}/api/site/get-sites`).subscribe({
       next: (sites) => {
         this.sites = sites;
       },
@@ -78,7 +77,7 @@ export class TeamCrudComponent implements OnInit {
   }
 
   listRegions(){
-    this.regionService.getRegions(`http://${environment.apiUrl}:3000/api/region/get-regions`).subscribe({
+    this.regionService.getRegions(`${environment.apiUrl}/api/region/get-regions`).subscribe({
       next: (regions) => {
         this.regions = regions;
       },

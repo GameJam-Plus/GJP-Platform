@@ -56,7 +56,7 @@ export class GamejamCrudComponent implements OnInit {
       }
     });
 
-    this.gamejamService.getGameJams(`http://${environment.apiUrl}:3000/api/game-jam/get-game-jams`).subscribe(
+    this.gamejamService.getGameJams(`${environment.apiUrl}/api/game-jam/get-game-jams`).subscribe(
       (gamejams: GameJam[]) => {
         this.dataSource = gamejams;
       },
@@ -65,7 +65,7 @@ export class GamejamCrudComponent implements OnInit {
       }
     );
 
-    this.themeService.getThemes(`http://${environment.apiUrl}:3000/api/theme/get-themes`).subscribe(
+    this.themeService.getThemes(`${environment.apiUrl}/api/theme/get-themes`).subscribe(
       (themes: Theme[]) => {
         this.gthemes = themes;
       },
@@ -168,7 +168,7 @@ export class GamejamCrudComponent implements OnInit {
       const gamejamId = this.userToEdit['_id'];
       const { edition, themes } = this.myForm.value;
 
-      this.gamejamService.updateGameJam(`http://${environment.apiUrl}:3000/api/game-jam/update-game-jam/${gamejamId}`, {
+      this.gamejamService.updateGameJam(`${environment.apiUrl}/api/game-jam/update-game-jam/${gamejamId}`, {
         edition,
         themes: themes.map((t: Theme) => ({ _id: t._id, titleEN: t.titleEN }))
       }).subscribe({
@@ -194,7 +194,7 @@ export class GamejamCrudComponent implements OnInit {
 
   eliminar(elemento: any) {
     const id = elemento._id;
-    const url = `http://${environment.apiUrl}:3000/api/game-jam/delete-game-jam/${id}`;
+    const url = `${environment.apiUrl}/api/game-jam/delete-game-jam/${id}`;
 
     this.gamejamService.deleteGameJam(url).subscribe({
       next: (data) => {
@@ -214,7 +214,7 @@ export class GamejamCrudComponent implements OnInit {
       console.log('Formulario válido');
 
       const { edition, themes } = this.myForm.value;
-      this.gamejamService.createGameJam(`http://${environment.apiUrl}:3000/api/game-jam/create-game-jam`, {
+      this.gamejamService.createGameJam(`${environment.apiUrl}/api/game-jam/create-game-jam`, {
         edition: edition,
         themes: themes.map((t: Theme) => ({ _id: t._id, titleEN: t.titleEN }))
       }).subscribe({

@@ -57,7 +57,7 @@ export class RegionCrudComponent implements OnInit{
 
   listRegions()
   {
-    const url = `http://${environment.apiUrl}:3000/api/region/get-regions`;
+    const url = `${environment.apiUrl}/api/region/get-regions`;
     this.regionService.getRegions(url).subscribe({
       next: (regions: Region[]) => {
         this.regions = regions;
@@ -70,7 +70,7 @@ export class RegionCrudComponent implements OnInit{
 
   listSites()
   {
-    const url = `http://${environment.apiUrl}:3000/api/site/get-sites`;
+    const url = `${environment.apiUrl}/api/site/get-sites`;
     this.siteService.getSites(url).subscribe({
       next: (sites: Site[]) => {
         this.sites = sites;
@@ -109,7 +109,7 @@ export class RegionCrudComponent implements OnInit{
   addRegion() {
     if (this.regionForm.valid) {
       var regionName = this.regionForm.value["region"];
-      this.regionService.createRegion(`http://${environment.apiUrl}:3000/api/region/create-region`, {
+      this.regionService.createRegion(`${environment.apiUrl}/api/region/create-region`, {
         name: regionName,
       }).subscribe({
         next: (data) => {
@@ -145,7 +145,7 @@ export class RegionCrudComponent implements OnInit{
         name: this.regionForm.value['region']
       };
 
-      const url = `http://${environment.apiUrl}:3000/api/region/update-region/${regionId}`;
+      const url = `${environment.apiUrl}/api/region/update-region/${regionId}`;
 
       this.regionService.updateRegion(url, {
         name: this.regionForm.value['region']
@@ -187,7 +187,7 @@ export class RegionCrudComponent implements OnInit{
       `Delete region with name ${region.name}`,
       () => {
         const id = region._id;
-        const url = `http://${environment.apiUrl}:3000/api/region/delete-region/${id}`;
+        const url = `${environment.apiUrl}/api/region/delete-region/${id}`;
         this.regionService.deleteRegion(url).subscribe({
             next: (data) => {
                 this.message.showMessage("Success", data.message);
