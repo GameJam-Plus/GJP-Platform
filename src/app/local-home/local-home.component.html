@@ -20,13 +20,13 @@
   <!-- #region NO SITE -->
   <div *ngIf="user.region && !user.site" class="warning p-5 text-center m-2">
     <p>You haven't been assigned to a site. Please create your site or join another site as co-organizer.</p>
-    <p>NOTE: this action is not reversible, get in touch with a Global Organizer if you require to change your site.</p>
+    <p>NOTE: this action is not reversible, get in touch with a Global Organizer if you require to change your venue.</p>
 
     <button type="button" class="btn btn-primary m-1" (click)="createNewSite()">Create new site</button>
 
     <hr>
 
-    <p>Or join an existing site (ask the site's organizer of the secret code)</p>
+    <p>Or join an existing venue (ask the site's organizer of the secret code)</p>
     <div class="row mb-2">
       <div class="col-3 p-2" *ngFor="let site of sites">
         <div class="card text-center p-2 shadow">
@@ -34,7 +34,7 @@
           <p><b>Country:</b> {{ site.country.code }} - {{ site.country.name }}</p>
           <p><b>City:</b> {{ site.city }}</p>
           <p><b>Modality:</b> {{ site.modality }}</p>
-          <button class="btn btn-black" (click)="joinSite(site)">JOIN SITE</button>
+          <button class="btn btn-black" (click)="joinSite(site)">JOIN VENUE</button>
         </div>
       </div>
     </div>
@@ -75,7 +75,7 @@
       <div *ngIf="page == 'jam'" class="container container-lg p-3">
         <div *ngIf="!jam">
           <h1>JOIN A GAME JAM</h1>
-          <p class="warning">This site is not linked to an open gamejam. Join to a gamejam below to start managing your site.</p>
+          <p class="warning">This site is not linked to an open gamejam. Join to a gamejam below to start managing your venue.</p>
           <div class="row">
             <div class="col-4 card" *ngFor="let gj of jams">
               <h3 class="text-center">{{gj.title}}</h3>
@@ -232,7 +232,7 @@
         <form (submit)="saveSite()" [formGroup]="siteForm" class="row">
 
           <div class="col-12 input-group input-group-lg mb-3">
-            <div class="input-group-prepend"><span class="input-group-text required">Site Name</span></div>
+            <div class="input-group-prepend"><span class="input-group-text required">Venue Name</span></div>
             <input type="text" class="form-control" id="siteName" formControlName="name">
           </div>
 
@@ -242,7 +242,7 @@
             <div class="input-group"> <!--COUNTRY-->
               <div class="input-group-prepend"><span class="input-group-text required">Country</span></div>
               <select class="form-control formList" id="countries" formControlName="country">
-                <option value="" disabled selected hidden>Country of the site</option>
+                <option value="" disabled selected hidden>Country of the venue</option>
                 <option *ngFor="let country of countries" [ngValue]="country">{{ country.name }}</option>
               </select>
             </div>
@@ -327,7 +327,7 @@
             <div class="input-group"> <!--MODALITY-->
               <div class="input-group-prepend"><span class="input-group-text">Modality</span></div>
               <select class="form-select" formControlName="modality">
-                <option value="on site">On Site</option>
+                <option value="on site">On Venue</option>
                 <option value="online">Online</option>
                 <option value="hybrid">Hybrid</option>
               </select>

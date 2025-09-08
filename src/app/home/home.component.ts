@@ -127,11 +127,13 @@ export class HomeComponent{
   }
 
   updateUser() : void {
-    if(this.user && this.userForm.valid)
+    if(this.user && this.userForm.valid && this.user._id)
     {
       this.user.name = this.userForm.get('name')?.value;
       this.user.discordUsername = this.userForm.get('discordUsername')?.value;
-      this.userService.updateUser(`${environment.apiUrl}/api/user/update-user/${this.user._id}`, this.user).subscribe({
+      //this.userService.updateUser(`${environment.apiUrl}/api/user/update-user/${this.user._id}`, this.user).subscribe({
+      this.userService.updateUser(this.user._id, this.user).subscribe({
+
         next: (data) => {
           this.successMessage = "User updated successfully";
           this.getUser();
