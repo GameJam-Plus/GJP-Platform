@@ -14,6 +14,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { DataFormComponent } from './data-form/data-form.component';
 import { RulesComponent } from '../rules/rules.component';
 import { User, Site, Region, Country, Jam, Stage, Team, Submission, JamStage } from '../../types';
+import { TranslatePipe } from '@ngx-translate/core';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
@@ -51,7 +52,8 @@ const SUBMISSION_GRACE_PERIOD_MS = 48 * 60 * 60 * 1000;
         FormsModule,
         ReactiveFormsModule,
         RulesComponent,
-        DataFormComponent
+        DataFormComponent,
+        TranslatePipe
     ]
 })
 export class JammerHomeComponent implements OnInit, OnDestroy {

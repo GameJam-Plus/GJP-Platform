@@ -12,6 +12,8 @@ import { CommonModule, formatDate } from '@angular/common';
 import { MessagesComponent } from '../messages/messages.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { saveAs } from 'file-saver';
+import { TranslatePipe } from '@ngx-translate/core';
+
 import * as moment from 'moment-timezone';
 
 import { faFileCsv } from '@fortawesome/free-solid-svg-icons';
@@ -24,7 +26,8 @@ import { faFileCsv } from '@fortawesome/free-solid-svg-icons';
     CommonModule,
     ReactiveFormsModule,
     FontAwesomeModule,
-    MessagesComponent
+    MessagesComponent,
+    TranslatePipe
   ],
   templateUrl: './global-jam.component.html',
   styleUrl: './global-jam.component.css'

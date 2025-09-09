@@ -4,7 +4,7 @@
 </div>
 
 <div *ngIf="activeJam && page == 'jam-main'" class="w-100 p-5">
-  <h1 class="text-center">Active GameJam Information</h1>
+  <h1 class="text-center">{{ 'platform.globalorganizer.home.activejam.header' | translate }}</h1>
 
   <form (ngSubmit)="updateJam()" [formGroup]="jamForm" enctype="multipart/form-data">
     <div class="row">
