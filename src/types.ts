@@ -50,8 +50,19 @@ export interface User {
   name: string;
   email: string;
   discordUsername: string;
-  gender?: string;
-  socialMedia?: string;
+  instagram?: string;
+  linkedin?: string;
+  telefoneWhatsApp: string;
+  diploma: string;
+  ethnicity:string;
+  gender: string;
+  intersex: string;
+  genderIdentity: string;
+  sexualOrientation: string;
+  disability: string;
+  participation: string;
+  student: string;
+  nameStuding: string;
   region?: {
     _id: string;
     name: string;
