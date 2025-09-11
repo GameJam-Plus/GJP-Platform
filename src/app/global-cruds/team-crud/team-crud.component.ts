@@ -40,6 +40,8 @@ export class TeamCrudComponent implements OnInit {
   teams: Team[] = [];
   sites: Site[] = [];
   regions: Region[] = [];
+  selectedTeam: Team | null = null;
+  jammers: User[] = [];
 
   @ViewChild(MessagesComponent) message!: MessagesComponent;
   constructor(private fb: FormBuilder, private teamService: TeamService, private userService: UserService, private regionService: RegionService, private siteService: SiteService, private gamejamService: GamejamService){
@@ -52,9 +54,10 @@ export class TeamCrudComponent implements OnInit {
   }
 
   listTeams(){
-    this.teamService.getTeams(`http://${environment.apiUrl}:3000/api/team/get-teams`).subscribe({
+    this.teamService.getTeams(`${environment.apiUrl}/api/team/get-teams`).subscribe({
       next: (teams) => {
         this.teams = teams;
+        console.log(this.teams);
       },
       error: (error) => {
         console.error('Error listing Teams:', error);
@@ -63,7 +66,7 @@ export class TeamCrudComponent implements OnInit {
   }
 
   listSites(){
-    this.siteService.getSites(`http://${environment.apiUrl}:3000/api/site/get-sites`).subscribe({
+    this.siteService.getSites(`${environment.apiUrl}/api/site/get-sites`).subscribe({
       next: (sites) => {
         this.sites = sites;
       },
@@ -74,12 +77,12 @@ export class TeamCrudComponent implements OnInit {
   }
 
   listRegions(){
-    this.regionService.getRegions(`http://${environment.apiUrl}:3000/api/region/get-regions`).subscribe({
+    this.regionService.getRegions(`${environment.apiUrl}/api/region/get-regions`).subscribe({
       next: (regions) => {
         this.regions = regions;
       },
       error: (error) => {
-        console.error('Error al obtener regiones:', error);
+        console.error('Error getting regions:', error);
       }
     });
   }
@@ -107,7 +110,22 @@ export class TeamCrudComponent implements OnInit {
     else return 'None';
   }
 
-  selectTeam(team: Team){}
+  selectTeam(team: Team){
+    this.selectedTeam = team;
+    this.getJammersPerTeam(team._id!);
+  }
+
+  getJammersPerTeam(teamId: string){
+    const url = `http://${environment.apiUrl}:3000/api/team/get-current-team-users/${teamId}`;
+    this.teamService.getJammersPerTeam(url).subscribe({
+      next: (jammers) => {
+        this.jammers = jammers;
+      },
+      error: (error) => {
+        console.error('Error getting jammers:', error);
+      }
+    });
+  }
 
   saveTeam(){}
 

@@ -51,6 +51,7 @@ export class UserCrudComponent implements OnInit{
     { label: 'Team Name', value: 'team.name' as keyof User, checked: false },
     { label: 'Role', value: 'roles' as keyof User, checked: false }
   ];
+  
   constructor(private fb: FormBuilder, private userService: UserService, private siteService: SiteService, private regionService: RegionService){}
   ngOnInit(): void {
     this.userForm = this.fb.group({
@@ -73,7 +74,7 @@ export class UserCrudComponent implements OnInit{
 
   listRegions()
   {
-    this.regionService.getRegions(`http://${environment.apiUrl}:3000/api/region/get-regions`).subscribe({
+    this.regionService.getRegions(`${environment.apiUrl}/api/region/get-regions`).subscribe({
       next: (regions: Region[]) => {
         this.regions = regions;
         this.listSites();
@@ -86,7 +87,7 @@ export class UserCrudComponent implements OnInit{
 
   listUsers()
   {
-    const url = `http://${environment.apiUrl}:3000/api/user/get-users`;
+    const url = `${environment.apiUrl}/api/user/get-users`;
     this.userService.getUsers(url).subscribe({
       next: (users: User[]) => {
         var empty = {
@@ -103,7 +104,7 @@ export class UserCrudComponent implements OnInit{
 
   listSites()
   {
-    this.siteService.getSites(`http://${environment.apiUrl}:3000/api/site/get-sites`).subscribe({
+    this.siteService.getSites(`${environment.apiUrl}/api/site/get-sites`).subscribe({
       next: (sites: Site[]) => {
         this.sites = sites;
         console.log(`Sites are ready ${this.sites.length}`);
@@ -203,7 +204,7 @@ export class UserCrudComponent implements OnInit{
       `Delete user with email ${user.email}?`,
       ()=>{
         const id = user._id;
-        const url = `http://${environment.apiUrl}:3000/api/user/delete-user/${id}`;
+        const url = `${environment.apiUrl}/api/user/delete-user/${id}`;
         this.userService.deleteUser(url).subscribe({
             next: (data) => {
                 //this.users = this.users.filter(item => item !== user);
@@ -496,7 +497,7 @@ export class UserCrudComponent implements OnInit{
     /*
     const doc = new jsPDF();
 
-    const url = `http://${environment.apiUrl}:3000/api/user/get-users`;
+    const url = `${environment.apiUrl}/api/user/get-users`;
     this.userService.getUsers(url).subscribe(
         (users: User[]) => {
             const data = users.map(user => ({

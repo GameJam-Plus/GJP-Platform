@@ -4,7 +4,7 @@
 </div>
 
 <div *ngIf="activeJam && page == 'jam-main'" class="w-100 p-5">
-  <h1 class="text-center">Active GameJam Information</h1>
+  <h1 class="text-center">{{ 'platform.globalorganizer.home.activejam.header' | translate }}</h1>
 
   <form (ngSubmit)="updateJam()" [formGroup]="jamForm" enctype="multipart/form-data">
     <div class="row">
@@ -192,14 +192,14 @@
 </div>
 
 <div *ngIf="activeJam && page == 'jam-sites'" class="w-100 p-5">
-  <h1>Active Sites: {{ jamData.siteCount }}</h1>
+  <h1>Active Venues: {{ jamData.siteCount }}</h1>
   <h2>Countries: {{ jamData.countryCount }}</h2>
   <h2>Jammers: {{ jamData.jammerCount }}</h2>
   <h2>Teams: {{ jamData.teamCount }}</h2>
 
   <div class="row">
     <div *ngFor="let site of activeSites pointer" class="col-3 p-2" (click)="selectSite(site)" data-toggle="modal" data-target="#siteInfoModal">
-      <div class="bg-white shadow p-4 rounded">
+      <div class="bg-white shadow p-4 rounded hover-effect">
         <h3>{{ site.name }}</h3>
         <b>Region: </b>{{ site.regionName }} <br>
         <b>Country: </b>{{ site.country.name }} <br>
@@ -218,7 +218,7 @@
     </div>
   </div>
 
-  <h2>Inactive Sites: {{ inactiveSites.length }}</h2>
+  <h2>Inactive Venues: {{ inactiveSites.length }}</h2>
 
   <div class="row">
     <div *ngFor="let site of inactiveSites" class="col-3 p-2">
@@ -256,7 +256,7 @@
         <th scope="col">Name</th>
         <th scope="col">Email</th>
         <th scope="col">Discord</th>
-        <th scope="col">Site Name</th>
+        <th scope="col">Venue Name</th>
         <th scope="col">Country</th>
         <th scole="col">Region</th>
         <th scope="col">Team</th>
@@ -477,60 +477,59 @@
 </div>
 
 <!-- Site Info Modal -->
-<div #siteInfoModal class="modal fade" id="siteInfoModal" tabIndex="-1" role="dialog">
+<div class="modal fade" id="siteInfoModal" tabIndex="-1" role="dialog" data-backdrop="static">
   <div class="modal-dialog modal-dialog-centered modal-xl p-4" role="document">
+    <div class="modal-content">
+      <div class="rounded bg-light shadow row m-3 p-2" *ngIf="selectedSite">
+        <h1 class="col-12 text-center">{{ selectedSite.name }}</h1>
+        <hr>
+        <div class="col-4 p-2">
+          <b>Region: </b>{{ selectedSite.regionName }} <br>
+          <b>Country: </b>{{ selectedSite.country.name }} <br>
+          <b>City: </b>{{ selectedSite.city }} <br>
+          <b>Modality: </b>{{ selectedSite.modality }} <br>
+          <b>Status: </b>{{ selectedSite.open ? "Open" : "Closed" }}<br>
+          <b>Jammers: </b>{{ selectedSite.jammers }} <br>
+          <b>Teams: </b>{{ selectedSite.teams }} <br>
+          <b>Organizers: </b> <br>
+          <ul>
+            <li *ngFor="let org of selectedSite.organizers">
+              <small>{{ org.name }} (<a [href]="'mailto:'+org.email">{{ org.email }}</a>)<br></small>
+            </li>
+          </ul>
+        </div>
+        <div class="info col-8 p-2 my-2">
+          <p [innerHTML]="selectedSite.description"></p>
+        </div>
 
-    <div class="rounded bg-light shadow row m-3 p-2" *ngIf="selectedSite">
-      <h1 class="col-12 text-center">{{ selectedSite.name }}</h1>
-      <hr>
-      <div class="col-4 p-2">
-        <b>Region: </b>{{ selectedSite.regionName }} <br>
-        <b>Country: </b>{{ selectedSite.country.name }} <br>
-        <b>City: </b>{{ selectedSite.city }} <br>
-        <b>Modality: </b>{{ selectedSite.modality }} <br>
-        <b>Status: </b>{{ selectedSite.open ? "Open" : "Closed" }}<br>
-        <b>Jammers: </b>{{ selectedSite.jammers }} <br>
-        <b>Teams: </b>{{ selectedSite.teams }} <br>
-        <b>Organizers: </b> <br>
-        <ul>
-          <li *ngFor="let org of selectedSite.organizers">
-            <small>{{ org.name }} (<a [href]="'mailto:'+org.email">{{ org.email }}</a>)<br></small>
-          </li>
-        </ul>
+        <hr class="my-2">
+
+        <div class="col-12 p-3" *ngIf="selectedJammers">
+          <table class="table table-stripped rounded">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Discord</th>
+                <th scope="col">Team</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let jammer of selectedJammers; index as j" [ngClass]="getJammerRowColor(jammer)">
+                <th scope="row">{{ j + 1 }}</th>
+                <td>{{ jammer.name }}</td>
+                <td><a [href]="'mailto:'+jammer.email">{{ jammer.email }}</a></td>
+                <td>{{ jammer.discordUsername }}</td>
+                <td>{{ jammer.team ? jammer.team.name : 'NO TEAM' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <button class="btn btn-black btn-block col-12 rounded" data-dismiss="modal">CLOSE</button>
       </div>
-      <div class="info col-8 p-2 my-2">
-        <p [innerHTML]="selectedSite.description"></p>
-      </div>
-
-      <hr class="my-2">
-
-      <div class="col-12 p-3" *ngIf="selectedJammers">
-        <table class="table table-stripped rounded">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Name</th>
-              <th scope="col">Email</th>
-              <th scope="col">Discord</th>
-              <th scope="col">Team</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let jammer of selectedJammers; index as j" [ngClass]="getJammerRowColor(jammer)">
-              <th scope="row">{{ j + 1 }}</th>
-              <td>{{ jammer.name }}</td>
-              <td><a [href]="'mailto:'+jammer.email">{{ jammer.email }}</a></td>
-              <td>{{ jammer.discordUsername }}</td>
-              <td>{{ jammer.team ? jammer.team.name : 'NO TEAM' }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-
-      <button class="btn btn-black btn-block col-12" (click)="clearSite()" data-dismiss="modal">CLOSE</button>
     </div>
-
   </div>
 </div>
 

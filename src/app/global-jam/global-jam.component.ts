@@ -12,6 +12,8 @@ import { CommonModule, formatDate } from '@angular/common';
 import { MessagesComponent } from '../messages/messages.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { saveAs } from 'file-saver';
+import { TranslatePipe } from '@ngx-translate/core';
+
 import * as moment from 'moment-timezone';
 
 import { faFileCsv } from '@fortawesome/free-solid-svg-icons';
@@ -24,7 +26,8 @@ import { faFileCsv } from '@fortawesome/free-solid-svg-icons';
     CommonModule,
     ReactiveFormsModule,
     FontAwesomeModule,
-    MessagesComponent
+    MessagesComponent,
+    TranslatePipe
   ],
   templateUrl: './global-jam.component.html',
   styleUrl: './global-jam.component.css'
@@ -60,11 +63,26 @@ export class GlobalJamComponent {
 
   @ViewChild(MessagesComponent) message!: MessagesComponent;
   @ViewChild('closeStageModal') closeStageModal?: ElementRef;
+  @ViewChild('siteInfoModal') siteInfoModal?: ElementRef;
+
   constructor(private route: ActivatedRoute, private jamService: JamService, private siteService: SiteService, private userService: UserService, private submissionService: SubmissionService, private fb: FormBuilder){}
 
   ngOnInit(): void {
     this.loadActiveJam();
     this.getSitesInfo();
+
+    // Add modal event listener
+    const modalElement = document.getElementById('siteInfoModal');
+    if (modalElement) {
+      modalElement.addEventListener('hidden.bs.modal', () => {
+        this.clearSite();
+        document.body.classList.remove('modal-open');
+        const backdrop = document.querySelector('.modal-backdrop');
+        if (backdrop) {
+          backdrop.remove();
+        }
+      });
+    }
 
     console.log(`The page is ${this.page}`);
 
@@ -698,21 +716,41 @@ export class GlobalJamComponent {
 // #endregion
 
 // #region SiteView functions
-  selectSite(site: any){
+  selectSite(site: any) {
     this.selectedSite = site;
     this.listJammersOfSite(site);
+    // Reset modal state before opening
+    const modalElement = document.getElementById('siteInfoModal');
+    if (modalElement) {
+      modalElement.classList.remove('show');
+      modalElement.style.display = 'none';
+      document.body.classList.remove('modal-open');
+      const backdrop = document.querySelector('.modal-backdrop');
+      if (backdrop) {
+        backdrop.remove();
+      }
+    }
+    // Small delay to ensure clean state
+    setTimeout(() => {
+      if (modalElement) {
+        modalElement.classList.add('show');
+        modalElement.style.display = 'block';
+        document.body.classList.add('modal-open');
+      }
+    }, 50);
   }
 
   clearSite()
   {
     this.selectedSite = null;
+    this.selectedJammers = [];
   }
 
   listJammersOfSite(site: any) : void
   {
     if(site && this.activeJam)
     {
-      const url = `http://${environment.apiUrl}:3000/api/user/get-jammers-per-site/${site._id}/${this.activeJam._id}`;
+      const url = `${environment.apiUrl}/api/user/get-jammers-per-site/${site._id}/${this.activeJam._id}`;
       this.userService.getJammersPerSite(url).subscribe({
         next: (jammers: User[]) => {
           this.selectedJammers = jammers;

@@ -8,7 +8,7 @@
         <th scope="col">Email</th>
         <th scope="col">Role</th>
         <th scope="col">Region</th>
-        <th scope="col">Site</th>
+        <th scope="col">Venue</th>
         <th scope="col">Actions</th>
       </tr>
     </thead>
@@ -164,9 +164,9 @@
           </div>
           <div class="row">
             <div class="col-sm">
-              <label for="rol">Site</label>
+              <label for="rol">Venue</label>
               <select class="form-select" formControlName="site">
-                <option value="" disabled selected hidden>Site</option>
+                <option value="" disabled selected hidden>Venue</option>
                 <option [ngValue]="null">None</option>
                 <option *ngFor="let site of filteredSites" [ngValue]="site">{{ site.name }}</option>
               </select>

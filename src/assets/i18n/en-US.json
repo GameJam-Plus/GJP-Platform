@@ -1,0 +1,91 @@
+{
+	"platform": {
+		"common": {
+			"by": "by",
+			"dangerzone": "Danger Zone",
+			"exitteam": "Exit Team",
+			"exitvenue": "Exit Venue",
+			"late": "LATE",
+			"notavailable": "Not available",
+			"pending": "PENDING",
+			"submittedon": "Submitted on:",
+			"valid": "VALID"
+		},
+		"globalorganizer": {
+			"home": {
+				"activejam": {
+					"header": "Active GameJam Information",
+					"title": "Title"
+				}
+			}
+		},
+		"jammer": {
+			"home": {
+				"gamesfromvenue": {
+					"gamesofthisvenue": "Games of this venue",
+					"loadsubmissions": "LOAD SUBMISSIONS"
+				},
+				"jaminfo": {
+					"categories": "Categories",
+					"currentstage": "Current Stage",
+					"manual": "Manual",
+					"notpublictext1": "Themes and categories are secret.",
+					"notpublictext2": "Global Organizers will publish the themes and categories soon, check again later.",
+					"stages": "Stages",
+					"stagetooltip": "All stages start at 00:00:00 and end at 11:59:59 in Brazilian Time (GMT-3).",
+					"themes": "Themes"
+				},
+				"venueinfo": {
+					"address": "Address",
+					"city": "City",
+					"contactinfo": "Contact Info",
+					"country": "Country",
+					"format": "Format",
+					"language": "Language",
+					"location": "Location",
+					"modality": "Modality",
+					"server": "Server",
+					"start": "Start",
+					"status": "Status"
+				}
+			},
+			"myjam": {
+				"mysubmission": {
+					"gamesubmissionstatus": "Game Submission Status:",
+					"mysubmission": "My Submission",
+					"noteam": "You are not assigned to a team, please create a new team or join a team in your venue to submit a game."
+				},
+				"myteam": {
+					"joincode": "Join Code:",
+					"joincodetooltip": "Share this code with your fellow jammers to invite them to your team.",
+					"jointeam": "Join an existing team",
+					"myteam": "My Team:",
+					"newteam": "Create a new team",
+					"noteamtext1": "You don't have a team yet.",
+					"noteamtext2": "Create a new team or join an existing team with the secret code.",
+					"teamleader": "Team Leader",
+					"teammembers": "Team Members",
+					"teamname": "Team Name:",
+					"updateteamname": "Update Team Name"
+				}
+			},
+			"navbar": {
+				"home": {
+					"gamesfromvenue": "Games from Venue",
+					"home": "Home",
+					"jaminfo": "Jam Info",
+					"venueinfo": "Venue Info"
+				},
+				"myjam": {
+					"feedback": "Feedback",
+					"myjam": "My Jam",
+					"mysubmission": "My Submission",
+					"myteam": "My Team"
+				},
+				"rules": {
+					"rulesandconditions": "Rules and Conditions"
+				}
+			}
+		}
+	}
+}

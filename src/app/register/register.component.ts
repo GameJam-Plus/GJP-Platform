@@ -6,6 +6,14 @@ import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { environment } from '../../environments/environment.prod';
 import { MessagesComponent } from '../messages/messages.component';
+
+export enum Gender {
+  Male = 'Male',
+  Female = 'Female',
+  Other = 'Other',
+  PreferNotToSay = 'Prefer not to say'
+}
+
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -21,25 +29,28 @@ import { MessagesComponent } from '../messages/messages.component';
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
   errorMessage: string = '';
+  genderOptions = Object.values(Gender);
   @ViewChild(MessagesComponent) message!: MessagesComponent;
+
   constructor(private router: Router, private fb: FormBuilder, private userService: UserService) { }
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
-      email: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       name: ['', Validators.required],
-      discordUsername: ['', Validators.required]
+      discordUsername: ['', Validators.required],
+      gender: ['', Validators.required],
+      socialMedia: ['', Validators.required]
     });
   }
 
   submitForm() {
     if (this.registerForm.valid) {
-
       const { email, name, region, site, discordUsername, instagram, linkedin, telefoneWhatsApp, diploma, ethnicity, gender, intersex, genderIdentity, sexualOrientation, disability, participation, student, nameStuding} = this.registerForm.value;
 
       this.userService.registerUser({
         name: name,
-        email: email.toLowerCase(),
+        email: email.toLowerCase().trim(),
         roles: ['Jammer'],
         coins: 0,
         discordUsername: discordUsername,
@@ -56,7 +67,6 @@ export class RegisterComponent implements OnInit {
         participation: participation, //se ja participou de GJ+ anteriores
         student: student,         //se é estudante ou não
         nameStuding: nameStuding, //nome local que estuda
-
       }).subscribe({
         next: (data) => {
           if (data.success) {
@@ -77,7 +87,7 @@ export class RegisterComponent implements OnInit {
         },
       });
     } else {
-      this.errorMessage = 'Please fill all the fields';
+      this.errorMessage = 'Please fill all the required fields';
     }
   }
 

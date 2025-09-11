@@ -1,0 +1,91 @@
+{
+	"platform": {
+		"common": {
+			"by": "por",
+			"dangerzone": "Zona peligrosa",
+			"exitteam": "Salir del equipo",
+			"exitvenue": "Salir del lugar",
+			"late": "TARDE",
+			"notavailable": "No disponible",
+			"pending": "PENDIENTE",
+			"submittedon": "Enviado el:",
+			"valid": "VÁLIDO"
+		},
+		"globalorganizer": {
+			"home": {
+				"activejam": {
+					"header": "Información activa de GameJam",
+					"title": "Título"
+				}
+			}
+		},
+		"jammer": {
+			"home": {
+				"gamesfromvenue": {
+					"gamesofthisvenue": "Juegos de este lugar",
+					"loadsubmissions": "CARGAR ENVÍOS"
+				},
+				"jaminfo": {
+					"categories": "Categorias",
+					"currentstage": "Etapa Actual",
+					"manual": "Manual",
+					"notpublictext1": "Los temas y las categorías son secretos.",
+					"notpublictext2": "Los organizadores mundiales publicarán los temas y las categorías en breve, vuelva a comprobarlo más adelante.",
+					"stages": "Etapas",
+					"stagetooltip": "Todas las etapas comienzan a las 00:00:00 y terminan a las 11:59:59 en hora brasileña (GMT-3).",
+					"themes": "Temas"
+				},
+				"venueinfo": {
+					"address": "Dirección",
+					"city": "Ciudad",
+					"contactinfo": "Información de contacto",
+					"country": "País",
+					"format": "Formato",
+					"language": "Idioma",
+					"location": "Ubicación",
+					"modality": "Modalidad",
+					"server": "Servidor",
+					"start": "Comenzar",
+					"status": "Estado"
+				}
+			},
+			"myjam": {
+				"mysubmission": {
+					"gamesubmissionstatus": "Estado de presentación del juego:",
+					"mysubmission": "Mi presentación",
+					"noteam": "No estás asignado a un equipo, por favor crea un nuevo equipo o únete a un equipo en tu sede para enviar una partida."
+				},
+				"myteam": {
+					"joincode": "Código de unión:",
+					"joincodetooltip": "Comparte este código con tus compañeros para invitarlos a tu equipo.",
+					"jointeam": "Unirse a un equipo existente",
+					"myteam": "Mi equipo:",
+					"newteam": "Crear un nuevo equipo",
+					"noteamtext1": "Aún no tienes un equipo.",
+					"noteamtext2": "Crea un nuevo equipo o únete a uno existente con el código secreto.",
+					"teamleader": "Líder del equipo",
+					"teammembers": "Miembros del equipo",
+					"teamname": "Nombre del equipo:",
+					"updateteamname": "Actualizar el nombre del equipo"
+				}
+			},
+			"navbar": {
+				"home": {
+					"gamesfromvenue": "Juegos del Lugar",
+					"home": "Inicio",
+					"jaminfo": "Información del Jam",
+					"venueinfo": "Información del Lugar"
+				},
+				"myjam": {
+					"feedback": "Comentarios",
+					"myjam": "Mi Jam",
+					"mysubmission": "Mi Envío",
+					"myteam": "Mi Equipo"
+				},
+				"rules": {
+					"rulesandconditions": "Reglas y Condiciones"
+				}
+			}
+		}
+	}
+}
