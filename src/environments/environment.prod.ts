@@ -1,7 +1,9 @@
 export const environment = {
     production: true,
-    apiUrl: '67.205.164.242'
+    apiUrl: 'localhost'
   };
 
 //67.205.164.242
+//https://platform.gamejamplus.com
+//http://localhost:3000
 

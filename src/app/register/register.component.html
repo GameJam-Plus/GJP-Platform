@@ -35,6 +35,188 @@
                   </div>
                 </div>
 
+                <div class="inputTitle">Instagram</div>
+                <div class="row">
+                  <div class="form-group inputSpace">
+                    <input #instagramInput type="instagram" class="form-control" id="instagramInput" required placeholder="Instagram" formControlName="instagram">
+                  </div>
+                </div>
+
+                <div class="inputTitle">Linkedin</div>
+                <div class="row">
+                  <div class="form-group inputSpace">
+                    <input #linkedinInput type="linkedin" class="form-control" id="linkedin" required placeholder="Linkedin" formControlName="linkedin">
+                  </div>
+                </div>
+
+                <div class="inputTitle">Cell Number / WhatsApp</div>
+                <div class="row">
+                  <div class="form-group inputSpace">
+                    <input #telefoneWhatsAppInput type="telefoneWhatsApp" class="form-control" id="telefoneWhatsAppInput" required placeholder="Cell Number / WhatsApp" formControlName="telefoneWhatsApp">
+                  </div>
+                </div>
+
+                <div class="inputTitle">Please select the option that represents your self-declared race/ethnicity:</div>
+                <div class="row">
+                  <div class="tooltip-text">  * Why are we asking this?
+                                                These questions help us in several important ways:
+
+                                                  * They support our participation in public and private funding opportunities that require that kind of data.
+                                                  * They allow us to assess whether we’re successfully building a more diverse, inclusive, and representative community.
+                                                  * They help us create specific categories, awards, or initiatives within GameJamPlus that celebrate and promote diversity.
+
+                                                  Your answers are confidential and will be used solely for statistical and strategic purposes. You can always choose "Prefer not to declare" if you're not comfortable sharing.
+                  </div>
+                  <select class="ethnicity" required formControlName="ethnicity">
+                    <option value="1">Asian</option>
+                    <option value="2">Black</option>
+                    <option value="3">Brown(Mixed)</option>
+                    <option value="4">Indigenous</option>
+                    <option value="5">White</option>
+                    <option value="6">Prefer not to declare</option>
+                  </select>
+                </div>
+                
+                <div class="inputTitle">Please select your gender:</div>
+                <div class="row">
+                  <div class="tooltip-text">  * Why are we asking this?
+                                                These questions help us in several important ways:
+
+                                                  * They support our participation in public and private funding opportunities that require that kind of data.
+                                                  * They allow us to assess whether we’re successfully building a more diverse, inclusive, and representative community.
+                                                  * They help us create specific categories, awards, or initiatives within GameJamPlus that celebrate and promote diversity.
+
+                                                  Your answers are confidential and will be used solely for statistical and strategic purposes. You can always choose "Prefer not to declare" if you're not comfortable sharing.
+                  </div>
+                  <select class="gender" required formControlName="gender">
+                    <option value="1">Female</option>
+                    <option value="2">Male</option>
+                    <option value="3">Non-binary</option>
+                    <option value="4">Prefer not to declare</option>
+                  </select>
+                </div>
+
+                <div class="inputTitle">Are you an intersex person?</div>
+                <div class="row">
+                  <div class="tooltip-text">  * Why are we asking this?
+                                                These questions help us in several important ways:
+
+                                                  * They support our participation in public and private funding opportunities that require that kind of data.
+                                                  * They allow us to assess whether we’re successfully building a more diverse, inclusive, and representative community.
+                                                  * They help us create specific categories, awards, or initiatives within GameJamPlus that celebrate and promote diversity.
+
+                                                  Your answers are confidential and will be used solely for statistical and strategic purposes. You can always choose "Prefer not to declare" if you're not comfortable sharing.
+                  </div>
+                  <select class="intersex" required formControlName="intersex">
+                    <option value="1">Yes</option>
+                    <option value="2">No</option>
+                    <option value="3">Prefer not to declare</option>
+                  </select>
+                </div>
+
+                <div class="inputTitle">Please select your gender identity:</div>
+                <div class="row">
+                  <div class="tooltip-text">  * Why are we asking this?
+                                                These questions help us in several important ways:
+
+                                                  * They support our participation in public and private funding opportunities that require that kind of data.
+                                                  * They allow us to assess whether we’re successfully building a more diverse, inclusive, and representative community.
+                                                  * They help us create specific categories, awards, or initiatives within GameJamPlus that celebrate and promote diversity.
+
+                                                  Your answers are confidential and will be used solely for statistical and strategic purposes. You can always choose "Prefer not to declare" if you're not comfortable sharing.
+                  </div>
+                  <select class="genderIdentity" required multiple formControlName="genderIdentity">
+                    <option value="1">Agender</option>
+                    <option value="2">Cisgender man</option>
+                    <option value="3">Cisgender woman</option>
+                    <option value="4">Gender fluid</option>
+                    <option value="5">Queer</option>
+                    <option value="6">Transgender man</option>
+                    <option value="7">Transgender woman</option>
+                    <option value="8">Travesti</option>
+                    <option value="9">Other</option>
+                    <option value="10">Prefer not to declare</option>
+                  </select>
+                </div>
+
+                <div class="inputTitle">Please select your sexual orientation:</div>
+                <div class="row">
+                  <div class="tooltip-text">  * Why are we asking this?
+                                                These questions help us in several important ways:
+
+                                                  * They support our participation in public and private funding opportunities that require that kind of data.
+                                                  * They allow us to assess whether we’re successfully building a more diverse, inclusive, and representative community.
+                                                  * They help us create specific categories, awards, or initiatives within GameJamPlus that celebrate and promote diversity.
+
+                                                  Your answers are confidential and will be used solely for statistical and strategic purposes. You can always choose "Prefer not to declare" if you're not comfortable sharing.
+                  </div>
+                  <select class="sexualOrientation" required multiple formControlName="sexualOrientation">
+                    <option value="1">Asexual</option>
+                    <option value="2">Bisexual</option>
+                    <option value="3">Gay</option>
+                    <option value="4">Heterosexual</option>
+                    <option value="5">Lesbian</option>
+                    <option value="6">Pansexual</option>
+                    <option value="7">Other</option>
+                    <option value="8">Prefer not to declare</option>
+                  </select>
+                </div>
+
+                <div class="inputTitle">Do you have any disabilities?</div>
+                <div class="row">
+                  <div class="tooltip-text">  * Why are we asking this?
+                                                These questions help us in several important ways:
+
+                                                  * They support our participation in public and private funding opportunities that require that kind of data.
+                                                  * They allow us to assess whether we’re successfully building a more diverse, inclusive, and representative community.
+                                                  * They help us create specific categories, awards, or initiatives within GameJamPlus that celebrate and promote diversity.
+
+                                                  Your answers are confidential and will be used solely for statistical and strategic purposes. You can always choose "Prefer not to declare" if you're not comfortable sharing.
+                  </div>
+                  <select class="disability" required multiple formControlName="disability">
+                    <option value="1">No</option>
+                    <option value="2">Yes. Intellectual disability</option>
+                    <option value="3">Yes. Physical disability</option>
+                    <option value="4">Yes. Visual disability</option>
+                    <option value="5">Yes. Hearing disability</option>
+                    <option value="6">Other</option>
+                    <option value="7">Prefer not to declare</option>
+                  </select>
+                </div>
+
+                <div class="inputTitle">Did you already take part in a GJ+ edition?</div>
+                <div class="row">
+                  <select class="participation" required formControlName="participation">
+                    <option value="1">Never participated</option>
+                    <option value="2">One time</option>
+                    <option value="3">Two or three times</option>
+                    <option value="4">Four times or more</option>
+                  </select>
+                </div>
+
+                <div class="inputTitle">Are you a student?</div>
+                <div class="row">
+                  <select class="student" required formControlName="student">
+                    <option value="1">Yes</option>
+                    <option value="2">No</option>
+                  </select>
+                </div>
+
+                <div class="inputTitle">If last question is Yes, what is the name of your School/College/University</div>
+                <div class="row">
+                  <div class="form-group inputSpace">
+                    <input #nameStudingInput type="nameStuding" class="form-control" id="nameStudingInput" required placeholder="School/College/University" formControlName="nameStuding">
+                  </div>
+                </div>
+
+                <div class="inputTitle">Do you already have a graduation degree?</div>
+                <div class="row">
+                  <select class="diploma" required formControlName="diploma">
+                    <option value="1">Yes</option>
+                    <option value="2">No</option>
+                  </select>
+                </div>
+
                 <div *ngIf="errorMessage" class="error">
                   {{ errorMessage }}
                 </div>

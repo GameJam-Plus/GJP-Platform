@@ -35,14 +35,28 @@ export class RegisterComponent implements OnInit {
   submitForm() {
     if (this.registerForm.valid) {
 
-      const { email, name, region, site, discordUsername} = this.registerForm.value;
+      const { email, name, region, site, discordUsername, instagram, linkedin, telefoneWhatsApp, diploma, ethnicity, gender, intersex, genderIdentity, sexualOrientation, disability, participation, student, nameStuding} = this.registerForm.value;
 
       this.userService.registerUser({
         name: name,
         email: email.toLowerCase(),
         roles: ['Jammer'],
         coins: 0,
-        discordUsername: discordUsername
+        discordUsername: discordUsername,
+        instagram: instagram,
+        linkedin: linkedin,
+        telefoneWhatsApp: telefoneWhatsApp,
+        diploma: diploma,
+        ethnicity: ethnicity,
+        gender: gender,
+        intersex: intersex,
+        genderIdentity: genderIdentity,
+        sexualOrientation: sexualOrientation,
+        disability: disability, //se tem alguma deficiencia
+        participation: participation, //se ja participou de GJ+ anteriores
+        student: student,         //se é estudante ou não
+        nameStuding: nameStuding, //nome local que estuda
+
       }).subscribe({
         next: (data) => {
           if (data.success) {
