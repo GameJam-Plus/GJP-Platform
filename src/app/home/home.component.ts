@@ -129,19 +129,43 @@ export class HomeComponent{
   updateUser() : void {
     if(this.user && this.userForm.valid && this.user._id)
     {
-      this.user.name = this.userForm.get('name')?.value;
-      this.user.discordUsername = this.userForm.get('discordUsername')?.value;
-      //this.userService.updateUser(`${environment.apiUrl}/api/user/update-user/${this.user._id}`, this.user).subscribe({
-      this.userService.updateUser(this.user._id, this.user).subscribe({
-
-        next: (data) => {
-          this.successMessage = "User updated successfully";
-          this.getUser();
-        },
-        error: (error) => {
-          this.errorMessage = error.message;
+      if(!this.userForm.valid) {
+        const controls = this.userForm.controls;
+        for (const name in controls) {
+          if (controls[name].invalid) {
+            console.log(`Invalid field: ${name}`);
+            console.log(`Value: ${controls[name].value}`);
+            console.log(`Errors:`, controls[name].errors);
+          }
         }
-      });
+        this.errorMessage = "Please notify the problem.";
+      }
+
+      else {
+        const updateData: User = {
+          name: this.userForm.get('name')?.value,
+          email: this.user.email,
+          discordUsername: this.userForm.get('discordUsername')?.value,
+          gender: this.user.gender,
+          socialMedia: this.user.socialMedia,
+          region: this.user.region,
+          site: this.user.site,
+          team: this.user.team,
+          coins: this.user.coins,
+          roles: this.user.roles,
+        };
+        
+        //this.userService.updateUser(`${environment.apiUrl}/api/user/update-user/${this.user._id}`, this.user).subscribe({
+        this.userService.updateUser(this.user._id, updateData).subscribe({
+          next: (data) => {
+            this.successMessage = "User updated successfully";
+            this.getUser();
+          },
+          error: (error) => {
+            this.errorMessage = error.message;
+          }
+        });
+      }
     }
     else
     {

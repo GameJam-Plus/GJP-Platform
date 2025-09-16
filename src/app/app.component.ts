@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
     if(isPlatformBrowser(this.platformId)) {
       //const savedLanguage = localStorage.getItem('language');
       const cultureLanguage = this.translate.getBrowserCultureLang();
-      const defaultLanguage = 'pt-BR';
+      const defaultLanguage = 'en-US';
 
       this.translate.addLangs(['en-US', 'es-MX', 'pt-BR', 'zh-CN']);
       this.translate.setFallbackLang(defaultLanguage);

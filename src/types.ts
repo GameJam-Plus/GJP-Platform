@@ -1,9 +1,6 @@
 import { HttpContext, HttpHeaders, HttpParams } from '@angular/common/http';
 
 export enum JamStage {
-  PITCH_SUBMISSION = 'Pitch',
-  SEMIFINAL_SUBMISSION = 'Semifinal Submission',
-  
   PRE_PRODUCTION = 'Pre-production',
   REGISTER = 'Register',
   GAMEJAM = 'GameJam',
@@ -16,6 +13,36 @@ export enum JamStage {
   ACCELERATION_SUBMISSION = 'Acceleration Submission',
   ACCELERATION_EVALUATION = 'Acceleration Evaluation',
   GLOBAL_FINAL = 'Global Final'
+}
+
+export const JamStageColors: Record<JamStage, string> = {
+  [JamStage.PRE_PRODUCTION]: '#1E78BC', 
+  [JamStage.REGISTER]: '#1E78BC', 
+  [JamStage.GAMEJAM]: '#7143B7', 
+  [JamStage.GAMEJAM_SUBMISSION]: '#7143B7', 
+  [JamStage.INCUBATION]: '#AC3991', 
+  [JamStage.INCUBATION_SUBMISSION]: '#AC3991', 
+  [JamStage.INCUBATION_EVALUATION]: '#AC3991', 
+  [JamStage.CONTINENTAL_SEMIFINAL]: '#DE3C60', 
+  [JamStage.ACCELERATION]: '#F05A49', 
+  [JamStage.ACCELERATION_SUBMISSION]: '#F05A49', 
+  [JamStage.ACCELERATION_EVALUATION]: '#F05A49', 
+  [JamStage.GLOBAL_FINAL]: '#F2A636'
+};
+
+export function getJamStageColor(stage: JamStage): string {
+  return JamStageColors[stage] ?? '#9CA3AF';
+}
+
+export function toJamStage(input: string | undefined | null): JamStage | undefined {
+  if (!input) {
+    return undefined;
+  }
+  const normalized = String(input).trim().toLowerCase();
+  const match = (Object.values(JamStage) as string[]).find(
+    (value) => value.toLowerCase() === normalized
+  );
+  return match as JamStage | undefined;
 }
 
 export interface Options {
