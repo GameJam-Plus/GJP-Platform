@@ -381,6 +381,7 @@ const getCurrentTeamSubmission = async (req, res) => {
         res.status(400).json({ success: false, error: 'Error processing the request.' });
     }
 };
+
 const getSubmissionName = async (req, res) => {
     try {
         const name = req.params.name;
@@ -399,7 +400,6 @@ const getSubmissionName = async (req, res) => {
         res.status(400).send({ success: false, msg: error.message });
     }
 };
-
 
 const getSubmission = async (req, res) => {
     try {
@@ -567,6 +567,7 @@ const getSubmissionsSite = async (req, res) => {
         res.status(400).send({ success: false, msg: error.message });
     }
 };
+
 const getSubmissionsSiteName = async (req, res) => {
     try {
         const siteName = req.params.name;
@@ -596,7 +597,6 @@ const getSubmissionsSiteName = async (req, res) => {
         res.status(400).send({ success: false, msg: error.message });
     }
 };
-
 
 const deleteSubmission = async (req, res) => {
     try {
@@ -727,7 +727,6 @@ const giveRating = async (req, res) => {
     }
 }
 
-
 const getRating = async (req, res) => {
     try {
         const userId = req.cookies.token ? jwt.verify(req.cookies.token, 'MY_JWT_SECRET').userId : null;
@@ -780,8 +779,6 @@ const getRating = async (req, res) => {
         res.status(400).send({ success: false, msg: error.message });
     }
 };
-
-
 
 const setEvaluatorToSubmission = async (req, res) => {
     try {
@@ -855,7 +852,6 @@ const setEvaluatorToSubmission = async (req, res) => {
     }
 };
 
-
 const getSubmissionsEvaluator = async (req, res) => {
     try {
         const evaluatorID = req.params.id;
@@ -872,7 +868,6 @@ const getSubmissionsEvaluator = async (req, res) => {
     }
 };
 
-
 const getRatingsEvaluator = async (req, res) => {
     try {
         const evaluatorID = req.params.id;
@@ -888,8 +883,6 @@ const getRatingsEvaluator = async (req, res) => {
         res.status(400).json({ success: false, error: 'Error processing the request.' });
     }
 };
-
-
 
 module.exports = {
     createSubmission,

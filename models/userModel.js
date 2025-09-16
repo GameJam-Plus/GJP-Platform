@@ -17,7 +17,7 @@ const userSchema = new Schema({
     gender: {
         type: String,
         enum: ["Masculino", "Feminino", "Não-binário", "Prefiro não dizer", "Outro"],
-        required: true
+        required: false
     },
     socialMedia: {
         type: String,
