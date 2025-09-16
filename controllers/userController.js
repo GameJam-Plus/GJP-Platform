@@ -13,7 +13,7 @@ const { deepEqual } = require('assert');
 const crypto = require('node:crypto');
 
 const registerUser = async (req, res) => {
-    const { name, email, region, site, team, roles, coins, discordUsername, gender, socialMedia } = req.body;
+    const { name, email, region, site, team, roles, coins, discordUsername, instagram, linkedin, telefoneWhatsApp, diploma, ethnicity, gender, intersex, genderIdentity, sexualOrientation, disability, participation, student, nameStuding, socialMedia } = req.body;
 
     try {
         // Validar email
@@ -22,6 +22,7 @@ const registerUser = async (req, res) => {
         }
 
         // Verificar si el email ya está registrado
+        
         const existingEmail = await User.findOne({ email: email.toLowerCase().trim() });
         if (existingEmail) {
             return res.status(409).json({ success: false, message: "The email is already in use." });
@@ -33,22 +34,34 @@ const registerUser = async (req, res) => {
             return res.status(409).json({ success: false, message: "The Discord Username is already in use." });
         }
 
+        //Verificar outras informações como nome
+        
         // Crear nuevo usuario
         const user = new User({
             name: name,
             email: email.toLowerCase().trim(),
-            gender: gender,
-            socialMedia: socialMedia.trim(),
             region: region ? { _id: region._id, name: region.name } : undefined,
             site: site ? { _id: site._id, name: site.name } : undefined,
             team: team ? { _id: team._id, name: team.name } : undefined,
             roles: roles,
             coins: coins,
             discordUsername: discordUsername,
-            genre: genre,
-            socialMedia: socialMedia,
+            instagram: instagram,
+            linkedin: linkedin,
+            telefoneWhatsApp: telefoneWhatsApp,
+            diploma: diploma,
+            ethnicity: ethnicity,
+            gender: gender,
+            intersex: intersex,
+            genderIdentity: genderIdentity,
+            sexualOrientation: sexualOrientation,
+            disability: disability, //se tem alguma deficiencia
+            participation: participation, //se ja participou de GJ+ anteriores
+            student: student,         //se é estudante ou não
+            nameStuding: nameStuding, //nome local que estuda
             creationDate: new Date()
         });
+        
 
         // Guardar usuario en la base de datos
         await user.save();
@@ -61,7 +74,7 @@ const registerUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
     const { id } = req.params;
-    const { name, email, region, site, team, roles, coins, discordUsername, gender, socialMedia } = req.body;
+    const { name, email, region, site, team, roles, coins, discordUsername, instagram, linkedin, telefoneWhatsApp, diploma, ethnicity, gender, intersex, genderIdentity, sexualOrientation, disability, participation, student, nameStuding, socialMedia } = req.body;
 
     try {
         if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -93,7 +106,20 @@ const updateUser = async (req, res) => {
         if (roles) existingUser.roles = roles;
         if (coins) existingUser.coins = coins;
         if (discordUsername) existingUser.discordUsername = discordUsername;
+        if (instagram) existingUser.instagram = instagram;
+        if (linkedin) existingUser.linkedin = linkedin;
+        if (telefoneWhatsApp) existingUser.telefoneWhatsApp = telefoneWhatsApp;
+        if (diploma) existingUser.diploma = diploma;
+        if (ethnicity) existingUser.ethnicity = ethnicity;
         if (gender) existingUser.gender = gender;
+        if (intersex) existingUser.intersex = intersex;
+        if (genderIdentity) existingUser.genderIdentity = genderIdentity;
+        if (sexualOrientation) existingUser.sexualOrientation = sexualOrientation;
+        if (disability) existingUser.disability = disability;
+        if (participation) existingUser.participation = participation;
+        if (student) existingUser.student = student;
+        if (nameStuding) existingUser.nameStuding = nameStuding;
+        
         if (socialMedia) existingUser.socialMedia = socialMedia;
         if(existingUser.roles.includes('Jammer')){
             const query = { 'jammers._id': id };
