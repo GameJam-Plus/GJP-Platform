@@ -142,12 +142,24 @@ export class HomeComponent{
       }
 
       else {
+
+        const formValues = this.userForm.value;
+
         const updateData: User = {
           name: this.userForm.get('name')?.value,
           email: this.user.email,
           discordUsername: this.userForm.get('discordUsername')?.value,
+          telefoneWhatsApp: this.userForm.get('')?.value,
+          diploma: this.userForm.get('')?.value,
+          ethnicity: this.userForm.get('')?.value,
           gender: this.user.gender,
-          socialMedia: this.user.socialMedia,
+          intersex: this.userForm.get('')?.value,
+          genderIdentity: this.userForm.get('')?.value,
+          sexualOrientation: this.userForm.get('')?.value,
+          disability: this.userForm.get('')?.value,
+          participation: this.userForm.get('')?.value,
+          student: this.userForm.get('')?.value,
+          nameStuding: this.userForm.get('')?.value,
           region: this.user.region,
           site: this.user.site,
           team: this.user.team,
