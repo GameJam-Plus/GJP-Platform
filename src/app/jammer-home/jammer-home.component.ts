@@ -13,7 +13,7 @@ import { MessagesComponent } from '../messages/messages.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DataFormComponent } from './data-form/data-form.component';
 import { RulesComponent } from '../rules/rules.component';
-import { User, Site, Region, Country, Jam, Stage, Team, Submission, JamStage } from '../../types';
+import { User, Site, Region, Country, Jam, Stage, Team, Submission, JamStage, JamStageColors, getJamStageColor, toJamStage } from '../../types';
 import { TranslatePipe } from '@ngx-translate/core';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -24,6 +24,7 @@ import { faPalette } from '@fortawesome/free-solid-svg-icons';
 import { faFilePowerpoint } from '@fortawesome/free-solid-svg-icons';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faCrown } from '@fortawesome/free-solid-svg-icons';
 import { faDiscord } from '@fortawesome/free-brands-svg-icons';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
@@ -93,6 +94,9 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
   gameCategories: string[] = [];
   gamePlatforms: string[] = [];
 
+  rulesLink = "/rules";
+  itchioLink = "https://itch.io/jam/gamejamplus-2425";
+
   availableGenres = [
     "Action",
     "Adventure",
@@ -158,6 +162,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
   faUsers = faUsers;
   faUser = faUser;
   faDiscord = faDiscord;
+  faCrown = faCrown;
   faEnvelope = faEnvelope;
   faLocationDot = faLocationDot;
   faLandmark = faLandmark;
@@ -726,7 +731,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
   {
     if(this.isCurrentStage(stage))
     {
-      return 'card inverted border border-dark';
+      return 'card text-white double-border';
     }
     else
     {
@@ -734,6 +739,14 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
     }
   }
 
+  getStageStyle(stage: any)
+  {
+    const enumStage = toJamStage(stage?.stageName);
+    const bg = enumStage ? getJamStageColor(enumStage) : '#9CA3AF';
+    return { 'background-color': bg };
+  }
+
+  //TODO: CAN REMOVE THIS FUNCTION
   onTimeForSubmission()
   {
     // for now we rather don't close the form and track late entries
@@ -826,38 +839,39 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
     return 0;
   }
 
-  getRelativePitchDelta()
-  {
-    if(this.jam && this.site && this.team)
-    {
-      if(this.site.customSubmissionTime)
-      {
-        let endDate = new Date(this.site.customSubmissionTime);
-        endDate = new Date((endDate.getTime() + 48*60*60*1000));
-        let now = new Date();
-        let delta = endDate.getTime() - now.getTime();
-        return delta;
-      }
+  // TODO: REMOVE THIS LATER
+  // getRelativePitchDelta()
+  // {
+  //   if(this.jam && this.site && this.team)
+  //   {
+  //     if(this.site.customSubmissionTime)
+  //     {
+  //       let endDate = new Date(this.site.customSubmissionTime);
+  //       endDate = new Date((endDate.getTime() + 48*60*60*1000));
+  //       let now = new Date();
+  //       let delta = endDate.getTime() - now.getTime();
+  //       return delta;
+  //     }
 
-      let now = new Date();
-      let offset = now.getTimezoneOffset() * 60000;
-      now = new Date((now.getTime() - offset));
-      let currentStage: any = null;
+  //     let now = new Date();
+  //     let offset = now.getTimezoneOffset() * 60000;
+  //     now = new Date((now.getTime() - offset));
+  //     let currentStage: any = null;
 
-      for(let s = 0; s < this.jam.stages.length; ++s)
-      {
-        if(this.jam.stages[s].stageName == JamStage.PITCH_SUBMISSION)
-        {
-          let endDate = new Date(this.jam.stages[s].endDate);
-          //endDate = new Date(endDate.getTime() - (180 * 60000) + (48*60*60*1000));
-          endDate = new Date(endDate.getTime() - (180 * 60000));
+  //     for(let s = 0; s < this.jam.stages.length; ++s)
+  //     {
+  //       if(this.jam.stages[s].stageName == JamStage.PITCH_SUBMISSION)
+  //       {
+  //         let endDate = new Date(this.jam.stages[s].endDate);
+  //         //endDate = new Date(endDate.getTime() - (180 * 60000) + (48*60*60*1000));
+  //         endDate = new Date(endDate.getTime() - (180 * 60000));
 
-          return endDate.getTime() - now.getTime();
-        }
-      }
-    }
-    return 0;
-  }
+  //         return endDate.getTime() - now.getTime();
+  //       }
+  //     }
+  //   }
+  //   return 0;
+  // }
 
   getAccelerationTimeDelta() {
     if(this.jam && this.site && this.team) {

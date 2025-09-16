@@ -210,9 +210,11 @@
 
           <!-- STAGES -->
           <div class="row pb-3 align-items-end">
-            <h2 class="col-12 text-center">{{ 'platform.jammer.home.jaminfo.stages' | translate}}<a matTooltip="{{ 'platform.jammer.home.jaminfo.stagetooltip' | translate}}" class="tooltip-trigger">?</a></h2>
+            <h2 class="col-12 text-center">{{ 'platform.jammer.home.jaminfo.stages' | translate}}
+              <a matTooltip="{{ 'platform.jammer.home.jaminfo.stagetooltip' | translate}}" class="tooltip-trigger">?</a>
+            </h2>
             <div class="col-3 p-2" *ngFor="let stage of jam.stages">
-              <div [ngClass]="getStageClass(stage)">
+              <div [ngClass]="getStageClass(stage)" [ngStyle]="getStageStyle(stage)">
                 <h3 class="text-center">{{ stage.stageName }}</h3>
                 <p class="text-center">{{ formatDate(stage.startDate) }} - {{ formatDate(stage.endDate) }}</p>
                 <p class="text-center" *ngIf="isCurrentStage(stage)">{{ 'platform.jammer.home.jaminfo.currentstage' | translate}}</p>
@@ -279,7 +281,9 @@
                 <h3>{{ jammer.name }}</h3>
                 <p><fa-icon [icon]="faEnvelope" class="mr-2"></fa-icon><a [href]="'mailto:' + jammer.email">{{ jammer.email }}</a></p>
                 <p><fa-icon [icon]="faDiscord" class="mr-2"></fa-icon> {{ jammer.discordUsername ? jammer.discordUsername : 'None' }}</p>
-                <p *ngIf="jammer.role && jammer.role === 'owner'">{{ 'platform.jammer.myjam.myteam.teamleader' | translate}}</p>
+                <p *ngIf="jammer.role && jammer.role === 'owner'">
+                  <fa-icon [icon]="faCrown" class="mr-2"></fa-icon> {{ 'platform.jammer.myjam.myteam.teamleader' | translate}}
+                </p>
               </div>
             </div>
           </div>
@@ -292,11 +296,11 @@
       </div>
 
       <div *ngIf="page == 'submission'" class="container container-lg p-3">
-        <h1>My Submission</h1>
+        <h1>{{ 'platform.jammer.myjam.mysubmission.mysubmission' | translate }}</h1>
         <div *ngIf="!team">
           <div class="warning m-3 p-4 text-center">
             <p class="py-2">
-              You are not assigned to a team, please create a new team or join a team in your venue to submit a game.
+              {{ 'platform.jammer.myjam.mysubmission.noteam' | translate }}
             </p>
           </div>
         </div>
@@ -320,758 +324,137 @@
           <!-- Gamejam Pitch Submission Status -->
           <div *ngIf="isStageActive(JamStages.GAMEJAM_SUBMISSION) || hasStagePassed(JamStages.GAMEJAM_SUBMISSION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.GAMEJAM_SUBMISSION)">
             <h2 class="text-white">
-              Status da submissão do pitch: 
+              {{ 'platform.jammer.myjam.mysubmission.pitchsubmissionstatus' | translate}}  
               <ng-container [ngSwitch]="true">
-                <span *ngSwitchCase="hasSubmittedOn(JamStages.GAMEJAM_SUBMISSION)">VÁLIDO</span>
-                <span *ngSwitchCase="!hasSubmittedOn(JamStages.GAMEJAM_SUBMISSION) && getStageTimeDelta(JamStages.GAMEJAM_SUBMISSION) > 0">PENDENTE</span>
-                <span *ngSwitchCase="!hasSubmittedOn(JamStages.GAMEJAM_SUBMISSION) && getStageTimeDelta(JamStages.GAMEJAM_SUBMISSION) < 0">ATRASADO</span>
-                <span *ngSwitchDefault>NÃO DISPONÍVEL</span>
+                <span *ngSwitchCase="hasSubmittedOn(JamStages.GAMEJAM_SUBMISSION)">{{ 'platform.common.valid' | translate}}</span>
+                <span *ngSwitchCase="!hasSubmittedOn(JamStages.GAMEJAM_SUBMISSION) && getStageTimeDelta(JamStages.GAMEJAM_SUBMISSION) > 0">{{ 'platform.common.pending' | translate}}</span>
+                <span *ngSwitchCase="!hasSubmittedOn(JamStages.GAMEJAM_SUBMISSION) && getStageTimeDelta(JamStages.GAMEJAM_SUBMISSION) < 0">{{ 'platform.common.late' | translate}}</span>
+                <span *ngSwitchDefault>{{ 'platform.common.notavailable' | translate}}</span>
               </ng-container>
             </h2>
-            <p class="text-white" *ngIf="hasSubmittedOn(JamStages.GAMEJAM_SUBMISSION) && submission">Enviado em: {{ submission.gamejamPitchTime | date:'medium' }}</p>
+            <p class="text-white" *ngIf="hasSubmittedOn(JamStages.GAMEJAM_SUBMISSION) && submission">{{ 'platform.common.submittedon' | translate}} {{ submission.gamejamPitchTime | date:'medium' }}</p>
           </div>
 
           <!-- Incubation Submission Status -->
           <div *ngIf="isStageActive(JamStages.INCUBATION) || hasStagePassed(JamStages.INCUBATION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.INCUBATION)">
             <h2 class="text-white">
-              Status da submissão da incubação: 
+              {{ 'platform.jammer.myjam.mysubmission.incubationsubmissionstatus' | translate}} 
               <ng-container [ngSwitch]="true">
-                <span *ngSwitchCase="hasSubmittedOn(JamStages.INCUBATION)">VÁLIDO</span>
-                <span *ngSwitchCase="!hasSubmittedOn(JamStages.INCUBATION) && getStageTimeDelta(JamStages.INCUBATION) > 0">PENDENTE</span>
-                <span *ngSwitchCase="!hasSubmittedOn(JamStages.INCUBATION) && getStageTimeDelta(JamStages.INCUBATION) < 0">ATRASADO</span>
-                <span *ngSwitchDefault>NÃO DISPONÍVEL</span>
+                <span *ngSwitchCase="hasSubmittedOn(JamStages.INCUBATION)">{{ 'platform.common.valid' | translate}}</span>
+                <span *ngSwitchCase="!hasSubmittedOn(JamStages.INCUBATION) && getStageTimeDelta(JamStages.INCUBATION) > 0">{{ 'platform.common.pending' | translate}}</span>
+                <span *ngSwitchCase="!hasSubmittedOn(JamStages.INCUBATION) && getStageTimeDelta(JamStages.INCUBATION) < 0">{{ 'platform.common.late' | translate}}</span>
+                <span *ngSwitchDefault>{{ 'platform.common.notavailable' | translate}}</span>
               </ng-container>
             </h2>
-            <p class="text-white" *ngIf="hasSubmittedOn(JamStages.INCUBATION) && submission">Enviado em: {{ submission.incubationSubmissionTime | date:'medium' }}</p>
+            <p class="text-white" *ngIf="hasSubmittedOn(JamStages.INCUBATION) && submission">{{ 'platform.common.submittedon' | translate}} {{ submission.incubationSubmissionTime | date:'medium' }}</p>
           </div>
 
           <!-- Incubation Pitch Submission Status -->
           <div *ngIf="isStageActive(JamStages.INCUBATION_SUBMISSION) || hasStagePassed(JamStages.INCUBATION_SUBMISSION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.INCUBATION_SUBMISSION)">
             <h2 class="text-white">
-              Status da submissão do pitch da incubação: 
+              {{ 'platform.jammer.myjam.mysubmission.incubationpitchsubmissionstatus' | translate}} 
               <ng-container [ngSwitch]="true">
-                <span *ngSwitchCase="hasSubmittedOn(JamStages.INCUBATION_SUBMISSION)">VÁLIDO</span>
-                <span *ngSwitchCase="!hasSubmittedOn(JamStages.INCUBATION_SUBMISSION) && getStageTimeDelta(JamStages.INCUBATION_SUBMISSION) > 0">PENDENTE</span>
-                <span *ngSwitchCase="!hasSubmittedOn(JamStages.INCUBATION_SUBMISSION) && getStageTimeDelta(JamStages.INCUBATION_SUBMISSION) < 0">ATRASADO</span>
-                <span *ngSwitchDefault>NÃO DISPONÍVEL</span>
+                <span *ngSwitchCase="hasSubmittedOn(JamStages.INCUBATION_SUBMISSION)">{{ 'platform.common.valid' | translate}}</span>
+                <span *ngSwitchCase="!hasSubmittedOn(JamStages.INCUBATION_SUBMISSION) && getStageTimeDelta(JamStages.INCUBATION_SUBMISSION) > 0">{{ 'platform.common.pending' | translate}}</span>
+                <span *ngSwitchCase="!hasSubmittedOn(JamStages.INCUBATION_SUBMISSION) && getStageTimeDelta(JamStages.INCUBATION_SUBMISSION) < 0">{{ 'platform.common.late' | translate}}</span>
+                <span *ngSwitchDefault>{{ 'platform.common.notavailable' | translate}}</span>
               </ng-container>
             </h2>
-            <p class="text-white" *ngIf="hasSubmittedOn(JamStages.INCUBATION_SUBMISSION) && submission">Enviado em: {{ submission.incubationPitchTime | date:'medium' }}</p>
+            <p class="text-white" *ngIf="hasSubmittedOn(JamStages.INCUBATION_SUBMISSION) && submission">{{ 'platform.common.submittedon' | translate}} {{ submission.incubationPitchTime | date:'medium' }}</p>
           </div>
 
           <!-- Acceleration Submission Status -->
           <div *ngIf="isStageActive(JamStages.ACCELERATION) || hasStagePassed(JamStages.ACCELERATION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.ACCELERATION)">
             <h2 class="text-white">
-              Status da submissão da aceleração: 
+              {{ 'platform.jammer.myjam.mysubmission.accelerationsubmissionstatus' | translate}} 
               <ng-container [ngSwitch]="true">
-                <span *ngSwitchCase="hasSubmittedOn(JamStages.ACCELERATION)">VÁLIDO</span>
-                <span *ngSwitchCase="!hasSubmittedOn(JamStages.ACCELERATION) && getStageTimeDelta(JamStages.ACCELERATION) > 0">PENDENTE</span>
-                <span *ngSwitchCase="!hasSubmittedOn(JamStages.ACCELERATION) && getStageTimeDelta(JamStages.ACCELERATION) < 0">ATRASADO</span>
-                <span *ngSwitchDefault>NÃO DISPONÍVEL</span>
+                <span *ngSwitchCase="hasSubmittedOn(JamStages.ACCELERATION)">{{ 'platform.common.valid' | translate}}</span>
+                <span *ngSwitchCase="!hasSubmittedOn(JamStages.ACCELERATION) && getStageTimeDelta(JamStages.ACCELERATION) > 0">{{ 'platform.common.pending' | translate}}</span>
+                <span *ngSwitchCase="!hasSubmittedOn(JamStages.ACCELERATION) && getStageTimeDelta(JamStages.ACCELERATION) < 0">{{ 'platform.common.late' | translate}}</span>
+                <span *ngSwitchDefault>{{ 'platform.common.notavailable' | translate}}</span>
               </ng-container>
             </h2>
-            <p class="text-white" *ngIf="hasSubmittedOn(JamStages.ACCELERATION) && submission">Enviado em: {{ submission.accelerationSubmissionTime | date:'medium' }}</p>
+            <p class="text-white" *ngIf="hasSubmittedOn(JamStages.ACCELERATION) && submission">{{ 'platform.common.submittedon' | translate}} {{ submission.accelerationSubmissionTime | date:'medium' }}</p>
           </div>
 
           <!-- Acceleration Pitch Submission Status -->
           <div *ngIf="isStageActive(JamStages.ACCELERATION_SUBMISSION) || hasStagePassed(JamStages.ACCELERATION_SUBMISSION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.ACCELERATION_SUBMISSION)">
             <h2 class="text-white">
-              Status da submissão do pitch da aceleração: 
+              {{ 'platform.jammer.myjam.mysubmission.accelerationpitchsubmissionstatus' | translate}} 
               <ng-container [ngSwitch]="true">
-                <span *ngSwitchCase="hasSubmittedOn(JamStages.ACCELERATION_SUBMISSION)">VÁLIDO</span>
-                <span *ngSwitchCase="!hasSubmittedOn(JamStages.ACCELERATION_SUBMISSION) && getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION) > 0">PENDENTE</span>
-                <span *ngSwitchCase="!hasSubmittedOn(JamStages.ACCELERATION_SUBMISSION) && getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION) < 0">ATRASADO</span>
-                <span *ngSwitchDefault>NÃO DISPONÍVEL</span>
+                <span *ngSwitchCase="hasSubmittedOn(JamStages.ACCELERATION_SUBMISSION)">{{ 'platform.common.valid' | translate}}</span>
+                <span *ngSwitchCase="!hasSubmittedOn(JamStages.ACCELERATION_SUBMISSION) && getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION) > 0">{{ 'platform.common.pending' | translate}}</span>
+                <span *ngSwitchCase="!hasSubmittedOn(JamStages.ACCELERATION_SUBMISSION) && getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION) < 0">{{ 'platform.common.late' | translate}}</span>
+                <span *ngSwitchDefault>{{ 'platform.common.notavailable' | translate}}</span>
               </ng-container>
             </h2>
-            <p class="text-white" *ngIf="hasSubmittedOn(JamStages.ACCELERATION_SUBMISSION) && submission">Enviado em: {{ submission.accelerationPitchTime | date:'medium' }}</p>
+            <p class="text-white" *ngIf="hasSubmittedOn(JamStages.ACCELERATION_SUBMISSION) && submission">{{ 'platform.common.submittedon' | translate}} {{ submission.accelerationPitchTime | date:'medium' }}</p>
           </div>
         </div>
 
         <!-- Forms -->
         <div *ngIf="team">
-          <div *ngIf="site.language == 'PT'"> <!-- SUBMISSIONS IN PORTUGUESE -->
-            <!-- GAMEJAM SUBMISSION FORM -->
-            <div *ngIf="isStageActiveWithDelay(JamStages.GAMEJAM)">
-              <hr class="my-2">
-              <h2>SUBMISSÃO DO JOGO</h2>
-              <div *ngIf="getStageTimeDelta(JamStages.GAMEJAM) > 0">
-                <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.GAMEJAM))}}</b>
-              </div>
-              <div class="info m-3 p-4">
-                <p class="py-2">
-                  Antes de enviar seu jogo, certifique-se de ler as <b><a href="/rules" target="_blank">Regras e Regulamentos</a></b>.<br>
-                  Revise todos os pontos desta lista de verificação antes de fazer sua submissão:
-                </p>
-
-                <ul>
-                  <li>Todos os membros da minha equipe entraram no <b><a href="https://itch.io/jam/gamejamplus-2425" target="_blank">itch.io oficial</a> da GameJam+</b></li>
-                  <li>Nosso jogo já foi enviado para a itch.io oficial da GameJam+</li>
-                  <li>A página do jogo é pública</li>
-                  <li>A versão do jogo é jogável</li>
-                  <li>Adicionamos capturas de tela, uma descrição, tags e todas as informações necessárias para jogar nosso jogo</li>
-                </ul>
-              </div>
-
-              <form (submit)="saveGamejamSubmission()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionGamejamForm" enctype="multipart/form-data">
-                <div class="row">
-                  <div class="form-group col-12"> <!-- GOING TO INCUBATION -->
-                    <label for="GoingToIncubation" class="required">
-                      <b>Você deseja participar da etapa de INCUBAÇÃO?</b>
-                    </label>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="goingToIncubation" [value]="true" formControlName="goingToIncubation" id="goingToIncubationYes">
-                      <label class="form-check-label" for="goingToIncubationYes">
-                        Sim
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="goingToIncubation" [value]="false" formControlName="goingToIncubation" id="goingToIncubationNo">
-                      <label class="form-check-label" for="goingToIncubationNo">
-                        Não
-                      </label>
-                    </div>
-                  </div>
-
-                  <div class="form-group col-12"> <!-- TITLE -->
-                    <label for="title" class="required">
-                      Título do seu jogo
-                    </label>
-                    <input type="text" class="form-control form-control-lg" placeholder="Next GOTY" formControlName="gamejamTitle">
-                  </div>
-
-                  <div class="form-group col-6"> <!-- LINK -->
-                    <label for="link" class="required">
-                      Link para a página do seu jogo no itch.io
-                    </label>
-                    <input type="url" class="form-control" placeholder="https://myteam.itch.io/mygame" formControlName="gamejamBuild">
-                  </div>
-
-                  <div class="form-group col-6"> <!-- CONTACT -->
-                    <label for="contact" class="required">
-                      Quem é a pessoa responsável pela equipe?
-                      <a matTooltip="Esse membro da equipe será o ponto de contato para o GJ+ caso precisemos entrar em contato." class="tooltip-trigger">?</a>
-                    </label>
-                    <select class="form-control" formControlName="gamejamContact">
-                      <option value="" disabled selected hidden>Selecione um membro da equipe</option>
-                      <option *ngFor="let jammer of team.jammers; index as i" [value]="i">
-                        {{ jammer.name }} - {{ jammer.email }}
-                      </option>
-                    </select>
-                  </div>
-
-                  <div class="form-group col-12"> <!-- DESCRIPTION -->
-                    <label for="description" class="required">
-                      Escreva aqui uma breve descrição do seu jogo
-                    </label>
-                    <textarea class="form-control" formControlName="gamejamDescription" rows="5"></textarea>
-                  </div>
-
-                  <div class="form-group col-6"> <!-- GENRE -->
-                    <label for="genre" class="required">
-                      Quais são os gêneros do seu jogo?
-                    </label>
-                    <select class="form-select" formControlName="gamejamGenres" multiple>
-                      <option *ngFor="let genre of availableGenres" [value]="genre">
-                        {{ genre }}
-                      </option>
-                    </select>
-                  </div>
-
-                  <div class="form-group col-6"> <!-- TOPICS -->
-                    <label for="topic" class="required">
-                      Seu jogo aborda algum dos seguintes tópicos?
-                      <a matTooltip="A abordagem pode ser na narrativa, jogabilidade, arte ou outros. Você pode marcar mais de uma opção." class="tooltip-trigger">?</a>
-                    </label>
-                    <select class="form-select" formControlName="gamejamTopics" multiple>
-                      <option *ngFor="let topic of availableTopics" [value]="topic">
-                        {{ topic }}
-                      </option>
-                    </select>
-                  </div>
-
-                  <div class="form-group col-4"> <!-- THEMES -->
-                    <label for="Themes" class="required">
-                      Em quais TEMAS seu jogo está registrado?
-                    </label>
-                    <select class="form-select" formControlName="gamejamThemes" multiple>
-                      <option *ngFor="let theme of jam.themes" [value]="theme.titleEN">
-                        {{ theme.titlePT }}
-                      </option>
-                    </select>
-                  </div>
-
-                  <div class="form-group col-4"> <!-- CATEGORIES -->
-                    <label for="Categories" class="required">
-                      CATEGORIA onde seu jogo compite?
-                    </label>
-                    <select class="form-select" formControlName="gamejamCategories" multiple>
-                      <option *ngFor="let category of jam.categories" [value]="category.titleEN">
-                        {{ category.titlePT }}
-                      </option>
-                    </select>
-                  </div>
-
-                  <div class="form-group col-4"> <!-- PLATFORMS -->
-                    <label for="Platforms" class="required">
-                      Para quais plataformas foi desenvolvido?
-                    </label>
-                    <select class="form-select" formControlName="gamejamPlatforms" multiple>
-                      <option *ngFor="let platform of availablePlatforms" [value]="platform">
-                        {{ platform }}
-                      </option>
-                    </select>
-                  </div>
-
-                  <div class="form-group col-6"> <!-- GRAPHICS -->
-                    <label for="Graphics" class="required">
-                      Que tipo de gráficos o seu jogo usa?
-                    </label>
-                    <select class="form-select" formControlName="gamejamGraphics">
-                      <option *ngFor="let graphic of availableGraphics" [value]="graphic">
-                        {{ graphic }}
-                      </option>
-                    </select>
-                  </div>
-
-                  <div class="form-group col-6"> <!-- ENGINE -->
-                    <label for="Engine" class="required">
-                      Qual motor foi usado nesta build?
-                    </label>
-                    <select class="form-select" formControlName="gamejamEngine">
-                      <option *ngFor="let engine of availableEngines" [value]="engine">
-                        {{ engine }}
-                      </option>
-                    </select>
-                  </div>
-                  
-                  <div class="form-group col-6"> <!-- RECOMMENDATION -->
-                    <label for="Recommendation" class="required">
-                      De 0 a 10, você recomendaria o GameJamPlus a um amigo?
-                    </label>
-                    <input type="number" class="form-control" min="0" max="10" step="1" value="5" formControlName="gamejamRecommendation">
-                  </div>
-
-                  <div class="form-group col-6"> <!-- ENJOYMENT -->
-                    <label for="Enjoyment" class="required">
-                      De 0 a 10, como foi sua experiência durante o GameJamPlus? Você gostou?
-                    </label>
-                    <input type="number" class="form-control" min="0" max="10" step="1" value="5" formControlName="gamejamEnjoyment">
-                  </div>
-
-                  <div class="form-group col-12"> <!-- SUGGESTIONS -->
-                    <label for="Suggestions">
-                      Você tem alguma outra consideração, dica, reclamação ou qualquer outra coisa que gostaria de compartilhar conosco?
-                      <a matTooltip="Por favor, não seja maldoso =)" class="tooltip-trigger">?</a>
-                    </label>
-                    <textarea rows="5" class="form-control" formControlName="gamejamSuggestions"></textarea>
-                  </div>
-
-                  <div class="form-group col-12"> <!-- AUTHORIZATION -->
-                    <label for="Authorization" class="required">
-                      Autorizo o uso e o processamento dos dados fornecidos por mim ao GameJam+, incluindo meus dados pessoais, para prospectar oportunidades de meu interesse, incluindo a transferência desses dados para terceiros, com o objetivo de me conectar a entidades e oportunidades no mercado de jogos digitais, nacional e internacionalmente, e segmentos relacionados.
-                    </label>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="gamejamAuthorization" [value]="true" formControlName="gamejamAuthorization" id="authorizationYes">
-                      <label class="form-check-label" for="authorizationYes">
-                        Sim
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="gamejamAuthorization" [value]="false" formControlName="gamejamAuthorization" id="authorizationNo">
-                      <label class="form-check-label" for="authorizationNo">
-                        Não
-                      </label>
-                    </div>
-                  </div>
-
-                  <button type="submit" class="btn btn-black col-12" *ngIf="getStageTimeDelta(JamStages.GAMEJAM) > 0">ENVIAR JOGO</button>
-                  <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.GAMEJAM) < 0">ENVIOS FECHADOS</div>
-                </div>
-              </form>
+          <!-- GAMEJAM SUBMISSION FORM -->
+          <div *ngIf="isStageActiveWithDelay(JamStages.GAMEJAM)">
+            <hr class="my-2">
+            <h2>{{ 'platform.jammer.myjam.mysubmission.gamesubmission' | translate}}</h2>
+            <div *ngIf="getStageTimeDelta(JamStages.GAMEJAM) > 0">
+              <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.GAMEJAM))}}</b>
             </div>
-
-            <!-- GAMEJAM PITCH SUBMISSION FORM -->
-            <div *ngIf="isStageActiveWithDelay(JamStages.GAMEJAM_SUBMISSION)">
-              <hr class="my-2">
-              <h2>SUBMISSÃO DO PITCH</h2>
-              <div *ngIf="getStageTimeDelta(JamStages.GAMEJAM_SUBMISSION) > 0">
-                <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.GAMEJAM_SUBMISSION)) }}</b>
-              </div>
-
-              <form (submit)="savePitchGamejam()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionPitchGamejamForm" enctype="multipart/form-data">
-                <div class="form-group col-12"> <!-- LINK -->
-                  Enviar um vídeo-pitch é obrigatório para avançar para a próxima etapa. <br>
-                  <label for="gamejamPitch" class="required">
-                    Link para o seu video pitch
-                  </label>
-                  <input 
-                  type="url" 
-                  class="form-control form-control-lg" 
-                  placeholder="https://www.youtube.com/my-pitch-video" 
-                  formControlName="gamejamPitch"
-                  pattern="^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(?:-nocookie)?\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|live\/|v\/)?)([\w\-]+)(\S+)?$">
-                  <div class="text-danger mt-1" *ngIf="submissionPitchGamejamForm.get('gamejamPitch')?.touched && submissionPitchGamejamForm.get('gamejamPitch')?.invalid">
-                    {{ getPitchErrorMessage() }}
-                  </div>
-                </div>
-
-                <button type="submit" *ngIf="getStageTimeDelta(JamStages.GAMEJAM_SUBMISSION) > 0" class="btn btn-black col-12">ENVIAR PITCH</button>
-                <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.GAMEJAM_SUBMISSION) < 0">ENVIOS FECHADOS</div>
-              </form>
-            </div>
-
-            <!-- INCUBATION SUBMISSION FORM -->
-            <div *ngIf="isStageActiveWithDelay(JamStages.INCUBATION)">
-              <hr class="my-2">
-              <h2>SUBMISSÃO DA INCUBAÇÃO</h2>
-              <div *ngIf="getStageTimeDelta(JamStages.INCUBATION) > 0">
-                <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.INCUBATION))}}</b>
-              </div>
-
-              <form (submit)="saveIncubationSubmission()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionIncubationForm" enctype="multipart/form-data">
-                <div class="row">
-                  <div class="form-group col-12"> <!-- GOING TO INCUBATION -->
-                    <label for="GoingToIncubation" class="required">
-                      <b>Você deseja participar da etapa de ACELERAÇÃO?</b>
-                    </label>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="goingToAcceleration" [value]="true" formControlName="goingToAcceleration" id="goingToAccelerationYes">
-                      <label class="form-check-label" for="goingToAccelerationYes">
-                        Sim
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="goingToAcceleration" [value]="false" formControlName="goingToAcceleration" id="goingToAccelerationNo">
-                      <label class="form-check-label" for="goingToAccelerationNo">
-                        Não
-                      </label>
-                    </div>
-                  </div>
-
-                  <div class="form-group col-12"> <!-- TITLE -->
-                    <label for="title" class="required">
-                      Título do seu jogo
-                    </label>
-                    <input type="text" class="form-control form-control-lg" placeholder="Next GOTY" formControlName="incubationTitle">
-                  </div>
-
-                  <div class="form-group col-6"> <!-- LINK -->
-                    <label for="link" class="required">
-                      Link para a página do seu jogo no itch.io
-                    </label>
-                    <input type="url" class="form-control" placeholder="https://myteam.itch.io/mygame" formControlName="incubationBuild">
-                  </div>
-
-                  <div class="form-group col-6"> <!-- CONTACT -->
-                    <label for="contact" class="required">
-                      Quem é a pessoa responsável pela equipe?
-                      <a matTooltip="Esse membro da equipe será o ponto de contato para o GJ+ caso precisemos entrar em contato." class="tooltip-trigger">?</a>
-                    </label>
-                    <select class="form-control" formControlName="incubationContact">
-                      <option value="" disabled selected hidden>Selecione um membro da equipe</option>
-                      <option *ngFor="let jammer of team.jammers; index as i" [value]="i">
-                        {{ jammer.name }} - {{ jammer.email }}
-                      </option>
-                    </select>
-                  </div>
-
-                  <div class="form-group col-12"> <!-- DESCRIPTION -->
-                    <label for="description" class="required">
-                      Escreva aqui uma breve descrição do seu jogo
-                    </label>
-                    <textarea class="form-control" formControlName="incubationDescription" rows="5"></textarea>
-                  </div>
-
-                  <div class="form-group col-6"> <!-- GENRE -->
-                    <label for="genre" class="required">
-                      Quais são os gêneros do seu jogo?
-                    </label>
-                    <select class="form-select" formControlName="incubationGenres" multiple>
-                      <option *ngFor="let genre of availableGenres" [value]="genre">
-                        {{ genre }}
-                      </option>
-                    </select>
-                  </div>
-
-                  <div class="form-group col-6"> <!-- TOPICS -->
-                    <label for="topic" class="required">
-                      Seu jogo aborda algum dos seguintes tópicos?
-                      <a matTooltip="A abordagem pode ser na narrativa, jogabilidade, arte ou outros. Você pode marcar mais de uma opção." class="tooltip-trigger">?</a>
-                    </label>
-                    <select class="form-select" formControlName="incubationTopics" multiple>
-                      <option *ngFor="let topic of availableTopics" [value]="topic">
-                        {{ topic }}
-                      </option>
-                    </select>
-                  </div>
-
-                  <div class="form-group col-4"> <!-- THEMES -->
-                    <label for="Themes" class="required">
-                      Em quais TEMAS seu jogo está registrado?
-                    </label>
-                    <select class="form-select" formControlName="incubationThemes" multiple>
-                      <option *ngFor="let theme of jam.themes" [value]="theme.titleEN">
-                        {{ theme.titlePT }}
-                      </option>
-                    </select>
-                  </div>
-
-                  <div class="form-group col-4"> <!-- CATEGORIES -->
-                    <label for="Categories" class="required">
-                      CATEGORIA onde seu jogo compite?
-                    </label>
-                    <select class="form-select" formControlName="incubationCategories" multiple>
-                      <option *ngFor="let category of jam.categories" [value]="category.titleEN">
-                        {{ category.titlePT }}
-                      </option>
-                    </select>
-                  </div>
-
-                  <div class="form-group col-4"> <!-- PLATFORMS -->
-                    <label for="Platforms" class="required">
-                      Para quais plataformas foi desenvolvido?
-                    </label>
-                    <select class="form-select" formControlName="incubationPlatforms" multiple>
-                      <option *ngFor="let platform of availablePlatforms" [value]="platform">
-                        {{ platform }}
-                      </option>
-                    </select>
-                  </div>
-
-                  <div class="form-group col-6"> <!-- GRAPHICS -->
-                    <label for="Graphics" class="required">
-                      Que tipo de gráficos o seu jogo usa?
-                    </label>
-                    <select class="form-select" formControlName="incubationGraphics">
-                      <option *ngFor="let graphic of availableGraphics" [value]="graphic">
-                        {{ graphic }}
-                      </option>
-                    </select>
-                  </div>
-
-                  <div class="form-group col-6"> <!-- ENGINE -->
-                    <label for="Engine" class="required">
-                      Qual motor foi usado nesta build?
-                    </label>
-                    <select class="form-select" formControlName="incubationEngine">
-                      <option *ngFor="let engine of availableEngines" [value]="engine">
-                        {{ engine }}
-                      </option>
-                    </select>
-                  </div>
-                  
-                  <div class="form-group col-6"> <!-- RECOMMENDATION -->
-                    <label for="Recommendation" class="required">
-                      De 0 a 10, você recomendaria o GameJamPlus a um amigo?
-                    </label>
-                    <input type="number" class="form-control" min="0" max="10" step="1" value="5" formControlName="incubationRecommendation">
-                  </div>
-
-                  <div class="form-group col-6"> <!-- ENJOYMENT -->
-                    <label for="Enjoyment" class="required">
-                      De 0 a 10, como foi sua experiência durante o GameJamPlus? Você gostou?
-                    </label>
-                    <input type="number" class="form-control" min="0" max="10" step="1" value="5" formControlName="incubationEnjoyment">
-                  </div>
-
-                  <div class="form-group col-12"> <!-- SUGGESTIONS -->
-                    <label for="Suggestions">
-                      Você tem alguma outra consideração, dica, reclamação ou qualquer outra coisa que gostaria de compartilhar conosco?
-                      <a matTooltip="Por favor, não seja maldoso =)" class="tooltip-trigger">?</a>
-                    </label>
-                    <textarea rows="5" class="form-control" formControlName="incubationSuggestions"></textarea>
-                  </div>
-
-                  <div class="form-group col-12"> <!-- AUTHORIZATION -->
-                    <label for="Authorization" class="required">
-                      Autorizo o uso e o processamento dos dados fornecidos por mim ao GameJam+, incluindo meus dados pessoais, para prospectar oportunidades de meu interesse, incluindo a transferência desses dados para terceiros, com o objetivo de me conectar a entidades e oportunidades no mercado de jogos digitais, nacional e internacionalmente, e segmentos relacionados.
-                    </label>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="incubationAuthorization" [value]="true" formControlName="incubationAuthorization" id="authorizationYes">
-                      <label class="form-check-label" for="authorizationYes">
-                        Sim
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="incubationAuthorization" [value]="false" formControlName="incubationAuthorization" id="authorizationNo">
-                      <label class="form-check-label" for="authorizationNo">
-                        Não
-                      </label>
-                    </div>
-                  </div>
-
-                  <button type="submit" class="btn btn-black col-12" *ngIf="getStageTimeDelta(JamStages.INCUBATION) > 0">ENVIAR JOGO</button>
-                  <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.INCUBATION) < 0">ENVIOS FECHADOS</div>
-                </div>
-              </form>
-            </div>
-
-            <!-- INCUBATION PITCH SUBMISSION FORM -->
-            <div *ngIf="isStageActiveWithDelay(JamStages.INCUBATION_SUBMISSION)">
-              <hr class="my-2">
-              <h2>PITCH INCUBAÇÃO</h2>
-              <div *ngIf="getStageTimeDelta(JamStages.INCUBATION_SUBMISSION) > 0">
-                <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.INCUBATION_SUBMISSION)) }}</b>
-              </div>
-
-              <form (submit)="savePitchIncubation()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionPitchIncubationForm" enctype="multipart/form-data">
-                <div class="form-group col-12"> <!-- LINK -->
-                  Enviar um vídeo-pitch é obrigatório para avançar para a próxima etapa. <br>
-                  <label for="incubationPitch" class="required">
-                    Link para o seu video pitch
-                  </label>
-                  <input 
-                  type="url" 
-                  class="form-control form-control-lg" 
-                  placeholder="https://www.youtube.com/my-pitch-video" 
-                  formControlName="incubationPitch"
-                  pattern="^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(?:-nocookie)?\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|live\/|v\/)?)([\w\-]+)(\S+)?$">
-                  <div class="text-danger mt-1" *ngIf="submissionPitchIncubationForm.get('incubationPitch')?.touched && submissionPitchIncubationForm.get('incubationPitch')?.invalid">
-                    {{ getPitchErrorMessage() }}
-                  </div>
-                </div>
-
-                <button type="submit" *ngIf="getStageTimeDelta(JamStages.INCUBATION_SUBMISSION) > 0" class="btn btn-black col-12">ENVIAR PITCH</button>
-                <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.INCUBATION_SUBMISSION) < 0">ENVIOS FECHADOS</div>
-              </form>
-            </div>
-
-            <!-- ACCELERATION SUBMISSION FORM -->
-            <div *ngIf="isStageActiveWithDelay(JamStages.ACCELERATION)">
-              <hr class="my-2">
-              <h2>SUBMISSÃO DO JOGO</h2>
-              <div *ngIf="getStageTimeDelta(JamStages.ACCELERATION) > 0">
-                <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.ACCELERATION)) }}</b>
-              </div>
-
-              <form (submit)="saveAccelerationSubmission()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionAccelerationForm" enctype="multipart/form-data">
-                <div class="row">
-                  <div class="form-group col-12"> <!-- TITLE -->
-                    <label for="title" class="required">
-                      Título do seu jogo
-                    </label>
-                    <input type="text" class="form-control form-control-lg" placeholder="Next GOTY" formControlName="accelerationTitle">
-                  </div>
-
-                  <div class="form-group col-6"> <!-- LINK -->
-                    <label for="link" class="required">
-                      Link para a página do seu jogo no itch.io
-                    </label>
-                    <input type="url" class="form-control" placeholder="https://myteam.itch.io/mygame" formControlName="accelerationBuild">
-                  </div>
-
-                  <div class="form-group col-6"> <!-- CONTACT -->
-                    <label for="contact" class="required">
-                      Quem é a pessoa responsável pela equipe?
-                      <a matTooltip="Esse membro da equipe será o ponto de contato para o GJ+ caso precisemos entrar em contato." class="tooltip-trigger">?</a>
-                    </label>
-                    <select class="form-control" formControlName="accelerationContact">
-                      <option value="" disabled selected hidden>Selecione um membro da equipe</option>
-                      <option *ngFor="let jammer of team.jammers; index as i" [value]="i">
-                        {{ jammer.name }} - {{ jammer.email }}
-                      </option>
-                    </select>
-                  </div>
-
-                  <div class="form-group col-12"> <!-- DESCRIPTION -->
-                    <label for="description" class="required">
-                      Escreva aqui uma breve descrição do seu jogo
-                    </label>
-                    <textarea class="form-control" formControlName="accelerationDescription" rows="5"></textarea>
-                  </div>
-
-                  <div class="form-group col-6"> <!-- GENRE -->
-                    <label for="genre" class="required">
-                      Quais são os gêneros do seu jogo?
-                    </label>
-                    <select class="form-select" formControlName="accelerationGenres" multiple>
-                      <option *ngFor="let genre of availableGenres" [value]="genre">
-                        {{ genre }}
-                      </option>
-                    </select>
-                  </div>
-
-                  <div class="form-group col-6"> <!-- TOPICS -->
-                    <label for="topic" class="required">
-                      Seu jogo aborda algum dos seguintes tópicos?
-                      <a matTooltip="A abordagem pode ser na narrativa, jogabilidade, arte ou outros. Você pode marcar mais de uma opção." class="tooltip-trigger">?</a>
-                    </label>
-                    <select class="form-select" formControlName="accelerationTopics" multiple>
-                      <option *ngFor="let topic of availableTopics" [value]="topic">
-                        {{ topic }}
-                      </option>
-                    </select>
-                  </div>
-
-                  <div class="form-group col-4"> <!-- THEMES -->
-                    <label for="Themes" class="required">
-                      Em quais TEMAS seu jogo está registrado?
-                    </label>
-                    <select class="form-select" formControlName="accelerationThemes" multiple>
-                      <option *ngFor="let theme of jam.themes" [value]="theme.titleEN">
-                        {{ theme.titlePT }}
-                      </option>
-                    </select>
-                  </div>
-
-                  <div class="form-group col-4"> <!-- CATEGORIES -->
-                    <label for="Categories" class="required">
-                      CATEGORIA onde seu jogo compite?
-                    </label>
-                    <select class="form-select" formControlName="accelerationCategories" multiple>
-                      <option *ngFor="let category of jam.categories" [value]="category.titleEN">
-                        {{ category.titlePT }}
-                      </option>
-                    </select>
-                  </div>
-
-                  <div class="form-group col-4"> <!-- PLATFORMS -->
-                    <label for="Platforms" class="required">
-                      Para quais plataformas foi desenvolvido?
-                    </label>
-                    <select class="form-select" formControlName="accelerationPlatforms" multiple>
-                      <option *ngFor="let platform of availablePlatforms" [value]="platform">
-                        {{ platform }}
-                      </option>
-                    </select>
-                  </div>
-
-                  <div class="form-group col-6"> <!-- GRAPHICS -->
-                    <label for="Graphics" class="required">
-                      Que tipo de gráficos o seu jogo usa?
-                    </label>
-                    <select class="form-select" formControlName="accelerationGraphics">
-                      <option *ngFor="let graphic of availableGraphics" [value]="graphic">
-                        {{ graphic }}
-                      </option>
-                    </select>
-                  </div>
-
-                  <div class="form-group col-6"> <!-- ENGINE -->
-                    <label for="Engine" class="required">
-                      Qual motor foi usado nesta build?
-                    </label>
-                    <select class="form-select" formControlName="accelerationEngine">
-                      <option *ngFor="let engine of availableEngines" [value]="engine">
-                        {{ engine }}
-                      </option>
-                    </select>
-                  </div>
-                  
-                  <div class="form-group col-6"> <!-- RECOMMENDATION -->
-                    <label for="Recommendation" class="required">
-                      De 0 a 10, você recomendaria o GameJamPlus a um amigo?
-                    </label>
-                    <input type="number" class="form-control" min="0" max="10" step="1" value="5" formControlName="accelerationRecommendation">
-                  </div>
-
-                  <div class="form-group col-6"> <!-- ENJOYMENT -->
-                    <label for="Enjoyment" class="required">
-                      De 0 a 10, como foi sua experiência durante o GameJamPlus? Você gostou?
-                    </label>
-                    <input type="number" class="form-control" min="0" max="10" step="1" value="5" formControlName="accelerationEnjoyment">
-                  </div>
-
-                  <div class="form-group col-12"> <!-- SUGGESTIONS -->
-                    <label for="Suggestions">
-                      Você tem alguma outra consideração, dica, reclamação ou qualquer outra coisa que gostaria de compartilhar conosco?
-                      <a matTooltip="Por favor, não seja maldoso =)" class="tooltip-trigger">?</a>
-                    </label>
-                    <textarea rows="5" class="form-control" formControlName="accelerationSuggestions"></textarea>
-                  </div>
-
-                  <div class="form-group col-12"> <!-- AUTHORIZATION -->
-                    <label for="Authorization" class="required">
-                      Autorizo o uso e o processamento dos dados fornecidos por mim ao GameJam+, incluindo meus dados pessoais, para prospectar oportunidades de meu interesse, incluindo a transferência desses dados para terceiros, com o objetivo de me conectar a entidades e oportunidades no mercado de jogos digitais, nacional e internacionalmente, e segmentos relacionados.
-                    </label>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="accelerationAuthorization" [value]="true" formControlName="accelerationAuthorization" id="accelerationAuthorizationYes">
-                      <label class="form-check-label" for="accelerationAuthorizationYes">
-                        Sim
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="accelerationAuthorization" [value]="false" formControlName="accelerationAuthorization" id="accelerationAuthorizationNo">
-                      <label class="form-check-label" for="accelerationAuthorizationNo">
-                        Não
-                      </label>
-                    </div>
-                  </div>
-
-                  <button type="submit" class="btn btn-black col-12" *ngIf="getStageTimeDelta(JamStages.ACCELERATION) > 0">ENVIAR JOGO</button>
-                  <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.ACCELERATION) < 0">ENVIOS FECHADOS</div>
-                </div>
-              </form>
-            </div>
-
-            <!-- ACCELERATION PITCH SUBMISSION FORM -->
-            <div *ngIf="isStageActiveWithDelay(JamStages.ACCELERATION_SUBMISSION)">
-              <hr class="my-2">
-              <h2>PITCH SUBMISSÃO</h2>
-              <div *ngIf="getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION) > 0">
-                <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION)) }}</b>
-              </div>
-
-              <form (submit)="savePitchAcceleration()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionPitchAccelerationForm" enctype="multipart/form-data">
-                <div class="form-group col-12"> <!-- LINK -->
-                  Enviar um vídeo-pitch é obrigatório para avançar para a próxima etapa. <br>
-                  <label for="accelerationPitch" class="required">
-                    Link para o seu video pitch
-                  </label>
-                  <input 
-                  type="url" 
-                  class="form-control form-control-lg" 
-                  placeholder="https://www.youtube.com/my-pitch-video" 
-                  formControlName="accelerationPitch"
-                  pattern="^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(?:-nocookie)?\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|live\/|v\/)?)([\w\-]+)(\S+)?$">
-                  <div class="text-danger mt-1" *ngIf="submissionPitchAccelerationForm.get('accelerationPitch')?.touched && submissionPitchAccelerationForm.get('accelerationPitch')?.invalid">
-                    {{ getPitchErrorMessage() }}
-                  </div>
-                </div>
-
-                <button type="submit" *ngIf="getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION) > 0" class="btn btn-black col-12">ENVIAR PITCH</button>
-                <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION) < 0">ENVIOS FECHADOS</div>
-              </form>
-            </div>            
-          </div>
-          
-          <div *ngIf="site.language == 'EN'"> <!-- SUBMISSIONS IN ENGLISH -->
-            <h2 *ngIf="getStageTimeDelta(JamStages.GAMEJAM) > 0" class="text-success">On Time - {{ formatTimeDelta( getStageTimeDelta(JamStages.GAMEJAM) ) }}</h2>
-            <h2 *ngIf="getStageTimeDelta(JamStages.GAMEJAM) < 0" class="">Submissions Closed</h2>
             <div class="info m-3 p-4">
-              <p class="py-2">
-                Before submitting your game, make sure to read the <b><a href="/rules" target="_blank">Rules and Regulations</a></b>.<br>
-                Review all the points in this checklist before making your submission:
-              </p>
+              <p class="py-2" [innerHTML]="'platform.jammer.myjam.mysubmission.submissioninfo.line1' | translate:{ rulesLink }"></p>
+              <p class="py-2" [innerHTML]="'platform.jammer.myjam.mysubmission.submissioninfo.line2' | translate"></p>
 
               <ul>
-                <li>All members of my team joined the official <b><a href="https://itch.io/jam/gamejamplus-2425" target="_blank">itch.io game jam</a></b></li>
-                <li>Our game is already submitted to the official itch.io game jam</li>
-                <li>The game page is public</li>
-                <li>The build is in a playable state</li>
-                <li>We have added screenshots, a description, tags, and all the information required to play our game.</li>
+                <li [innerHTML]="'platform.jammer.myjam.mysubmission.submissioninfochecklist.item1' | translate:{ itchioLink }"></li>
+                <li>{{ 'platform.jammer.myjam.mysubmission.submissioninfochecklist.item2' | translate }}</li>
+                <li>{{ 'platform.jammer.myjam.mysubmission.submissioninfochecklist.item3' | translate }}</li>
+                <li>{{ 'platform.jammer.myjam.mysubmission.submissioninfochecklist.item4' | translate }}</li>
+                <li>{{ 'platform.jammer.myjam.mysubmission.submissioninfochecklist.item5' | translate }}</li>
               </ul>
             </div>
+
             <form (submit)="saveGamejamSubmission()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionGamejamForm" enctype="multipart/form-data">
               <div class="row">
+                <div class="form-group col-12"> <!-- GOING TO INCUBATION -->
+                  <label for="goingToIncubation" class="required">
+                    <b>{{ 'platform.jammer.myjam.mysubmission.formquestion.goingtoincubation' | translate }}</b>
+                  </label>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="goingToIncubation" [value]="true" formControlName="goingToIncubation" id="goingToIncubationYes">
+                    <label class="form-check-label" for="goingToIncubationYes">
+                      {{ 'platform.common.yes' | translate }}
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="goingToIncubation" [value]="false" formControlName="goingToIncubation" id="goingToIncubationNo">
+                    <label class="form-check-label" for="goingToIncubationNo">
+                      {{ 'platform.common.no' | translate }}
+                    </label>
+                  </div>
+                </div>
+
                 <div class="form-group col-12"> <!-- TITLE -->
-                  <label for="title" class="required">Title of your game</label>
-                  <input type="text" class="form-control form-control-lg" placeholder="Next GOTY" formControlName="title">
+                  <label for="title" class="required">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamtitle' | translate }}
+                  </label>
+                  <input type="text" id="title" class="form-control form-control-lg" placeholder="Next GOTY" formControlName="gamejamTitle">
                 </div>
 
                 <div class="form-group col-6"> <!-- LINK -->
-                  <label for="link" class="required">Link to your game's itch.io page</label>
-                  <input type="url" class="form-control" placeholder="https://myteam.itch.io/mygame" formControlName="link">
+                  <label for="link" class="required">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejambuild' | translate }}
+                  </label>
+                  <input type="url" id="link" class="form-control" placeholder="https://myteam.itch.io/mygame" formControlName="gamejamBuild">
                 </div>
 
                 <div class="form-group col-6"> <!-- CONTACT -->
                   <label for="contact" class="required">
-                    Who is the person responsible for the team
-                    <a matTooltip="This teammember will be the contact point for GJ+ in case we need to reach out" class="tooltip-trigger">?</a>
+                    <span [innerHTML]="'platform.jammer.myjam.mysubmission.formquestion.gamejamcontact' | translate"></span>
+                    <a matTooltip="{{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.tooltipcontact' | translate }}" class="tooltip-trigger">?</a>
                   </label>
-                  <select class="form-control" formControlName="contact">
-                    <option value="" disabled selected hidden>Select a team member</option>
+                  <select id="contact" class="form-control" formControlName="gamejamContact">
+                    <option value="" disabled selected hidden>{{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.selectteammember' | translate }}</option>
                     <option *ngFor="let jammer of team.jammers; index as i" [value]="i">
                       {{ jammer.name }} - {{ jammer.email }}
                     </option>
@@ -1079,205 +462,216 @@
                 </div>
 
                 <div class="form-group col-12"> <!-- DESCRIPTION -->
-                  <label for="description" class="required">Write here a small description of your game</label>
-                  <textarea class="form-control" formControlName="description" rows="5"></textarea>
+                  <label for="description" class="required">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamdescription' | translate }}
+                  </label>
+                  <textarea id="description" class="form-control" formControlName="gamejamDescription" rows="5"></textarea>
                 </div>
 
                 <div class="form-group col-6"> <!-- GENRE -->
-                  <label for="genre">What are your game's genres?</label>
-                  <select class="form-select" #selectGenre (change)="setGameGenre(selectGenre.selectedOptions)" multiple>
-                    <option value="Action">Action</option>
-                    <option value="Adventure">Adventure</option>
-                    <option value="Educational">Educational</option>
-                    <option value="Hypercasual">Hypercasual</option>
-                    <option value="Multiplayer">Multiplayer</option>
-                    <option value="Narrative">Narrative</option>
-                    <option value="Platforming">Platforming</option>
-                    <option value="Puzzle">Puzzle</option>
-                    <option value="Runner">Runner</option>
-                    <option value="Sandbox">Sandbox</option>
-                    <option value="Shooter">Shooter</option>
+                  <label for="genre" class="required">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamgenres' | translate }}
+                  </label>
+                  <select id="genre" class="form-select" formControlName="gamejamGenres" multiple>
+                    <option *ngFor="let genre of availableGenres" [value]="genre">
+                      {{ genre }}
+                    </option>
                   </select>
                 </div>
 
                 <div class="form-group col-6"> <!-- TOPICS -->
-                  <label for="topic">
-                    Does your game approach any of the following topics?
-                    <a matTooltip="The approach can be on the narrative, gameplay, art or others. You can check more than one option." class="tooltip-trigger">?</a>
+                  <label for="topic" class="required">
+                    <span [innerHTML]="'platform.jammer.myjam.mysubmission.formquestion.gamejamtopics' | translate"></span>
+                    <a matTooltip="{{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.tooltiptopics' | translate }}" class="tooltip-trigger">?</a>
                   </label>
-                  <select class="form-select" #selectTopic (change)="setGameTopics(selectTopic.selectedOptions)" multiple>
-                    <option value="Business">Business</option>
-                    <option value="Sustentability">Sustentability</option>
-                    <option value="Educational">Educational</option>
-                    <option value="For Children">For Children</option>
-                    <option value="Diversity">Diversity</option>
-                    <option value="Environment">Environment</option>
-                    <option value="Originary/Native People">Originary/Native People</option>
-                    <option value="Historical Facts">Historical Facts</option>
-                    <option value="Health">Health</option>
-                    <option value="Inclussion and Accessibility">Inclussion and Accessibility</option>
-                    <option value="Folk Tales">Folk Tales</option>
-                    <option value="Finantial Education">Finantial Education</option>
-                    <option value="Music or Rhythm">Music or Rhythm</option>
-                    <option value="Mental Health">Mental Health</option>
+                  <select id="topic" class="form-select" formControlName="gamejamTopics" multiple>
+                    <option *ngFor="let topic of availableTopics" [value]="topic">
+                      {{ topic }}
+                    </option>
                   </select>
                 </div>
 
                 <div class="form-group col-4"> <!-- THEMES -->
-                  <label for="Themes" class="required">In which THEMES is your game registered for?</label>
-                  <select class="form-select" #selectThemes (change)="setGameThemes(selectThemes.selectedOptions)" multiple>
-                    <option *ngFor="let theme of jam.themes; index as i" [value]="theme.titleEN">{{ theme.titleEN }}</option>
+                  <label for="Themes" class="required">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamthemes' | translate }}
+                  </label>
+                  <select id="Themes" class="form-select" formControlName="gamejamThemes" multiple>
+                    <option *ngFor="let theme of jam.themes" [value]="theme.titleEN">
+                      {{ theme.titlePT }}
+                    </option>
                   </select>
                 </div>
 
                 <div class="form-group col-4"> <!-- CATEGORIES -->
-                  <label for="Categories">Is your game competing in any CATEGORIES?</label>
-                  <select class="form-select" #selectCategories (change)="setGameCategories(selectCategories.selectedOptions)" multiple>
-                    <option *ngFor="let category of jam.categories; index as i" [value]="category.titleEN">{{ category.titleEN }}</option>
+                  <label for="Categories" class="required">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamcategories' | translate }}
+                  </label>
+                  <select id="Categories" class="form-select" formControlName="gamejamCategories" multiple>
+                    <option *ngFor="let category of jam.categories" [value]="category.titleEN">
+                      {{ category.titlePT }}
+                    </option>
                   </select>
                 </div>
 
                 <div class="form-group col-4"> <!-- PLATFORMS -->
-                  <label for="Platforms" class="required">What platforms is your game built for?</label>
-                  <select class="form-select" #selectPlatforms (change)="setGamePlatforms(selectPlatforms.selectedOptions)" multiple>
-                    <option value="PC">PC</option>
-                    <option value="Console">Console</option>
-                    <option value="Mobile">Mobile</option>
-                    <option value="VR/AR">VR/AR</option>
-                    <option value="Board Game">Board Game</option>
-                    <option value="Other">Other</option>
+                  <label for="Platforms" class="required">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamplatforms' | translate }}
+                  </label>
+                  <select id="Platforms" class="form-select" formControlName="gamejamPlatforms" multiple>
+                    <option *ngFor="let platform of availablePlatforms" [value]="platform">
+                      {{ platform }}
+                    </option>
                   </select>
                 </div>
 
                 <div class="form-group col-6"> <!-- GRAPHICS -->
-                  <label for="Graphics" class="required">What kind of graphics does your game have?</label>
-                  <select class="form-select" formControlName="graphics">
-                    <option value="2D">2D</option>
-                    <option value="2.5D">2.5D</option>
-                    <option value="3D">3D</option>
-                    <option value="Other">Other</option>
+                  <label for="Graphics" class="required">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamgraphics' | translate }}
+                  </label>
+                  <select id="Graphics" class="form-select" formControlName="gamejamGraphics">
+                    <option *ngFor="let graphic of availableGraphics" [value]="graphic">
+                      {{ graphic }}
+                    </option>
                   </select>
                 </div>
 
                 <div class="form-group col-6"> <!-- ENGINE -->
-                  <label for="Engine" class="required">What engine was used on this build?</label>
-                  <select class="form-select" formControlName="engine">
-                    <option value="Unity">Unity</option>
-                    <option value="Unreal">Unreal</option>
-                    <option value="Godot">Godot</option>
-                    <option value="GameMaker">GameMaker</option>
-                    <option value="Construct">Construct</option>
-                    <option value="RPGMaker">RPGMaker</option>
-                    <option value="Other">Otro</option>
+                  <label for="Engine" class="required">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamengine' | translate }}
+                  </label>
+                  <select id="Engine" class="form-select" formControlName="gamejamEngine">
+                    <option *ngFor="let engine of availableEngines" [value]="engine">
+                      {{ engine }}
+                    </option>
                   </select>
                 </div>
-
+                
                 <div class="form-group col-6"> <!-- RECOMMENDATION -->
-                  <label for="Recommendation">From 0 to 10, what are the chances of you recommending GameJamPlus to a friend?</label>
-                  <input type="number" class="form-control" min="0" max="10" step="1" value="5" formControlName="recommendation">
+                  <label for="Recommendation" class="required">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamrecommendation' | translate }}
+                  </label>
+                  <input type="number" id="Recommendation" class="form-control" min="0" max="10" step="1" value="5" formControlName="gamejamRecommendation">
                 </div>
 
                 <div class="form-group col-6"> <!-- ENJOYMENT -->
-                  <label for="Enjoyment">From 0 to 10, how was your experience during GameJamPlus? did you enjoy it?</label>
-                  <input type="number" class="form-control" min="0" max="10" step="1" value="5" formControlName="enjoyment">
+                  <label for="Enjoyment" class="required">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamenjoyment' | translate }}
+                  </label>
+                  <input type="number" id="Enjoyment" class="form-control" min="0" max="10" step="1" value="5" formControlName="gamejamEnjoyment">
                 </div>
 
                 <div class="form-group col-12"> <!-- SUGGESTIONS -->
                   <label for="Suggestions">
-                    Do you have any other considerations, tips, complaints or anything else you'd like to share with us?
-                    <a matTooltip="Please don't be mean =)" class="tooltip-trigger">?</a>
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamsuggestions' | translate }}
+                    <a matTooltip="{{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.tooltipsuggestions' | translate }}" class="tooltip-trigger">?</a>
                   </label>
-                  <textarea rows="5" class="form-control" formControlName="suggestions"></textarea>
+                  <textarea id="Suggestions" rows="5" class="form-control" formControlName="gamejamSuggestions"></textarea>
                 </div>
 
                 <div class="form-group col-12"> <!-- AUTHORIZATION -->
                   <label for="Authorization" class="required">
-                    I authorize the use and processing of the data provided by me to GameJam+, including my personal data, to prospect opportunities of interest to me, including the transfer of this data to third parties, with the aim of connecting me to entities and opportunities in the industry and audiovisual market of digital games , nationally and internationally, and related segments.
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamauthorization' | translate }}
                   </label>
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="authorization" value="Yes" formControlName="authorization" checked>
-                    <label class="form-check-label" for="autorizationYes">
-                      Yes
+                    <input class="form-check-input" type="radio" name="gamejamAuthorization" [value]="true" formControlName="gamejamAuthorization" id="authorizationYes">
+                    <label class="form-check-label" for="authorizationYes">
+                      {{ 'platform.common.yes' | translate }}
                     </label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="authorization" value="No" formControlName="authorization">
+                    <input class="form-check-input" type="radio" name="gamejamAuthorization" [value]="false" formControlName="gamejamAuthorization" id="authorizationNo">
                     <label class="form-check-label" for="authorizationNo">
-                      No
+                      {{ 'platform.common.no' | translate }}
                     </label>
                   </div>
                 </div>
 
-                <button type="submit" class="btn btn-black col-12" *ngIf="getStageTimeDelta(JamStages.GAMEJAM) > 0">SEND GAME</button>
-                <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.GAMEJAM) < 0">SUBMISSIONS CLOSED</div>
+                <button type="submit" class="btn btn-black col-12" *ngIf="getStageTimeDelta(JamStages.GAMEJAM) > 0">{{ 'platform.common.sendgame' | translate }}</button>
+                <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.GAMEJAM) < 0">{{ 'platform.common.closedsubmissions' | translate }}</div>
               </div>
-            </form>
-
-            <hr class="my-2">
-            <h2>PITCH SUBMISSION</h2>
-            <div *ngIf="getRelativeTimeDelta() > 0">
-              <b>{{ formatTimeDelta(getRelativeTimeDelta())}}</b>
-            </div>
-            <form (submit)="savePitchGamejam()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionPitchGamejamForm" enctype="multipart/form-data">
-              <div class="form-group col-12"> <!-- LINK -->
-                Submitting a pitch is required to move forward to the next stage. <br>
-                <label for="title">Link to your video-pitch</label>
-                <input type="text" class="form-control form-control-lg" placeholder="https://www.youtube.com/my-pitch-video" formControlName="link">
-              </div>
-
-              <h3>Do you wish to move forward to the acceleration stage?</h3>
-
-              <div class="form-group p-2 border">
-                By marking this you acknowledge that the next stage requires you to keep working on your game and pitch, and make another submission on April.
-                <label for="incubation">Do you wish to move forward to the acceleration stage?</label>
-                <select class="form-control" formControlName="acceleration">
-                  <option value="" disabled selected hidden>Select an option</option>
-                  <option value="true">YES</option>
-                  <option value="false">NO</option>
-                </select>
-              </div>
-
-              <button type="submit" *ngIf="getRelativeTimeDelta() > 0" class="btn btn-black col-12">ENVIAR PITCH</button>
-              <div class="d-block p-3 text-center bg-secondary" *ngIf="getRelativeTimeDelta() < 0">SUBMISSIONS CLOSED</div>
             </form>
           </div>
-          
-          <div *ngIf="site.language == 'ES'"> <!-- SUBMISSIONS IN SPANISH -->
-            <h2 *ngIf="getRelativeTimeDelta() > 0" class="text-success">A Tiempo - {{ formatTimeDelta( getRelativeTimeDelta() ) }}</h2>
-            <h2 *ngIf="getRelativeTimeDelta() < 0">Envíos Cerrados</h2>
-            <div class="info m-3 p-4">
-              <p class="py-2">
-                Antes de enviar tu juego, procura leer las <b><a href="/rules" target="_blank">Reglas y Condiciones</a></b>.<br>
-                Revisa todos estos puntos antes de hacer tu envío:
-              </p>
 
-              <ul>
-                <li>Todos los miembros de nuestro equipo se unieron al <b><a href="https://itch.io/jam/gamejamplus-2425" target="_blank">jam de itch.io</a></b> oficial de GameJam+</li>
-                <li>Ya enviamos nuestro juego al jam de itch.io oficial de GameJam+</li>
-                <li>La página del juego está pública</li>
-                <li>El build está en un estado jugable</li>
-                <li>Añadimos capturas de pantalla, descripción, tags, y toda la información requerida para jugar nuestro juego.</li>
-              </ul>
+          <!-- GAMEJAM PITCH SUBMISSION FORM -->
+          <div *ngIf="isStageActiveWithDelay(JamStages.GAMEJAM_SUBMISSION)">
+            <hr class="my-2">
+            <h2>{{ 'platform.jammer.myjam.mysubmission.pitchsubmission' | translate }}</h2>
+            <div *ngIf="getStageTimeDelta(JamStages.GAMEJAM_SUBMISSION) > 0">
+              <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.GAMEJAM_SUBMISSION)) }}</b>
             </div>
-            <form (submit)="saveGamejamSubmission()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionGamejamForm" enctype="multipart/form-data">
+
+            <form (submit)="savePitchGamejam()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionPitchGamejamForm" enctype="multipart/form-data">
+              <div class="form-group col-12"> <!-- LINK -->
+                {{ 'platform.jammer.myjam.mysubmission.formquestion.pitchtext' | translate }}<br>
+                <label for="gamejamPitch" class="required">
+                  {{ 'platform.jammer.myjam.mysubmission.formquestion.pitchlink' | translate }}
+                </label>
+                <input 
+                id="gamejamPitch" 
+                type="url" 
+                class="form-control form-control-lg" 
+                placeholder="https://www.youtube.com/my-pitch-video" 
+                formControlName="gamejamPitch"
+                pattern="^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(?:-nocookie)?\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|live\/|v\/)?)([\w\-]+)(\S+)?$">
+                <div class="text-danger mt-1" *ngIf="submissionPitchGamejamForm.get('gamejamPitch')?.touched && submissionPitchGamejamForm.get('gamejamPitch')?.invalid">
+                  {{ getPitchErrorMessage() }}
+                </div>
+              </div>
+
+              <button type="submit" *ngIf="getStageTimeDelta(JamStages.GAMEJAM_SUBMISSION) > 0" class="btn btn-black col-12">{{ 'platform.common.sendpitch' | translate }}</button>
+              <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.GAMEJAM_SUBMISSION) < 0">{{ 'platform.common.closedsubmissions' | translate }}</div>
+            </form>
+          </div>
+
+          <!-- INCUBATION SUBMISSION FORM -->
+          <div *ngIf="isStageActiveWithDelay(JamStages.INCUBATION)">
+            <hr class="my-2">
+            <h2>{{ 'platform.jammer.myjam.mysubmission.incubationsubmission' | translate }}</h2>
+            <div *ngIf="getStageTimeDelta(JamStages.INCUBATION) > 0">
+              <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.INCUBATION))}}</b>
+            </div>
+
+            <form (submit)="saveIncubationSubmission()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionIncubationForm" enctype="multipart/form-data">
               <div class="row">
+                <div class="form-group col-12"> <!-- GOING TO ACCELERATION -->
+                  <label for="incubationGoingToAcceleration" class="required">
+                    <b>{{ 'platform.jammer.myjam.mysubmission.formquestion.goingtoacceleration' | translate }}</b>
+                  </label>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="goingToAcceleration" [value]="true" formControlName="goingToAcceleration" id="incubationGoingToAccelerationYes">
+                    <label class="form-check-label" for="incubationGoingToAccelerationYes">
+                      {{ 'platform.common.yes' | translate }}
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="goingToAcceleration" [value]="false" formControlName="goingToAcceleration" id="incubationGoingToAccelerationNo">
+                    <label class="form-check-label" for="incubationGoingToAccelerationNo">
+                      {{ 'platform.common.no' | translate }}
+                    </label>
+                  </div>
+                </div>
+
                 <div class="form-group col-12"> <!-- TITLE -->
-                  <label for="title" class="required">Título del juego</label>
-                  <input type="text" class="form-control form-control-lg" placeholder="Siguiente GOTY" formControlName="title">
+                  <label for="incubationTitle" class="required">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamtitle' | translate }}
+                  </label>
+                  <input type="text" id="incubationTitle" class="form-control form-control-lg" placeholder="Next GOTY" formControlName="incubationTitle">
                 </div>
 
                 <div class="form-group col-6"> <!-- LINK -->
-                  <label for="link" class="required">Enlace a la página de itch.io del juego</label>
-                  <input type="url" class="form-control" placeholder="https://myteam.itch.io/mygame" formControlName="link">
+                  <label for="incubationLink" class="required">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejambuild' | translate }}
+                  </label>
+                  <input type="url" id="incubationLink" class="form-control" placeholder="https://myteam.itch.io/mygame" formControlName="incubationBuild">
                 </div>
 
                 <div class="form-group col-6"> <!-- CONTACT -->
-                  <label for="contact" class="required">
-                    Quién es la persona responsable del equipo
-                    <a matTooltip="This teammember will be the contact point for GJ+ in case we need to reach out" class="tooltip-trigger">?</a>
+                  <label for="incubationContact" class="required">
+                    <span [innerHTML]="'platform.jammer.myjam.mysubmission.formquestion.gamejamcontact' | translate"></span>
+                    <a matTooltip="{{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.tooltipcontact' | translate }}" class="tooltip-trigger">?</a>
                   </label>
-                  <select class="form-control" formControlName="contact">
-                    <option value="" disabled selected hidden>Selecciona alguien de tu equipo</option>
+                  <select id="incubationContact" class="form-control" formControlName="incubationContact">
+                    <option value="" disabled selected hidden>{{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.selectteammember' | translate }}</option>
                     <option *ngFor="let jammer of team.jammers; index as i" [value]="i">
                       {{ jammer.name }} - {{ jammer.email }}
                     </option>
@@ -1285,179 +679,371 @@
                 </div>
 
                 <div class="form-group col-12"> <!-- DESCRIPTION -->
-                  <label for="description" class="required">Escribe una descripción corta de tu juego</label>
-                  <textarea class="form-control" formControlName="description" rows="5"></textarea>
+                  <label for="incubationDescription" class="required">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamdescription' | translate }}
+                  </label>
+                  <textarea id="incubationDescription" class="form-control" formControlName="incubationDescription" rows="5"></textarea>
                 </div>
 
                 <div class="form-group col-6"> <!-- GENRE -->
-                  <label for="genre">¿Cuáles son los géneros de tu juego?</label>
-                  <select class="form-select" #selectGenre (change)="setGameGenre(selectGenre.selectedOptions)" multiple>
-                    <option value="Action">Acción</option>
-                    <option value="Adventure">Aventura</option>
-                    <option value="Educational">Educativo</option>
-                    <option value="Hypercasual">Hypercasual</option>
-                    <option value="Multiplayer">Multijugador</option>
-                    <option value="Narrative">Narrativo</option>
-                    <option value="Platforming">Plataformero</option>
-                    <option value="Puzzle">Puzzle</option>
-                    <option value="Runner">Runner</option>
-                    <option value="Sandbox">Sandbox</option>
-                    <option value="Shooter">Shooter</option>
+                  <label for="incubationGenre" class="required">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamgenres' | translate }}
+                  </label>
+                  <select id="incubationGenre" class="form-select" formControlName="incubationGenres" multiple>
+                    <option *ngFor="let genre of availableGenres" [value]="genre">
+                      {{ genre }}
+                    </option>
                   </select>
                 </div>
 
                 <div class="form-group col-6"> <!-- TOPICS -->
-                  <label for="topic">
-                    ¿Tu juego aborda alguno de estos asuntos?
-                    <a matTooltip="The approach can be on the narrative, gameplay, art or others. You can check more than one option." class="tooltip-trigger">?</a>
+                  <label for="incubationTopic" class="required">
+                    <span [innerHTML]="'platform.jammer.myjam.mysubmission.formquestion.gamejamtopics' | translate"></span>
+                    <a matTooltip="{{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.tooltiptopics' | translate }}" class="tooltip-trigger">?</a>
                   </label>
-                  <select class="form-select" #selectTopic (change)="setGameTopics(selectTopic.selectedOptions)" multiple>
-                    <option value="Business">Negocios</option>
-                    <option value="Sustentability">Sostenibilidad</option>
-                    <option value="Educational">Educación</option>
-                    <option value="For Children">Para niños</option>
-                    <option value="Diversity">Diversidad</option>
-                    <option value="Environment">Medio Ambiente</option>
-                    <option value="Originary/Native People">Pueblos originarios</option>
-                    <option value="Historical Facts">Hechos históricos</option>
-                    <option value="Health">Salud</option>
-                    <option value="Inclussion and Accessibility">Inclusión y accesibilidad</option>
-                    <option value="Folk Tales">Folclore y leyendas</option>
-                    <option value="Finantial Education">Educación financiera</option>
-                    <option value="Music or Rhythm">Música o ritmo</option>
-                    <option value="Mental Health">Salud mental</option>
+                  <select id="incubationTopic" class="form-select" formControlName="incubationTopics" multiple>
+                    <option *ngFor="let topic of availableTopics" [value]="topic">
+                      {{ topic }}
+                    </option>
                   </select>
                 </div>
 
                 <div class="form-group col-4"> <!-- THEMES -->
-                  <label for="Themes" class="required">¿Cuáles TEMAS tiene tu juego?</label>
-                  <select class="form-select" #selectThemes (change)="setGameThemes(selectThemes.selectedOptions)" multiple>
-                    <option *ngFor="let theme of jam.themes; index as i" [value]="theme.titleEN">{{ theme.titleES }}</option>
+                  <label for="incubationThemes" class="required">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamthemes' | translate }}
+                  </label>
+                  <select id="incubationThemes" class="form-select" formControlName="incubationThemes" multiple>
+                    <option *ngFor="let theme of jam.themes" [value]="theme.titleEN">
+                      {{ theme.titlePT }}
+                    </option>
                   </select>
                 </div>
 
                 <div class="form-group col-4"> <!-- CATEGORIES -->
-                  <label for="Categories">¿Tu juego tiene alguna CATEGORÍA?</label>
-                  <select class="form-select" #selectCategories (change)="setGameCategories(selectCategories.selectedOptions)" multiple>
-                    <option *ngFor="let category of jam.categories; index as i" [value]="category.titleEN">{{ category.titleES }}</option>
+                  <label for="incubationCategories" class="required">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamcategories' | translate }}
+                  </label>
+                  <select id="incubationCategories" class="form-select" formControlName="incubationCategories" multiple>
+                    <option *ngFor="let category of jam.categories" [value]="category.titleEN">
+                      {{ category.titlePT }}
+                    </option>
                   </select>
                 </div>
 
                 <div class="form-group col-4"> <!-- PLATFORMS -->
-                  <label for="Platforms" class="required">¿Para qué plataformas está hecho tu juego?</label>
-                  <select class="form-select" #selectPlatforms (change)="setGamePlatforms(selectPlatforms.selectedOptions)" multiple>
-                    <option value="PC">PC</option>
-                    <option value="Console">Console</option>
-                    <option value="Mobile">Mobile</option>
-                    <option value="VR/AR">VR/AR</option>
-                    <option value="Board Game">Board Game</option>
-                    <option value="Other">Other</option>
+                  <label for="incubationPlatforms" class="required">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamplatforms' | translate }}
+                  </label>
+                  <select id="incubationPlatforms" class="form-select" formControlName="incubationPlatforms" multiple>
+                    <option *ngFor="let platform of availablePlatforms" [value]="platform">
+                      {{ platform }}
+                    </option>
                   </select>
                 </div>
 
                 <div class="form-group col-6"> <!-- GRAPHICS -->
-                  <label for="Graphics" class="required">¿Qué tipo de gráficas tiene tu juego?</label>
-                  <select class="form-select" formControlName="graphics">
-                    <option value="2D">2D</option>
-                    <option value="2.5D">2.5D</option>
-                    <option value="3D">3D</option>
-                    <option value="Other">Otro</option>
+                  <label for="incubationGraphics" class="required">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamgraphics' | translate }}
+                  </label>
+                  <select id="incubationGraphics" class="form-select" formControlName="incubationGraphics">
+                    <option *ngFor="let graphic of availableGraphics" [value]="graphic">
+                      {{ graphic }}
+                    </option>
                   </select>
                 </div>
 
                 <div class="form-group col-6"> <!-- ENGINE -->
-                  <label for="Engine" class="required">¿En cuál motor está hecho tu juego?</label>
-                  <select class="form-select" formControlName="engine">
-                    <option value="Unity">Unity</option>
-                    <option value="Unreal">Unreal</option>
-                    <option value="Godot">Godot</option>
-                    <option value="GameMaker">GameMaker</option>
-                    <option value="Construct">Construct</option>
-                    <option value="RPGMaker">RPGMaker</option>
-                    <option value="Other">Otro</option>
+                  <label for="incubationEngine" class="required">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamengine' | translate }}
+                  </label>
+                  <select id="incubationEngine" class="form-select" formControlName="incubationEngine">
+                    <option *ngFor="let engine of availableEngines" [value]="engine">
+                      {{ engine }}
+                    </option>
                   </select>
                 </div>
-
+                
                 <div class="form-group col-6"> <!-- RECOMMENDATION -->
-                  <label for="Recommendation">De 0 a 10, ¿qué chance hay de que recomiendes GameJam+ a un amigo?</label>
-                  <input type="number" class="form-control" min="0" max="10" step="1" value="5" formControlName="recommendation">
+                  <label for="incubationRecommendation" class="required">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamrecommendation' | translate }}
+                  </label>
+                  <input type="number" id="incubationRecommendation" class="form-control" min="0" max="10" step="1" value="5" formControlName="incubationRecommendation">
                 </div>
 
                 <div class="form-group col-6"> <!-- ENJOYMENT -->
-                  <label for="Enjoyment">De 0 a 10, ¿cómo fue tu experiencia con GameJam+? ¿Te gustó?</label>
-                  <input type="number" class="form-control" min="0" max="10" step="1" value="5" formControlName="enjoyment">
+                  <label for="incubationEnjoyment" class="required">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamenjoyment' | translate }}
+                  </label>
+                  <input type="number" id="incubationEnjoyment" class="form-control" min="0" max="10" step="1" value="5" formControlName="incubationEnjoyment">
                 </div>
 
                 <div class="form-group col-12"> <!-- SUGGESTIONS -->
-                  <label for="Suggestions">
-                    ¿Tienes algún otro comentario, sugerencia, o queja adicional que quieras decirnos?
-                    <a matTooltip="Por favor sé gentil =)" class="tooltip-trigger">?</a>
+                  <label for="incubationSuggestions">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamsuggestions' | translate }}
+                    <a matTooltip="{{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.tooltipsuggestions' | translate }}" class="tooltip-trigger">?</a>
                   </label>
-                  <textarea rows="5" class="form-control" formControlName="suggestions"></textarea>
+                  <textarea id="incubationSuggestions" rows="5" class="form-control" formControlName="incubationSuggestions"></textarea>
                 </div>
 
                 <div class="form-group col-12"> <!-- AUTHORIZATION -->
-                  <label for="Authorization" class="required">
-                    Autorizo el uso y procesamiento de los datos provistos por mí a GameJam+, incluyendo mi información personal, a posibles oportunidades que puedan serme de interés, incluida la transferencia de datos a terceros, con el fin de conectarme a entidades y oportunidades en la industria y mercado audiovisual y de videojuegos, nacional e internacional, y en segmentos relacionados.
+                  <label for="incubationAuthorization" class="required">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamauthorization' | translate }}
                   </label>
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="authorization" value="Yes" formControlName="authorization" checked>
-                    <label class="form-check-label" for="autorizationYes">
-                      Sí
+                    <input class="form-check-input" type="radio" name="incubationAuthorization" [value]="true" formControlName="incubationAuthorization" id="incubationAuthorizationYes">
+                    <label class="form-check-label" for="incubationAuthorizationYes">
+                      {{ 'platform.common.yes' | translate }}
                     </label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" name="authorization" value="No" formControlName="authorization">
-                    <label class="form-check-label" for="authorizationNo">
-                      No
+                    <input class="form-check-input" type="radio" name="incubationAuthorization" [value]="false" formControlName="incubationAuthorization" id="incubationAuthorizationNo">
+                    <label class="form-check-label" for="incubationAuthorizationNo">
+                      {{ 'platform.common.no' | translate }}
                     </label>
                   </div>
                 </div>
 
-                <button type="submit" class="btn btn-black col-12" *ngIf="getRelativeTimeDelta() > 0">ENVIAR JUEGO</button>
-                <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getRelativeTimeDelta() < 0">ENVÍOS CERRADOS</div>
+                <button type="submit" class="btn btn-black col-12" *ngIf="getStageTimeDelta(JamStages.INCUBATION) > 0">{{ 'platform.common.sendgame' | translate }}</button>
+                <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.INCUBATION) < 0">{{ 'platform.common.closedsubmissions' | translate }}</div>
               </div>
-            </form>
-
-            <hr class="my-2">
-            <h2>ENVÍO DE PITCH</h2>
-            <!-- <div *ngIf="getRelativePitchDelta() > 0"> -->
-            <div *ngIf="getRelativeTimeDelta() > 0">
-              <b>{{ formatTimeDelta(getRelativeTimeDelta())}}</b>
-            </div>
-            <form (submit)="savePitchGamejam()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionPitchGamejamForm" enctype="multipart/form-data">
-              <div class="form-group col-12"> <!-- LINK -->
-                Enviar un pitch es obligatorio si quieres continuar a la próxima etapa. <br>
-                <label for="title">Link de su video-pitch</label>
-                <input type="text" class="form-control form-control-lg" placeholder="https://www.youtube.com/my-pitch-video" formControlName="link">
-              </div>
-
-              <h3>¿Deseas participar en la etapa de aceleración?</h3>
-
-              <div class="p-2 border form-group">
-                Al marcar esto reconocemos que la próxima etapa requiere que continuemos trabajando nuestro juego y pitch, y que hagamos otro envío en Abril.
-                <label for="incubation">¿Quieren ir a la etapa de aceleración?</label>
-                <select class="form-control" formControlName="acceleration">
-                  <option value="" disabled selected hidden>Selecciona una opción</option>
-                  <option value="true">SÍ</option>
-                  <option value="false">NO</option>
-                </select>
-              </div>
-
-              <button type="submit" *ngIf="getRelativeTimeDelta() > 0" class="btn btn-black col-12">ENVIAR PITCH</button>
-              <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getRelativeTimeDelta() < 0">ENVÍOS CERRADOS</div>
             </form>
           </div>
-        </div>
 
-        <div *ngIf="team && !onTimeForSubmission()">
-          <p> HERE BE THE SUBMISSION REVIEW </p>
+          <!-- INCUBATION PITCH SUBMISSION FORM -->
+          <div *ngIf="isStageActiveWithDelay(JamStages.INCUBATION_SUBMISSION)">
+            <hr class="my-2">
+            <h2>{{ 'platform.jammer.myjam.mysubmission.incubationsubmission' | translate }}</h2>
+            <div *ngIf="getStageTimeDelta(JamStages.INCUBATION_SUBMISSION) > 0">
+              <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.INCUBATION_SUBMISSION)) }}</b>
+            </div>
+
+            <form (submit)="savePitchIncubation()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionPitchIncubationForm" enctype="multipart/form-data">
+              <div class="form-group col-12"> <!-- LINK -->
+                {{ 'platform.jammer.myjam.mysubmission.formquestion.pitchtext' | translate }}<br>
+                <label for="incubationPitch" class="required">
+                  {{ 'platform.jammer.myjam.mysubmission.formquestion.pitchlink' | translate }}
+                </label>
+                <input 
+                id="incubationPitch" 
+                type="url" 
+                class="form-control form-control-lg" 
+                placeholder="https://www.youtube.com/my-pitch-video" 
+                formControlName="incubationPitch"
+                pattern="^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(?:-nocookie)?\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|live\/|v\/)?)([\w\-]+)(\S+)?$">
+                <div class="text-danger mt-1" *ngIf="submissionPitchIncubationForm.get('incubationPitch')?.touched && submissionPitchIncubationForm.get('incubationPitch')?.invalid">
+                  {{ getPitchErrorMessage() }}
+                </div>
+              </div>
+
+              <button type="submit" *ngIf="getStageTimeDelta(JamStages.INCUBATION_SUBMISSION) > 0" class="btn btn-black col-12">{{ 'platform.common.sendpitch' | translate }}</button>
+              <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.INCUBATION_SUBMISSION) < 0">{{ 'platform.common.closedsubmissions' | translate }}</div>
+            </form>
+          </div>
+
+          <!-- ACCELERATION SUBMISSION FORM -->
+          <div *ngIf="isStageActiveWithDelay(JamStages.ACCELERATION)">
+            <hr class="my-2">
+            <h2>{{ 'platform.jammer.myjam.mysubmission.accelerationsubmission' | translate }}</h2>
+            <div *ngIf="getStageTimeDelta(JamStages.ACCELERATION) > 0">
+              <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.ACCELERATION)) }}</b>
+            </div>
+
+            <form (submit)="saveAccelerationSubmission()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionAccelerationForm" enctype="multipart/form-data">
+              <div class="row">
+                <div class="form-group col-12"> <!-- TITLE -->
+                  <label for="accelerationTitle" class="required">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamtitle' | translate }}
+                  </label>
+                  <input type="text" id="accelerationTitle" class="form-control form-control-lg" placeholder="Next GOTY" formControlName="accelerationTitle">
+                </div>
+
+                <div class="form-group col-6"> <!-- LINK -->
+                  <label for="accelerationLink" class="required">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejambuild' | translate }}
+                  </label>
+                  <input type="url" id="accelerationLink" class="form-control" placeholder="https://myteam.itch.io/mygame" formControlName="accelerationBuild">
+                </div>
+
+                <div class="form-group col-6"> <!-- CONTACT -->
+                  <label for="accelerationContact" class="required">
+                    <span [innerHTML]="'platform.jammer.myjam.mysubmission.formquestion.gamejamcontact' | translate"></span>
+                    <a matTooltip="{{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.tooltipcontact' | translate }}" class="tooltip-trigger">?</a>
+                  </label>
+                  <select id="accelerationContact" class="form-control" formControlName="accelerationContact">
+                    <option value="" disabled selected hidden>{{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.selectteammember' | translate }}</option>
+                    <option *ngFor="let jammer of team.jammers; index as i" [value]="i">
+                      {{ jammer.name }} - {{ jammer.email }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="form-group col-12"> <!-- DESCRIPTION -->
+                  <label for="accelerationDescription" class="required">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamdescription' | translate }}
+                  </label>
+                  <textarea id="accelerationDescription" class="form-control" formControlName="accelerationDescription" rows="5"></textarea>
+                </div>
+
+                <div class="form-group col-6"> <!-- GENRE -->
+                  <label for="accelerationGenre" class="required">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamgenres' | translate }}
+                  </label>
+                  <select id="accelerationGenre" class="form-select" formControlName="accelerationGenres" multiple>
+                    <option *ngFor="let genre of availableGenres" [value]="genre">
+                      {{ genre }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="form-group col-6"> <!-- TOPICS -->
+                  <label for="accelerationTopic" class="required">
+                    <span [innerHTML]="'platform.jammer.myjam.mysubmission.formquestion.gamejamtopics' | translate"></span>
+                    <a matTooltip="{{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.tooltiptopics' | translate }}" class="tooltip-trigger">?</a>
+                  </label>
+                  <select id="accelerationTopic" class="form-select" formControlName="accelerationTopics" multiple>
+                    <option *ngFor="let topic of availableTopics" [value]="topic">
+                      {{ topic }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="form-group col-4"> <!-- THEMES -->
+                  <label for="accelerationThemes" class="required">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamthemes' | translate }}
+                  </label>
+                  <select id="accelerationThemes" class="form-select" formControlName="accelerationThemes" multiple>
+                    <option *ngFor="let theme of jam.themes" [value]="theme.titleEN">
+                      {{ theme.titlePT }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="form-group col-4"> <!-- CATEGORIES -->
+                  <label for="accelerationCategories" class="required">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamcategories' | translate }}
+                  </label>
+                  <select id="accelerationCategories" class="form-select" formControlName="accelerationCategories" multiple>
+                    <option *ngFor="let category of jam.categories" [value]="category.titleEN">
+                      {{ category.titlePT }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="form-group col-4"> <!-- PLATFORMS -->
+                  <label for="accelerationPlatforms" class="required">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamplatforms' | translate }}
+                  </label>
+                  <select id="accelerationPlatforms" class="form-select" formControlName="accelerationPlatforms" multiple>
+                    <option *ngFor="let platform of availablePlatforms" [value]="platform">
+                      {{ platform }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="form-group col-6"> <!-- GRAPHICS -->
+                  <label for="accelerationGraphics" class="required">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamgraphics' | translate }}
+                  </label>
+                  <select id="accelerationGraphics" class="form-select" formControlName="accelerationGraphics">
+                    <option *ngFor="let graphic of availableGraphics" [value]="graphic">
+                      {{ graphic }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="form-group col-6"> <!-- ENGINE -->
+                  <label for="accelerationEngine" class="required">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamengine' | translate }}
+                  </label>
+                  <select id="accelerationEngine" class="form-select" formControlName="accelerationEngine">
+                    <option *ngFor="let engine of availableEngines" [value]="engine">
+                      {{ engine }}
+                    </option>
+                  </select>
+                </div>
+                
+                <div class="form-group col-6"> <!-- RECOMMENDATION -->
+                  <label for="accelerationRecommendation" class="required">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamrecommendation' | translate }}
+                  </label>
+                  <input type="number" id="accelerationRecommendation" class="form-control" min="0" max="10" step="1" value="5" formControlName="accelerationRecommendation">
+                </div>
+
+                <div class="form-group col-6"> <!-- ENJOYMENT -->
+                  <label for="accelerationEnjoyment" class="required">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamenjoyment' | translate }}
+                  </label>
+                  <input type="number" id="accelerationEnjoyment" class="form-control" min="0" max="10" step="1" value="5" formControlName="accelerationEnjoyment">
+                </div>
+
+                <div class="form-group col-12"> <!-- SUGGESTIONS -->
+                  <label for="accelerationSuggestions">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamsuggestions' | translate }}
+                    <a matTooltip="{{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.tooltipsuggestions' | translate }}" class="tooltip-trigger">?</a>
+                  </label>
+                  <textarea id="accelerationSuggestions" rows="5" class="form-control" formControlName="accelerationSuggestions"></textarea>
+                </div>
+
+                <div class="form-group col-12"> <!-- AUTHORIZATION -->
+                  <label for="accelerationAuthorization" class="required">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamauthorization' | translate }}
+                  </label>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="accelerationAuthorization" [value]="true" formControlName="accelerationAuthorization" id="accelerationAuthorizationYes">
+                    <label class="form-check-label" for="accelerationAuthorizationYes">
+                      {{ 'platform.common.yes' | translate }}
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="accelerationAuthorization" [value]="false" formControlName="accelerationAuthorization" id="accelerationAuthorizationNo">
+                    <label class="form-check-label" for="accelerationAuthorizationNo">
+                      {{ 'platform.common.no' | translate }}
+                    </label>
+                  </div>
+                </div>
+
+                <button type="submit" class="btn btn-black col-12" *ngIf="getStageTimeDelta(JamStages.ACCELERATION) > 0">{{ 'platform.common.sendgame' | translate }}</button>
+                <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.ACCELERATION) < 0">{{ 'platform.common.closedsubmissions' | translate }}</div>
+              </div>
+            </form>
+          </div>
+
+          <!-- ACCELERATION PITCH SUBMISSION FORM -->
+          <div *ngIf="isStageActiveWithDelay(JamStages.ACCELERATION_SUBMISSION)">
+            <hr class="my-2">
+            <h2>{{ 'platform.jammer.myjam.mysubmission.pitchacceleration' | translate }}</h2>
+            <div *ngIf="getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION) > 0">
+              <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION)) }}</b>
+            </div>
+
+            <form (submit)="savePitchAcceleration()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionPitchAccelerationForm" enctype="multipart/form-data">
+              <div class="form-group col-12"> <!-- LINK -->
+                {{ 'platform.jammer.myjam.mysubmission.formquestion.pitchtext' | translate }}<br>
+                <label for="accelerationPitch" class="required">
+                  {{ 'platform.jammer.myjam.mysubmission.formquestion.pitchlink' | translate }}
+                </label>
+                <input 
+                id="accelerationPitch" 
+                type="url" 
+                class="form-control form-control-lg" 
+                placeholder="https://www.youtube.com/my-pitch-video" 
+                formControlName="accelerationPitch"
+                pattern="^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(?:-nocookie)?\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|live\/|v\/)?)([\w\-]+)(\S+)?$">
+                <div class="text-danger mt-1" *ngIf="submissionPitchAccelerationForm.get('accelerationPitch')?.touched && submissionPitchAccelerationForm.get('accelerationPitch')?.invalid">
+                  {{ getPitchErrorMessage() }}
+                </div>
+              </div>
+
+              <button type="submit" *ngIf="getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION) > 0" class="btn btn-black col-12">{{ 'platform.common.sendpitch' | translate }}</button>
+              <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION) < 0">{{ 'platform.common.closedsubmissions' | translate }}</div>
+            </form>
+          </div>
         </div>
       </div>
 
       <div *ngIf="page == 'feedback'" class="container container-lg p-3">
-        <h1>Feedback from the Judges</h1>
-        <p>This section is still under construction</p>
+        <h1>{{ 'platform.jammer.myjam.feedback.feedbacksfromjudges' | translate }}</h1>
+        <p>{{ 'platform.jammer.myjam.feedback.construction' | translate }}</p>
       </div>
       <!-- #endregion -->
 
@@ -1471,7 +1057,7 @@
       <div class="p-2 mb-2">
         <div class="card text-center p-2 shadow">
           <fa-icon [icon]="faCoffee" class="fa-3x"></fa-icon>
-          <p>Welcome to the new and improved GJ+ platform.</p>
+          <p>{{ 'platform.jammer.sidebar.welcome' | translate }}</p>
           <p><a href="mailto:support@gamejamplus.com">support&#64;gamejamplus.com</a></p>
         </div>
       </div>
@@ -1479,11 +1065,11 @@
       <div class="p-2 mb-2">
         <div class="card text-center p-2 shadow">
           <fa-icon [icon]="faJar" class="fa-3x"></fa-icon>
-          <span><b>Venues:</b> {{ jamData.siteCount }}</span>
-          <span><b>Countries:</b> {{ jamData.countryCount }}</span>
-          <span><b>Jammers:</b>  {{ jamData.jammerCount }}</span>
-          <span><b>Teams:</b> {{ jamData.teamCount }} <br></span>
-          <span><b>Submissions:</b> {{ jamData.submissionCount }}</span>
+          <span><b>{{ 'platform.common.venues' | translate }}</b> {{ jamData.siteCount }}</span>
+          <span><b>{{ 'platform.common.countries' | translate }}</b> {{ jamData.countryCount }}</span>
+          <span><b>{{ 'platform.common.jammers' | translate }}</b>  {{ jamData.jammerCount }}</span>
+          <span><b>{{ 'platform.common.teams' | translate }}</b> {{ jamData.teamCount }} <br></span>
+          <span><b>{{ 'platform.common.submissions' | translate }}</b> {{ jamData.submissionCount }}</span>
           <span class="mb-2"></span>
         </div>
       </div>
@@ -1498,8 +1084,8 @@
       <div class="p-2 mb-2">
         <div class="card text-center p-2 shadow">
           <fa-icon [icon]="faUsers" class="fa-3x"></fa-icon>
-          <p><b>Special Thanks</b></p>
-          <p>Sharon Chacón<br>David Pastor<br>Jeffry Cuendiz<br>Paublo Ávila</p>
+          <p><b>{{ 'platform.common.specialthanks' | translate }}</b></p>
+          <p>CIDeV<br>Sharon Chacón<br>David Pastor<br>Jeffry Cuendiz<br>Paublo Ávila</p>
         </div>
       </div>
     </div>
