@@ -6,13 +6,14 @@ import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { environment } from '../../environments/environment.prod';
 import { MessagesComponent } from '../messages/messages.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
-export enum Gender {
+/*export enum Gender {
   Male = 'Male',
   Female = 'Female',
-  Other = 'Other',
-  PreferNotToSay = 'Prefer not to say'
-}
+  Nonbinary = 'Non-binary',
+  PreferNotToDeclare = 'Prefer not to declare'
+}*/
 
 @Component({
   selector: 'app-register',
@@ -21,7 +22,8 @@ export enum Gender {
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
-    MessagesComponent
+    MessagesComponent,
+    MatTooltipModule
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
@@ -29,7 +31,7 @@ export enum Gender {
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
   errorMessage: string = '';
-  genderOptions = Object.values(Gender);
+  //genderOptions = Object.values(Gender);
   @ViewChild(MessagesComponent) message!: MessagesComponent;
 
   constructor(private router: Router, private fb: FormBuilder, private userService: UserService) { }
@@ -39,15 +41,39 @@ export class RegisterComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       name: ['', Validators.required],
       discordUsername: ['', Validators.required],
+      instagram: ['',Validators.required],
+      linkedin: [''],
+      telefoneWhatsApp: [''],
+      diploma: [''],
+      ethnicity: ['', Validators.required],
       gender: ['', Validators.required],
-      socialMedia: ['', Validators.required]
+      intersex: ['', Validators.required],
+      genderIdentity: ['', Validators.required],
+      sexualOrientation: ['', Validators.required],
+      disability: ['', Validators.required], 
+      participation: ['', Validators.required],
+      student: ['', Validators.required],           
+      nameStuding: ['', Validators.required], 
     });
+    //testa se a pergunta "você estuda?" tem como resposta "Yes", fazendo com que possa escrever o nome da escola
+    this.registerForm.get('student')!.valueChanges.subscribe((value) => {
+        const nameStudingControl = this.registerForm.get('nameStuding');
+
+        if(value == 'Yes'){
+          nameStudingControl!.enable();
+          nameStudingControl!.setValidators([Validators.required]);
+        } else {
+          nameStudingControl!.setValue('');
+          nameStudingControl!.clearValidators();
+          nameStudingControl!.disable();
+        }
+        nameStudingControl!.updateValueAndValidity();
+      }); 
   }
 
   submitForm() {
     if (this.registerForm.valid) {
       const { email, name, region, site, discordUsername, instagram, linkedin, telefoneWhatsApp, diploma, ethnicity, gender, intersex, genderIdentity, sexualOrientation, disability, participation, student, nameStuding} = this.registerForm.value;
-
       this.userService.registerUser({
         name: name,
         email: email.toLowerCase().trim(),

@@ -274,7 +274,20 @@ export class UserCrudComponent implements OnInit{
         coins: 0,
         region: region,
         site: site,
-        discordUsername: this.userForm.get('discordUsername')?.value
+        discordUsername: this.userForm.get('discordUsername')?.value,
+        instagram: this.userForm.get('instagram')?.value,
+        linkedin: this.userForm.get('linkedin')?.value,
+        telefoneWhatsApp: this.userForm.get('telefoneWhatsApp')!.value,
+        diploma: this.userForm.get('diploma')!.value,
+        ethnicity: this.userForm.get('ethnicity')!.value,
+        gender: this.userForm.get('gender')!.value,
+        intersex: this.userForm.get('intersex')!.value,
+        genderIdentity: this.userForm.get('genderIdentity')!.value,
+        sexualOrientation: this.userForm.get('sexualOrientation')!.value,
+        disability: this.userForm.get('disability')!.value, 
+        participation: this.userForm.get('participation')!.value, 
+        student: this.userForm.get('student')!.value,         
+        nameStuding: this.userForm.get('nameStuding')!.value 
       };
 
       console.log('Adding user: ');
@@ -347,7 +360,20 @@ export class UserCrudComponent implements OnInit{
         coins: this.userToEdit.coins,
         region: region,
         site: site,
-        discordUsername: this.userForm.get('discordUsername')?.value
+        discordUsername: this.userForm.get('discordUsername')?.value,
+        instagram: this.userForm.get('instagram')?.value,
+        linkedin: this.userForm.get('linkedin')?.value,
+        telefoneWhatsApp: this.userForm.get('telefoneWhatsApp')!.value,
+        diploma: this.userForm.get('diploma')!.value,
+        ethnicity: this.userForm.get('ethnicity')!.value,
+        gender: this.userForm.get('gender')!.value,
+        intersex: this.userForm.get('intersex')!.value,
+        genderIdentity: this.userForm.get('genderIdentity')!.value,
+        sexualOrientation: this.userForm.get('sexualOrientation')!.value,
+        disability: this.userForm.get('disability')!.value, 
+        participation: this.userForm.get('participation')!.value, 
+        student: this.userForm.get('student')!.value,         
+        nameStuding: this.userForm.get('nameStuding')!.value 
       };
 
       console.log('Editing user: ');
