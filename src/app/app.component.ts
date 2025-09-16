@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
 
       if(cultureLanguage) {
         console.log('Culture language used.');
-        this.translate.use(defaultLanguage);
+        this.translate.use(cultureLanguage);
       } else {
         console.log('Default language used.');
         this.translate.use(defaultLanguage);

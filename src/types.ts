@@ -16,18 +16,18 @@ export enum JamStage {
 }
 
 export const JamStageColors: Record<JamStage, string> = {
-  [JamStage.PRE_PRODUCTION]: '#1E78BC', // Gray
-  [JamStage.REGISTER]: '#1E78BC', // Blue
-  [JamStage.GAMEJAM]: '#7143B7', // Emerald
-  [JamStage.GAMEJAM_SUBMISSION]: '#7143B7', // Green
-  [JamStage.INCUBATION]: '#AC3991', // Amber
-  [JamStage.INCUBATION_SUBMISSION]: '#AC3991', // Darker Amber
-  [JamStage.INCUBATION_EVALUATION]: '#AC3991', // Brown/Amber
-  [JamStage.CONTINENTAL_SEMIFINAL]: '#DE3C60', // Violet
-  [JamStage.ACCELERATION]: '#F05A49', // Pink
-  [JamStage.ACCELERATION_SUBMISSION]: '#F05A49', // Dark Pink
-  [JamStage.ACCELERATION_EVALUATION]: '#F05A49', // Deep Pink
-  [JamStage.GLOBAL_FINAL]: '#F2A636' // Red
+  [JamStage.PRE_PRODUCTION]: '#1E78BC', 
+  [JamStage.REGISTER]: '#1E78BC', 
+  [JamStage.GAMEJAM]: '#7143B7', 
+  [JamStage.GAMEJAM_SUBMISSION]: '#7143B7', 
+  [JamStage.INCUBATION]: '#AC3991', 
+  [JamStage.INCUBATION_SUBMISSION]: '#AC3991', 
+  [JamStage.INCUBATION_EVALUATION]: '#AC3991', 
+  [JamStage.CONTINENTAL_SEMIFINAL]: '#DE3C60', 
+  [JamStage.ACCELERATION]: '#F05A49', 
+  [JamStage.ACCELERATION_SUBMISSION]: '#F05A49', 
+  [JamStage.ACCELERATION_EVALUATION]: '#F05A49', 
+  [JamStage.GLOBAL_FINAL]: '#F2A636'
 };
 
 export function getJamStageColor(stage: JamStage): string {

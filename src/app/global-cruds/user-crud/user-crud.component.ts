@@ -340,20 +340,22 @@ export class UserCrudComponent implements OnInit{
         return;
       }
 
-      const user: User = {
-        name : this.userForm.get('name')!.value,
+      const updateData = {
+        name: this.userForm.get('name')!.value,
         email: this.userForm.get('email')!.value,
         roles: roles,
         coins: this.userToEdit.coins,
         region: region,
         site: site,
-        discordUsername: this.userForm.get('discordUsername')?.value
+        discordUsername: this.userForm.get('discordUsername')?.value,
+        gender: this.userToEdit.gender,
+        socialMedia: this.userToEdit.socialMedia
       };
 
       console.log('Editing user: ');
-      console.log(user);
+      console.log(updateData);
 
-      this.userService.updateUser(this.userToEdit._id!, user).subscribe({
+      this.userService.updateUser(this.userToEdit._id!, updateData).subscribe({
         next: (data) => {
           this.closeUserForm.nativeElement.click();
           this.message.showMessage("Success", "User updated successfully");
