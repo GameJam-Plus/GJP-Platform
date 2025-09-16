@@ -3,13 +3,18 @@
     background: linear-gradient(108deg, #FEDE6E 0%, #FA7800 33%, #FF3131 50%, #D052A5 75%, #3763FF 100%);
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
 }
 
 .row{
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-left: 2rem;
+    padding-right: 2rem;
 }
 
 .col{
@@ -46,6 +51,7 @@
     padding: 20px;
     border: 1px solid #888;
     width: 40%;
+    
 }
 
 #OKboomer{
@@ -75,6 +81,8 @@
     font-family: K2D;
     font-weight: 400;
     word-wrap: break-word;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
 }
 
 .inputSpace{

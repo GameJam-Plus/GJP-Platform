@@ -6,6 +6,7 @@ import { UserService } from '../services/user.service';
 import { SiteService } from '../services/site.service';
 import { RegionService } from '../services/region.service';
 import { environment } from '../../environments/environment.prod';
+import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -24,6 +25,19 @@ export class UserDashboardComponent implements OnInit {
     name: '',
     email: '',
     discordUsername: '',
+    instagram: '',
+    linkedin: '',
+    telefoneWhatsApp: '',
+    diploma: '',
+    ethnicity: '',
+    gender: '',
+    intersex: '',
+    genderIdentity: '',
+    sexualOrientation: '',
+    disability: '', 
+    participation: '', 
+    student: '',
+    nameStuding: '',
     region: {
       _id: '',
       name: ''
@@ -44,7 +58,20 @@ export class UserDashboardComponent implements OnInit {
         this.myForm = this.fb.group({
           name: [user.name, Validators.required],
           email: [user.email, Validators.required],
-          discordUsername: [user.discordUsername, Validators.required]
+          discordUsername: [user.discordUsername, Validators.required], 
+          instagram: [user.instagram, Validators.required],
+          linkedin: [user.linkedin, Validators.required],
+          telefoneWhatsApp: [user.telefoneWhatsApp, Validators.required],
+          diploma: [user.diploma, Validators.required],
+          ethnicity: [user.ethnicity, Validators.required],
+          gender: [user.gender, Validators.required],
+          intersex: [user.intersex, Validators.required],
+          genderIdentity: [user.genderIdentity, Validators.required],
+          sexualOrientation: [user.sexualOrientation, Validators.required],
+          disability: [user.disability, Validators.required], 
+          participation: [user.participation, Validators.required], 
+          student: [user.student, Validators.required],
+          nameStuding: [user.nameStuding, Validators.required],
         });
       },
       error => {
@@ -57,7 +84,7 @@ export class UserDashboardComponent implements OnInit {
     if (this.myForm.valid) {
       console.log('Formulario válido');
       const userId = this.dataSource._id;
-      const { email, name, discordUsername} = this.myForm.value;
+      const { email, name, discordUsername, instagram, linkedin, telefoneWhatsApp, diploma, ethnicity, gender, intersex, genderIdentity, sexualOrientation, disability, participation, student, nameStuding} = this.myForm.value;
   
       this.userService.updateUser(`${environment.apiUrl}/api/user/update-user/${userId}`, {
         name: name,
@@ -67,6 +94,19 @@ export class UserDashboardComponent implements OnInit {
         roles: this.dataSource.roles,
         coins: 0,
         discordUsername: discordUsername,
+        instagram: instagram,
+        linkedin: linkedin,
+        telefoneWhatsApp: telefoneWhatsApp,
+        diploma: diploma,
+        ethnicity: ethnicity,
+        gender: gender,
+        intersex: intersex,
+        genderIdentity: genderIdentity,
+        sexualOrientation: sexualOrientation,
+        disability: disability, 
+        participation: participation, 
+        student: student,         
+        nameStuding: nameStuding, 
       }).subscribe({
         next: (data) => {
           if (data.success) {
