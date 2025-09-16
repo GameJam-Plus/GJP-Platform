@@ -14,11 +14,63 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    gender: {
+    instagram: {
         type: String,
-        enum: ["Masculino", "Feminino", "Não-binário", "Prefiro não dizer", "Outro"],
+        required: true
+    },
+    linkedin: {
+        type: String,
         required: false
     },
+    telefoneWhatsApp: {
+        type: String,
+        required: false
+    },
+    diploma: {
+        type: String,
+        required: false
+    },
+    ethnicity: {
+        type: String,
+        required: true
+    },
+    instagram: {
+        type: String,
+        required: true
+    },      
+    gender: {
+        type: String,
+        enum: ["Male", "Female", "Non-binary", "Prefer not to declare"],
+        required: true
+    },
+    intersex: {
+        type: String,
+        required: true
+    }, 
+    genderIdentity: {
+        type: Array,
+        required: true
+    }, 
+    sexualOrientation: {
+        type: Array,
+        required: true
+    }, 
+    disability: {
+        type: Array,
+        required: true
+    }, 
+    participation: {
+        type: String,
+        required: true
+    }, 
+    student: {
+        type: String,
+        required: true
+    }, 
+    nameStuding: {
+        type: String,
+        required: false
+    }, 
     socialMedia: {
         type: String,
         required: false
@@ -65,6 +117,7 @@ const userSchema = new Schema({
         type: Date,
         required: false
     }
+    
 });
 
 module.exports = mongoose.model("User", userSchema);
