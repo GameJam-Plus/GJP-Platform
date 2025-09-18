@@ -49,7 +49,6 @@ const registerUser = async (req, res) => {
             instagram: instagram,
             linkedin: linkedin,
             telefoneWhatsApp: telefoneWhatsApp,
-            diploma: diploma,
             ethnicity: ethnicity,
             gender: gender,
             intersex: intersex,
@@ -74,7 +73,7 @@ const registerUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
     const { id } = req.params;
-    const { name, email, region, site, team, roles, coins, discordUsername, instagram, linkedin, telefoneWhatsApp, diploma, ethnicity, gender, intersex, genderIdentity, sexualOrientation, disability, participation, student, nameStuding, socialMedia } = req.body;
+    const { name, email, region, site, team, roles, coins, discordUsername, instagram, linkedin, telefoneWhatsApp, ethnicity, gender, intersex, genderIdentity, sexualOrientation, disability, participation, student, nameStuding, socialMedia } = req.body;
 
     try {
         if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -109,7 +108,6 @@ const updateUser = async (req, res) => {
         if (instagram) existingUser.instagram = instagram;
         if (linkedin) existingUser.linkedin = linkedin;
         if (telefoneWhatsApp) existingUser.telefoneWhatsApp = telefoneWhatsApp;
-        if (diploma) existingUser.diploma = diploma;
         if (ethnicity) existingUser.ethnicity = ethnicity;
         if (gender) existingUser.gender = gender;
         if (intersex) existingUser.intersex = intersex;
@@ -120,7 +118,6 @@ const updateUser = async (req, res) => {
         if (student) existingUser.student = student;
         if (nameStuding) existingUser.nameStuding = nameStuding;
         
-        if (socialMedia) existingUser.socialMedia = socialMedia;
         if(existingUser.roles.includes('Jammer')){
             const query = { 'jammers._id': id };
 

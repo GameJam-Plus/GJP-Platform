@@ -26,10 +26,6 @@ const userSchema = new Schema({
         type: String,
         required: false
     },
-    diploma: {
-        type: String,
-        required: false
-    },
     ethnicity: {
         type: String,
         required: true
