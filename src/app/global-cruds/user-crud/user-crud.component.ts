@@ -7,7 +7,6 @@ import { Region, Site, User } from '../../../types';
 import { SiteService } from '../../services/site.service';
 import { RegionService } from '../../services/region.service';
 import { MessagesComponent } from '../../messages/messages.component';
-import { jsPDF }  from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { environment } from '../../../environments/environment.prod';
 import { identity, Observable } from 'rxjs';
