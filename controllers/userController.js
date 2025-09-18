@@ -671,7 +671,7 @@ const saveJammerData = async (req, res) => {
         //Save user data (for users that have account before the changes)
         user.name = data.name;
         user.email = data.email;
-        user.discord = data.discord;
+        user.discordUsername = data.discordUsername;
         user.ethnicity = data.ethnicity;
         user.gender = data.gender;
         user.intersex = data.intersex;
