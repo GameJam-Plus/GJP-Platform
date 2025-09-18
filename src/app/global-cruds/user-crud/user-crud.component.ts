@@ -10,8 +10,7 @@ import { MessagesComponent } from '../../messages/messages.component';
 import { jsPDF }  from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { environment } from '../../../environments/environment.prod';
-import { Observable } from 'rxjs';
-import { faGenderless } from '@fortawesome/free-solid-svg-icons';
+import { identity, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-user-crud',
@@ -279,16 +278,15 @@ export class UserCrudComponent implements OnInit{
         instagram: this.userForm.get('instagram')?.value ?? ' ',
         linkedin: this.userForm.get('linkedin')?.value,
         telefoneWhatsApp: this.userForm.get('telefoneWhatsApp')?.value,
-        //diploma: this.userForm.get('diploma')?.value,
         ethnicity: this.userForm.get('ethnicity')?.value ?? ' ',
         gender: this.userForm.get('gender')?.value ?? 'Prefer not to declare',
         intersex: this.userForm.get('intersex')?.value ?? ' ',
-        genderIdentity: this.userForm.get('genderIdentity')?.value ?? ' ',
-        sexualOrientation: this.userForm.get('sexualOrientation')?.value ?? ' ',
+        identity: this.userForm.get('identity')?.value ?? ' ',
+        orientation: this.userForm.get('orientation')?.value ?? ' ',
         disability: this.userForm.get('disability')?.value ?? ' ', 
         participation: this.userForm.get('participation')?.value ?? ' ', 
         student: this.userForm.get('student')?.value ?? ' ',         
-        nameStuding: this.userForm.get('nameStuding')?.value ?? ' '
+        school: this.userForm.get('school')?.value ?? ' '
       };
 
       console.log('Adding user: ');
@@ -365,16 +363,15 @@ export class UserCrudComponent implements OnInit{
         instagram: this.userForm.get('instagram')?.value ?? ' ',
         linkedin: this.userForm.get('linkedin')?.value,
         telefoneWhatsApp: this.userForm.get('telefoneWhatsApp')?.value,
-        //diploma: this.userForm.get('diploma')?.value,
         ethnicity: this.userForm.get('ethnicity')?.value ?? ' ',
         gender: this.userForm.get('gender')?.value ?? 'Prefer not to declare',
         intersex: this.userForm.get('intersex')?.value ?? ' ',
-        genderIdentity: this.userForm.get('genderIdentity')?.value ?? ' ',
-        sexualOrientation: this.userForm.get('sexualOrientation')?.value ?? ' ',
+        identity: this.userForm.get('identity')?.value ?? ' ',
+        orientation: this.userForm.get('orientation')?.value ?? ' ',
         disability: this.userForm.get('disability')?.value ?? ' ', 
         participation: this.userForm.get('participation')?.value ?? ' ', 
         student: this.userForm.get('student')?.value ?? ' ',         
-        nameStuding: this.userForm.get('nameStuding')?.value ?? ' ' 
+        school: this.userForm.get('school')?.value ?? ' ' 
       };
 
       console.log('Editing user: ');

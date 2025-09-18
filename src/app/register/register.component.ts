@@ -47,32 +47,32 @@ export class RegisterComponent implements OnInit {
       ethnicity: ['', Validators.required],
       gender: ['', Validators.required],
       intersex: ['', Validators.required],
-      genderIdentity: ['', Validators.required],
-      sexualOrientation: ['', Validators.required],
+      identity: ['', Validators.required],
+      orientation: ['', Validators.required],
       disability: ['', Validators.required], 
       participation: ['', Validators.required],
       student: ['', Validators.required],           
-      nameStuding: ['', Validators.required], 
+      school: ['', Validators.required], 
     });
     //testa se a pergunta "você estuda?" tem como resposta "Yes", fazendo com que possa escrever o nome da escola
     this.registerForm.get('student')!.valueChanges.subscribe((value) => {
-        const nameStudingControl = this.registerForm.get('nameStuding');
+        const schoolControl = this.registerForm.get('school');
 
         if(value == 'Yes'){
-          nameStudingControl!.enable();
-          nameStudingControl!.setValidators([Validators.required]);
+          schoolControl!.enable();
+          schoolControl!.setValidators([Validators.required]);
         } else {
-          nameStudingControl!.setValue('');
-          nameStudingControl!.clearValidators();
-          nameStudingControl!.disable();
+          schoolControl!.setValue('');
+          schoolControl!.clearValidators();
+          schoolControl!.disable();
         }
-        nameStudingControl!.updateValueAndValidity();
+        schoolControl!.updateValueAndValidity();
       }); 
   }
 
   submitForm() {
     if (this.registerForm.valid) {
-      const { email, name, region, site, discordUsername, instagram, linkedin, telefoneWhatsApp, diploma, ethnicity, gender, intersex, genderIdentity, sexualOrientation, disability, participation, student, nameStuding} = this.registerForm.value;
+      const { name, email, discordUsername, instagram, linkedin, telefoneWhatsApp, ethnicity, gender, intersex, identity, orientation, disability, participation, student, school } = this.registerForm.value;
       this.userService.registerUser({
         name: name,
         email: email.toLowerCase().trim(),
@@ -82,16 +82,15 @@ export class RegisterComponent implements OnInit {
         instagram: instagram,
         linkedin: linkedin,
         telefoneWhatsApp: telefoneWhatsApp,
-        //diploma: diploma,
         ethnicity: ethnicity,
         gender: gender,
         intersex: intersex,
-        genderIdentity: genderIdentity,
-        sexualOrientation: sexualOrientation,
+        identity: identity,
+        orientation: orientation,
         disability: disability, //se tem alguma deficiencia
         participation: participation, //se ja participou de GJ+ anteriores
         student: student,         //se é estudante ou não
-        nameStuding: nameStuding, //nome local que estuda
+        school: school, //nome local que estuda
       }).subscribe({
         next: (data) => {
           if (data.success) {

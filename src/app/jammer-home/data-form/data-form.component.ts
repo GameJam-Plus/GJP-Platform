@@ -3,7 +3,7 @@ import { MessagesComponent } from '../../messages/messages.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators,  } from '@angular/forms';
 import { UserService } from '../../services/user.service';
-import { User, Site, Jam, Country } from '../../../types';
+import { User, Site, Jam, Country, JammerData } from '../../../types';
 
 @Component({
   selector: 'app-data-form',
@@ -41,13 +41,46 @@ export class DataFormComponent implements OnInit {
       countryOfResidence: ['', Validators.required],
       city: ['', Validators.required],
       email: [this.user.email, Validators.required],
-      discord: [this.user.discordUsername, Validators.required],
-      gender: ['', Validators.required],
+      discordUsername: [this.user.discordUsername, Validators.required],
+      ethnicity: [this.user.ethnicity, Validators.required],
+      gender: [this.user.gender, Validators.required],
+      intersex: [this.user.intersex, Validators.required],
+      student: [this.user.student, Validators.required],
+      school: [this.user.student],
+      degree: ['', Validators.required],
 
-      pronounH: false,
-      pronounS: false,
-      pronounT: false,
-      pronounO: false,
+      // pronounH: false,
+      // pronounS: false,
+      // pronounT: false,
+      // pronounO: false,
+
+      identityAg: false,
+      identityCM: false,
+      identityCW: false,
+      identityGF: false,
+      identityQ: false,
+      identityTM: false,
+      identityTW: false,
+      identityT: false,
+      identityO: false,
+      identityNo: false,
+
+      orientationAs: false,
+      orientationBi: false,
+      orientationGay: false,
+      orientationHet: false,
+      orientationLes: false,
+      orientationPan: false,
+      orientationO: false,
+      orientationNo: false,
+
+      disabilityN: false,
+      disabilityYI: false,
+      disabilityYP: false,
+      disabilityYV: false,
+      disabilityYH: false,
+      disabilityO: false,
+      disabilityNo: false,
 
       industryFree: false,
       industryStudio: false,
@@ -55,8 +88,6 @@ export class DataFormComponent implements OnInit {
       industryNone: false,
       industryPast: false,
       industryNo: false,
-
-      degree: ['', Validators.required],
 
       studyNone: false,
       studyFree: false,
@@ -71,12 +102,7 @@ export class DataFormComponent implements OnInit {
       studyBiz: false,
       studyOther: false,
 
-      jamFirst: false,
-      jamFirstGJP: false,
-      jamPIIH: false,
-      jamOther: false,
-      jamGJP2: false,
-      jamGJP3: false,
+      participation: [this.user.participation, Validators.required],
 
       termsOfConduct: ['', Validators.required],
       termsOfImage: ['', Validators.required],
@@ -95,23 +121,42 @@ export class DataFormComponent implements OnInit {
     {
       if(this.jammerDataForm.valid)
       {
-        let gender = this.jammerDataForm.get('gender')?.value;
-        let countryO = this.jammerDataForm.get('countryOfOrigin')?.value.name;
-        let countryR = this.jammerDataForm.get('countryOfResidence')?.value.name;
-        let degree = this.jammerDataForm.get('degree')?.value;
-        let pronouns = new Array();
-        if(this.jammerDataForm.get('pronounH')?.value) pronouns.push('He/Him');
-        if(this.jammerDataForm.get('pronounS')?.value) pronouns.push('She/Her');
-        if(this.jammerDataForm.get('pronounT')?.value) pronouns.push('They/Them');
-        if(this.jammerDataForm.get('pronounO')?.value) pronouns.push('Other');
+        //let pronouns = new Array();
+        // if(this.jammerDataForm.get('pronounH')?.value) pronouns.push('He/Him');
+        // if(this.jammerDataForm.get('pronounS')?.value) pronouns.push('She/Her');
+        // if(this.jammerDataForm.get('pronounT')?.value) pronouns.push('They/Them');
+        // if(this.jammerDataForm.get('pronounO')?.value) pronouns.push('Other');
 
-        let industry = new Array();
-        if(this.jammerDataForm.get('industryFree')?.value) industry.push('I work in the games industry as a freelancer');
-        if(this.jammerDataForm.get('industryStudio')?.value) industry.push('I work in the games industry in a studio');
-        if(this.jammerDataForm.get('industryOwn')?.value) industry.push('I own a game studio');
-        if(this.jammerDataForm.get('industryNone')?.value) industry.push("I haven't worked in the games industry yet, but I'm looking forward to it");
-        if(this.jammerDataForm.get('industryPast')?.value) industry.push("I used to work in the games industry, but I don't anymore");
-        if(this.jammerDataForm.get('industryNo')?.value) industry.push("I'm not interested in working in the games industry, I jam for fun");
+        let identity = new Array();
+        if(this.jammerDataForm.get('identityAg')?.value) identity.push('Agender');
+        if(this.jammerDataForm.get('identityCM')?.value) identity.push('Cisgender Man');
+        if(this.jammerDataForm.get('identityCW')?.value) identity.push('Cisgender Woman');
+        if(this.jammerDataForm.get('identityGF')?.value) identity.push('Gender Fluid');
+        if(this.jammerDataForm.get('identityQ')?.value) identity.push('Queer');
+        if(this.jammerDataForm.get('identityTM')?.value) identity.push('Transgender Man');
+        if(this.jammerDataForm.get('identityTW')?.value) identity.push('Transgender Woman');
+        if(this.jammerDataForm.get('identityT')?.value) identity.push('Travesti');
+        if(this.jammerDataForm.get('identityO')?.value) identity.push('Other');
+        if(this.jammerDataForm.get('identityNo')?.value) identity.push('Prefer not to declare');
+        
+        let orientation = new Array();
+        if(this.jammerDataForm.get('orientationAs')?.value) orientation.push('Asexual');
+        if(this.jammerDataForm.get('orientationBi')?.value) orientation.push('Bisexual');
+        if(this.jammerDataForm.get('orientationGay')?.value) orientation.push('Gay');
+        if(this.jammerDataForm.get('orientationHet')?.value) orientation.push('Heterosexual');
+        if(this.jammerDataForm.get('orientationLes')?.value) orientation.push('Lesbian');
+        if(this.jammerDataForm.get('orientationPan')?.value) orientation.push('Pansexual');
+        if(this.jammerDataForm.get('orientationO')?.value) orientation.push('Other');
+        if(this.jammerDataForm.get('orientationNo')?.value) orientation.push('Prefer not to declare');
+
+        let disability = new Array();
+        if(this.jammerDataForm.get('disabilityN')?.value) disability.push('No');
+        if(this.jammerDataForm.get('disabilityYI')?.value) disability.push('Yes. Intellectual disability');
+        if(this.jammerDataForm.get('disabilityYP')?.value) disability.push('Yes. Physical disability');
+        if(this.jammerDataForm.get('disabilityYV')?.value) disability.push('Yes. Visual disability');
+        if(this.jammerDataForm.get('disabilityYH')?.value) disability.push('Yes. Hearing disability');
+        if(this.jammerDataForm.get('disabilityO')?.value) disability.push('Other');
+        if(this.jammerDataForm.get('disabilityNo')?.value) disability.push('Prefer not to declare');
 
         let studies = new Array();
         if(this.jammerDataForm.get('studyNone')?.value) studies.push('No studies related to games industry');
@@ -127,39 +172,39 @@ export class DataFormComponent implements OnInit {
         if(this.jammerDataForm.get('studyBiz')?.value) studies.push('Business/Management');
         if(this.jammerDataForm.get('studyOther')?.value) studies.push('Other related with Game Development');
 
-        let jams = new Array();
-        if(this.jammerDataForm.get('jamFirst')?.value) jams.push('This is my first Game Jam');
-        if(this.jammerDataForm.get('jamFirstGJP')?.value) jams.push('This is my first Game Jam Plus');
-        if(this.jammerDataForm.get('jamPIIH')?.value) jams.push('I have participated in other jams from Indie Hero');
-        if(this.jammerDataForm.get('jamOther')?.value) jams.push('I have participated in other jams in general');
-        if(this.jammerDataForm.get('jamGJP2')?.value) jams.push('This is my 2nd Game Jam Plus');
-        if(this.jammerDataForm.get('jamGJP3')?.value) jams.push('This is my 3rd or more Game Jam Plus');
-
-        this.termsOfConduct = this.jammerDataForm.get('termsOfConduct')?.value;
-        this.termsOfImage = this.jammerDataForm.get('termsOfImage')?.value;
-        this.termsOfIP = this.jammerDataForm.get('termsOfIP')?.value;
-
-        console.log(this.termsOfConduct);
-        console.log(this.termsOfImage);
-        console.log(this.termsOfIP);
+        let industry = new Array();
+        if(this.jammerDataForm.get('industryFree')?.value) industry.push('I work in the games industry as a freelancer');
+        if(this.jammerDataForm.get('industryStudio')?.value) industry.push('I work in the games industry in a studio');
+        if(this.jammerDataForm.get('industryOwn')?.value) industry.push('I own a game studio');
+        if(this.jammerDataForm.get('industryNone')?.value) industry.push("I haven't worked in the games industry yet, but I'm looking forward to it");
+        if(this.jammerDataForm.get('industryPast')?.value) industry.push("I used to work in the games industry, but I don't anymore");
+        if(this.jammerDataForm.get('industryNo')?.value) industry.push("I'm not interested in working in the games industry, I jam for fun");
 
         if(this.termsOfConduct && this.termsOfImage && this.termsOfIP)
         {
-          let jammerData = {
+          let jammerData : JammerData = {
             name: this.jammerDataForm.get('name')?.value,
             email: this.jammerDataForm.get('email')?.value,
-            countryOfOrigin: countryO,
-            countryOfResidence: countryR,
+            discordUsername: this.jammerDataForm.get('discord')?.value,
+            countryOfOrigin: this.jammerDataForm.get('countryOfOrigin')?.value.name,
+            countryOfResidence: this.jammerDataForm.get('countryOfResidence')?.value.name,
             city: this.jammerDataForm.get('city')?.value,
-            gender: gender,
-            degree: degree,
-            pronouns: pronouns,
-            industry: industry,
+            ethnicity: this.jammerDataForm.get('ethnicity')?.value,
+            //pronouns: pronouns,
+            gender: this.jammerDataForm.get('gender')?.value,
+            intersex: this.jammerDataForm.get('intersex')?.value,
+            identity: identity,
+            orientation: orientation,
+            disability: disability,
+            student: this.jammerDataForm.get('student')?.value,
+            school: this.jammerDataForm.get('school')?.value,
+            degree: this.jammerDataForm.get('degree')?.value,
             studies: studies,
-            jams: jams,
-            termsOfConduct: this.termsOfConduct,
-            termsOfImage: this.termsOfImage,
-            termsOfIP: this.termsOfIP
+            industry: industry,
+            participation: this.jammerDataForm.get('participation')?.value,
+            termsOfConduct: this.jammerDataForm.get('termsOfConduct')?.value,
+            termsOfImage: this.jammerDataForm.get('termsOfImage')?.value,
+            termsOfIP: this.jammerDataForm.get('termsOfIP')?.value
           };
 
           this.userService.saveJammerData(this.user!._id!, this.site!._id!, this.jam!._id!, jammerData).subscribe({

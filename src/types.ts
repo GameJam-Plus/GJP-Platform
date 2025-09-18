@@ -79,16 +79,16 @@ export interface User {
   discordUsername: string;
   instagram?: string;
   linkedin?: string;
-  telefoneWhatsApp: string;
+  telefoneWhatsApp?: string;
   ethnicity:string;
   gender: string;
   intersex: string;
-  genderIdentity: string;
-  sexualOrientation: string;
+  identity: string;
+  orientation: string;
   disability: string;
   participation: string;
   student: string;
-  nameStuding: string;
+  school?: string;
   region?: {
     _id: string;
     name: string;
@@ -103,9 +103,33 @@ export interface User {
   };
   roles: string[];
   role?: string;
-  coins: number;
+  coins?: number;
   creationDate?: Date;
   lastUpdateDate?: Date;
+}
+
+export interface JammerData {
+  name: string;
+  countryOfOrigin: string;
+  countryOfResidence: string;
+  city: string;
+  email: string;
+  discordUsername: string;
+  ethnicity: string;
+  gender: string;
+  intersex: string;
+  identity: string[];
+  orientation: string[];
+  disability: string[];
+  student: string;
+  school: string;
+  degree: string;
+  studies: string[];
+  industry: string[];
+  participation: string;
+  termsOfConduct: boolean;
+  termsOfImage: boolean;
+  termsOfIP: boolean;
 }
 
 export interface Site {

@@ -48,7 +48,19 @@ export class HomeComponent{
   ngOnInit(): void {
     this.userForm = this.fb.group({
       name: ['', Validators.required],
-      discordUsername: ['']
+      discordUsername: ['', Validators.required],
+      telefoneWhatsApp: [''],
+      instagram: [''],
+      linkedin: [''],
+      ethnicity: [''],
+      gender: [''],
+      intersex: [''],
+      identity: [''],
+      orientation: [''],
+      disability: [''],
+      participation: [''],
+      student: [''],
+      school: ['']
     });
 
     this.getUser();
@@ -112,7 +124,19 @@ export class HomeComponent{
     {
       this.userForm.setValue({
         name: this.user.name,
-        discordUsername: this.user.discordUsername ? this.user.discordUsername : ''
+        discordUsername: this.user.discordUsername ? this.user.discordUsername : '',
+        telefoneWhatsApp: this.user.telefoneWhatsApp ? this.user.telefoneWhatsApp : '',
+        instagram: this.user.instagram ? this.user.instagram : '',
+        linkedin: this.user.linkedin ? this.user.linkedin : '',
+        ethnicity: this.user.ethnicity ? this.user.ethnicity : '',
+        gender: this.user.gender ? this.user.gender : '',
+        intersex: this.user.intersex ? this.user.intersex : '',
+        identity: this.user.identity ? this.user.identity : '',
+        orientation: this.user.orientation ? this.user.orientation : '',
+        disability: this.user.disability ? this.user.disability : '',
+        participation: this.user.participation ? this.user.participation : '',
+        student: this.user.student ? this.user.student : '',
+        school: this.user.school ? this.user.school : '' 
       })
     }
   }
@@ -120,7 +144,20 @@ export class HomeComponent{
   clearUserForm() : void {
     this.userForm.setValue({
       name: '',
-      discordUsername: ''
+      discordUsername: '',
+      telefoneWhatsApp: '',
+      instagram: '',
+      linkedin: '',
+      ethnicity: '',
+      gender: '',
+      intersex: '',
+      identity: '',
+      orientation: '',
+      disability: '',
+      participation: '',
+      student: '',
+      school: ''
+
     });
     this.errorMessage = '';
     this.successMessage = '';
@@ -153,12 +190,12 @@ export class HomeComponent{
           ethnicity: this.userForm.get('')?.value,
           gender: this.user.gender,
           intersex: this.userForm.get('')?.value,
-          genderIdentity: this.userForm.get('')?.value,
-          sexualOrientation: this.userForm.get('')?.value,
+          identity: this.userForm.get('')?.value,
+          orientation: this.userForm.get('')?.value,
           disability: this.userForm.get('')?.value,
           participation: this.userForm.get('')?.value,
           student: this.userForm.get('')?.value,
-          nameStuding: this.userForm.get('')?.value,
+          school: this.userForm.get('')?.value,
           region: this.user.region,
           site: this.user.site,
           team: this.user.team,

@@ -28,16 +28,15 @@ export class UserDashboardComponent implements OnInit {
     instagram: '',
     linkedin: '',
     telefoneWhatsApp: '',
-    //diploma: '',
     ethnicity: '',
     gender: '',
     intersex: '',
-    genderIdentity: '',
-    sexualOrientation: '',
+    identity: '',
+    orientation: '',
     disability: '', 
     participation: '', 
     student: '',
-    nameStuding: '',
+    school: '',
     region: {
       _id: '',
       name: ''
@@ -62,16 +61,15 @@ export class UserDashboardComponent implements OnInit {
           instagram: [user.instagram, Validators.required],
           linkedin: [user.linkedin, Validators.required],
           telefoneWhatsApp: [user.telefoneWhatsApp, Validators.required],
-          //diploma: [user.diploma, Validators.required],
           ethnicity: [user.ethnicity, Validators.required],
           gender: [user.gender, Validators.required],
           intersex: [user.intersex, Validators.required],
-          genderIdentity: [user.genderIdentity, Validators.required],
-          sexualOrientation: [user.sexualOrientation, Validators.required],
+          identity: [user.identity, Validators.required],
+          orientation: [user.orientation, Validators.required],
           disability: [user.disability, Validators.required], 
           participation: [user.participation, Validators.required], 
           student: [user.student, Validators.required],
-          nameStuding: [user.nameStuding, Validators.required],
+          school: [user.school, Validators.required],
         });
       },
       error => {
@@ -84,7 +82,7 @@ export class UserDashboardComponent implements OnInit {
     if (this.myForm.valid) {
       console.log('Formulario válido');
       const userId = this.dataSource._id;
-      const { email, name, discordUsername, instagram, linkedin, telefoneWhatsApp, diploma, ethnicity, gender, intersex, genderIdentity, sexualOrientation, disability, participation, student, nameStuding} = this.myForm.value;
+      const { name, email, discordUsername, instagram, linkedin, telefoneWhatsApp, ethnicity, gender, intersex, identity, orientation, disability, participation, student, school } = this.myForm.value;
   
       this.userService.updateUser(`${environment.apiUrl}/api/user/update-user/${userId}`, {
         name: name,
@@ -97,16 +95,15 @@ export class UserDashboardComponent implements OnInit {
         instagram: instagram,
         linkedin: linkedin,
         telefoneWhatsApp: telefoneWhatsApp,
-        //diploma: diploma,
         ethnicity: ethnicity,
         gender: gender,
         intersex: intersex,
-        genderIdentity: genderIdentity,
-        sexualOrientation: sexualOrientation,
+        identity: identity,
+        orientation: orientation,
         disability: disability, 
         participation: participation, 
         student: student,         
-        nameStuding: nameStuding, 
+        school: school, 
       }).subscribe({
         next: (data) => {
           if (data.success) {
