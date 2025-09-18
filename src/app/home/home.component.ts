@@ -150,7 +150,6 @@ export class HomeComponent{
           email: this.user.email,
           discordUsername: this.userForm.get('discordUsername')?.value,
           telefoneWhatsApp: this.userForm.get('')?.value,
-          diploma: this.userForm.get('')?.value,
           ethnicity: this.userForm.get('')?.value,
           gender: this.user.gender,
           intersex: this.userForm.get('')?.value,

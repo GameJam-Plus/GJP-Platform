@@ -80,7 +80,6 @@ export interface User {
   instagram?: string;
   linkedin?: string;
   telefoneWhatsApp: string;
-  diploma: string;
   ethnicity:string;
   gender: string;
   intersex: string;
