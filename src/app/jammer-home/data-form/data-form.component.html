@@ -12,12 +12,12 @@
 
   <form (submit)="saveJammerData()" [formGroup]="jammerDataForm" class="m-2">
     <div class="row">
-      <div class="form-group col-sm-6">
+      <div class="form-group col-sm-6"> <!-- NAME -->
         <label for="name" class="required">Qual é o seu nome?</label>
         <input type="text" class="form-control" formControlName="name">
       </div>
 
-      <div class="form-group col-sm-6">
+      <div class="form-group col-sm-6"> <!-- COUNTRY BORN -->
         <label for="name" class="required">De que país você é?</label>
         <select class="form-control formList" id="countries" formControlName="countryOfOrigin">
           <option value="" disabled selected hidden>País de origem</option>
@@ -25,7 +25,7 @@
         </select>
       </div>
 
-      <div class="form-group col-sm-6">
+      <div class="form-group col-sm-6"> <!-- COUNTRY LIVING -->
         <label for="name" class="required">Em que país você mora?</label>
         <select class="form-control formList" id="countries" formControlName="countryOfResidence">
           <option value="" disabled selected hidden>"País de residência"</option>
@@ -33,52 +33,172 @@
         </select>
       </div>
 
-      <div class="form-group col-sm-6">
+      <div class="form-group col-sm-6"> <!-- CITY -->
         <label for="name" class="required">Em que cidade você mora?</label>
         <input type="text" class="form-control" formControlName="city">
       </div>
 
-      <div class="form-group col-sm-6">
+      <div class="form-group col-sm-6"> <!-- EMAIL -->
         <label for="name" class="required">Qual é o seu e-mail de contato?</label>
         <input type="text" class="form-control" formControlName="email">
       </div>
 
-      <div class="form-group col-sm-6">
+      <div class="form-group col-sm-6"> <!-- DISCORD -->
         <label for="name" class="required">Qual é o seu tag do Discord?</label>
-        <input type="text" class="form-control" formControlName="discord">
+        <input type="text" class="form-control" formControlName="discordUsername">
       </div>
 
-      <div class="form-group col-sm-6"> <!-- GENDER -->
-        <label for="name" class="required">"Qual é o gênero com o qual você se identifica?"</label>
+      <div class="form-group col-sm-6"> <!-- ETHNICITY -->
+        <label for="name" class="required">Por favor seleceione a opção que representa a sua raça/etinia auto declarada.</label>
         <div class="border border-secondary rounded p-2">
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="gender" id="genderM" value="Male" formControlName="gender">
-            <label class="form-check-label" for="gender1">
-              Masculino
+            <input class="form-check-input" type="radio" name="ethnicity" id="ethnicityA" value="Asian" formControlName="ethnicity">
+            <label class="form-check-label" for="ethnicityA">
+              Asiático
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="gender" id="genderF" value="Female" formControlName="gender">
-            <label class="form-check-label" for="gender1">
-              Feminino
+            <input class="form-check-input" type="radio" name="ethnicity" id="ethnicityBl" value="Black" formControlName="ethnicity">
+            <label class="form-check-label" for="ethnicityBl">
+              Preto
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="gender" id="genderO" value="Other" formControlName="gender">
-            <label class="form-check-label" for="gender1">
-              Outro
+            <input class="form-check-input" type="radio" name="ethnicity" id="ethnicityBr" value="Brown(Mix)" formControlName="ethnicity">
+            <label class="form-check-label" for="ethnicityBr">
+              Mulato
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="gender" id="genderN" value="NoAnswer" formControlName="gender">
-            <label class="form-check-label" for="gender1">
+            <input class="form-check-input" type="radio" name="ethnicity" id="ethnicityI" value="Indigenous" formControlName="ethnicity">
+            <label class="form-check-label" for="ethnicityI">
+              Indígena
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="ethnicity" id="ethnicityW" value="White" formControlName="ethnicity">
+            <label class="form-check-label" for="ethnicityW">
+              Branco
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="ethnicity" id="ethnicityNo" value="NoAnswer" formControlName="ethnicity">
+            <label class="form-check-label" for="ethnicityNo">
               Prefiro não responder
             </label>
           </div>
         </div>
       </div>
 
-      <div class="form-group col-sm-6"> <!-- PRONOUNS -->
+      <div class="form-group col-sm-6"> <!-- GENDER -->
+        <label for="name" class="required">Por favor selecione o seu gênero:</label>
+        <div class="border border-secondary rounded p-2">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="gender" id="genderM" value="Male" formControlName="gender">
+            <label class="form-check-label" for="genderM">
+              Masculino
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="gender" id="genderF" value="Female" formControlName="gender">
+            <label class="form-check-label" for="genderF">
+              Feminino
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="gender" id="genderNB" value="Non-binary" formControlName="gender">
+            <label class="form-check-label" for="genderNB">
+              Não-binário
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="gender" id="genderN" value="Prefer not to declare" formControlName="gender">
+            <label class="form-check-label" for="genderN">
+              Prefiro não responder
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group col-sm-6"> <!-- INTERSEX -->
+        <label for="name" class="required">Você é uma pessoa intersexo?</label>
+        <div class="border border-secondary rounded p-2">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="intersex" id="genderM" value="Yes" formControlName="intersex">
+            <label class="form-check-label" for="genderM">
+              Sim
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="intersex" id="genderF" value="No" formControlName="intersex">
+            <label class="form-check-label" for="genderF">
+              No
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="intersex" id="genderNB" value="Prefer not to declare" formControlName="intersex">
+            <label class="form-check-label" for="genderNB">
+              Prefiro não declarar
+            </label>
+          </div>
+        </div>
+
+        <!-- ORIENTATION -->
+        <label for="orientation" class="required">Por favor selecione a sua orientação sexual:</label>
+        <div class="border border-secondary rounded p-2">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="orientationAs" formControlName="orientationAs">
+            <label class="form-check-label" for="orientationAs">
+              Assexual
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="orientationBi" formControlName="orientationBi">
+            <label class="form-check-label" for="orientationBi">
+              Bissexual
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="orientationGay" formControlName="orientationGay">
+            <label class="form-check-label" for="orientationGay">
+              Gay
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="orientationHet" formControlName="orientationHet">
+            <label class="form-check-label" for="orientationHet">
+              Heterossexual
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="orientationLes" formControlName="orientationLes">
+            <label class="form-check-label" for="orientationLes">
+              Lésbica
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="orientationPan" formControlName="orientationPan">
+            <label class="form-check-label" for="orientationPan">
+              Panssexual
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="orientationO" formControlName="orientationO">
+            <label class="form-check-label" for="orientationO">
+              Outro
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="orientationNo" formControlName="orientationNo">
+            <label class="form-check-label" for="orientationNo">
+              Prefiro não declarar
+            </label>
+          </div>
+        </div>
+      </div>
+      
+      <!-- PRONOUNS
+      <div class="form-group col-sm-6">
         <label for="industry">Quais pronomes você usa?</label>
         <div class="border border-secondary rounded p-2">
           <div class="form-check">
@@ -107,7 +227,144 @@
           </div>
         </div>
       </div>
+      -->
 
+      <div class="form-group col-sm-6"> <!-- IDENTITY -->
+        <label for="identity" class="required">Por favor selecione a sua identidade de gênero:</label>
+        <div class="border border-secondary rounded p-2">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="identityAg" formControlName="identityAg">
+            <label class="form-check-label" for="identityAg">
+              Agênero
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="identityCM" formControlName="identityCM">
+            <label class="form-check-label" for="identityCM">
+              Cisgenero Homem
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="identityCW" formControlName="identityCW">
+            <label class="form-check-label" for="identityCW">
+              Cisgenero Mulher
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="identityGF" formControlName="identityGF">
+            <label class="form-check-label" for="identityGF">
+              Gênero fluído
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="identityQ" formControlName="identityQ">
+            <label class="form-check-label" for="identityQ">
+              Queer
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="identityTM" formControlName="identityTM">
+            <label class="form-check-label" for="identityTM">
+              Transgênero Homem
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="identityTW" formControlName="identityTW">
+            <label class="form-check-label" for="identityTW">
+              Transgênero Mulher
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="identityT" formControlName="identityT">
+            <label class="form-check-label" for="identityT">
+              Travesti
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="identityO" formControlName="identityO">
+            <label class="form-check-label" for="identityO">
+              Outro
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="identityNo" formControlName="identityNo">
+            <label class="form-check-label" for="identityNo">
+              Prefiro não declarar
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group col-sm-6"> <!-- DISABILITIES -->
+        <label for="orientation" class="required">Você possui alguma deficiência?</label>
+        <div class="border border-secondary rounded p-2">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="disabilityN" formControlName="disabilityN">
+            <label class="form-check-label" for="disabilityN">
+              Não
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="disabilityYI" formControlName="disabilityYI">
+            <label class="form-check-label" for="disabilityYI">
+              Sim. Deficiência intelectual.
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="disabilityYP" formControlName="disabilityYP">
+            <label class="form-check-label" for="disabilityYP">
+              Sim. Deficiência física.
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="disabilityYV" formControlName="disabilityYV">
+            <label class="form-check-label" for="disabilityYV">
+              Sim. Deficiência visual.
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="disabilityYH" formControlName="disabilityYH">
+            <label class="form-check-label" for="disabilityYH">
+              Sim. Deficiência auditiva.
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="disabilityO" formControlName="disabilityO">
+            <label class="form-check-label" for="disabilityO">
+              Outro
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="disabilityNo" formControlName="disabilityNo">
+            <label class="form-check-label" for="disabilityNo">
+              Prefiro não declarar
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group col-sm-6"> <!-- STUDENT -->
+        <label for="name" class="required">Você é um estudante?</label>
+        <div class="border border-secondary rounded p-2">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="student" id="studentY" value="Yes" formControlName="student">
+            <label class="form-check-label" for="studentY">
+              Sim
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="student" id="studentN" value="No" formControlName="student">
+            <label class="form-check-label" for="studentN">
+              Não
+            </label>
+          </div>
+        </div>
+
+        <!-- SCHOOL -->
+        <label for="name">Qual é o nome da sua Escola/Colégio/Universidade?</label>
+        <input type="text" class="form-control" formControlName="school">
+      </div>
+      
       <div class="form-group col-sm-6"> <!-- DEGREE -->
         <label for="name" class="required">Selecione seu maior grau de escolaridade até o momento.</label>
         <div class="border border-secondary rounded p-2">
@@ -150,50 +407,8 @@
         </div>
       </div>
 
-      <div class="form-group col-sm-6"> <!-- INDUSTRY -->
-        <label for="industry">Marque todas as opções que se aplicam</label>
-        <div class="border border-secondary rounded p-2">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="He/Him" id="industry1" formControlName="industryFree">
-            <label class="form-check-label" for="industry1">
-              Trabalho na indústria de jogos como freelancer.
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="He/Him" id="industry2" formControlName="industryStudio">
-            <label class="form-check-label" for="industry2">
-              Trabalho na indústria de jogos em um estúdio.
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="He/Him" id="industry3" formControlName="industryOwn">
-            <label class="form-check-label" for="industry3">
-              Sou proprietário de um estúdio de jogos.
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="He/Him" id="industry4" formControlName="industryNone">
-            <label class="form-check-label" for="industry4">
-              Ainda não trabalhei na indústria de jogos, mas estou ansioso para isso.
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="He/Him" id="industry5" formControlName="industryPast">
-            <label class="form-check-label" for="industry5">
-              Trabalhei na indústria de jogos, mas não trabalho mais.
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="He/Him" id="industry6" formControlName="industryNo">
-            <label class="form-check-label" for="industry6">
-              Não estou interessado em trabalhar na indústria de jogos, eu participo por diversão.
-            </label>
-          </div>
-        </div>
-      </div>
-
       <div class="form-group col-sm-6"> <!-- STUDIES -->
-        <label for="industry">Marque todas as opções que se aplicam</label>
+        <label for="industry">Marque todas as opções que se aplicam aos seus estudos:</label>
         <div class="border border-secondary rounded p-2">
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="study1" formControlName="studyNone">
@@ -270,46 +485,80 @@
         </div>
       </div>
 
-      <div class="form-group col-sm-6"> <!-- JAMS -->
-        <label for="industry">Marque todas as opções que se aplicam.</label>
+      <div class="form-group col-sm-6"> <!-- INDUSTRY -->
+        <label for="industry">Marque todas as opções que se aplicam a sua carreira:</label>
         <div class="border border-secondary rounded p-2">
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="jam1" formControlName="jamFirst">
-            <label class="form-check-label" for="jam1">
-              Este é meu primeiro Game Jam.
+            <input class="form-check-input" type="checkbox" value="He/Him" id="industry1" formControlName="industryFree">
+            <label class="form-check-label" for="industry1">
+              Trabalho na indústria de jogos como freelancer.
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="jam2" formControlName="jamFirstGJP">
-            <label class="form-check-label" for="jam2">
-              Este é meu primeiro Game Jam Plus.
+            <input class="form-check-input" type="checkbox" value="He/Him" id="industry2" formControlName="industryStudio">
+            <label class="form-check-label" for="industry2">
+              Trabalho na indústria de jogos em um estúdio.
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="jam3" formControlName="jamPIIH">
-            <label class="form-check-label" for="jam3">
-              Participei de outros game jams do Indie Hero.
+            <input class="form-check-input" type="checkbox" value="He/Him" id="industry3" formControlName="industryOwn">
+            <label class="form-check-label" for="industry3">
+              Sou proprietário de um estúdio de jogos.
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="jam4" formControlName="jamOther">
-            <label class="form-check-label" for="jam4">
-              Participei de outros game jams em geral.
+            <input class="form-check-input" type="checkbox" value="He/Him" id="industry4" formControlName="industryNone">
+            <label class="form-check-label" for="industry4">
+              Ainda não trabalhei na indústria de jogos, mas estou ansioso para isso.
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="jam5" formControlName="jamGJP2">
-            <label class="form-check-label" for="jam5">
-              Este é meu 2º Game Jam Plus.
+            <input class="form-check-input" type="checkbox" value="He/Him" id="industry5" formControlName="industryPast">
+            <label class="form-check-label" for="industry5">
+              Trabalhei na indústria de jogos, mas não trabalho mais.
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="jam6" formControlName="jamGJP3">
-            <label class="form-check-label" for="jam6">
-              Este é meu 3º Game Jam Plus ou mais.
+            <input class="form-check-input" type="checkbox" value="He/Him" id="industry6" formControlName="industryNo">
+            <label class="form-check-label" for="industry6">
+              Não estou interessado em trabalhar na indústria de jogos, eu participo por diversão.
             </label>
           </div>
         </div>
+      </div>
+
+      <div class="form-group col-sm-6"> <!-- JAMS -->
+        <label for="participation" class="required">Você já participou de alguma edição da GJ+?</label>
+        <div class="border border-secondary rounded p-2">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="participation" id="jam1" value="Never participated" formControlName="participation">
+            <label class="form-check-label" for="jam1">
+              Nunca participei
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="participation" id="jam2" value="One time" formControlName="participation">
+            <label class="form-check-label" for="jam2">
+              Uma vez
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="participation" id="jam3" value="Two or three times" formControlName="participation">
+            <label class="form-check-label" for="jam3">
+              Duas ou três vezes
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="participation" id="jam4" value="Four times or more" formControlName="participation">
+            <label class="form-check-label" for="jam4">
+              Quatro ou mais vezes
+            </label>
+          </div>
+        </div>
+        
+      </div>
+
+      <div class="form-group col-sm-12"> <!-- TERMS AND CONDITIONS -->
         <!-- -->
         <label for="terms" class="required mt-3">
           Para participar desta edição, confirmo que li, entendi e concordei com os <a href="/rules" target="_blank">Termos e Condições</a> do evento.
@@ -339,723 +588,11 @@
         </div>
       </div>
 
-      <div class="form-group col-sm-6"> <!-- TERMS AND CONDITIONS -->
-
-      </div>
-
       <div class="error p-3 d-block text-center" *ngIf="!jammerDataFormValid">
         Por favor, preencha todos os campos obrigatórios para prosseguir.
       </div>
 
       <button type="submit" class="navbutton navL1 flex-center my-3 col-sm-12">ENVIAR FORMULÁRIO</button>
-    </div>
-  </form>
-</div>
-
-<!-- #endregion -->
-
-<!-- #region ES -->
-<div class="bg-white shadow p-4 rounded" *ngIf="site.language == 'ES'">
-  <h1 class="text-center">Información de Jammer</h1>
-  <div class="warning text-center p-4">
-    <p>
-      Para proceder al dashboard necesitamos que llenes este corto formulario.<br>
-      Esta información ayudará a GameJam+ a proveerte un mejor servicio en el futuro.
-    </p>
-  </div>
-
-  <form (submit)="saveJammerData()" [formGroup]="jammerDataForm" class="m-2">
-    <div class="row">
-      <div class="form-group col-sm-6">
-        <label for="name" class="required">¿Cuál es tu nombre completo?</label>
-        <input type="text" class="form-control" formControlName="name">
-      </div>
-
-      <div class="form-group col-sm-6">
-        <label for="name" class="required">¿De qué país provienes?</label>
-        <select class="form-control formList" id="countries" formControlName="countryOfOrigin">
-          <option value="" disabled selected hidden>País de origen</option>
-          <option *ngFor="let country of countries" [ngValue]="country">{{ country.name }}</option>
-        </select>
-      </div>
-
-      <div class="form-group col-sm-6">
-        <label for="name" class="required">¿En qué país habitas?</label>
-        <select class="form-control formList" id="countries" formControlName="countryOfResidence">
-          <option value="" disabled selected hidden>País de residencia</option>
-          <option *ngFor="let country of countries" [ngValue]="country">{{ country.name }}</option>
-        </select>
-      </div>
-
-      <div class="form-group col-sm-6">
-        <label for="name" class="required">¿En cuál ciudad vives?</label>
-        <input type="text" class="form-control" formControlName="city">
-      </div>
-
-      <div class="form-group col-sm-6">
-        <label for="name" class="required">¿Cuál es tu correo electrónico de contacto?</label>
-        <input type="text" class="form-control" formControlName="email">
-      </div>
-
-      <div class="form-group col-sm-6">
-        <label for="name" class="required">¿Cuál es tu nick de Discord?</label>
-        <input type="text" class="form-control" formControlName="discord">
-      </div>
-
-      <div class="form-group col-sm-6"> <!-- GENDER -->
-        <label for="name" class="required">¿Con cuál género te identificas?</label>
-        <div class="border border-secondary rounded p-2">
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="gender" id="genderM" value="Male" formControlName="gender">
-            <label class="form-check-label" for="gender1">
-              Masculino
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="gender" id="genderF" value="Female" formControlName="gender">
-            <label class="form-check-label" for="gender1">
-              Femenino
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="gender" id="genderO" value="Other" formControlName="gender">
-            <label class="form-check-label" for="gender1">
-              Otro
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="gender" id="genderN" value="NoAnswer" formControlName="gender">
-            <label class="form-check-label" for="gender1">
-              Prefiero no responder
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group col-sm-6"> <!-- PRONOUNS -->
-        <label for="industry">¿Qué pronombres usas?</label>
-        <div class="border border-secondary rounded p-2">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="pronoun1" formControlName="pronounH">
-            <label class="form-check-label" for="pronoun1">
-              El
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="pronoun2" formControlName="pronounS">
-            <label class="form-check-label" for="pronoun2">
-              Ella
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="pronoun3" formControlName="pronounT">
-            <label class="form-check-label" for="pronoun3">
-              Elle
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="pronoun4" formControlName="pronounO">
-            <label class="form-check-label" for="pronoun4">
-              Otro / Prefiero no responder
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group col-sm-6"> <!-- DEGREE -->
-        <label for="name" class="required">Selecciona tu grado de educación más alto a la fecha</label>
-        <div class="border border-secondary rounded p-2">
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="degree" id="degree1" value="Highschool Incomplete" formControlName="degree">
-            <label class="form-check-label" for="degree1">
-              Estoy en secundaria
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="degree" id="degree2" value="Highschool Complete" formControlName="degree">
-            <label class="form-check-label" for="degree2">
-              Tengo mi título de secundaria
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="degree" id="degree3" value="Technical Degree" formControlName="degree">
-            <label class="form-check-label" for="degree3">
-              Tengo un título técnico
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="degree" id="degree4" value="Undergraduate" formControlName="degree">
-            <label class="form-check-label" for="degree4">
-              Estoy en la universidad
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="degree" id="degree5" value="Bachelor or Licenciate" formControlName="degree">
-            <label class="form-check-label" for="degree5">
-              Tengo un Bachillerato o Licenciatura
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="degree" id="degree6" value="Postgraduate" formControlName="degree">
-            <label class="form-check-label" for="degree6">
-              Tengo una Maestría o Doctorado
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group col-sm-6"> <!-- INDUSTRY -->
-        <label for="industry">Marca todas las que apliquen</label>
-        <div class="border border-secondary rounded p-2">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="He/Him" id="industry1" formControlName="industryFree">
-            <label class="form-check-label" for="industry1">
-              Trabajo en la industria de video juegos como freelancer
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="He/Him" id="industry2" formControlName="industryStudio">
-            <label class="form-check-label" for="industry2">
-              Trabajo en un estudio de video juegos
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="He/Him" id="industry3" formControlName="industryOwn">
-            <label class="form-check-label" for="industry3">
-              Tengo mi propio estudio de video juegos
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="He/Him" id="industry4" formControlName="industryNone">
-            <label class="form-check-label" for="industry4">
-              Aún no he trabajado en la industria de videojuegos, pero quiero hacerlo
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="He/Him" id="industry5" formControlName="industryPast">
-            <label class="form-check-label" for="industry5">
-              He trabajado en la industria de video juegos, pero ahora no
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="He/Him" id="industry6" formControlName="industryNo">
-            <label class="form-check-label" for="industry6">
-              No me interesa trabajar en la industria de videojuegos, jammeo por diversión
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group col-sm-6"> <!-- STUDIES -->
-        <label for="industry">Marca todas las que apliquen</label>
-        <div class="border border-secondary rounded p-2">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="study1" formControlName="studyNone">
-            <label class="form-check-label" for="study1">
-              No he estudiado nada relacionado con desarrollo de videojuegos
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="study2" formControlName="studyFree">
-            <label class="form-check-label" for="study2">
-              He tomado cursos libres o he aprendido por mi cuenta
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="study3" formControlName="studyTechnical">
-            <label class="form-check-label" for="study3">
-              Tengo un título de un técnico en desarrollo de video juegos de una institutición
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="study4" formControlName="studyDegree">
-            <label class="form-check-label" for="study4">
-              Tengo un título académico en desarrollo de video juegos (Diploma, Bachillerato o Licenciatura)
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="study4" formControlName="studyPostgraduate">
-            <label class="form-check-label" for="study4">
-              Tengo un posgrado en desarrollo de video juegos (Maestría o Doctorado)
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="study5" formControlName="studyProgramming">
-            <label class="form-check-label" for="study5">
-              Tengo un grado en Ciencias de la Computación, Programación, o algún equivalente
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="study6" formControlName="studyDesign">
-            <label class="form-check-label" for="study6">
-              Tengo un grado en Diseño, Diseño Gráfico, Diseño de Producto, o algún equivalente
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="study7" formControlName="studyArts">
-            <label class="form-check-label" for="study7">
-              Tengo un grado en Bellas Artes o algún equivalente
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="study8" formControlName="studyMusic">
-            <label class="form-check-label" for="study8">
-              Tengo un grado en Producción Musical, Composición, Ingeniería de Sonido, o algún equivalente
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="study9" formControlName="studyNarrative">
-            <label class="form-check-label" for="study9">
-              Tengo un grado en Narrativa, Comunicación, Letras, o algún equivalente
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="study10" formControlName="studyBiz">
-            <label class="form-check-label" for="study10">
-              Tengo un grado en Gestión Empresarial, Negocios, o algún equivalente
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="study11" formControlName="studyOther">
-            <label class="form-check-label" for="study11">
-              Tengo otros estudios que se relacionan con la industria de video juegos
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group col-sm-6"> <!-- JAMS -->
-        <label for="industry">Marca todas las que apliquen</label>
-        <div class="border border-secondary rounded p-2">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="jam1" formControlName="jamFirst">
-            <label class="form-check-label" for="jam1">
-              Este es mi primer Game Jam
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="jam2" formControlName="jamFirstGJP">
-            <label class="form-check-label" for="jam2">
-              Este es mi primer Game Jam Plus
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="jam3" formControlName="jamPIIH">
-            <label class="form-check-label" for="jam3">
-              He participado en otros game jams de Indie Hero
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="jam4" formControlName="jamOther">
-            <label class="form-check-label" for="jam4">
-              He participado en otros game jams en general
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="jam5" formControlName="jamGJP2">
-            <label class="form-check-label" for="jam5">
-              Este es mi segundo Game Jam Plus
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="jam6" formControlName="jamGJP3">
-            <label class="form-check-label" for="jam6">
-              Este es mi tercer o más Game Jam Plus
-            </label>
-          </div>
-        </div>
-        <!-- -->
-        <label for="terms" class="required mt-3">
-          Para participar en esta edición, confirmo que leí, comprendo y estoy de acuerdo con los <a href="/rules" target="_blank">Términos y Condiciones</a> del evento.
-        </label>
-        <div class="border border-secondary rounded p-2">
-
-          <div [ngClass]="{'form-check': true, 'error': !termsOfConduct}">
-            <input class="form-check-input" type="checkbox" id="terms" formControlName="termsOfConduct">
-            <label class="form-check-label" for="terms">
-              Comprendo que debo tratar a otros participantes, organizadores, mentores y jueces con respeto y cortesía
-            </label>
-          </div>
-
-          <div [ngClass]="{'form-check': true, 'error': !termsOfImage}">
-            <input class="form-check-input" type="checkbox" id="terms" formControlName="termsOfImage">
-            <label class="form-check-label" for="terms">
-              Comprendo que mi imagen será grabada o fotografiada y podría ser usada por Game Jam Plus para fines de comunicación y mercadeo
-            </label>
-          </div>
-
-          <div [ngClass]="{'form-check': true, 'error': !termsOfIP}">
-            <input class="form-check-input" type="checkbox" id="terms" formControlName="termsOfIP">
-            <label class="form-check-label" for="terms">
-              Comprendo que mi juego, videos, y recursos producidos y enviados a este evento serán compartidos por Game Jam Plus para fines de comunicación, evaluación, y mercadeo
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group col-sm-6"> <!-- TERMS AND CONDITIONS -->
-
-      </div>
-
-      <div class="error p-3 d-block text-center" *ngIf="!jammerDataFormValid">
-        Por favor llena todos los campos requeridos para continuar
-      </div>
-
-      <button type="submit" class="navbutton navL1 flex-center my-3 col-sm-12">GUARDAR DATOS</button>
-    </div>
-  </form>
-</div>
-
-<!-- #endregion -->
-
-<!-- #region EN -->
-<div class="bg-white shadow p-4 rounded" *ngIf="site.language != 'PT' && site.language != 'ES'">
-  <h1 class="text-center">Jammer Information</h1>
-  <div class="warning text-center p-4">
-    <p>
-      In order to proceed to your dashboard, we require you to fill this short form.<br>
-      This information will help GameJam+ provide you a better service in the future.
-    </p>
-  </div>
-
-  <form (submit)="saveJammerData()" [formGroup]="jammerDataForm" class="m-2">
-    <div class="row">
-      <div class="form-group col-sm-6">
-        <label for="name" class="required">What's your name?</label>
-        <input type="text" class="form-control" formControlName="name">
-      </div>
-
-      <div class="form-group col-sm-6">
-        <label for="name" class="required">What country are you from?</label>
-        <select class="form-control formList" id="countries" formControlName="countryOfOrigin">
-          <option value="" disabled selected hidden>Country of Origin</option>
-          <option *ngFor="let country of countries" [ngValue]="country">{{ country.name }}</option>
-        </select>
-      </div>
-
-      <div class="form-group col-sm-6">
-        <label for="name" class="required">In which country do you live?</label>
-        <select class="form-control formList" id="countries" formControlName="countryOfResidence">
-          <option value="" disabled selected hidden>Country of Residence</option>
-          <option *ngFor="let country of countries" [ngValue]="country">{{ country.name }}</option>
-        </select>
-      </div>
-
-      <div class="form-group col-sm-6">
-        <label for="name" class="required">In which city do you live?</label>
-        <input type="text" class="form-control" formControlName="city">
-      </div>
-
-      <div class="form-group col-sm-6">
-        <label for="name" class="required">What's your contact email?</label>
-        <input type="text" class="form-control" formControlName="email">
-      </div>
-
-      <div class="form-group col-sm-6">
-        <label for="name" class="required">What's your discord tag?</label>
-        <input type="text" class="form-control" formControlName="discord">
-      </div>
-
-      <div class="form-group col-sm-6"> <!-- GENDER -->
-        <label for="name" class="required">What's the gender you identify with?</label>
-        <div class="border border-secondary rounded p-2">
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="gender" id="genderM" value="Male" formControlName="gender">
-            <label class="form-check-label" for="gender1">
-              Male
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="gender" id="genderF" value="Female" formControlName="gender">
-            <label class="form-check-label" for="gender1">
-              Female
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="gender" id="genderO" value="Other" formControlName="gender">
-            <label class="form-check-label" for="gender1">
-              Other
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="gender" id="genderN" value="NoAnswer" formControlName="gender">
-            <label class="form-check-label" for="gender1">
-              Prefer not to answer
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group col-sm-6"> <!-- PRONOUNS -->
-        <label for="industry">What pronouns do you use</label>
-        <div class="border border-secondary rounded p-2">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="pronoun1" formControlName="pronounH">
-            <label class="form-check-label" for="pronoun1">
-              He/Him
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="pronoun2" formControlName="pronounS">
-            <label class="form-check-label" for="pronoun2">
-              She/Her
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="pronoun3" formControlName="pronounT">
-            <label class="form-check-label" for="pronoun3">
-              They/Them
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="pronoun4" formControlName="pronounO">
-            <label class="form-check-label" for="pronoun4">
-              Other / Prefer not to answer
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group col-sm-6"> <!-- DEGREE -->
-        <label for="name" class="required">Select your highest education degree to date</label>
-        <div class="border border-secondary rounded p-2">
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="degree" id="degree1" value="Highschool Incomplete" formControlName="degree">
-            <label class="form-check-label" for="degree1">
-              I'm in Highschool
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="degree" id="degree2" value="Highschool Complete" formControlName="degree">
-            <label class="form-check-label" for="degree2">
-              I have my Highschool diploma
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="degree" id="degree3" value="Technical Degree" formControlName="degree">
-            <label class="form-check-label" for="degree3">
-              I have a Technical Degree
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="degree" id="degree4" value="Undergraduate" formControlName="degree">
-            <label class="form-check-label" for="degree4">
-              I am in College
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="degree" id="degree5" value="Bachelor or Licenciate" formControlName="degree">
-            <label class="form-check-label" for="degree5">
-              I have a Bachelor's or a Licenciate degree
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="degree" id="degree6" value="Postgraduate" formControlName="degree">
-            <label class="form-check-label" for="degree6">
-              I have a Master's or Doctorade
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group col-sm-6"> <!-- INDUSTRY -->
-        <label for="industry">Check all that apply</label>
-        <div class="border border-secondary rounded p-2">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="He/Him" id="industry1" formControlName="industryFree">
-            <label class="form-check-label" for="industry1">
-              I work in the games industry as a freelancer
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="He/Him" id="industry2" formControlName="industryStudio">
-            <label class="form-check-label" for="industry2">
-              I work in the games industry in a studio
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="He/Him" id="industry3" formControlName="industryOwn">
-            <label class="form-check-label" for="industry3">
-              I own a game studio
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="He/Him" id="industry4" formControlName="industryNone">
-            <label class="form-check-label" for="industry4">
-              I haven't worked in the games industry yet, but I'm looking forward to it
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="He/Him" id="industry5" formControlName="industryPast">
-            <label class="form-check-label" for="industry5">
-              I used to work in the games industry, but I don't anymore
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="He/Him" id="industry6" formControlName="industryNo">
-            <label class="form-check-label" for="industry6">
-              I'm not interested in working in the games industry, I jam for fun
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group col-sm-6"> <!-- STUDIES -->
-        <label for="industry">Check all that apply</label>
-        <div class="border border-secondary rounded p-2">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="study1" formControlName="studyNone">
-            <label class="form-check-label" for="study1">
-              I haven't studied anything related to game development
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="study2" formControlName="studyFree">
-            <label class="form-check-label" for="study2">
-              I have taken free courses or learned game development on my own
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="study3" formControlName="studyTechnical">
-            <label class="form-check-label" for="study3">
-              I have taken a technical course or degree in game development from an institution
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="study4" formControlName="studyDegree">
-            <label class="form-check-label" for="study4">
-              I have taken an academic degree in game development (Diploma, Bachelor or Licenciate)
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="study4" formControlName="studyPostgraduate">
-            <label class="form-check-label" for="study4">
-              I have taken a Postgraduate degree in game development (Masters or Doctorate)
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="study5" formControlName="studyProgramming">
-            <label class="form-check-label" for="study5">
-              I have taken a degree in computer science, programming, or equivalent
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="study6" formControlName="studyDesign">
-            <label class="form-check-label" for="study6">
-              I have taken a degree in Design, Graphic Design, Product Design, or equivalent
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="study7" formControlName="studyArts">
-            <label class="form-check-label" for="study7">
-              I have taken a degree in Fine Arts or equivalent
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="study8" formControlName="studyMusic">
-            <label class="form-check-label" for="study8">
-              I have taken a degree in Music Production, Composition, Sound Engineering, or equivalent
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="study9" formControlName="studyNarrative">
-            <label class="form-check-label" for="study9">
-              I have taken a degree in Narrative, Communication, Letters, or equivalent
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="study10" formControlName="studyBiz">
-            <label class="form-check-label" for="study10">
-              I have taken a degree in Business, Management, or equivalent
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="study11" formControlName="studyOther">
-            <label class="form-check-label" for="study11">
-              I have taken other studies related to the games industry
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group col-sm-6"> <!-- JAMS -->
-        <label for="industry">Check all that apply</label>
-        <div class="border border-secondary rounded p-2">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="jam1" formControlName="jamFirst">
-            <label class="form-check-label" for="jam1">
-              This is my first Game Jam
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="jam2" formControlName="jamFirstGJP">
-            <label class="form-check-label" for="jam2">
-              This is my first Game Jam Plus
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="jam3" formControlName="jamPIIH">
-            <label class="form-check-label" for="jam3">
-              I have participated in other game jams from Indie Hero
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="jam4" formControlName="jamOther">
-            <label class="form-check-label" for="jam4">
-              I have participated in other game jams in general
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="jam5" formControlName="jamGJP2">
-            <label class="form-check-label" for="jam5">
-              This is my 2nd Game Jam Plus
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="jam6" formControlName="jamGJP3">
-            <label class="form-check-label" for="jam6">
-              This is my 3rd or more Game Jam Plus
-            </label>
-          </div>
-        </div>
-        <!-- -->
-        <label for="terms" class="required mt-3">
-          To participate in this edition, I confirm that I read, understood and agreed with the <a href="/rules" target="_blank">Terms and Conditions</a> of the event.
-        </label>
-        <div class="border border-secondary rounded p-2">
-
-          <div [ngClass]="{'form-check': true, 'error': !termsOfConduct}">
-            <input class="form-check-input" type="checkbox" id="terms" formControlName="termsOfConduct">
-            <label class="form-check-label" for="terms">
-              I understand that I have to treat other participants, organizers, mentors and judges with respect and courtesy
-            </label>
-          </div>
-
-          <div [ngClass]="{'form-check': true, 'error': !termsOfImage}">
-            <input class="form-check-input" type="checkbox" id="terms" formControlName="termsOfImage">
-            <label class="form-check-label" for="terms">
-              I understand that my image and likeness will be recorded and could be used by Game Jam Plus for communication and marketing purposes
-            </label>
-          </div>
-
-          <div [ngClass]="{'form-check': true, 'error': !termsOfIP}">
-            <input class="form-check-input" type="checkbox" id="terms" formControlName="termsOfIP">
-            <label class="form-check-label" for="terms">
-              I understand that my game, videos, and assets produced and submitted to this event will be shared by Game Jam Plus for communication, evaluation, and marketing purposes
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group col-sm-6"> <!-- TERMS AND CONDITIONS -->
-
-      </div>
-
-      <div class="error p-3 d-block text-center" *ngIf="!jammerDataFormValid">
-        Please fill all the required fields to proceed
-      </div>
-
-      <button type="submit" class="navbutton navL1 flex-center my-3 col-sm-12">SAVE CHANGES</button>
     </div>
   </form>
 </div>

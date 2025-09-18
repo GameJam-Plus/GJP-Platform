@@ -53,9 +53,13 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-sm">
+            <div class="col-6">
               <label for="discord">Discord</label>
               <input type="text" class="form-control" id="discord" placeholder="Enter user's discord" formControlName="discordUsername">
+            </div>
+            <div class="col-6">
+              <label for="whatsapp">WhatsApp number</label>
+              <input type="text" class="form-control" id="whatsapp" placeholder="+5511999998888" formControlName="telefoneWhatsApp">
             </div>
           </div>
 
@@ -68,7 +72,7 @@
 
           <div class="row">
             <div class="col-sm">
-              <label for="discord">Roles:</label>
+              <label for="roles">Roles:</label>
               <div class="form-control" readonly>
                 <div *ngFor="let role of user!.roles">
                   {{role}}

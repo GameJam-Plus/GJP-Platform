@@ -314,8 +314,11 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
   {
     this.jamService.getJamByUser(this.user._id!).subscribe({
       next: (data) => {
-        console.log(data.jammerData);
-        if(data.jammerData) this.jammerData = true;
+        console.log("Jammer data: ", data.jammerData);
+        if(data.jammerData.ethnicity && 
+          data.jammerData.gender && 
+          data.jammerData.intersex && 
+          data.jammerData.orientation) this.jammerData = true;
         this.jam = data.jam;
         this.site = data.site;
         this.team = data.team;
@@ -530,7 +533,8 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
         const url = `${environment.apiUrl}/api/site/join-site`;
         this.siteService.joinSite(url, {
           userId: this.user._id,
-          siteId: site._id
+          siteId: site._id,
+          jamId: this.jam?._id
         }).subscribe({
           next: (data) => {
             this.site = data.site;
@@ -543,6 +547,10 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
         });
       }
     );
+  }
+
+  hasJammerData() {
+
   }
 
   exitSite() : void
