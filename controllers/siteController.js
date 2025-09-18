@@ -359,7 +359,7 @@ const deleteSite = async(req,res)=>{
 const joinJammerToSite = async(req, res)=>{
     try{
         let { siteId, userId, jamId } = req.body;
-
+        
         if(!jamId)
         {
             const jam = await Jam.findOne({ open: true });
@@ -372,7 +372,7 @@ const joinJammerToSite = async(req, res)=>{
             siteId: siteId,
             jamId: jamId
         });
-
+        
         if(uoj.length > 0) return res.status(400).json({success: false, message: "User already registered to this site"});
 
         const userOnJam = new UserOnJam({

@@ -16,7 +16,7 @@ const userSchema = new Schema({
     },
     instagram: {
         type: String,
-        required: true
+        required: false
     },
     linkedin: {
         type: String,
@@ -28,49 +28,45 @@ const userSchema = new Schema({
     },
     ethnicity: {
         type: String,
-        required: true
+        required: false
     },
     instagram: {
         type: String,
-        required: true
+        required: false
     },      
     gender: {
         type: String,
         enum: ["Male", "Female", "Non-binary", "Prefer not to declare"],
-        required: true
+        required: false
     },
     intersex: {
         type: String,
-        required: true
+        required: false
     }, 
-    genderIdentity: {
+    identity: {
         type: Array,
-        required: true
+        required: false
     }, 
-    sexualOrientation: {
+    orientation: {
         type: Array,
-        required: true
+        required: false
     }, 
     disability: {
         type: Array,
-        required: true
+        required: false
     }, 
     participation: {
         type: String,
-        required: true
+        required: false
     }, 
     student: {
         type: String,
-        required: true
+        required: false
     }, 
-    nameStuding: {
+    school: {
         type: String,
         required: false
     }, 
-    socialMedia: {
-        type: String,
-        required: false
-    },
     region: {
         _id: { 
             type: mongoose.Schema.Types.ObjectId,
