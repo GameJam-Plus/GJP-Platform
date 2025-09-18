@@ -140,7 +140,7 @@
                 </div>
                 <div class="row">
                   <div class="form-group inputSpace">
-                    <select class="genderIdentity" required multiple formControlName="genderIdentity">
+                    <select class="identity" required multiple formControlName="identity">
                     <option value="Agender">Agender</option>
                     <option value="Cisgender man">Cisgender man</option>
                     <option value="Cisgender woman">Cisgender woman</option>
@@ -168,7 +168,7 @@
                 </div>
                 <div class="row">
                   <div class="form-group inputSpace">
-                    <select class="sexualOrientation" required multiple formControlName="sexualOrientation">
+                    <select class="orientation" required multiple formControlName="orientation">
                     <option value="Asexual">Asexual</option>
                     <option value="Bisexual">Bisexual</option>
                     <option value="Gay">Gay</option>
@@ -231,17 +231,7 @@
                 <div class="inputTitle">What is the name of your School/College/University*</div>
                 <div class="row">
                   <div class="form-group inputSpace">
-                    <input #nameStudingInput type="nameStuding" class="form-control" id="nameStudingInput" placeholder="School/College/University" formControlName="nameStuding">
-                  </div>
-                </div>
-
-                <div class="inputTitle">Do you already have a graduation degree?*</div>
-                <div class="row">
-                  <div class="form-group inputSpace">
-                    <select class="diploma" required formControlName="diploma">
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                  </select>
+                    <input #schoolInput type="school" class="form-control" id="schoolInput" placeholder="School/College/University" formControlName="school">
                   </div>
                 </div>
 
