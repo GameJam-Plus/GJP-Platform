@@ -166,7 +166,7 @@ export class UserCrudComponent implements OnInit{
       roleJammer: roleJammer,
       region: null,
       site: null,
-      discordUsername: user.discordUsername ? user.discordUsername : ''
+      discordUsername: user.discordUsername ? user.discordUsername : '',
     });
 
     if(user.region)
@@ -275,18 +275,18 @@ export class UserCrudComponent implements OnInit{
         region: region,
         site: site,
         discordUsername: this.userForm.get('discordUsername')?.value,
-        instagram: this.userForm.get('instagram')?.value,
+        instagram: this.userForm.get('instagram')?.value ?? ' ',
         linkedin: this.userForm.get('linkedin')?.value,
-        telefoneWhatsApp: this.userForm.get('telefoneWhatsApp')!.value,
-        ethnicity: this.userForm.get('ethnicity')!.value,
-        gender: this.userForm.get('gender')!.value,
-        intersex: this.userForm.get('intersex')!.value,
-        identity: this.userForm.get('identity')!.value,
-        orientation: this.userForm.get('orientation')!.value,
-        disability: this.userForm.get('disability')!.value, 
-        participation: this.userForm.get('participation')!.value, 
-        student: this.userForm.get('student')!.value,         
-        school: this.userForm.get('school')!.value 
+        telefoneWhatsApp: this.userForm.get('telefoneWhatsApp')?.value,
+        ethnicity: this.userForm.get('ethnicity')?.value ?? ' ',
+        gender: this.userForm.get('gender')?.value ?? 'Prefer not to declare',
+        intersex: this.userForm.get('intersex')?.value ?? ' ',
+        identity: this.userForm.get('identity')?.value ?? ' ',
+        orientation: this.userForm.get('orientation')?.value ?? ' ',
+        disability: this.userForm.get('disability')?.value ?? ' ', 
+        participation: this.userForm.get('participation')?.value ?? ' ', 
+        student: this.userForm.get('student')?.value ?? ' ',         
+        school: this.userForm.get('school')?.value ?? ' '
       };
 
       console.log('Adding user: ');
@@ -360,18 +360,18 @@ export class UserCrudComponent implements OnInit{
         region: region,
         site: site,
         discordUsername: this.userForm.get('discordUsername')?.value,
-        instagram: this.userForm.get('instagram')?.value,
+        instagram: this.userForm.get('instagram')?.value ?? ' ',
         linkedin: this.userForm.get('linkedin')?.value,
-        telefoneWhatsApp: this.userForm.get('telefoneWhatsApp')!.value,
-        ethnicity: this.userForm.get('ethnicity')!.value,
-        gender: this.userForm.get('gender')!.value,
-        intersex: this.userForm.get('intersex')!.value,
-        identity: this.userForm.get('identity')!.value,
-        orientation: this.userForm.get('orientation')!.value,
-        disability: this.userForm.get('disability')!.value, 
-        participation: this.userForm.get('participation')!.value, 
-        student: this.userForm.get('student')!.value,         
-        school: this.userForm.get('school')!.value 
+        telefoneWhatsApp: this.userForm.get('telefoneWhatsApp')?.value,
+        ethnicity: this.userForm.get('ethnicity')?.value ?? ' ',
+        gender: this.userForm.get('gender')?.value ?? 'Prefer not to declare',
+        intersex: this.userForm.get('intersex')?.value ?? ' ',
+        identity: this.userForm.get('identity')?.value ?? ' ',
+        orientation: this.userForm.get('orientation')?.value ?? ' ',
+        disability: this.userForm.get('disability')?.value ?? ' ', 
+        participation: this.userForm.get('participation')?.value ?? ' ', 
+        student: this.userForm.get('student')?.value ?? ' ',         
+        school: this.userForm.get('school')?.value ?? ' ' 
       };
 
       console.log('Editing user: ');
