@@ -1,0 +1,161 @@
+{
+	"platform": {
+		"common": {
+			"by": "由",
+			"dangerzone": "危险区域",
+			"exitteam": "退出团队",
+			"exitvenue": "退出会场",
+			"late": "迟到",
+			"notavailable": "不可用",
+			"pending": "待定",
+			"submittedon": "提交日期：",
+			"valid": "有效",
+			"yes": "是",
+			"no": "否",
+			"sendgame": "提交游戏",
+			"sendpitch": "提交演示",
+			"closedsubmissions": "提交已关闭",
+			"venues": "会场：",
+			"countries": "国家：",
+			"jammers": "参与者：",
+			"teams": "团队：",
+			"submissions": "提交：",
+			"specialthanks": "特别感谢"
+		},
+		"globalorganizer": {
+			"home": {
+				"activejam": {
+					"header": "活跃 GameJam 信息",
+					"title": "标题"
+				}
+			}
+		},
+		"jammer": {
+			"home": {
+				"gamesfromvenue": {
+					"gamesofthisvenue": "此场馆的游戏",
+					"loadsubmissions": "加载提交"
+				},
+				"jaminfo": {
+					"categories": "类别",
+					"currentstage": "当前阶段",
+					"manual": "手册",
+					"notpublictext1": "主题和类别是保密的。",
+					"notpublictext2": "全球组织者将很快公布主题和类别，请稍后再查看。",
+					"stages": "阶段",
+					"stagetooltip": "所有阶段均从巴西时间（GMT-3）00:00:00开始，到11:59:59结束。",
+					"themes": "主题"
+				},
+				"venueinfo": {
+					"address": "地址",
+					"city": "城市",
+					"contactinfo": "联系信息",
+					"country": "国家",
+					"format": "格式",
+					"language": "语言",
+					"location": "地点",
+					"modality": "形式",
+					"server": "服务器",
+					"start": "开始",
+					"status": "状态"
+				}
+			},
+			"myjam": {
+				"mysubmission": {
+					"gamesubmissionstatus": "游戏提交状态：",
+					"mysubmission": "我的提交",
+					"noteam": "您没有被分配到团队，请创建一个新团队或加入您所在场馆的团队以提交游戏。",
+					"pitchsubmissionstatus": "演示提交状态",
+					"incubationsubmissionstatus": "孵化阶段提交状态：",
+					"incubationpitchsubmissionstatus": "孵化阶段演示提交状态：",
+					"accelerationsubmissionstatus": "加速阶段提交状态：",
+					"accelerationpitchsubmissionstatus": "加速阶段演示提交状态：",
+					"gamesubmission": "游戏提交",
+					"pitchsubmission": "演示提交",
+					"incubationsubmission": "孵化提交",
+					"pitchincubation": "孵化演示提交",
+					"accelerationsubmission": "加速提交",
+					"pitchacceleration": "加速演示提交",
+					"submissioninfo": {
+						"line1": "在提交您的游戏之前，请务必阅读<b><a href='{{rulesLink}}' target='_blank'>规则和规定</a></b>。",
+						"line2": "在提交前，请检查以下所有项目："
+					},
+					"submissioninfochecklist": {
+						"item1": "我团队的所有成员已加入 <b><a href='{{itchioLink}}' target='_blank'>GameJam+ 官方 itch.io</a></b>",
+						"item2": "我们的游戏已提交至 GameJam+ 官方 itch.io",
+						"item3": "游戏页面已公开",
+						"item4": "游戏版本可玩",
+						"item5": "我们添加了截图、描述、标签以及所有必要的游戏信息"
+					},
+					"formquestion": {
+						"goingtoincubation": "您是否想参加孵化阶段？",
+						"goingtoacceleration": "您是否想参加加速阶段？",
+						"gamejamtitle": "您的游戏标题",
+						"gamejambuild": "您游戏的 itch.io 页面链接",
+						"gamejamcontact": "谁是团队负责人？<br>此成员将在需要时作为 GJ+ 的联系人。",
+						"gamejamdescription": "在此输入您游戏的简要描述",
+						"gamejamgenres": "您的游戏属于哪些类型？",
+						"gamejamtopics": "您的游戏是否涉及以下任何主题？<br>可以通过叙事、玩法、美术等方式呈现。可选择多个选项。",
+						"gamejamthemes": "您的游戏注册在哪些主题下？",
+						"gamejamcategories": "您的游戏参赛的类别？",
+						"gamejamplatforms": "该游戏开发于哪些平台？",
+						"gamejamgraphics": "您的游戏使用哪种图形类型？",
+						"gamejamengine": "此版本使用了哪个引擎？",
+						"gamejamrecommendation": "从 0 到 10，您会向朋友推荐 GameJamPlus 吗？",
+						"gamejamenjoyment": "从 0 到 10，您在 GameJamPlus 的体验如何？您喜欢吗？",
+						"gamejamsuggestions": "您还有其他意见、建议、投诉或想与我们分享的内容吗？",
+						"gamejamauthorization": "我授权 GameJam+ 使用和处理我提供的数据，包括我的个人数据，以寻找我感兴趣的机会，包括将这些数据传输给第三方，目的是将我与国内外游戏市场及相关领域的实体和机会联系起来。",
+						"pitchtext": "提交视频演示是进入下一阶段的强制要求。",
+						"pitchlink": "您的视频演示链接",
+						"innertext": {
+							"selectteammember": "选择一名团队成员",
+							"tooltipcontact": "如果我们需要联系，该成员将作为 GJ+ 的联系人。",
+							"tooltiptopics": "可以通过叙事、玩法、美术等方式呈现。可选择多个选项。",
+							"tooltipsuggestions": "请不要刻薄 =)"
+						}
+					}
+				},
+				"myteam": {
+					"joincode": "加入代码：",
+					"joincodetooltip": "将此代码分享给队友，邀请他们加入您的团队。",
+					"jointeam": "加入现有团队",
+					"myteam": "我的团队：",
+					"newteam": "创建新团队",
+					"noteamtext1": "您还没有团队。",
+					"noteamtext2": "创建新团队或使用邀请码加入现有团队。",
+					"teamleader": "团队负责人",
+					"teammembers": "团队成员",
+					"teamname": "团队名称：",
+					"updateteamname": "更新团队名称"
+				},
+				"feedback": {
+					"feedbacksfromjudges": "评委的反馈",
+					"construction": "此部分仍在建设中。"
+				}
+			},
+			"rules": {
+
+			},
+			"navbar": {
+				"home": {
+					"gamesfromvenue": "场馆游戏",
+					"home": "主页",
+					"jaminfo": "Jam 信息",
+					"venueinfo": "场馆信息"
+				},
+				"myjam": {
+					"feedback": "反馈",
+					"myjam": "我的 Jam",
+					"mysubmission": "我的提交",
+					"myteam": "我的团队"
+				},
+				"rules": {
+					"rulesandconditions": "规则和条件"
+				}
+			},
+			"sidebar": {
+				"welcome": "欢迎使用全新改进的 GJ+ 平台。"
+			}
+		}
+	}
+}
