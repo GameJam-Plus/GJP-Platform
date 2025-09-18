@@ -81,6 +81,7 @@ const jamSchema = mongoose.Schema({
             type: String
         },
     }],
+    // TODO: Add startDateEvaluation and endDateEvaluation?
     stages: [{
         stageName: {
             type: String

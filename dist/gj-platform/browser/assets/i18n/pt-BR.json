@@ -1,0 +1,161 @@
+{
+	"platform": {
+		"common": {
+			"by": "por",
+			"dangerzone": "Zona de perigo",
+			"exitteam": "Sair da equipe",
+			"exitvenue": "Sair da sede",
+			"late": "ATRASADO",
+			"notavailable": "Não disponível",
+			"pending": "PENDENTE",
+			"submittedon": "Enviado em:",
+			"valid": "VÁLIDO",
+			"yes": "Sim",
+			"no": "Não",
+			"sendgame": "ENVIAR JOGO",
+			"sendpitch": "ENVIAR PITCH",
+			"closedsubmissions": "SUBMISSÕES ENCERRADAS",
+			"venues": "Locais:",
+			"countries": "Países:",
+			"jammers": "Participantes:",
+			"teams": "Equipes:",
+			"submissions": "Submissões:",
+			"specialthanks": "Agradecimentos Especiais"
+		},
+		"globalorganizer": {
+			"home": {
+				"activejam": {
+					"header": "Informações ativas do GameJam",
+					"title": "Título"
+				}
+			}
+		},
+		"jammer": {
+			"home": {
+				"gamesfromvenue": {
+					"gamesofthisvenue": "Jogos deste local",
+					"loadsubmissions": "CARREGAR SUBMISSÕES"
+				},
+				"jaminfo": {
+					"categories": "Categorias",
+					"currentstage": "Estágio Atual",
+					"manual": "Manual",
+					"notpublictext1": "Os temas e as categorias são secretos.",
+					"notpublictext2": "Os Organizadores Globais divulgarão os temas e as categorias em breve.",
+					"stages": "Estágios",
+					"stagetooltip": "Todas as etapas começam às 00:00:00 e terminam às 11:59:59 no horário brasileiro (GMT-3).",
+					"themes": "Temas"
+				},
+				"venueinfo": {
+					"address": "Endereço",
+					"city": "Cidade",
+					"contactinfo": "Informações de contato",
+					"country": "País",
+					"format": "Formato",
+					"language": "Idioma",
+					"location": "Localização",
+					"modality": "Modalidade",
+					"server": "Servidor",
+					"start": "Início",
+					"status": "Status"
+				}
+			},
+			"myjam": {
+				"mysubmission": {
+					"gamesubmissionstatus": "Status da submissão do jogo:",
+					"mysubmission": "Meu envio",
+					"noteam": "Você não está atribuído a uma equipe. Crie uma nova equipe ou entre em uma equipe no seu local de jogo para enviar um jogo.",
+					"pitchsubmissionstatus": "Status da submissão do Pitch",
+					"incubationsubmissionstatus": "Status da submissão da Incubação:",
+					"incubationpitchsubmissionstatus": "Status da submissão do Pitch da Incubação:",
+					"accelerationsubmissionstatus": "Status da submissão da Aceleração:",
+					"accelerationpitchsubmissionstatus": "Status da submissão do Pitch da Aceleração:",
+					"gamesubmission": "SUBMISSÃO DO JOGO",
+					"pitchsubmission": "SUBMISSÃO DO PITCH",
+					"incubationsubmission": "SUBMISSÃO DA INCUBAÇÃO",
+					"pitchincubation": "SUBMISSÃO DO PITCH DA INCUBAÇÃO",
+					"accelerationsubmission": "SUBMISSÃO DA ACELERAÇÃO",
+					"pitchacceleration": "SUBMISSÃO DO PITCH DA ACELERAÇÃO",
+					"submissioninfo": {
+						"line1": "Antes de enviar seu jogo, certifique-se de ler as <b><a href='{{rulesLink}}' target='_blank'>Regras e Regulamentos</a></b>.",
+						"line2": "Revise todos os itens desta lista de verificação antes de fazer sua submissão:"
+					},
+					"submissioninfochecklist": {
+						"item1": "Todos os membros da minha equipe entraram no <b><a href='{{itchioLink}}' target='_blank'>itch.io oficial do GameJam+</a></b>",
+						"item2": "Nosso jogo já foi enviado para o itch.io oficial do GameJam+",
+						"item3": "A página do jogo é pública",
+						"item4": "A versão do jogo é jogável",
+						"item5": "Adicionamos capturas de tela, uma descrição, tags e todas as informações necessárias para jogar nosso jogo"
+					},
+					"formquestion": {
+						"goingtoincubation": "Você deseja participar da etapa de INCUBAÇÃO?",
+						"goingtoacceleration": "Você deseja participar da etapa de ACELERAÇÃO?",
+						"gamejamtitle": "Título do seu jogo",
+						"gamejambuild": "Link para a página do seu jogo no itch.io",
+						"gamejamcontact": "Quem é a pessoa responsável pela equipe?<br>Esse membro será o ponto de contato do GJ+ se necessário.",
+						"gamejamdescription": "Escreva uma breve descrição do seu jogo aqui",
+						"gamejamgenres": "Quais são os gêneros do seu jogo?",
+						"gamejamtopics": "Seu jogo aborda algum dos seguintes tópicos?<br>A abordagem pode ser na narrativa, jogabilidade, arte ou outros. Você pode selecionar mais de uma opção.",
+						"gamejamthemes": "Em quais TEMAS seu jogo está inscrito?",
+						"gamejamcategories": "CATEGORIA na qual seu jogo compete?",
+						"gamejamplatforms": "Para quais plataformas ele foi desenvolvido?",
+						"gamejamgraphics": "Que tipo de gráficos seu jogo utiliza?",
+						"gamejamengine": "Qual engine foi usada nesta versão?",
+						"gamejamrecommendation": "De 0 a 10, você recomendaria o GameJamPlus a um amigo?",
+						"gamejamenjoyment": "De 0 a 10, como foi sua experiência durante o GameJamPlus? Você gostou?",
+						"gamejamsuggestions": "Você tem alguma consideração, dica, reclamação ou algo que gostaria de compartilhar conosco?",
+						"gamejamauthorization": "Autorizo o uso e tratamento dos dados fornecidos por mim ao GameJam+, incluindo meus dados pessoais, para buscar oportunidades de meu interesse, incluindo a transferência desses dados a terceiros, com o objetivo de me conectar a entidades e oportunidades no mercado de jogos digitais, nacional e internacionalmente, e segmentos relacionados.",
+						"pitchtext": "O envio de um vídeo pitch é obrigatório para avançar para a próxima etapa.",
+						"pitchlink": "Link para o seu vídeo pitch",
+						"innertext": {
+							"selectteammember": "Selecione um membro da equipe",
+							"tooltipcontact": "Esse membro será o ponto de contato do GJ+ caso precisemos entrar em contato.",
+							"tooltiptopics": "A abordagem pode ser na narrativa, jogabilidade, arte ou outros. Você pode selecionar mais de uma opção.",
+							"tooltipsuggestions": "Por favor, não seja maldoso =)"
+						}
+					}
+				},
+				"myteam": {
+					"joincode": "Código de Participação:",
+					"joincodetooltip": "Compartilhe este código com seus colegas para convidá-los para sua equipe.",
+					"jointeam": "Entrar em uma equipe existente",
+					"myteam": "Minha Equipe:",
+					"newteam": "Criar uma nova equipe",
+					"noteamtext1": "Você ainda não tem uma equipe.",
+					"noteamtext2": "Crie uma nova equipe ou entre em uma equipe existente com o código secreto.",
+					"teamleader": "Líder da Equipe",
+					"teammembers": "Membros da Equipe",
+					"teamname": "Nome da Equipe:",
+					"updateteamname": "Atualizar o nome da equipe"
+				},
+				"feedback": {
+					"feedbacksfromjudges": "Feedback dos Jurados",
+					"construction": "Esta seção ainda está em construção."
+				}
+			},
+			"rules": {
+
+			},
+			"navbar": {
+				"home": {
+					"gamesfromvenue": "Jogos do Local",
+					"home": "Início",
+					"jaminfo": "Informações da Jam",
+					"venueinfo": "Informações do Local"
+				},
+				"myjam": {
+					"feedback": "Feedback",
+					"myjam": "Minha Jam",
+					"mysubmission": "Minha Submissão",
+					"myteam": "Minha Equipe"
+				},
+				"rules": {
+					"rulesandconditions": "Regras e Condições"
+				}
+			},
+			"sidebar": {
+				"welcome": "Bem-vindo à nova e aprimorada plataforma do GJ+."
+			}
+		}
+	}
+}

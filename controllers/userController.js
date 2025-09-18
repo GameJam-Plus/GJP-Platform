@@ -13,7 +13,7 @@ const { deepEqual } = require('assert');
 const crypto = require('node:crypto');
 
 const registerUser = async (req, res) => {
-    const { name, email, region, site, team, roles, coins, discordUsername, gender, socialMedia } = req.body;
+    const { name, email, region, site, team, roles, coins, discordUsername, instagram, linkedin, telefoneWhatsApp, ethnicity, gender, intersex, identity, orientation, disability, participation, student, school } = req.body;
 
     try {
         // Validar email
@@ -22,6 +22,7 @@ const registerUser = async (req, res) => {
         }
 
         // Verificar si el email ya está registrado
+        
         const existingEmail = await User.findOne({ email: email.toLowerCase().trim() });
         if (existingEmail) {
             return res.status(409).json({ success: false, message: "The email is already in use." });
@@ -33,20 +34,33 @@ const registerUser = async (req, res) => {
             return res.status(409).json({ success: false, message: "The Discord Username is already in use." });
         }
 
+        //Verificar outras informações como nome
+        
         // Crear nuevo usuario
         const user = new User({
             name: name,
             email: email.toLowerCase().trim(),
-            gender: gender,
-            socialMedia: socialMedia.trim(),
             region: region ? { _id: region._id, name: region.name } : undefined,
             site: site ? { _id: site._id, name: site.name } : undefined,
             team: team ? { _id: team._id, name: team.name } : undefined,
             roles: roles,
             coins: coins,
             discordUsername: discordUsername,
+            instagram: instagram,
+            linkedin: linkedin,
+            telefoneWhatsApp: telefoneWhatsApp,
+            ethnicity: ethnicity,
+            gender: gender,
+            intersex: intersex,
+            identity: identity,
+            orientation: orientation,
+            disability: disability, //se tem alguma deficiencia
+            participation: participation, //se ja participou de GJ+ anteriores
+            student: student,         //se é estudante ou não
+            school: school, //nome local que estuda
             creationDate: new Date()
         });
+        
 
         // Guardar usuario en la base de datos
         await user.save();
@@ -59,7 +73,8 @@ const registerUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
     const { id } = req.params;
-    const { name, email, region, site, team, roles, coins, discordUsername, gender, socialMedia } = req.body;
+    const { name, email, region, site, team, roles, coins, discordUsername, instagram, linkedin, telefoneWhatsApp, ethnicity, gender, intersex, identity, orientation, disability, participation, student, school } = req.body;
+
     try {
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return res.status(400).json({ success: false, message: 'Invalid user ID.' });
@@ -90,8 +105,19 @@ const updateUser = async (req, res) => {
         if (roles) existingUser.roles = roles;
         if (coins) existingUser.coins = coins;
         if (discordUsername) existingUser.discordUsername = discordUsername;
+        if (instagram) existingUser.instagram = instagram;
+        if (linkedin) existingUser.linkedin = linkedin;
+        if (telefoneWhatsApp) existingUser.telefoneWhatsApp = telefoneWhatsApp;
+        if (ethnicity) existingUser.ethnicity = ethnicity;
         if (gender) existingUser.gender = gender;
-        if (socialMedia) existingUser.socialMedia = socialMedia;
+        if (intersex) existingUser.intersex = intersex;
+        if (identity) existingUser.identity = identity;
+        if (orientation) existingUser.orientation = orientation;
+        if (disability) existingUser.disability = disability;
+        if (participation) existingUser.participation = participation;
+        if (student) existingUser.student = student;
+        if (school) existingUser.school = school;
+        
         if(existingUser.roles.includes('Jammer')){
             const query = { 'jammers._id': id };
 
@@ -415,8 +441,18 @@ const registerUsersFromCSV = async (req, res) => {
                             name: jammerInfo[j].name,
                             email: jammerInfo[j].email.toLowerCase().trim(),
                             discordUsername: jammerInfo[j].discordUsername,
+                            instagram: jammerInfo[j].instagram,
+                            linkedin: jammerInfo[j].linkedin,
+                            telefoneWhatsApp: jammerInfo[j].telefoneWhatsApp,
+                            ethnicity:jammerInfo[j].ethnicity,
                             gender: jammerInfo[j].gender,
-                            socialMedia: jammerInfo[j].socialMedia.trim(),
+                            intersex: jammerInfo[j].intersex,
+                            identity: jammerInfo[j].identity,
+                            orientation: jammerInfo[j].orientation,
+                            disability: jammerInfo[j].disability,
+                            participation: jammerInfo[j].participation,
+                            student: jammerInfo[j].student,
+                            school: jammerInfo[j].school,
                             roles: ['Jammer'],
                             creationDate: currentDate,
                             lastUpdateDate: currentDate
@@ -516,6 +552,18 @@ const registerUsersFromCSV = async (req, res) => {
                         name: user.name,
                         email: user.email,
                         discordUsername: user.discordUsername,
+                        instagram: user.instagram,
+                        linkedin: user.linkedin,
+                        telefoneWhatsApp: user.telefoneWhatsApp,
+                        ethnicity:user.ethnicity,
+                        gender: user.gender,
+                        intersex: user.intersex,
+                        identity: user.identity,
+                        orientation: user.orientation,
+                        disability: user.disability,
+                        participation: user.participation,
+                        student: user.student,
+                        school: user.school,
                         role: team.jammers.length == 0 ? 'owner' : ''
                     });
 
@@ -578,6 +626,7 @@ const deleteRol = async (req, res) => {
 const saveJammerData = async (req, res) => {
     try{
         const { userId , siteId , jamId , data } = req.body;
+        const currentDate = new Date();
         
         let uoj = await UserOnJam.findOne({
             userId: userId,
@@ -588,10 +637,55 @@ const saveJammerData = async (req, res) => {
         {
             return res.status(400).json({ success: false, message: 'No jammer found' });
         }
+        let user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'User not found' });
+        }
 
-        uoj.jammerData = JSON.stringify(data);
-        await uoj.save();
-        return res.status(200).json({ success: true, data: uoj });
+        // Save jammer data
+        //uoj.jammerData = JSON.stringify(data);
+        uoj.jammerData.name = data.name;
+        uoj.jammerData.countryOfOrigin = data.countryOfOrigin;
+        uoj.jammerData.countryOfResidence = data.countryOfResidence;
+        uoj.jammerData.city = data.city;
+        uoj.jammerData.email = data.email;
+        uoj.jammerData.discordUsername = data.discordUsername;
+        uoj.jammerData.ethnicity = data.ethnicity;
+        uoj.jammerData.gender = data.gender;
+        uoj.jammerData.intersex = data.intersex;
+        uoj.jammerData.orientation = data.orientation;
+        uoj.jammerData.identity = data.identity;
+        uoj.jammerData.disability = data.disability;
+        uoj.jammerData.student = data.student;
+        uoj.jammerData.school = data.school;
+        uoj.jammerData.degree = data.degree;
+        uoj.jammerData.studies = data.studies;
+        uoj.jammerData.industry = data.industry;
+        uoj.jammerData.participation = data.participation;
+        uoj.jammerData.termsOfConduct = data.termsOfConduct;
+        uoj.jammerData.termsOfImage = data.termsOfImage;
+        uoj.jammerData.termsOfIP = data.termsOfIP;
+
+        uoj = await uoj.save();
+
+        //Save user data (for users that have account before the changes)
+        user.name = data.name;
+        user.email = data.email;
+        user.discordUsername = data.discordUsername;
+        user.ethnicity = data.ethnicity;
+        user.gender = data.gender;
+        user.intersex = data.intersex;
+        user.orientation = data.orientation;
+        user.identity = data.identity;
+        user.disability = data.disability;
+        user.participation = data.participation;
+        user.student = data.student;
+        user.school = data.school;
+        user.lastUpdateDate = currentDate;
+        
+        user = await user.save();
+
+        return res.status(200).json({ success: true, message: 'Jammer data saved successfully', data: uoj });
     } catch (error) {
         return res.status(400).json({ success: false, message: error.message });
     }
