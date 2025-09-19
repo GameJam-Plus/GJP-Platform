@@ -20,7 +20,8 @@
 			"jammers": "Jammers:",
 			"teams": "Teams:",
 			"submissions": "Submissions:",
-			"specialthanks": "Special Thanks"
+			"specialthanks": "Special Thanks",
+			"sendform": "SEND FORM"
 		},
 		"globalorganizer": {
 			"home": {
@@ -37,6 +38,15 @@
 					"loadsubmissions": "LOAD SUBMISSIONS"
 				},
 				"jaminfo": {
+					"nojamtext1": "You haven't been assigned to a Venue yet.",
+					"nojamtext2": "Select a venue from the list below to proceed.",
+					"regions": "Regions:",
+					"venuesof": "Venues of",
+					"modality": "Modality:",
+					"statusopen": "Status: Open for registration",
+					"joinvenue": "Join Venue",
+					"statusclosed": "Status: Closed",
+					"contactvenue": "Contact the venue's organizers for more information on how to join this venue",
 					"categories": "Categories",
 					"currentstage": "Current Stage",
 					"manual": "Manual",
@@ -50,6 +60,9 @@
 					"address": "Address",
 					"city": "City",
 					"contactinfo": "Contact Info",
+					"email": "Email",
+					"phone": "Phone",
+					"website": "Website",
 					"country": "Country",
 					"format": "Format",
 					"language": "Language",
@@ -135,6 +148,112 @@
 			},
 			"rules": {
 
+			},
+			"dataform": {
+				"jammerinformation": "Jammer Information",
+				"info1": "To access your dashboard, please complete this short form.",
+				"info2": "This information will help GameJamPlus provide you with a better service in the future.",
+				"name": "What is your name?",
+				"countryborn": "What country are you from?",
+				"countryoforigin": "Country of origin",
+				"countryliving": "What country do you live in?",
+				"countryofresidence": "Country of residence",
+				"city": "What city do you live in?",
+				"email": "What is your contact email?",
+				"discord": "What is your Discord tag?",
+				"no": "Prefer not to declare",
+				"other": "Other",
+				"ethnicity": "Please select the option that represents your self-declared race/ethnicity:",
+				"ethnicityoptions": {
+					"asian": "Asian",
+					"black": "Black",
+					"brown": "Brown(Mix)",
+					"indiginous": "Indigenous",
+					"white": "White"
+				},
+				"gender": "Please select your gender:",
+				"genderoptions": {
+					"male": "Male",
+					"female": "Female",
+					"nonbinary": "Non-binary"
+				},
+				"intersex": "Are you an intersex person?",
+				"orientation": "Please select your sexual orientation:",
+				"orientationoptions": {
+					"asexual": "Asexual",
+					"bisexual": "Bisexual",
+					"gay": "Gay",
+					"heterosexual": "Heterosexual",
+					"lesbian": "Lesbian",
+					"pansexual": "Pansexual"
+				},
+				"identity": "Please select your gender identity:",
+				"identityoptions": {
+					"agender": "Agender",
+					"cisman": "Cisgender Man",
+					"ciswoman": "Cisgender Woman",
+					"genderfluid": "Gender Fluid",
+					"queer": "Queer",
+					"transman": "Transgender Man",
+					"transwoman": "Transgender Woman",
+					"travesti": "Travesti"
+				},
+				"disability": "Do you have any disabilities?",
+				"disabilityoptions": {
+					"intellectual": "Yes. Intelectual disability.",
+					"physical": "Yes. Physical disability.",
+					"visual": "Yes. Visual disability.",
+					"hearing": "Yes. Hearing disability."
+				},
+				"student": "Are you a student?",
+				"school": "What is the name of your School/College/University?",
+				"degree": "Select your highest level of education to date.",
+				"degreeoptions": {
+					"hsimcomplete": "I'm in high school.",
+					"hscomplete": "I have a high school diploma.",
+					"technical": "I have a technical degree.",
+					"undergraduate": "I'm in college.",
+					"bachelor": "I have a Bachelor's or Licentiate degree.",
+					"postgraduate": "I have a Master's or Doctorate degree."
+				},
+				"studies": "Check all options that apply to your studies:",
+				"studiesoptions": {
+					"option1": "I didn't study anything related to game development.",
+					"option2": "I took free courses or learned game development on my own.",
+					"option3": "I took a technical course or degree in game development at an institution.",
+					"option4": "I have an academic degree in game development (Diploma, Bachelor's or Licentiate).",
+					"option5": "I did a postgraduate degree in game development (Masters or PhD).",
+					"option6": "I have a degree in computer science, programming or equivalent.",
+					"option7": "I have a degree in Design, Graphic Design, Product Design or equivalent.",
+					"option8": "I have a degree in Visual Arts or equivalent.",
+					"option9": "I have a degree in Music Production, Composition, Sound Engineering or equivalent.",
+					"option10": "I have a degree in Narrative, Communication, Literature or equivalent.",
+					"option11": "I have a degree in Business, Administration or equivalent.",
+					"option12": "I have done other studies related to the gaming industry."
+				},
+				"industry": "Check all that apply to your career:",
+				"industryoptions": {
+					"option1": "I work in the gaming industry as a freelancer.",
+					"option2": "I work in the gaming industry in a studio.",
+					"option3": "I own a game studio.",
+					"option4": "I haven't worked in the games industry yet, but I'm looking forward to it.",
+					"option5": "I used to work in the gaming industry, but I don't anymore.",
+					"option6": "I'm not interested in working in the gaming industry, I'm in it for fun."
+				},
+				"participation": "Have you ever participated in any edition of GJ+?",
+				"participationoptions": {
+					"option1": "I never participated",
+					"option2": "Once",
+					"option3": "Two or three times",
+					"option4": "Four or more times"
+				},
+				"termsandconditions": "To participate in this edition, I confirm that I have read, understood, and agreed to the <a href='{{rulesLink}}' target='_blank'>Terms and Conditions</a> of the event.",
+				"termsoptions": {
+					"option1": "I understand that I must treat other participants, organizers, mentors, and judges with respect and courtesy.",
+					"option2": "I understand that my image and likeness will be recorded and may be used by GameJamPlus for communication and marketing purposes.",
+					"option3": "I understand that my game, videos, and assets produced and submitted to this event will be shared by GameJamPlus for communication, evaluation, and marketing purposes."
+				},
+				"error": "Please fill in all required fields to proceed."
 			},
 			"navbar": {
 				"home": {

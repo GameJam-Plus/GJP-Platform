@@ -1,12 +1,12 @@
 <div>
   <!-- #region NO JAM -->
   <div *ngIf="!jam" class="warning p-5 text-center m-2">
-    <p>You haven't been assigned to a Venue yet.</p>
-    <p>Select a venue from the list below to proceed.</p>
+    <p>{{ 'platform.jammer.home.jaminfo.nojamtext1' | translate}}</p>
+    <p>{{ 'platform.jammer.home.jaminfo.nojamtext2' | translate}}</p>
 
     <div class="row">
       <div class="col-3 border">
-        <h2>Regions:</h2>
+        <h2>{{ 'platform.jammer.home.jaminfo.regions' | translate}}</h2>
         <div *ngFor="let region of regions" class="p-2" (click)="selectRegion(region)">
           <div class="card p-2 shadow pointer">
             <h3>{{ region.name }}</h3>
@@ -15,23 +15,23 @@
       </div>
 
       <div *ngIf="selectedRegion" class="col-9">
-        <h2>Venues of {{ selectedRegion!.name }}</h2>
+        <h2>{{ 'platform.jammer.home.jaminfo.venuesof' | translate}} {{ selectedRegion!.name }}</h2>
         <div class="row">
           <div class="col-3" *ngFor="let site of filteredSites">
             <div class="card p-2 shadow minh-2">
               <h3 class="fs-4">{{ site.name }}</h3>
               <p>
                 {{ site.country.name }} - {{ site.city }}<br>
-                Modality: {{ site.modality }}<br>
+                {{ 'platform.jammer.home.jaminfo.modality' | translate}} {{ site.modality }}<br>
                 <span *ngIf="site.email">{{ site.email }}<br></span>
                 <span *ngIf="site.phoneNumber">{{ site.phoneNumber }}<br></span>
-                <span *ngIf="site.open">Status: Open for registration</span>
+                <span *ngIf="site.open">{{ 'platform.jammer.home.jaminfo.statusopen' | translate}}</span>
               </p>
               <span *ngIf="site.open" style="flex-grow: 1;"></span>
-              <button *ngIf="site.open" class="btn btn-black align-bottom" (click)="joinSite(site)">Join venue</button>
+              <button *ngIf="site.open" class="btn btn-black align-bottom" (click)="joinSite(site)">{{ 'platform.jammer.home.jaminfo.joinvenue' | translate}}</button>
 
-              <p *ngIf="!site.open">Status: Closed</p>
-              <p *ngIf="!site.open">Contact the venue's organizers for more information on how to join this venue</p>
+              <p *ngIf="!site.open">{{ 'platform.jammer.home.jaminfo.statusclosed' | translate}}</p>
+              <p *ngIf="!site.open">{{ 'platform.jammer.home.jaminfo.contactvenue' | translate}}</p>
             </div>
           </div>
         </div>
@@ -86,7 +86,7 @@
             <div class="pseudocard inverted m-1 py-2 minh-3">
               <div class="row align-items-start">
                 <fa-icon [icon]="faLandmark" class="fa-2x col-4 text-right maxh-05"></fa-icon>
-                <h2 class="col-8 maxh-05">{{ 'platform.jammer.home.venueinfo.location' | translate}}</h2>
+                <h2 class="col-8 maxh-05 fs-4">{{ 'platform.jammer.home.venueinfo.location' | translate}}</h2>
                 <hr>
               </div>
 
@@ -103,7 +103,7 @@
             <div class="pseudocard inverted m-1 py-2 minh-3">
               <div class="row align-items-start">
                 <fa-icon [icon]="faPeopleRoof" class="fa-2x col-4 text-right maxh-05"></fa-icon>
-                <h2 class="col-8 maxh-05">{{ 'platform.jammer.home.venueinfo.format' | translate}}</h2>
+                <h2 class="col-8 maxh-05 fs-4">{{ 'platform.jammer.home.venueinfo.format' | translate}}</h2>
                 <hr>
               </div>
 
@@ -120,7 +120,7 @@
             <div class="pseudocard inverted m-1 py-2 minh-3">
               <div class="row align-items-start">
                 <fa-icon [icon]="faEnvelope" class="fa-2x col-4 text-right maxh-05"></fa-icon>
-                <h2 class="col-8 maxh-05">{{ 'platform.jammer.home.venueinfo.contactinfo' | translate}}</h2>
+                <h2 class="col-8 maxh-05 fs-4">{{ 'platform.jammer.home.venueinfo.contactinfo' | translate}}</h2>
                 <hr>
               </div>
 

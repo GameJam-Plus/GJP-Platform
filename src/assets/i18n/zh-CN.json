@@ -20,7 +20,8 @@
 			"jammers": "参与者：",
 			"teams": "团队：",
 			"submissions": "提交：",
-			"specialthanks": "特别感谢"
+			"specialthanks": "特别感谢",
+			"sendform": "提交表单"
 		},
 		"globalorganizer": {
 			"home": {
@@ -37,6 +38,15 @@
 					"loadsubmissions": "加载提交"
 				},
 				"jaminfo": {
+					"nojamtext1": "您尚未被分配到任何会场。",
+					"nojamtext2": "请从下面的列表中选择一个会场以继续。",
+					"regions": "地区：",
+					"venuesof": "会场 - ",
+					"modality": "形式：",
+					"statusopen": "状态：开放注册",
+					"joinvenue": "加入会场",
+					"statusclosed": "状态：已关闭",
+					"contactvenue": "请联系该会场的组织者以获取有关如何加入的更多信息",
 					"categories": "类别",
 					"currentstage": "当前阶段",
 					"manual": "手册",
@@ -50,6 +60,9 @@
 					"address": "地址",
 					"city": "城市",
 					"contactinfo": "联系信息",
+					"email": "电子邮箱",
+					"phone": "电话",
+					"website": "网站",	
 					"country": "国家",
 					"format": "格式",
 					"language": "语言",
@@ -135,6 +148,112 @@
 			},
 			"rules": {
 
+			},
+			"dataform": {
+				"jammerinformation": "参与者信息",
+				"info1": "要访问您的面板，请填写此简短表格。",
+				"info2": "这些信息将帮助 GameJamPlus 在未来为您提供更好的服务。",
+				"name": "您的名字是什么？",
+				"countryborn": "您来自哪个国家？",
+				"countryoforigin": "原籍国",
+				"countryliving": "您现在居住在哪个国家？",
+				"countryofresidence": "居住国",
+				"city": "您居住在哪个城市？",
+				"email": "您的联系邮箱是什么？",
+				"discord": "您的 Discord 标签是什么？",
+				"no": "不愿透露",
+				"other": "其他",
+				"ethnicity": "请选择代表您自我声明的种族/族裔的选项：",
+				"ethnicityoptions": {
+					"asian": "亚裔",
+					"black": "黑人",
+					"brown": "棕色（混合）",
+					"indiginous": "原住民",
+					"white": "白人"
+				},
+				"gender": "请选择您的性别：",
+				"genderoptions": {
+					"male": "男性",
+					"female": "女性",
+					"nonbinary": "非二元"
+				},
+				"intersex": "您是双性人吗？",
+				"orientation": "请选择您的性取向：",
+				"orientationoptions": {
+					"asexual": "无性恋",
+					"bisexual": "双性恋",
+					"gay": "男同性恋",
+					"heterosexual": "异性恋",
+					"lesbian": "女同性恋",
+					"pansexual": "泛性恋"
+				},
+				"identity": "请选择您的性别认同：",
+				"identityoptions": {
+					"agender": "无性别",
+					"cisman": "顺性别男性",
+					"ciswoman": "顺性别女性",
+					"genderfluid": "性别流动",
+					"queer": "酷儿",
+					"transman": "跨性别男性",
+					"transwoman": "跨性别女性",
+					"travesti": "Travesti"
+				},
+				"disability": "您有任何残疾吗？",
+				"disabilityoptions": {
+					"intellectual": "是的。智力残疾。",
+					"physical": "是的。身体残疾。",
+					"visual": "是的。视力残疾。",
+					"hearing": "是的。听力残疾。"
+				},
+				"student": "您是学生吗？",
+				"school": "您的学校/学院/大学名称是什么？",
+				"degree": "请选择您目前的最高学历。",
+				"degreeoptions": {
+					"hsimcomplete": "我在读高中。",
+					"hscomplete": "我有高中毕业证书。",
+					"technical": "我有技术学位。",
+					"undergraduate": "我在读大学。",
+					"bachelor": "我有学士或同等学位。",
+					"postgraduate": "我有硕士或博士学位。"
+				},
+				"studies": "勾选所有适用于您学习经历的选项：",
+				"studiesoptions": {
+					"option1": "我没有学习过任何与游戏开发相关的内容。",
+					"option2": "我参加过免费课程或自学了游戏开发。",
+					"option3": "我在某机构参加过游戏开发的技术课程或学位。",
+					"option4": "我拥有游戏开发的学术学位（文凭、学士或同等学历）。",
+					"option5": "我完成了游戏开发的研究生课程（硕士或博士）。",
+					"option6": "我有计算机科学、编程或相关学位。",
+					"option7": "我有设计、平面设计、产品设计或相关学位。",
+					"option8": "我有视觉艺术或相关学位。",
+					"option9": "我有音乐制作、作曲、声音工程或相关学位。",
+					"option10": "我有叙事、传播、文学或相关学位。",
+					"option11": "我有商业、管理或相关学位。",
+					"option12": "我完成了与游戏产业相关的其他学习。"
+				},
+				"industry": "勾选所有适用于您职业的选项：",
+				"industryoptions": {
+					"option1": "我以自由职业者的身份在游戏行业工作。",
+					"option2": "我在游戏行业的工作室工作。",
+					"option3": "我拥有一家游戏工作室。",
+					"option4": "我还没有在游戏行业工作过，但我期待着加入。",
+					"option5": "我曾经在游戏行业工作过，但现在不再从事。",
+					"option6": "我对游戏行业不感兴趣，只是为了娱乐参与。"
+				},
+				"participation": "您是否参加过任何一届 GJ+？",
+				"participationoptions": {
+					"option1": "我从未参加过",
+					"option2": "一次",
+					"option3": "两到三次",
+					"option4": "四次或更多"
+				},
+				"termsandconditions": "要参加本届活动，我确认我已阅读、理解并同意活动的<a href='{{rulesLink}}' target='_blank'>条款和条件</a>。",
+				"termsoptions": {
+					"option1": "我理解我必须以尊重和礼貌的态度对待其他参与者、组织者、导师和评委。",
+					"option2": "我理解我的形象和肖像将被记录，并可能被 GameJamPlus 用于传播和营销目的。",
+					"option3": "我理解我在本活动中制作和提交的游戏、视频和素材将由 GameJamPlus 用于传播、评估和营销目的。"
+				},
+				"error": "请填写所有必填字段以继续。"
 			},
 			"navbar": {
 				"home": {

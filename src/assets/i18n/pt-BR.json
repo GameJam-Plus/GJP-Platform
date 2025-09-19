@@ -20,7 +20,8 @@
 			"jammers": "Participantes:",
 			"teams": "Equipes:",
 			"submissions": "Submissões:",
-			"specialthanks": "Agradecimentos Especiais"
+			"specialthanks": "Agradecimentos Especiais",
+			"sendform": "ENVIAR FORMULÁRIO"
 		},
 		"globalorganizer": {
 			"home": {
@@ -37,6 +38,15 @@
 					"loadsubmissions": "CARREGAR SUBMISSÕES"
 				},
 				"jaminfo": {
+					"nojamtext1": "Você ainda não foi atribuído a uma sede.",
+					"nojamtext2": "Selecione uma sede da lista abaixo para continuar.",
+					"regions": "Regiões:",
+					"venuesof": "Sedes de",
+					"modality": "Modalidade:",
+					"statusopen": "Status: Aberto para inscrições",
+					"joinvenue": "Entrar na sede",
+					"statusclosed": "Status: Fechado",
+					"contactvenue": "Entre em contato com os organizadores da sede para mais informações sobre como participar desta sede",
 					"categories": "Categorias",
 					"currentstage": "Estágio Atual",
 					"manual": "Manual",
@@ -50,6 +60,9 @@
 					"address": "Endereço",
 					"city": "Cidade",
 					"contactinfo": "Informações de contato",
+					"email": "Email",
+					"phone": "Telefone",
+					"website": "Website",
 					"country": "País",
 					"format": "Formato",
 					"language": "Idioma",
@@ -135,6 +148,112 @@
 			},
 			"rules": {
 
+			},
+			"dataform": {
+				"jammerinformation": "Informações do Participante",
+				"info1": "Para acessar seu painel, complete este breve formulário.",
+				"info2": "Essas informações ajudarão o GameJamPlus a oferecer um serviço melhor para você no futuro.",
+				"name": "Qual é o seu nome?",
+				"countryborn": "De qual país você é?",
+				"countryoforigin": "País de origem",
+				"countryliving": "Em qual país você mora?",
+				"countryofresidence": "País de residência",
+				"city": "Em qual cidade você mora?",
+				"email": "Qual é o seu e-mail de contato?",
+				"discord": "Qual é a sua tag do Discord?",
+				"no": "Prefiro não declarar",
+				"other": "Outro",
+				"ethnicity": "Selecione a opção que representa sua raça/etnia autodeclarada:",
+				"ethnicityoptions": {
+					"asian": "Asiático",
+					"black": "Negro",
+					"brown": "Pardo (Mestiço)",
+					"indiginous": "Indígena",
+					"white": "Branco"
+				},
+				"gender": "Selecione o seu gênero:",
+				"genderoptions": {
+					"male": "Masculino",
+					"female": "Feminino",
+					"nonbinary": "Não-binário"
+				},
+				"intersex": "Você é uma pessoa intersexo?",
+				"orientation": "Selecione sua orientação sexual:",
+				"orientationoptions": {
+					"asexual": "Assexual",
+					"bisexual": "Bissexual",
+					"gay": "Gay",
+					"heterosexual": "Heterossexual",
+					"lesbian": "Lésbica",
+					"pansexual": "Pansexual"
+				},
+				"identity": "Selecione sua identidade de gênero:",
+				"identityoptions": {
+					"agender": "Agênero",
+					"cisman": "Homem Cisgênero",
+					"ciswoman": "Mulher Cisgênero",
+					"genderfluid": "Gênero Fluido",
+					"queer": "Queer",
+					"transman": "Homem Trans",
+					"transwoman": "Mulher Trans",
+					"travesti": "Travesti"
+				},
+				"disability": "Você possui alguma deficiência?",
+				"disabilityoptions": {
+					"intellectual": "Sim. Deficiência intelectual.",
+					"physical": "Sim. Deficiência física.",
+					"visual": "Sim. Deficiência visual.",
+					"hearing": "Sim. Deficiência auditiva."
+				},
+				"student": "Você é estudante?",
+				"school": "Qual é o nome da sua Escola/Faculdade/Universidade?",
+				"degree": "Selecione o seu nível mais alto de escolaridade até o momento.",
+				"degreeoptions": {
+					"hsimcomplete": "Estou no ensino médio.",
+					"hscomplete": "Tenho diploma de ensino médio.",
+					"technical": "Tenho diploma técnico.",
+					"undergraduate": "Estou na faculdade.",
+					"bachelor": "Tenho diploma de Bacharelado ou Licenciatura.",
+					"postgraduate": "Tenho diploma de Pós-graduação (Mestrado ou Doutorado)."
+				},
+				"studies": "Marque todas as opções que se aplicam aos seus estudos:",
+				"studiesoptions": {
+					"option1": "Não estudei nada relacionado ao desenvolvimento de jogos.",
+					"option2": "Fiz cursos livres ou aprendi desenvolvimento de jogos por conta própria.",
+					"option3": "Fiz um curso técnico ou graduação em desenvolvimento de jogos em uma instituição.",
+					"option4": "Tenho diploma acadêmico em desenvolvimento de jogos (Diploma, Bacharelado ou Licenciatura).",
+					"option5": "Fiz pós-graduação em desenvolvimento de jogos (Mestrado ou Doutorado).",
+					"option6": "Tenho formação em Ciência da Computação, Programação ou equivalente.",
+					"option7": "Tenho formação em Design, Design Gráfico, Design de Produto ou equivalente.",
+					"option8": "Tenho formação em Artes Visuais ou equivalente.",
+					"option9": "Tenho formação em Produção Musical, Composição, Engenharia de Som ou equivalente.",
+					"option10": "Tenho formação em Narrativa, Comunicação, Literatura ou equivalente.",
+					"option11": "Tenho formação em Negócios, Administração ou equivalente.",
+					"option12": "Fiz outros estudos relacionados à indústria de jogos."
+				},
+				"industry": "Marque todas as opções que se aplicam à sua carreira:",
+				"industryoptions": {
+					"option1": "Trabalho na indústria de jogos como freelancer.",
+					"option2": "Trabalho na indústria de jogos em um estúdio.",
+					"option3": "Sou dono de um estúdio de jogos.",
+					"option4": "Ainda não trabalhei na indústria de jogos, mas tenho interesse.",
+					"option5": "Já trabalhei na indústria de jogos, mas não trabalho mais.",
+					"option6": "Não tenho interesse em trabalhar na indústria de jogos, participo apenas por diversão."
+				},
+				"participation": "Você já participou de alguma edição do GJ+?",
+				"participationoptions": {
+					"option1": "Nunca participei",
+					"option2": "Uma vez",
+					"option3": "Duas ou três vezes",
+					"option4": "Quatro ou mais vezes"
+				},
+				"termsandconditions": "Para participar desta edição, confirmo que li, entendi e concordo com os <a href='{{rulesLink}}' target='_blank'>Termos e Condições</a> do evento.",
+				"termsoptions": {
+					"option1": "Entendo que devo tratar outros participantes, organizadores, mentores e jurados com respeito e cortesia.",
+					"option2": "Entendo que minha imagem e semelhança serão registradas e poderão ser usadas pelo GameJamPlus para fins de comunicação e marketing.",
+					"option3": "Entendo que meu jogo, vídeos e materiais produzidos e enviados para este evento serão compartilhados pelo GameJamPlus para fins de comunicação, avaliação e marketing."
+				},
+				"error": "Preencha todos os campos obrigatórios para continuar."
 			},
 			"navbar": {
 				"home": {

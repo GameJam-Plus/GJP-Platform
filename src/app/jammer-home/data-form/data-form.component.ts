@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators,  } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { User, Site, Jam, Country, JammerData } from '../../../types';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-data-form',
@@ -13,6 +14,7 @@ import { User, Site, Jam, Country, JammerData } from '../../../types';
     MessagesComponent,
     FormsModule,
     ReactiveFormsModule,
+    TranslatePipe
   ],
   templateUrl: './data-form.component.html',
   styleUrl: './data-form.component.css'
@@ -26,6 +28,7 @@ export class DataFormComponent implements OnInit {
 
   @Output() jammerData = new EventEmitter<boolean>();
 
+  rulesLink = "/rules";
   jammerDataForm!: FormGroup;
   jammerDataFormValid: boolean = true;
   termsOfConduct: boolean = true;

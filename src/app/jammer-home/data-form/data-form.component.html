@@ -1,197 +1,195 @@
-{{site.language}}
-
 <!-- #region PT -->
 <div class="bg-white shadow p-4 rounded" *ngIf="site.language=='PT'">
-  <h1 class="text-center">Informações do Jammer</h1>
+  <h1 class="text-center">{{ 'platform.jammer.dataform.jammerinformation' | translate }}</h1>
   <div class="warning text-center p-4">
     <p>
-      Para acessar seu painel, pedimos que preencha este breve formulário.<br>
-      Essas informações ajudarão o GameJam+ a lhe oferecer um serviço melhor no futuro.
+      {{ 'platform.jammer.dataform.info1' | translate }}<br>
+      {{ 'platform.jammer.dataform.info2' | translate }}
     </p>
   </div>
 
   <form (submit)="saveJammerData()" [formGroup]="jammerDataForm" class="m-2">
     <div class="row">
       <div class="form-group col-sm-6"> <!-- NAME -->
-        <label for="name" class="required">Qual é o seu nome?</label>
+        <label for="name" class="required">{{ 'platform.jammer.dataform.name' | translate }}</label>
         <input type="text" class="form-control" formControlName="name">
       </div>
 
       <div class="form-group col-sm-6"> <!-- COUNTRY BORN -->
-        <label for="name" class="required">De que país você é?</label>
+        <label for="name" class="required">{{ 'platform.jammer.dataform.countryborn' | translate }}</label>
         <select class="form-control formList" id="countries" formControlName="countryOfOrigin">
-          <option value="" disabled selected hidden>País de origem</option>
+          <option value="" disabled selected hidden>{{ 'platform.jammer.dataform.countryoforigin' | translate }}</option>
           <option *ngFor="let country of countries" [ngValue]="country">{{ country.name }}</option>
         </select>
       </div>
 
       <div class="form-group col-sm-6"> <!-- COUNTRY LIVING -->
-        <label for="name" class="required">Em que país você mora?</label>
+        <label for="name" class="required">{{ 'platform.jammer.dataform.countryliving' | translate }}</label>
         <select class="form-control formList" id="countries" formControlName="countryOfResidence">
-          <option value="" disabled selected hidden>"País de residência"</option>
+          <option value="" disabled selected hidden>{{ 'platform.jammer.dataform.countryofresidence' | translate }}</option>
           <option *ngFor="let country of countries" [ngValue]="country">{{ country.name }}</option>
         </select>
       </div>
 
       <div class="form-group col-sm-6"> <!-- CITY -->
-        <label for="name" class="required">Em que cidade você mora?</label>
+        <label for="name" class="required">{{ 'platform.jammer.dataform.city' | translate }}</label>
         <input type="text" class="form-control" formControlName="city">
       </div>
 
       <div class="form-group col-sm-6"> <!-- EMAIL -->
-        <label for="name" class="required">Qual é o seu e-mail de contato?</label>
+        <label for="name" class="required">{{ 'platform.jammer.dataform.email' | translate }}</label>
         <input type="text" class="form-control" formControlName="email">
       </div>
 
       <div class="form-group col-sm-6"> <!-- DISCORD -->
-        <label for="name" class="required">Qual é o seu tag do Discord?</label>
+        <label for="name" class="required">{{ 'platform.jammer.dataform.discord' | translate }}</label>
         <input type="text" class="form-control" formControlName="discordUsername">
       </div>
 
       <div class="form-group col-sm-6"> <!-- ETHNICITY -->
-        <label for="name" class="required">Por favor seleceione a opção que representa a sua raça/etinia auto declarada.</label>
+        <label for="name" class="required">{{ 'platform.jammer.dataform.ethnicity' | translate }}</label>
         <div class="border border-secondary rounded p-2">
           <div class="form-check">
             <input class="form-check-input" type="radio" name="ethnicity" id="ethnicityA" value="Asian" formControlName="ethnicity">
             <label class="form-check-label" for="ethnicityA">
-              Asiático
+              {{ 'platform.jammer.dataform.ethnicityoptions.asian' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="radio" name="ethnicity" id="ethnicityBl" value="Black" formControlName="ethnicity">
             <label class="form-check-label" for="ethnicityBl">
-              Preto
+              {{ 'platform.jammer.dataform.ethnicityoptions.black' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="radio" name="ethnicity" id="ethnicityBr" value="Brown(Mix)" formControlName="ethnicity">
             <label class="form-check-label" for="ethnicityBr">
-              Mulato
+              {{ 'platform.jammer.dataform.ethnicityoptions.brown' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="radio" name="ethnicity" id="ethnicityI" value="Indigenous" formControlName="ethnicity">
             <label class="form-check-label" for="ethnicityI">
-              Indígena
+              {{ 'platform.jammer.dataform.ethnicityoptions.indiginous' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="radio" name="ethnicity" id="ethnicityW" value="White" formControlName="ethnicity">
             <label class="form-check-label" for="ethnicityW">
-              Branco
+              {{ 'platform.jammer.dataform.ethnicityoptions.white' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="radio" name="ethnicity" id="ethnicityNo" value="NoAnswer" formControlName="ethnicity">
             <label class="form-check-label" for="ethnicityNo">
-              Prefiro não responder
+              {{ 'platform.jammer.dataform.no' | translate }}
             </label>
           </div>
         </div>
       </div>
 
       <div class="form-group col-sm-6"> <!-- GENDER -->
-        <label for="name" class="required">Por favor selecione o seu gênero:</label>
+        <label for="name" class="required">{{ 'platform.jammer.dataform.gender' | translate }}</label>
         <div class="border border-secondary rounded p-2">
           <div class="form-check">
             <input class="form-check-input" type="radio" name="gender" id="genderM" value="Male" formControlName="gender">
             <label class="form-check-label" for="genderM">
-              Masculino
+              {{ 'platform.jammer.dataform.genderoptions.male' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="radio" name="gender" id="genderF" value="Female" formControlName="gender">
             <label class="form-check-label" for="genderF">
-              Feminino
+              {{ 'platform.jammer.dataform.genderoptions.female' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="radio" name="gender" id="genderNB" value="Non-binary" formControlName="gender">
             <label class="form-check-label" for="genderNB">
-              Não-binário
+              {{ 'platform.jammer.dataform.genderoptions.nonbinary' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="radio" name="gender" id="genderN" value="Prefer not to declare" formControlName="gender">
             <label class="form-check-label" for="genderN">
-              Prefiro não responder
+              {{ 'platform.jammer.dataform.no' | translate }}
             </label>
           </div>
         </div>
       </div>
 
       <div class="form-group col-sm-6"> <!-- INTERSEX -->
-        <label for="name" class="required">Você é uma pessoa intersexo?</label>
+        <label for="name" class="required">{{ 'platform.jammer.dataform.intersex' | translate }}</label>
         <div class="border border-secondary rounded p-2">
           <div class="form-check">
             <input class="form-check-input" type="radio" name="intersex" id="genderM" value="Yes" formControlName="intersex">
             <label class="form-check-label" for="genderM">
-              Sim
+              {{ 'platform.common.yes' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="radio" name="intersex" id="genderF" value="No" formControlName="intersex">
             <label class="form-check-label" for="genderF">
-              No
+              {{ 'platform.common.no' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="radio" name="intersex" id="genderNB" value="Prefer not to declare" formControlName="intersex">
             <label class="form-check-label" for="genderNB">
-              Prefiro não declarar
+              {{ 'platform.jammer.dataform.no' | translate }}
             </label>
           </div>
         </div>
 
         <!-- ORIENTATION -->
-        <label for="orientation" class="required">Por favor selecione a sua orientação sexual:</label>
+        <label for="orientation" class="required">{{ 'platform.jammer.dataform.orientation' | translate }}</label>
         <div class="border border-secondary rounded p-2">
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="orientationAs" formControlName="orientationAs">
             <label class="form-check-label" for="orientationAs">
-              Assexual
+              {{ 'platform.jammer.dataform.orientationoptions.asexual' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="orientationBi" formControlName="orientationBi">
             <label class="form-check-label" for="orientationBi">
-              Bissexual
+              {{ 'platform.jammer.dataform.orientationoptions.bisexual' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="orientationGay" formControlName="orientationGay">
             <label class="form-check-label" for="orientationGay">
-              Gay
+              {{ 'platform.jammer.dataform.orientationoptions.gay' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="orientationHet" formControlName="orientationHet">
             <label class="form-check-label" for="orientationHet">
-              Heterossexual
+              {{ 'platform.jammer.dataform.orientationoptions.heterosexual' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="orientationLes" formControlName="orientationLes">
             <label class="form-check-label" for="orientationLes">
-              Lésbica
+              {{ 'platform.jammer.dataform.orientationoptions.lesbian' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="orientationPan" formControlName="orientationPan">
             <label class="form-check-label" for="orientationPan">
-              Panssexual
+              {{ 'platform.jammer.dataform.orientationoptions.pansexual' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="orientationO" formControlName="orientationO">
             <label class="form-check-label" for="orientationO">
-              Outro
+              {{ 'platform.jammer.dataform.other' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="orientationNo" formControlName="orientationNo">
             <label class="form-check-label" for="orientationNo">
-              Prefiro não declarar
+              {{ 'platform.jammer.dataform.no' | translate }}
             </label>
           </div>
         </div>
@@ -230,328 +228,328 @@
       -->
 
       <div class="form-group col-sm-6"> <!-- IDENTITY -->
-        <label for="identity" class="required">Por favor selecione a sua identidade de gênero:</label>
+        <label for="identity" class="required">{{ 'platform.jammer.dataform.identity' | translate }}</label>
         <div class="border border-secondary rounded p-2">
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="identityAg" formControlName="identityAg">
             <label class="form-check-label" for="identityAg">
-              Agênero
+              {{ 'platform.jammer.dataform.identityoptions.agender' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="identityCM" formControlName="identityCM">
             <label class="form-check-label" for="identityCM">
-              Cisgenero Homem
+              {{ 'platform.jammer.dataform.identityoptions.cisman' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="identityCW" formControlName="identityCW">
             <label class="form-check-label" for="identityCW">
-              Cisgenero Mulher
+              {{ 'platform.jammer.dataform.identityoptions.ciswoman' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="identityGF" formControlName="identityGF">
             <label class="form-check-label" for="identityGF">
-              Gênero fluído
+              {{ 'platform.jammer.dataform.identityoptions.genderfluid' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="identityQ" formControlName="identityQ">
             <label class="form-check-label" for="identityQ">
-              Queer
+              {{ 'platform.jammer.dataform.identityoptions.queer' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="identityTM" formControlName="identityTM">
             <label class="form-check-label" for="identityTM">
-              Transgênero Homem
+              {{ 'platform.jammer.dataform.identityoptions.transman' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="identityTW" formControlName="identityTW">
             <label class="form-check-label" for="identityTW">
-              Transgênero Mulher
+              {{ 'platform.jammer.dataform.identityoptions.transwoman' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="identityT" formControlName="identityT">
             <label class="form-check-label" for="identityT">
-              Travesti
+              {{ 'platform.jammer.dataform.identityoptions.travesti' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="identityO" formControlName="identityO">
             <label class="form-check-label" for="identityO">
-              Outro
+              {{ 'platform.jammer.dataform.other' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="identityNo" formControlName="identityNo">
             <label class="form-check-label" for="identityNo">
-              Prefiro não declarar
+              {{ 'platform.jammer.dataform.no' | translate }}
             </label>
           </div>
         </div>
       </div>
 
       <div class="form-group col-sm-6"> <!-- DISABILITIES -->
-        <label for="orientation" class="required">Você possui alguma deficiência?</label>
+        <label for="orientation" class="required">{{ 'platform.jammer.dataform.disability' | translate }}</label>
         <div class="border border-secondary rounded p-2">
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="disabilityN" formControlName="disabilityN">
             <label class="form-check-label" for="disabilityN">
-              Não
+              {{ 'platform.common.no' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="disabilityYI" formControlName="disabilityYI">
             <label class="form-check-label" for="disabilityYI">
-              Sim. Deficiência intelectual.
+              {{ 'platform.jammer.dataform.disabilityoptions.intellectual' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="disabilityYP" formControlName="disabilityYP">
             <label class="form-check-label" for="disabilityYP">
-              Sim. Deficiência física.
+              {{ 'platform.jammer.dataform.disabilityoptions.physical' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="disabilityYV" formControlName="disabilityYV">
             <label class="form-check-label" for="disabilityYV">
-              Sim. Deficiência visual.
+              {{ 'platform.jammer.dataform.disabilityoptions.visual' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="disabilityYH" formControlName="disabilityYH">
             <label class="form-check-label" for="disabilityYH">
-              Sim. Deficiência auditiva.
+              {{ 'platform.jammer.dataform.disabilityoptions.hearing' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="disabilityO" formControlName="disabilityO">
             <label class="form-check-label" for="disabilityO">
-              Outro
+              {{ 'platform.jammer.dataform.other' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="disabilityNo" formControlName="disabilityNo">
             <label class="form-check-label" for="disabilityNo">
-              Prefiro não declarar
+              {{ 'platform.jammer.dataform.no' | translate }}
             </label>
           </div>
         </div>
       </div>
 
       <div class="form-group col-sm-6"> <!-- STUDENT -->
-        <label for="name" class="required">Você é um estudante?</label>
+        <label for="name" class="required">{{ 'platform.jammer.dataform.student' | translate }}</label>
         <div class="border border-secondary rounded p-2">
           <div class="form-check">
             <input class="form-check-input" type="radio" name="student" id="studentY" value="Yes" formControlName="student">
             <label class="form-check-label" for="studentY">
-              Sim
+              {{ 'platform.common.yes' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="radio" name="student" id="studentN" value="No" formControlName="student">
             <label class="form-check-label" for="studentN">
-              Não
+              {{ 'platform.common.no' | translate }}
             </label>
           </div>
         </div>
 
         <!-- SCHOOL -->
-        <label for="name">Qual é o nome da sua Escola/Colégio/Universidade?</label>
-        <input type="text" class="form-control" formControlName="school">
+        <label for="name">{{ 'platform.jammer.dataform.school' | translate }}</label>
+        <input type="text" class="form-control" formControlName="school" maxlength="100">
       </div>
       
       <div class="form-group col-sm-6"> <!-- DEGREE -->
-        <label for="name" class="required">Selecione seu maior grau de escolaridade até o momento.</label>
+        <label for="name" class="required">{{ 'platform.jammer.dataform.degree' | translate }}</label>
         <div class="border border-secondary rounded p-2">
           <div class="form-check">
             <input class="form-check-input" type="radio" name="degree" id="degree1" value="Highschool Incomplete" formControlName="degree">
             <label class="form-check-label" for="degree1">
-              Estou no ensino médio.
+              {{ 'platform.jammer.dataform.degreeoptions.hsimcomplete' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="radio" name="degree" id="degree2" value="Highschool Complete" formControlName="degree">
             <label class="form-check-label" for="degree2">
-              Tenho um diploma de ensino médio.
+              {{ 'platform.jammer.dataform.degreeoptions.hscomplete' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="radio" name="degree" id="degree3" value="Technical Degree" formControlName="degree">
             <label class="form-check-label" for="degree3">
-              Tenho um diploma técnico.
+              {{ 'platform.jammer.dataform.degreeoptions.technical' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="radio" name="degree" id="degree4" value="Undergraduate" formControlName="degree">
             <label class="form-check-label" for="degree4">
-              Estou na faculdade.
+              {{ 'platform.jammer.dataform.degreeoptions.undergraduate' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="radio" name="degree" id="degree5" value="Bachelor or Licenciate" formControlName="degree">
             <label class="form-check-label" for="degree5">
-              Tenho um diploma de Bacharel ou Licenciatura.
+              {{ 'platform.jammer.dataform.degreeoptions.bachelor' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="radio" name="degree" id="degree6" value="Postgraduate" formControlName="degree">
             <label class="form-check-label" for="degree6">
-              Tenho um diploma de Mestrado ou Doutorado.
+              {{ 'platform.jammer.dataform.degreeoptions.postgraduate' | translate }}
             </label>
           </div>
         </div>
       </div>
 
       <div class="form-group col-sm-6"> <!-- STUDIES -->
-        <label for="industry">Marque todas as opções que se aplicam aos seus estudos:</label>
+        <label for="industry">{{ 'platform.jammer.dataform.studies' | translate }}</label>
         <div class="border border-secondary rounded p-2">
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="study1" formControlName="studyNone">
             <label class="form-check-label" for="study1">
-              Não estudei nada relacionado ao desenvolvimento de jogos.
+              {{ 'platform.jammer.dataform.studiesoptions.option1' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="study2" formControlName="studyFree">
             <label class="form-check-label" for="study2">
-              Fiz cursos gratuitos ou aprendi desenvolvimento de jogos por conta própria.
+              {{ 'platform.jammer.dataform.studiesoptions.option2' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="study3" formControlName="studyTechnical">
             <label class="form-check-label" for="study3">
-              Fiz um curso técnico ou graduação em desenvolvimento de jogos em uma instituição.
+              {{ 'platform.jammer.dataform.studiesoptions.option3' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="study4" formControlName="studyDegree">
             <label class="form-check-label" for="study4">
-              Fiz uma graduação acadêmica em desenvolvimento de jogos (Diploma, Bacharel ou Licenciatura).
+              {{ 'platform.jammer.dataform.studiesoptions.option4' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="study4" formControlName="studyPostgraduate">
             <label class="form-check-label" for="study4">
-              Fiz uma pós-graduação em desenvolvimento de jogos (Mestrado ou Doutorado).
+              {{ 'platform.jammer.dataform.studiesoptions.option5' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="study5" formControlName="studyProgramming">
             <label class="form-check-label" for="study5">
-              Fiz uma graduação em ciência da computação, programação ou equivalente.
+              {{ 'platform.jammer.dataform.studiesoptions.option6' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="study6" formControlName="studyDesign">
             <label class="form-check-label" for="study6">
-              Fiz uma graduação em Design, Design Gráfico, Design de Produto ou equivalente.
+              {{ 'platform.jammer.dataform.studiesoptions.option7' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="study7" formControlName="studyArts">
             <label class="form-check-label" for="study7">
-              Fiz uma graduação em Artes Visuais ou equivalente.
+              {{ 'platform.jammer.dataform.studiesoptions.option8' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="study8" formControlName="studyMusic">
             <label class="form-check-label" for="study8">
-              Fiz uma graduação em Produção Musical, Composição, Engenharia de Som ou equivalente.
+              {{ 'platform.jammer.dataform.studiesoptions.option9' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="study9" formControlName="studyNarrative">
             <label class="form-check-label" for="study9">
-              Fiz uma graduação em Narrativa, Comunicação, Letras ou equivalente.
+              {{ 'platform.jammer.dataform.studiesoptions.option10' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="study10" formControlName="studyBiz">
             <label class="form-check-label" for="study10">
-              Fiz uma graduação em Negócios, Administração ou equivalente.
+              {{ 'platform.jammer.dataform.studiesoptions.option11' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="study11" formControlName="studyOther">
             <label class="form-check-label" for="study11">
-              Fiz outros estudos relacionados à indústria de jogos.
+              {{ 'platform.jammer.dataform.studiesoptions.option12' | translate }}
             </label>
           </div>
         </div>
       </div>
 
       <div class="form-group col-sm-6"> <!-- INDUSTRY -->
-        <label for="industry">Marque todas as opções que se aplicam a sua carreira:</label>
+        <label for="industry">{{ 'platform.jammer.dataform.industry' | translate }}</label>
         <div class="border border-secondary rounded p-2">
           <div class="form-check">
             <input class="form-check-input" type="checkbox" value="He/Him" id="industry1" formControlName="industryFree">
             <label class="form-check-label" for="industry1">
-              Trabalho na indústria de jogos como freelancer.
+              {{ 'platform.jammer.dataform.industryoptions.option1' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" value="He/Him" id="industry2" formControlName="industryStudio">
             <label class="form-check-label" for="industry2">
-              Trabalho na indústria de jogos em um estúdio.
+              {{ 'platform.jammer.dataform.industryoptions.option2' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" value="He/Him" id="industry3" formControlName="industryOwn">
             <label class="form-check-label" for="industry3">
-              Sou proprietário de um estúdio de jogos.
+              {{ 'platform.jammer.dataform.industryoptions.option3' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" value="He/Him" id="industry4" formControlName="industryNone">
             <label class="form-check-label" for="industry4">
-              Ainda não trabalhei na indústria de jogos, mas estou ansioso para isso.
+              {{ 'platform.jammer.dataform.industryoptions.option4' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" value="He/Him" id="industry5" formControlName="industryPast">
             <label class="form-check-label" for="industry5">
-              Trabalhei na indústria de jogos, mas não trabalho mais.
+              {{ 'platform.jammer.dataform.industryoptions.option5' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" value="He/Him" id="industry6" formControlName="industryNo">
             <label class="form-check-label" for="industry6">
-              Não estou interessado em trabalhar na indústria de jogos, eu participo por diversão.
+              {{ 'platform.jammer.dataform.industryoptions.option6' | translate }}
             </label>
           </div>
         </div>
       </div>
 
       <div class="form-group col-sm-6"> <!-- JAMS -->
-        <label for="participation" class="required">Você já participou de alguma edição da GJ+?</label>
+        <label for="participation" class="required">{{ 'platform.jammer.dataform.participation' | translate }}</label>
         <div class="border border-secondary rounded p-2">
           <div class="form-check">
             <input class="form-check-input" type="radio" name="participation" id="jam1" value="Never participated" formControlName="participation">
             <label class="form-check-label" for="jam1">
-              Nunca participei
+              {{ 'platform.jammer.dataform.participationoptions.option1' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="radio" name="participation" id="jam2" value="One time" formControlName="participation">
             <label class="form-check-label" for="jam2">
-              Uma vez
+              {{ 'platform.jammer.dataform.participationoptions.option2' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="radio" name="participation" id="jam3" value="Two or three times" formControlName="participation">
             <label class="form-check-label" for="jam3">
-              Duas ou três vezes
+              {{ 'platform.jammer.dataform.participationoptions.option3' | translate }}
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="radio" name="participation" id="jam4" value="Four times or more" formControlName="participation">
             <label class="form-check-label" for="jam4">
-              Quatro ou mais vezes
+              {{ 'platform.jammer.dataform.participationoptions.option4' | translate }}
             </label>
           </div>
         </div>
@@ -560,39 +558,38 @@
 
       <div class="form-group col-sm-12"> <!-- TERMS AND CONDITIONS -->
         <!-- -->
-        <label for="terms" class="required mt-3">
-          Para participar desta edição, confirmo que li, entendi e concordei com os <a href="/rules" target="_blank">Termos e Condições</a> do evento.
+        <label for="terms" class="required mt-3" [innerHTML]="'platform.jammer.dataform.termsandconditions' | translate:{ rulesLink }">
         </label>
         <div class="border border-secondary rounded p-2">
-
           <div [ngClass]="{'form-check': true, 'error': !termsOfConduct}">
+
             <input class="form-check-input" type="checkbox" id="terms" formControlName="termsOfConduct">
             <label class="form-check-label" for="terms">
-              Entendo que devo tratar os outros participantes, organizadores, mentores e jurados com respeito e cortesia.
+              {{ 'platform.jammer.dataform.termsoptions.option1' | translate }}
             </label>
           </div>
 
           <div [ngClass]="{'form-check': true, 'error': !termsOfImage}">
             <input class="form-check-input" type="checkbox" id="terms" formControlName="termsOfImage">
             <label class="form-check-label" for="terms">
-              Entendo que minha imagem e semelhança serão gravadas e poderão ser usadas pelo Game Jam Plus para fins de comunicação e marketing.
+              {{ 'platform.jammer.dataform.termsoptions.option2' | translate }}
             </label>
           </div>
 
           <div [ngClass]="{'form-check': true, 'error': !termsOfIP}">
             <input class="form-check-input" type="checkbox" id="terms" formControlName="termsOfIP">
             <label class="form-check-label" for="terms">
-              Entendo que meu jogo, vídeos e recursos produzidos e submetidos a este evento serão compartilhados pelo Game Jam Plus para fins de comunicação, avaliação e marketing.
+              {{ 'platform.jammer.dataform.termsoptions.option3' | translate }}
             </label>
           </div>
         </div>
       </div>
 
       <div class="error p-3 d-block text-center" *ngIf="!jammerDataFormValid">
-        Por favor, preencha todos os campos obrigatórios para prosseguir.
+        {{ 'platform.jammer.dataform.error' | translate }}
       </div>
 
-      <button type="submit" class="navbutton navL1 flex-center my-3 col-sm-12">ENVIAR FORMULÁRIO</button>
+      <button type="submit" class="navbutton navL1 flex-center my-3 col-sm-12">{{ 'platform.common.sendform' | translate }}</button>
     </div>
   </form>
 </div>
