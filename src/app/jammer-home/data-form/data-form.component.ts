@@ -154,10 +154,10 @@ export class DataFormComponent implements OnInit {
 
         let disability = new Array();
         if(this.jammerDataForm.get('disabilityN')?.value) disability.push('No');
-        if(this.jammerDataForm.get('disabilityYI')?.value) disability.push('Intellectual disability');
-        if(this.jammerDataForm.get('disabilityYP')?.value) disability.push('Physical disability');
-        if(this.jammerDataForm.get('disabilityYV')?.value) disability.push('Visual disability');
-        if(this.jammerDataForm.get('disabilityYH')?.value) disability.push('Hearing disability');
+        if(this.jammerDataForm.get('disabilityYI')?.value) disability.push('Yes. Intellectual disability');
+        if(this.jammerDataForm.get('disabilityYP')?.value) disability.push('Yes. Physical disability');
+        if(this.jammerDataForm.get('disabilityYV')?.value) disability.push('Yes. Visual disability');
+        if(this.jammerDataForm.get('disabilityYH')?.value) disability.push('Yes. Hearing disability');
         if(this.jammerDataForm.get('disabilityO')?.value) disability.push('Other');
         if(this.jammerDataForm.get('disabilityNo')?.value) disability.push('Prefer not to declare');
 
