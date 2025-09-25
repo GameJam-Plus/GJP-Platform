@@ -273,7 +273,6 @@ const getSitesByJam = async (req, res) => {
 
         if(jamId == "open")
         {
-            console.log("Finding open jam...");
             const jam = await Jam.findOne({ open: true });
             if(!jam)
             {

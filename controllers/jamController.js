@@ -185,10 +185,9 @@ const getJamBySite = async(req, res) => {
 
 // returns an open gamejam that is linked to a userID or error if no jam found
 const getJamByUser = async(req, res) => {
+    const { id, jamId } = req.params;
     try{
-        const id = req.params.id;
-
-        const jamsOfUser = await UserOnJam.find({ userId: id });
+        const jamsOfUser = await UserOnJam.find({ userId: id, jamId: jamId });
 
         if(jamsOfUser.length <= 0) 
         {
@@ -222,7 +221,7 @@ const getJamByUser = async(req, res) => {
         })
         return res.status(200).send({success: true, data: {jam: jam, site: site, team: team, jammerData: jamOfUser.jammerData }});
     } catch(error) {
-        if(!jam) return res.status(400).send({success: false, message: error.message});
+        if(!jamId) return res.status(400).send({success: false, message: error.message});
     }
     
 };
