@@ -12,228 +12,272 @@
           <div class="Card-body">
             <form (submit)="submitForm()" [formGroup]="registerForm">
               <div class="row">
-                <div class="title">Register</div>
+                <div style="display: flex; align-items: center; position: relative;">
+                  <div class="title" style="flex: 1; text-align: center;">
+                    {{ 'platform.common.register' | translate }}
+                  </div>
+                  <mat-icon [tooltip]="tooltipContent" 
+                  placement="bottom"
+                  container="body"
+                  style="vertical-align: middle;">
+                  info
+                  </mat-icon>
+                </div>
+
+                <ng-template #tooltipContent>
+                  <div class="row">
+                    <p><b>{{ 'platform.register.innertext.tooltipline1' | translate }}</b><br>
+                      {{ 'platform.register.innertext.tooltipline2' | translate }}</p>
+                      <ul>
+                        <li>{{ 'platform.register.innertext.tooltipline3' | translate }}</li>
+                        <li>{{ 'platform.register.innertext.tooltipline4' | translate }}</li>
+                        <li>{{ 'platform.register.innertext.tooltipline5' | translate }}</li>
+                      </ul>
+                      <p>{{ 'platform.register.innertext.tooltipline6' | translate }}</p>
+                  </div>
+                </ng-template>
                 
-                <div class="inputTitle">Email *</div>
-                <div class="row">
-                  <div class="form-group inputSpace">
-                    <input #emailInput type="email" class="form-control" id="emailInput" required placeholder="Email" formControlName="email">
-                  </div>
-                </div>
-
-                <div class="inputTitle">Name *</div>
-                <div class="row">
-                  <div class="form-group inputSpace">
-                    <input #nameInput class="form-control" id="nameInput" required placeholder="Name" formControlName="name">
-                  </div>
-                </div>
-
-                <div class="inputTitle">Discord Username *</div>
-                <div class="row">
-                  <div class="form-group inputSpace">
-                    <input #discordUsernameInput class="form-control" id="discordUsernameInput" required placeholder="Discord Username" formControlName="discordUsername">
-                  </div>
-                </div>
-
-                <div class="inputTitle">Instagram*</div>
-                <div class="row">
-                  <div class="form-group inputSpace">
-                    <input #instagramInput type="instagram" class="form-control" id="instagramInput" required placeholder="Instagram" formControlName="instagram">
-                  </div>
-                </div>
-
-                <div class="inputTitle">Linkedin</div>
-                <div class="row">
-                  <div class="form-group inputSpace">
-                    <input #linkedinInput type="linkedin" class="form-control" id="linkedinInput" placeholder="Linkedin" formControlName="linkedin">
-                  </div>
-                </div>
-
-                <div class="inputTitle">Cell Number / WhatsApp</div>
-                <div class="row">
-                  <div class="form-group inputSpace">
-                    <input #telefoneWhatsAppInput type="telefoneWhatsApp" class="form-control" id="telefoneWhatsAppInput" placeholder="Cell Number / WhatsApp" formControlName="telefoneWhatsApp">
-                  </div>
-                </div>
-
+                <!-- Email -->
                 <div class="inputTitle">
-                  
-                      Please select the option that represents your self-declared race/ethnicity:*
-                      <a matTooltip="* Why are we asking this?      
-                These questions help us in several important ways:
-
-                * They support our participation in public and private funding opportunities that require that kind of data.
-                * They allow us to assess whether we’re successfully building a more diverse, inclusive, and representative community.
-                * They help us create specific categories, awards, or initiatives within GameJamPlus that celebrate and promote diversity.
-
-                Your answers are confidential and will be used solely for statistical and strategic purposes. You can always choose 'Prefer not to declare' if you're not comfortable sharing." class="tooltip-trigger">?</a>
-                  
-  
+                  {{ 'platform.common.email' | translate }}
                 </div>
+                <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                  <mat-label>
+                    {{ 'platform.common.writehere' | translate }}
+                  </mat-label>
+                  <input matInput 
+                         type="email" 
+                         id="emailInput" 
+                         required 
+                         placeholder="user@user.com" 
+                         formControlName="email">
+                </mat-form-field>
+
+                <!-- Name -->
+                <div class="inputTitle">
+                  {{ 'platform.common.name' | translate }}
+                </div>
+                <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                  <mat-label>
+                    {{ 'platform.common.writehere' | translate }}
+                  </mat-label>
+                  <input matInput
+                        id="nameInput"
+                        required
+                        placeholder="John Game Jam"
+                        formControlName="name">
+                </mat-form-field>
+
+                <!-- Discord -->
+                <div class="inputTitle">
+                  {{ 'platform.common.discord' | translate }}
+                </div>
+                <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                  <mat-label>
+                    {{ 'platform.common.writehere' | translate }}
+                  </mat-label>
+                  <input matInput
+                        id="discordUsernameInput"
+                        required
+                        placeholder="discord"
+                        formControlName="discordUsername">
+                </mat-form-field>
+
+                <!-- Instagram -->
+                <div class="inputTitle">
+                  Instagram
+                </div>
+                <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                  <mat-label>
+                    {{ 'platform.common.writehere' | translate }}
+                  </mat-label>
+                  <input matInput
+                        id="instagramInput"
+                        placeholder="Instagram"
+                        formControlName="instagram">
+                </mat-form-field>
+
+                <!-- Linkedin -->
+                <div class="inputTitle">
+                  Linkedin
+                </div>
+                <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                  <mat-label>
+                    {{ 'platform.common.writehere' | translate }}
+                  </mat-label>
+                  <input matInput
+                        id="linkedinInput"
+                        placeholder="Linkedin"
+                        formControlName="linkedin">
+                </mat-form-field>
+
+                <!-- Cell Number / WhatsApp -->
+                <div class="inputTitle">
+                  {{ 'platform.common.cellnumber' | translate }} / WhatsApp
+                </div>
+                <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                  <mat-label>
+                    {{ 'platform.common.writehere' | translate }}
+                  </mat-label>
+                  <input matInput
+                        id="telefoneWhatsAppInput"
+                        placeholder="+55 11 99988 7755"
+                        formControlName="telefoneWhatsApp">
+                </mat-form-field>
+
+                <!-- Ethnicity -->
+                <div class="inputTitle">
+                  {{ 'platform.jammer.dataform.ethnicity' | translate }}
+                </div>
+                <mat-form-field appearance="fill" class="selectorStyle">
+                  <mat-label>
+                    {{ 'platform.common.selecthere' | translate }}
+                  </mat-label>
+                  <mat-select formControlName="ethnicity" required>
+                    <mat-option value="Asian">{{ 'platform.jammer.dataform.ethnicityoptions.asian' | translate }}</mat-option>
+                    <mat-option value="Black">{{ 'platform.jammer.dataform.ethnicityoptions.black' | translate }}</mat-option>
+                    <mat-option value="Brown(Mixed)">{{ 'platform.jammer.dataform.ethnicityoptions.brown' | translate }}</mat-option>
+                    <mat-option value="Indigenous">{{ 'platform.jammer.dataform.ethnicityoptions.indiginous' | translate }}</mat-option>
+                    <mat-option value="White">{{ 'platform.jammer.dataform.ethnicityoptions.white' | translate }}</mat-option>
+                    <mat-option value="Prefer not to declare">{{ 'platform.jammer.dataform.no' | translate }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
                 
-                <div class="row">
-                  <div class="form-group inputSpace">
-                    <select class="ethnicity" required formControlName="ethnicity">
-                    <option value="Asian">Asian</option>
-                    <option value="Black">Black</option>
-                    <option value="Brown(Mixed)">Brown(Mixed)</option>
-                    <option value="Indigenous">Indigenous</option>
-                    <option value="White">White</option>
-                    <option value="Prefer not to declare">Prefer not to declare</option>
-                  </select>
-                  </div>
+                <!-- Gender -->
+                <div class="inputTitle">
+                  {{ 'platform.jammer.dataform.gender' | translate }}
                 </div>
-                
+                <mat-form-field appearance="fill" class="selectorStyle">
+                  <mat-label>
+                    {{ 'platform.common.selecthere' | translate }}
+                  </mat-label>
+                  <mat-select formControlName="gender" required>
+                    <mat-option value="Female">{{ 'platform.jammer.dataform.genderoptions.female' | translate }}</mat-option>
+                    <mat-option value="Male">{{ 'platform.jammer.dataform.genderoptions.male' | translate }}</mat-option>
+                    <mat-option value="Non-binary">{{ 'platform.jammer.dataform.genderoptions.nonbinary' | translate }}</mat-option>
+                    <mat-option value="Prefer not to declare">{{ 'platform.jammer.dataform.no' | translate }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
 
-                <div class="inputTitle">Please select your gender:*
-                  <a matTooltip="* Why are we asking this?
-                These questions help us in several important ways:
-
-                * They support our participation in public and private funding opportunities that require that kind of data.
-                * They allow us to assess whether we’re successfully building a more diverse, inclusive, and representative community.
-                * They help us create specific categories, awards, or initiatives within GameJamPlus that celebrate and promote diversity.
-
-                Your answers are confidential and will be used solely for statistical and strategic purposes. You can always choose 'Prefer not to declare' if you're not comfortable sharing." class="tooltip-trigger">?</a>
+                <!-- Intersex -->
+                <div class="inputTitle">
+                  {{ 'platform.jammer.dataform.intersex' | translate }}
                 </div>
-                <div class="row">
-                  <div class="form-group inputSpace">
-                    <select class="gender" required formControlName="gender">
-                    <option value="Female">Female</option>
-                    <option value="Male">Male</option>
-                    <option value="Non-binary">Non-binary</option>
-                    <option value="Prefer not to declare">Prefer not to declare</option>
-                  </select>
-                  </div>  
+                <mat-form-field appearance="fill" class="selectorStyle">
+                  <mat-label>
+                    {{ 'platform.common.selecthere' | translate }}
+                  </mat-label>
+                  <mat-select formControlName="intersex" required>
+                    <mat-option value="Yes">{{ 'platform.common.yes' | translate }}</mat-option>
+                    <mat-option value="No">{{ 'platform.common.no' | translate }}</mat-option>
+                    <mat-option value="Prefer not to declare">{{ 'platform.jammer.dataform.no' | translate }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <!-- Gender Identity -->
+                <div class="inputTitle">
+                  {{ 'platform.jammer.dataform.identity' | translate }}
                 </div>
+                <mat-form-field appearance="fill" class="selectorStyle">
+                  <mat-label>
+                    {{ 'platform.common.selecthere' | translate }}
+                  </mat-label>
+                  <mat-select formControlName="identity" multiple required>
+                    <mat-option value="Agender">{{ 'platform.jammer.dataform.identityoptions.agender' | translate }}</mat-option>
+                    <mat-option value="Cisgender man">{{ 'platform.jammer.dataform.identityoptions.cisman' | translate }}</mat-option>
+                    <mat-option value="Cisgender woman">{{ 'platform.jammer.dataform.identityoptions.ciswoman' | translate }}</mat-option>
+                    <mat-option value="Gender fluid">{{ 'platform.jammer.dataform.identityoptions.genderfluid' | translate }}</mat-option>
+                    <mat-option value="Queer">{{ 'platform.jammer.dataform.identityoptions.queer' | translate }}</mat-option>
+                    <mat-option value="Transgender man">{{ 'platform.jammer.dataform.identityoptions.transman' | translate }}</mat-option>
+                    <mat-option value="Transgender woman">{{ 'platform.jammer.dataform.identityoptions.transwoman' | translate }}</mat-option>
+                    <mat-option value="Travesti">{{ 'platform.jammer.dataform.identityoptions.travesti' | translate }}</mat-option>
+                    <mat-option value="Other">{{ 'platform.jammer.dataform.other' | translate }}</mat-option>
+                    <mat-option value="Prefer not to declare">{{ 'platform.jammer.dataform.no' | translate }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
 
-                
-                <div class="inputTitle">Are you an intersex person?*
-                  <a matTooltip="* Why are we asking this?
-                These questions help us in several important ways:
-
-                * They support our participation in public and private funding opportunities that require that kind of data.
-                * They allow us to assess whether we’re successfully building a more diverse, inclusive, and representative community.
-                * They help us create specific categories, awards, or initiatives within GameJamPlus that celebrate and promote diversity.
-
-                Your answers are confidential and will be used solely for statistical and strategic purposes. You can always choose 'Prefer not to declare' if you're not comfortable sharing." class="tooltip-trigger">?</a>
+                <!-- Orientation -->
+                <div class="inputTitle">
+                  {{ 'platform.jammer.dataform.orientation' | translate }}
                 </div>
-                <div class="row">
-                  <div class="form-group inputSpace">
-                    <select class="intersex" required formControlName="intersex">
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                    <option value="Prefer not to declare">Prefer not to declare</option>
-                  </select>
-                  </div>
+                <mat-form-field appearance="fill" class="selectorStyle">
+                  <mat-label>
+                    {{ 'platform.common.selecthere' | translate }}
+                  </mat-label>
+                  <mat-select formControlName="orientation" multiple required>
+                    <mat-option value="Asexual">{{ 'platform.jammer.dataform.orientationoptions.asexual' | translate }}</mat-option>
+                    <mat-option value="Bisexual">{{ 'platform.jammer.dataform.orientationoptions.bisexual' | translate }}</mat-option>
+                    <mat-option value="Gay">{{ 'platform.jammer.dataform.orientationoptions.gay' | translate }}</mat-option>
+                    <mat-option value="Heterosexual">{{ 'platform.jammer.dataform.orientationoptions.heterosexual' | translate }}</mat-option>
+                    <mat-option value="Lesbian">{{ 'platform.jammer.dataform.orientationoptions.lesbian' | translate }}</mat-option>
+                    <mat-option value="Pansexual">{{ 'platform.jammer.dataform.orientationoptions.pansexual' | translate }}</mat-option>
+                    <mat-option value="Other">{{ 'platform.jammer.dataform.other' | translate }}</mat-option>
+                    <mat-option value="Prefer not to declare">{{ 'platform.jammer.dataform.no' | translate }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <!-- Disabilities -->
+                <div class="inputTitle">
+                  {{ 'platform.jammer.dataform.disability' | translate }}
                 </div>
+                <mat-form-field appearance="fill"  class="selectorStyle">
+                  <mat-label>
+                    {{ 'platform.common.selecthere' | translate }}
+                  </mat-label>
+                  <mat-select formControlName="disability" multiple>
+                    <mat-option value="No">{{ 'platform.common.no' | translate }}</mat-option>
+                    <mat-option value="Visual disability">{{ 'platform.jammer.dataform.disabilityoptions.intellectual' | translate }}</mat-option>
+                    <mat-option value="Physical disability">{{ 'platform.jammer.dataform.disabilityoptions.physical' | translate }}</mat-option>
+                    <mat-option value="Hearing disability">{{ 'platform.jammer.dataform.disabilityoptions.hearing' | translate }}</mat-option>
+                    <mat-option value="Other">{{ 'platform.jammer.dataform.other' | translate }}</mat-option>
+                    <mat-option value="Prefer not to declare">{{ 'platform.jammer.dataform.no' | translate }}</mat-option>
+                  </mat-select>
+                </mat-form-field>              
 
-                
-                <div class="inputTitle">Please select your gender identity:*
-                  <a matTooltip="* Why are we asking this?
-                These questions help us in several important ways:
-
-                * They support our participation in public and private funding opportunities that require that kind of data.
-                * They allow us to assess whether we’re successfully building a more diverse, inclusive, and representative community.
-                * They help us create specific categories, awards, or initiatives within GameJamPlus that celebrate and promote diversity.
-
-                Your answers are confidential and will be used solely for statistical and strategic purposes. You can always choose 'Prefer not to declare' if you're not comfortable sharing." class="tooltip-trigger">?</a>
+                <!-- Participation -->
+                <div class="inputTitle">
+                  {{ 'platform.jammer.dataform.participation' | translate }}
                 </div>
-                <div class="row">
-                  <div class="form-group inputSpace">
-                    <select class="identity" required multiple formControlName="identity">
-                    <option value="Agender">Agender</option>
-                    <option value="Cisgender man">Cisgender man</option>
-                    <option value="Cisgender woman">Cisgender woman</option>
-                    <option value="Gender fluid">Gender fluid</option>
-                    <option value="Queer">Queer</option>
-                    <option value="Transgender man">Transgender man</option>
-                    <option value="Transgender woman">Transgender woman</option>
-                    <option value="Travesti">Travesti</option>
-                    <option value="Other">Other</option>
-                    <option value="Prefer not to declare">Prefer not to declare</option>
-                  </select>
-                  </div>
+                <mat-form-field appearance="fill" class="selectorStyle">
+                  <mat-label>
+                    {{ 'platform.common.selecthere' | translate }}
+                  </mat-label>
+                  <mat-select formControlName="participation" required>
+                    <mat-option value="Never participated">{{ 'platform.jammer.dataform.participationoptions.option1' | translate }}</mat-option>
+                    <mat-option value="One time">{{ 'platform.jammer.dataform.participationoptions.option2' | translate }}</mat-option>
+                    <mat-option value="Two or three times">{{ 'platform.jammer.dataform.participationoptions.option3' | translate }}</mat-option>
+                    <mat-option value="Four times or more">{{ 'platform.jammer.dataform.participationoptions.option4' | translate }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <!-- Student -->
+                <div class="inputTitle">
+                  {{ 'platform.jammer.dataform.student' | translate }}
                 </div>
+                <mat-form-field appearance="fill" class="selectorStyle">
+                  <mat-label>
+                    {{ 'platform.common.selecthere' | translate }}
+                  </mat-label>
+                  <mat-select formControlName="student" required>
+                    <mat-option value="Yes">{{ 'platform.common.yes' | translate }}</mat-option>
+                    <mat-option value="No">{{ 'platform.common.no' | translate }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
 
-                
-                 <div class="inputTitle">Please select your sexual orientation:*
-                  <a matTooltip="* Why are we asking this?
-                These questions help us in several important ways:
-
-                * They support our participation in public and private funding opportunities that require that kind of data.
-                * They allow us to assess whether we’re successfully building a more diverse, inclusive, and representative community.
-                * They help us create specific categories, awards, or initiatives within GameJamPlus that celebrate and promote diversity.
-
-                Your answers are confidential and will be used solely for statistical and strategic purposes. You can always choose 'Prefer not to declare' if you're not comfortable sharing." class="tooltip-trigger">?</a>
+                <!-- School -->
+                <div class="inputTitle">
+                  {{ 'platform.jammer.dataform.school' | translate }}
                 </div>
-                <div class="row">
-                  <div class="form-group inputSpace">
-                    <select class="orientation" required multiple formControlName="orientation">
-                    <option value="Asexual">Asexual</option>
-                    <option value="Bisexual">Bisexual</option>
-                    <option value="Gay">Gay</option>
-                    <option value="Heterosexual">Heterosexual</option>
-                    <option value="Lesbian">Lesbian</option>
-                    <option value="Pansexual">Pansexual</option>
-                    <option value="Other">Other</option>
-                    <option value="Prefer not to declare">Prefer not to declare</option>
-                  </select>
-                  </div>
-                </div>
-
-                
-                <div class="inputTitle">Do you have any disabilities?*
-                  <a matTooltip="* Why are we asking this?
-                These questions help us in several important ways:
-
-                * They support our participation in public and private funding opportunities that require that kind of data.
-                * They allow us to assess whether we’re successfully building a more diverse, inclusive, and representative community.
-                * They help us create specific categories, awards, or initiatives within GameJamPlus that celebrate and promote diversity.
-
-                Your answers are confidential and will be used solely for statistical and strategic purposes. You can always choose 'Prefer not to declare' if you're not comfortable sharing." class="tooltip-trigger">?</a>
-                </div>
-                <div class="row">
-                  <div class="form-group inputSpace">
-                    <select class="disability" required multiple formControlName="disability">
-                    <option value="No">No</option>
-                    <option value="Intellectual disability">Yes. Intellectual disability</option>
-                    <option value="Physical disability">Yes. Physical disability</option>
-                    <option value="Visual disability">Yes. Visual disability</option>
-                    <option value="Hearing disability">Yes. Hearing disability</option>
-                    <option value="Other">Other</option>
-                    <option value="Prefer not to declare">Prefer not to declare</option>
-                  </select>
-                  </div>
-                </div>
-
-                <div class="inputTitle">Did you already take part in a GJ+ edition?*</div>
-                <div class="row">
-                  <div class="form-group inputSpace">
-                    <select class="participation" required formControlName="participation">
-                    <option value="Never participated">Never participated</option>
-                    <option value="One time">One time</option>
-                    <option value="Two or three times">Two or three times</option>
-                    <option value="Four times or more">Four times or more</option>
-                  </select>
-                  </div>
-                </div>
-
-                <div class="inputTitle">Are you a student?*</div>
-                <div class="row">
-                  <div class="form-group inputSpace">
-                    <select class="student" required formControlName="student">
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                  </select>
-                  </div>
-                </div>
-
-                <div class="inputTitle">What is the name of your School/College/University*</div>
-                <div class="row">
-                  <div class="form-group inputSpace">
-                    <input #schoolInput type="school" class="form-control" id="schoolInput" placeholder="School/College/University" formControlName="school">
-                  </div>
-                </div>
+                <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                  <mat-label>
+                    {{ 'platform.common.writehere' | translate }}
+                  </mat-label>
+                  <input matInput
+                        id="schoolInput"
+                        required
+                        placeholder=""
+                        formControlName="school">
+                </mat-form-field>
 
                 <div *ngIf="errorMessage" class="error">
                   {{ errorMessage }}
@@ -242,7 +286,7 @@
                 <div class="row">
                   <div class="registerBTN">
                     <button type="submit" class="btn btn-default registerFont">
-                      Register
+                      {{ 'platform.common.register' | translate }}
                     </button>
                   </div>
                 </div>

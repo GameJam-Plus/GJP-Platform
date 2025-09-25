@@ -21,7 +21,27 @@
 			"teams": "Equipes:",
 			"submissions": "Submissões:",
 			"specialthanks": "Agradecimentos Especiais",
-			"sendform": "ENVIAR FORMULÁRIO"
+			"sendform": "ENVIAR FORMULÁRIO",
+			"register": "Registrar",
+			"email": "E-mail",
+			"name": "Nome",
+			"discord": "Usuário do Discord",
+			"cellnumber": "Número de celular",
+			"selecthere": "Selecione aqui",
+			"writehere": "Escreva aqui"
+		},
+		"errors": {
+			"requiredfields": "Por favor, preencha todos os campos obrigatórios!"
+		},
+		"register": {
+			"innertext": {
+				"tooltipline1": "Por que estamos perguntando isso?",
+				"tooltipline2": "Essas perguntas nos ajudam de várias maneiras importantes:",
+				"tooltipline3": "Elas apoiam nossa participação em oportunidades de financiamento público e privado que exigem esse tipo de dado.",
+				"tooltipline4": "Elas nos permitem avaliar se estamos construindo com sucesso uma comunidade mais diversa, inclusiva e representativa.",
+				"tooltipline5": "Elas nos ajudam a criar categorias específicas, prêmios ou iniciativas dentro do GameJamPlus que celebram e promovem a diversidade.",
+				"tooltipline6": "Suas respostas são confidenciais e serão usadas exclusivamente para fins estatísticos e estratégicos. Você sempre pode escolher 'Prefiro não declarar' se não se sentir à vontade para compartilhar."
+			}
 		},
 		"globalorganizer": {
 			"home": {

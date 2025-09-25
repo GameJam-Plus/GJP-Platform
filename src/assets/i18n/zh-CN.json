@@ -21,7 +21,27 @@
 			"teams": "团队：",
 			"submissions": "提交：",
 			"specialthanks": "特别感谢",
-			"sendform": "提交表单"
+			"sendform": "提交表单",
+			"register": "注册",
+			"email": "电子邮箱",
+			"name": "姓名",
+			"discord": "Discord 用户名",
+			"cellnumber": "手机号",
+			"selecthere": "在这里选择",
+			"writehere": "在这里输入"
+		},
+		"errors": {
+			"requiredfields": "请填写所有必填字段！"
+		},
+		"register": {
+			"innertext": {
+				"tooltipline1": "为什么我们要问这些？",
+				"tooltipline2": "这些问题在几个重要方面对我们有帮助：",
+				"tooltipline3": "它们支持我们参与需要此类数据的公共和私人资助机会。",
+				"tooltipline4": "它们使我们能够评估我们是否成功地建立了一个更加多元、包容和具代表性的社区。",
+				"tooltipline5": "它们帮助我们在 GameJamPlus 内创建特定的类别、奖项或倡议，以庆祝和促进多样性。",
+				"tooltipline6": "您的回答将被严格保密，并仅用于统计和战略目的。如果您不愿意分享，您始终可以选择“宁愿不声明”。"
+			}
 		},
 		"globalorganizer": {
 			"home": {

@@ -21,7 +21,27 @@
 			"teams": "Teams:",
 			"submissions": "Submissions:",
 			"specialthanks": "Special Thanks",
-			"sendform": "SEND FORM"
+			"sendform": "SEND FORM",
+			"register": "Register",
+			"email": "Email",
+			"name": "Name",
+			"discord": "Discord Username",
+			"cellnumber": "Cell Number",
+			"selecthere": "Select here",
+			"writehere": "Write here"
+		},
+		"errors": {
+			"requiredfields": "Please fill all the required fields!"
+		},
+		"register": {
+			"innertext": {
+				"tooltipline1": "Why are we asking this?",
+				"tooltipline2": "These questions help us in several important ways:",
+				"tooltipline3": "They support our participation in public and private funding opportunities that require that kind of data.",
+				"tooltipline4": "They allow us to assess whether we're successfully building a more diverse, inclusive, and representative community.",
+				"tooltipline5": "They help us create specific categories, awards, or initiatives within GameJamPlus that celebrate and promote diversity.",
+				"tooltipline6": "Your answers are confidential and will be used solely for statistical and strategic purposes. You can always choose 'Prefer not to declare' if you're not comfortable sharing."
+			}
 		},
 		"globalorganizer": {
 			"home": {

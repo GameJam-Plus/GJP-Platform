@@ -3,10 +3,17 @@ import { FormBuilder, FormGroup, Validators, FormsModule } from '@angular/forms'
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { User } from '../../types';
 import { UserService } from '../services/user.service';
 import { environment } from '../../environments/environment.prod';
 import { MessagesComponent } from '../messages/messages.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 /*export enum Gender {
   Male = 'Male',
@@ -23,7 +30,13 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     CommonModule,
     ReactiveFormsModule,
     MessagesComponent,
-    MatTooltipModule
+    MatTooltipModule,
+    TranslatePipe,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatIconModule,
+    TooltipModule
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
@@ -34,14 +47,14 @@ export class RegisterComponent implements OnInit {
   //genderOptions = Object.values(Gender);
   @ViewChild(MessagesComponent) message!: MessagesComponent;
 
-  constructor(private router: Router, private fb: FormBuilder, private userService: UserService) { }
+  constructor(private router: Router, private fb: FormBuilder, private userService: UserService, private translate: TranslateService) { }
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       name: ['', Validators.required],
       discordUsername: ['', Validators.required],
-      instagram: ['',Validators.required],
+      instagram: [''],
       linkedin: [''],
       telefoneWhatsApp: [''],
       ethnicity: ['', Validators.required],
@@ -71,27 +84,42 @@ export class RegisterComponent implements OnInit {
   }
 
   submitForm() {
-    if (this.registerForm.valid) {
-      const { name, email, discordUsername, instagram, linkedin, telefoneWhatsApp, ethnicity, gender, intersex, identity, orientation, disability, participation, student, school } = this.registerForm.value;
-      this.userService.registerUser({
-        name: name,
-        email: email.toLowerCase().trim(),
+    if (!this.registerForm.valid) {
+      const controls = this.registerForm.controls;
+        for (const name in controls) {
+            if (controls[name].invalid) {
+              console.log(`Invalid field: ${name}`);
+              console.log(`Value: ${controls[name].value}`);
+              console.log(`Errors:`, controls[name].errors);
+            }
+        }
+        this.errorMessage = this.translate.instant('platform.errors.requiredfields');
+    }
+    else
+    {
+      const formValues = this.registerForm.value;
+
+      const user: User = {
+        name: formValues.name,
+        email: formValues.email,
         roles: ['Jammer'],
         coins: 0,
-        discordUsername: discordUsername,
-        instagram: instagram,
-        linkedin: linkedin,
-        telefoneWhatsApp: telefoneWhatsApp,
-        ethnicity: ethnicity,
-        gender: gender,
-        intersex: intersex,
-        identity: identity,
-        orientation: orientation,
-        disability: disability, //se tem alguma deficiencia
-        participation: participation, //se ja participou de GJ+ anteriores
-        student: student,         //se é estudante ou não
-        school: school, //nome local que estuda
-      }).subscribe({
+        discordUsername: formValues.discordUsername,
+        instagram: formValues.instagram,
+        linkedin: formValues.linkedin,
+        telefoneWhatsApp: formValues.telefoneWhatsApp,
+        ethnicity: formValues.ethnicity,
+        gender: formValues.gender,
+        intersex: formValues.intersex,
+        identity: formValues.identity,
+        orientation: formValues.orientation,
+        disability: formValues.disability,
+        participation: formValues.participation,
+        student: formValues.student,
+        school: formValues.school,
+      }
+
+      this.userService.registerUser(user).subscribe({
         next: (data) => {
           if (data.success) {
             this.message.showMessage(
@@ -106,12 +134,9 @@ export class RegisterComponent implements OnInit {
           }
         },
         error: (error) => {
-          console.log(error);
           this.errorMessage = error.error.message;
-        },
+        }
       });
-    } else {
-      this.errorMessage = 'Please fill all the required fields';
     }
   }
 

@@ -188,7 +188,7 @@ export class DataFormComponent implements OnInit {
           let jammerData : JammerData = {
             name: this.jammerDataForm.get('name')?.value,
             email: this.jammerDataForm.get('email')?.value,
-            discordUsername: this.jammerDataForm.get('discord')?.value,
+            discordUsername: this.jammerDataForm.get('discordUsername')?.value,
             countryOfOrigin: this.jammerDataForm.get('countryOfOrigin')?.value.name,
             countryOfResidence: this.jammerDataForm.get('countryOfResidence')?.value.name,
             city: this.jammerDataForm.get('city')?.value,

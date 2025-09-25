@@ -33,7 +33,7 @@
         </td>
         <td>
           <select name="filterModality" #filterModality class="form-select" (change)="setFilter('modality', filterModality.selectedOptions)" multiple>
-            <option value="on site">On Venue</option>
+            <option value="on site">On Site</option>
             <option value="online">Online</option>
             <option value="hybrid">Hybrid</option>
           </select>
@@ -150,7 +150,7 @@
                 <div class="form-group formInput">
                   <select #createModalityInput class="form-control" id="createSiteModalityInput" formControlName="modality">
                     <option value="" disabled selected hidden>Modality</option>
-                    <option value="on site">On Venue</option>
+                    <option value="on site">On Site</option>
                     <option value="online">Online</option>
                     <option value="hybrid">Hybrid</option>
                   </select>
