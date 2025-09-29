@@ -38,6 +38,8 @@ export class DataFormComponent implements OnInit {
   constructor(private fb: FormBuilder, private userService: UserService){}
 
   ngOnInit(): void {
+    console.log(this.site.language);
+
     this.jammerDataForm = this.fb.group({
       name: [this.user.name, Validators.required],
       countryOfOrigin: ['', Validators.required],

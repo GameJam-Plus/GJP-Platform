@@ -313,39 +313,38 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
   }
 
   getJamOfUser(): void {
-    this.jamService.getCurrentJam().pipe(
-      switchMap((jam: Jam) => {
+    this.jamService.getCurrentJam().subscribe({
+      next: (jam: Jam) => {
         this.currentJam = jam;
-        return this.jamService.getJamByUser(this.user._id!, jam._id!);
-      })
-    ).subscribe({
-      next: (data) => {
-        console.log("Jammer data: ", data.jammerData);
-  
-        if (
-          data.jammerData.ethnicity &&
-          data.jammerData.gender &&
-          data.jammerData.intersex &&
-          data.jammerData.orientation
-        ) {
-          this.jammerData = true;
-        }
-  
-        this.jam = data.jam;
-        this.site = data.site;
-        this.team = data.team;
-  
-        this.listStaff();
-        this.listJammers();
-        this.countJamData();
-        this.getSubmission();
-  
-        console.log(this.team);
+        this.jamService.getJamByUser(this.user._id!, jam._id!).subscribe({
+          next: (data) => {
+            this.jam = data.jam;
+            this.site = data.site;
+            this.team = data.team;
+
+            if(
+              data.jammerData.ethnicity &&
+              data.jammerData.gender &&
+              data.jammerData.intersex &&
+              data.jammerData.orientation
+            ){
+              this.jammerData = data.jammerData;
+            }
+
+            this.listStaff();
+            this.listJammers();
+            this.countJamData();
+            this.getSubmission();
+          }, 
+          error: (error) => {
+            console.log("Error obtaining jammer information", error.error.message);
+            this.listRegions();
+            this.listSites();
+          }
+        });
       },
       error: (error) => {
-        console.log("Error: ", error.error.message);
-        this.listRegions();
-        this.listSites();
+        console.log("Error fetching current jam: ", error);
       }
     });
   }
