@@ -181,7 +181,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
   ];
 
   randomColors = [
-    "red", "blue", "green", "yellow", "purple", "orange", "pink", "brown", "black", "white"
+    "red", "blue", "green", "yellow", "purple", "orange", "pink", "brown", "black", "white", "gray"
   ];
 
   randomPluralNouns = [
@@ -290,6 +290,8 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
     this.intervalId = setInterval(() => {
       this.getDeltaTime();
     }, 1000);
+
+    console.log("Current user: ", this.user.name);
   }
 
   ngOnDestroy(): void {
@@ -314,11 +316,12 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
   {
     this.jamService.getJamByUser(this.user._id!).subscribe({
       next: (data) => {
+        console.log("Jam: ", data.jam.title);
+        console.log("Site: ", data.site.name);
         console.log("Jammer data: ", data.jammerData);
-        if(data.jammerData.ethnicity && 
-          data.jammerData.gender && 
-          data.jammerData.intersex && 
-          data.jammerData.orientation) this.jammerData = true;
+        if(this.hasJammerDataCompleted(data)) {
+            console.log("Jammer data found.");
+            this.jammerData = true;}
         this.jam = data.jam;
         this.site = data.site;
         this.team = data.team;
@@ -335,6 +338,27 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
         this.listSites();
       }
     });
+  }
+
+  hasJammerDataCompleted(data : any) : boolean 
+  {
+    return data.jammerData.countryOfOrigin && 
+      data.jammerData.countryOfResidence && 
+      data.jammerData.city && 
+      data.jammerData.ethnicity && 
+      data.jammerData.gender && 
+      data.jammerData.intersex && 
+      data.jammerData.identity.length > 0 && 
+      data.jammerData.orientation.length > 0 && 
+      data.jammerData.disability.length > 0 && 
+      data.jammerData.student && 
+      data.jammerData.degree && 
+      data.jammerData.studies.length > 0 && 
+      data.jammerData.industry.length > 0 && 
+      data.jammerData.participation && 
+      data.jammerData.termsOfConduct && 
+      data.jammerData.termsOfImage && 
+      data.jammerData.termsOfIP;
   }
 
   countJamData(): void{
