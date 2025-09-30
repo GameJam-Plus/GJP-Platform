@@ -290,8 +290,6 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
     this.intervalId = setInterval(() => {
       this.getDeltaTime();
     }, 1000);
-
-    console.log("Current user: ", this.user.name);
   }
 
   ngOnDestroy(): void {
@@ -318,7 +316,6 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
       next: (data) => {
         console.log("Jam: ", data.jam.title);
         console.log("Site: ", data.site.name);
-        console.log("Jammer data: ", data.jammerData);
         if(this.hasJammerDataCompleted(data)) {
             console.log("Jammer data found.");
             this.jammerData = true;}
@@ -571,10 +568,6 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
         });
       }
     );
-  }
-
-  hasJammerData() {
-
   }
 
   exitSite() : void
