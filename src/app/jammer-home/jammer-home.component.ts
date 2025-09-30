@@ -15,7 +15,6 @@ import { DataFormComponent } from './data-form/data-form.component';
 import { RulesComponent } from '../rules/rules.component';
 import { User, Site, Region, Country, Jam, Stage, Team, Submission, JamStage, JamStageColors, getJamStageColor, toJamStage } from '../../types';
 import { TranslatePipe } from '@ngx-translate/core';
-import { switchMap } from 'rxjs';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
@@ -74,7 +73,6 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
   page: string = "site";
   intervalId: any;
 
-  currentJam?: Jam;
   site?: Site;
   jam?: Jam;
   team?: Team;
@@ -312,44 +310,32 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  getJamOfUser(): void {
-    this.jamService.getCurrentJam().pipe(
-      switchMap((jam: Jam) => {
-        this.currentJam = jam;
-        return this.jamService.getJamByUser(this.user._id!, jam._id!);
-      })
-    ).subscribe({
+  getJamOfUser() : void
+  {
+    this.jamService.getJamByUser(this.user._id!).subscribe({
       next: (data) => {
         console.log("Jammer data: ", data.jammerData);
-  
-        if (
-          data.jammerData.ethnicity &&
-          data.jammerData.gender &&
-          data.jammerData.intersex &&
-          data.jammerData.orientation
-        ) {
-          this.jammerData = true;
-        }
-  
+        if(data.jammerData.ethnicity && 
+          data.jammerData.gender && 
+          data.jammerData.intersex && 
+          data.jammerData.orientation) this.jammerData = true;
         this.jam = data.jam;
         this.site = data.site;
         this.team = data.team;
-  
         this.listStaff();
         this.listJammers();
         this.countJamData();
         this.getSubmission();
-  
-        console.log(this.team);
+
+        console.log("Team: ", this.team);
       },
       error: (error) => {
-        console.log("Error: ", error.error.message);
+        //if(error.status === 404)
         this.listRegions();
         this.listSites();
       }
     });
   }
-  
 
   countJamData(): void{
     if(this.jam)
@@ -508,7 +494,6 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
     const url = `${environment.apiUrl}/api/region/get-regions`;
     this.regionService.getRegions(url).subscribe({
       next: (regions: Region[]) => {
-        console.log("Regions: ", regions);
         this.regions = regions;
         this.selectedRegion = regions[0];
       },
