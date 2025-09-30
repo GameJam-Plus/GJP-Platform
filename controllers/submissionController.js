@@ -308,7 +308,7 @@ const getSubmissionByTeam = async(req, res) => {
     try { 
         let submission = await Submission.findOne({ teamId: req.params.teamId });
 
-        if(!submission) return res.status(400).json({ success: false, message: "No valid submission found" });
+        if(!submission) return res.status(404).json({ success: false, message: "No valid submission found" });
         else return res.status(200).json({ success: true, data: submission });
     } catch(error) {
         return res.status(400).json({ success: false, message: error.message });
