@@ -4,6 +4,7 @@
     <thead>
       <tr>
         <th scope="col">Region</th>
+        <th scope="col">Organizer</th>
         <th scope="col">Country</th>
         <th scope="col">City</th>
         <th scope="col">Name</th>
@@ -19,6 +20,9 @@
           <select name="filterRegion" #filterRegion class="form-select" (change)="setFilter('region', filterRegion.selectedOptions)" multiple>
             <option *ngFor="let region of regions" [value]="region._id">{{ region.name }}</option>
           </select>
+        </td>
+        <td>
+          <input type="text" name="filterOrganizer" #filterOrganizer class="form-control" (change)="setFilter('organizer', filterOrganizer.value)">
         </td>
         <td>
           <select name="filterCountry" #filterCountry class="form-select" (change)="setFilter('country', filterCountry.selectedOptions)" multiple>
@@ -45,11 +49,12 @@
           </select>
         </td>
         <td>
-          <button class="btn btn-primary" (click)="clearFilters(filterRegion, filterCountry, filterCity, filterName, filterModality, filterStatus)">Clear Filters</button>
+          <button class="btn btn-primary" (click)="clearFilters(filterRegion, filterCountry, filterCity, filterOrganizer, filterName, filterModality, filterStatus)">Clear Filters</button>
         </td>
       </tr>
       <tr *ngFor="let row of filteredSites">
         <td>{{ getRegionName(row.regionId) }}</td>
+        <td>{{ row.organizer }}</td> 
         <td>{{ row.country.name }}</td>
         <td>{{ row.city }}</td>
         <td>{{ row.name }}</td>
