@@ -9,6 +9,17 @@
     position: relative;
 }
 
+.btn-diagonal {
+    clip-path: polygon(
+    20% 0, 
+    100% 0, 
+    100% 100%, 
+    20% 100%, 
+    0 50% 
+  );
+  padding: 0.5rem 1.5rem;
+}
+
 .teamName1 {
     text-align: center;
     position: relative;

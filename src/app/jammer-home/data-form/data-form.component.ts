@@ -57,33 +57,33 @@ export class DataFormComponent implements OnInit {
       // pronounT: false,
       // pronounO: false,
 
-      identityAg: false,
-      identityCM: false,
-      identityCW: false,
-      identityGF: false,
-      identityQ: false,
-      identityTM: false,
-      identityTW: false,
-      identityT: false,
-      identityO: false,
-      identityNo: false,
+      identityAg: this.user.identity.includes('Agender'),
+      identityCM: this.user.identity.includes('Cisgender Man'),
+      identityCW: this.user.identity.includes('Cisgender Woman'),
+      identityGF: this.user.identity.includes('Gender Fluid'),
+      identityQ: this.user.identity.includes('Queer'),
+      identityTM: this.user.identity.includes('Transgender Man'),
+      identityTW: this.user.identity.includes('Transgender Woman'),
+      identityT: this.user.identity.includes('Travesti'),
+      identityO: this.user.identity.includes('Other'),
+      identityNo: this.user.identity.includes('Prefer not to declare'),
 
-      orientationAs: false,
-      orientationBi: false,
-      orientationGay: false,
-      orientationHet: false,
-      orientationLes: false,
-      orientationPan: false,
-      orientationO: false,
-      orientationNo: false,
+      orientationAs: this.user.orientation.includes('Asexual'),
+      orientationBi: this.user.orientation.includes('Bisexual'),
+      orientationGay: this.user.orientation.includes('Gay'),
+      orientationHet: this.user.orientation.includes('Heterosexual'),
+      orientationLes: this.user.orientation.includes('Lesbian'),
+      orientationPan: this.user.orientation.includes('Pansexual'),
+      orientationO: this.user.orientation.includes('Other'),
+      orientationNo: this.user.orientation.includes('Prefer not to declare'),
 
-      disabilityN: false,
-      disabilityYI: false,
-      disabilityYP: false,
-      disabilityYV: false,
-      disabilityYH: false,
-      disabilityO: false,
-      disabilityNo: false,
+      disabilityN: this.user.disability.includes('No'),
+      disabilityYI: this.user.disability.includes('Intellectual disability'),
+      disabilityYP: this.user.disability.includes('Physical disability'),
+      disabilityYV: this.user.disability.includes('Visual disability'),
+      disabilityYH: this.user.disability.includes('Hearing disability'),
+      disabilityO: this.user.disability.includes('Other'),
+      disabilityNo: this.user.disability.includes('Prefer not to declare'),
 
       industryFree: false,
       industryStudio: false,
@@ -111,11 +111,6 @@ export class DataFormComponent implements OnInit {
       termsOfImage: ['', Validators.required],
       termsOfIP: ['', Validators.required]
     });
-  }
-
-  isLanguageDefault()
-  {
-    return this.site.language != 'PT' && this.site.language != 'ES';
   }
 
   saveJammerData()

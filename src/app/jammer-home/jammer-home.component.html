@@ -43,7 +43,16 @@
 
   <!-- #region NO JAMMER DATA -->
   
-  <div *ngIf="jam && site && !jammerData" class="row w-100 p-5">
+  <div *ngIf="jam && site && !jammerData" class="row w-100 p-5 align-items-center position-relative">
+    <div class="">
+      
+      <button class="btn btn-primary btn-diagonal" (click)="exitSite()">
+        Go back
+      </button>
+    </div>
+    <div class="pb-3">
+      <h2 class="m-0">Selected venue: {{site.name}}</h2>
+    </div>
     <app-data-form [user]="user" [site]="site" [jam]="jam" [countries]="countries" (jammerData)="setJammerData($event)"></app-data-form>
   </div>
 
