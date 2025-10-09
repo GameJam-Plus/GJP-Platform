@@ -155,6 +155,7 @@ export interface Site {
       code: string;
     };
     city?: string;
+    organizer?: string;
     igda?: boolean;
     customSubmissionTime?: string;
 }

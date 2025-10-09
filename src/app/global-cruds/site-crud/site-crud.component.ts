@@ -53,7 +53,8 @@ export class SiteCrudComponent implements OnInit {
       modality: ['', Validators.required],
       region: ['', Validators.required],
       country: ['', Validators.required],
-      city: ['']
+      city: [''],
+      organizer: ['']
     });
 
     this.listRegions();
@@ -259,6 +260,9 @@ export class SiteCrudComponent implements OnInit {
         }
         this.filter.regions = regions;
         break;
+      case 'organizer':
+        this.filter.organizer = value;
+        break;  
       case 'country':
         let countries = new Array();
         for(var o = 0; o < value.length; ++o)
@@ -294,11 +298,12 @@ export class SiteCrudComponent implements OnInit {
     this.filteredSites = this.getRows();
   }
 
-  clearFilters(filterRegion: any, filterCountry: any, filterCity: any, filterName: any, filterModality: any, filterStatus: any)
+  clearFilters(filterRegion: any, filterCountry: any, filterCity: any, filterOrganizer: any, filterName: any, filterModality: any, filterStatus: any)
   {
     filterRegion.selectedIndex = -1;
     filterCountry.selectedIndex = -1;
     filterCity.value = '';
+    filterOrganizer.value = '';
     filterName.value = '';
     filterModality.selectedIndex = -1;
     filterStatus.selectedIndex = -1;
@@ -314,6 +319,8 @@ export class SiteCrudComponent implements OnInit {
       
       if(this.filter.regions && this.filter.regions.length > 0)
         valid = valid && this.filter.regions.includes(item.regionId);
+      if(this.filter.organizer)
+        valid = valid && (item.organizer ? item.organizer.toLowerCase().includes(this.filter.organizer.toLowerCase()) : false);
       if(this.filter.countries && this.filter.countries.length > 0)
         valid = valid && this.filter.countries.includes(item.country.code);
       if(this.filter.city)
