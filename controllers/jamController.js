@@ -236,6 +236,8 @@ const countJamData = async(req, res) => {
             siteCount : 0,
             countryCount : 0,
             jammerCount : 0,
+            jammerBrazilCount : 0,
+            jammerInternacionalCount : 0,
             teamCount : 0,
             submissionCount : 0
         };
@@ -255,6 +257,16 @@ const countJamData = async(req, res) => {
         let jammers = await UserOnJam.countDocuments({ jamId: jamId });
 
         result.jammerCount = jammers;
+        
+        let jammersBrazil = await UserOnJam.countDocuments({ 
+            jamId: jamId,
+            "jammerData.countryOfOrigin": "Brazil"
+        });
+       result.jammerBrazilCount = jammersBrazil;
+
+       result.jammerInternacionalCount = jammers - jammersBrazil;
+
+
 
         let teams = await Team.countDocuments({ jamId: jamId });
 
