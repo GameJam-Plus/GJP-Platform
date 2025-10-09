@@ -1,0 +1,10 @@
+{
+  "routes": [
+    "/home",
+    "/Jammer",
+    "/Juez",
+    "/login",
+    "/register",
+    "/rules"
+  ]
+}
