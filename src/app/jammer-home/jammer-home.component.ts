@@ -12,8 +12,9 @@ import { environment } from '../../environments/environment.prod';
 import { MessagesComponent } from '../messages/messages.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DataFormComponent } from './data-form/data-form.component';
+import { SideBarComponent } from '../side-bar/side-bar.component';
 import { RulesComponent } from '../rules/rules.component';
-import { User, Site, Region, Country, Jam, Stage, Team, Submission, JamStage, JamStageColors, getJamStageColor, toJamStage } from '../../types';
+import { User, Site, Region, Country, Jam, Stage, Team, Submission, JamStage, getJamStageColor, toJamStage } from '../../types';
 import { TranslatePipe } from '@ngx-translate/core';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -53,6 +54,7 @@ const SUBMISSION_GRACE_PERIOD_MS = 48 * 60 * 60 * 1000;
         FormsModule,
         ReactiveFormsModule,
         RulesComponent,
+        SideBarComponent,
         DataFormComponent,
         TranslatePipe
     ]

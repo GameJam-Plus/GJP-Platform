@@ -1,0 +1,38 @@
+<!-- #region SIDEBAR -->
+
+    <div class="p-2 mb-2">
+      <div class="card text-center p-2 shadow">
+        <fa-icon [icon]="faCoffee" class="fa-3x"></fa-icon>
+        <p>{{ 'platform.sidebar.welcome' | translate }}</p>
+        <p><a href="mailto:support@gamejamplus.com">support&#64;gamejamplus.com</a></p>
+      </div>
+    </div>
+
+    <div class="p-2 mb-2">
+      <div class="card text-center p-2 shadow">
+        <fa-icon [icon]="faJar" class="fa-3x"></fa-icon>
+        <span><b>{{ 'platform.common.venues' | translate }}</b> {{ jamData.siteCount }}</span>
+        <span><b>{{ 'platform.common.countries' | translate }}</b> {{ jamData.countryCount }}</span>
+        <span><b>{{ 'platform.common.jammers' | translate }}</b>  {{ jamData.jammerCount }}</span>
+        <span><b>{{ 'platform.common.teams' | translate }}</b> {{ jamData.teamCount }} <br></span>
+        <span><b>{{ 'platform.common.submissions' | translate }}</b> {{ jamData.submissionCount }}</span>
+        <span class="mb-2"></span>
+      </div>
+    </div>
+
+    <div class="p-2 mb-2">
+      <div class="card text-center p-2 shadow">
+        <img src="/assets/Images/cidev.png" style="width: 40%; margin: auto;">
+        <p>Powered by CIDeV</p>
+      </div>
+    </div>
+
+    <div class="p-2 mb-2">
+      <div class="card text-center p-2 shadow">
+        <fa-icon [icon]="faUsers" class="fa-3x"></fa-icon>
+        <p><b>{{ 'platform.common.specialthanks' | translate }}</b></p>
+        <p>CIDeV<br>Sharon Chacón<br>David Pastor<br>Jeffry Cuendiz<br>Paublo Ávila</p>
+      </div>
+    </div>
+  
+  <!-- #endregion -->

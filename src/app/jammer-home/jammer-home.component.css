@@ -9,7 +9,7 @@
     position: relative;
 }
 
-.btn-diagonal {
+.btn-arrow-left {
     clip-path: polygon(
     20% 0, 
     100% 0, 

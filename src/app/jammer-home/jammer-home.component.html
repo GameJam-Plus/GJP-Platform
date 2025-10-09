@@ -46,12 +46,12 @@
   <div *ngIf="jam && site && !jammerData" class="row w-100 p-5 align-items-center position-relative">
     <div class="">
       
-      <button class="btn btn-primary btn-diagonal" (click)="exitSite()">
-        Go back
+      <button class="btn btn-primary btn-arrow-left" (click)="exitSite()">
+        {{ 'platform.common.goback' | translate }}
       </button>
     </div>
     <div class="pb-3">
-      <h2 class="m-0">Selected venue: {{site.name}}</h2>
+      <h2 class="m-0">{{ 'platform.common.venue' | translate }} {{site.name}}</h2>
     </div>
     <app-data-form [user]="user" [site]="site" [jam]="jam" [countries]="countries" (jammerData)="setJammerData($event)"></app-data-form>
   </div>
@@ -66,22 +66,22 @@
 
     <!-- #region NAV BAR -->
     <div id="localHomeNavBar" class="col-2 container-fluid">
-      <div class="navbutton navL1" data-toggle="collapse" data-target="#homeMenu">{{ 'platform.jammer.navbar.home.home' | translate}}</div>
+      <div class="navbutton navL1" data-toggle="collapse" data-target="#homeMenu">{{ 'platform.navbar.home.home' | translate}}</div>
       <ul #homeMenu id="homeMenu" class="collapse">
-        <li class="navbutton navL2" (click)="page = 'site'">{{ 'platform.jammer.navbar.home.venueinfo' | translate}}</li>
-        <li class="navbutton navL2" (click)="page = 'jam'">{{ 'platform.jammer.navbar.home.jaminfo' | translate}}</li>
-        <li class="navbutton navL2" (click)="page = 'games'">{{ 'platform.jammer.navbar.home.gamesfromvenue' | translate}}</li>
+        <li class="navbutton navL2" (click)="page = 'site'">{{ 'platform.navbar.home.venueinfo' | translate}}</li>
+        <li class="navbutton navL2" (click)="page = 'jam'">{{ 'platform.navbar.home.jaminfo' | translate}}</li>
+        <li class="navbutton navL2" (click)="page = 'games'">{{ 'platform.navbar.home.gamesfromvenue' | translate}}</li>
         <!--<li class="navbutton navL2" (click)="page = 'news'">Notifications</li>-->
       </ul>
 
-      <div class="navbutton navL1" data-toggle="collapse" data-target="#venueMenu">{{ 'platform.jammer.navbar.myjam.myjam' | translate}}</div>
+      <div class="navbutton navL1" data-toggle="collapse" data-target="#venueMenu">{{ 'platform.navbar.myjam.myjam' | translate}}</div>
       <ul #venueMenu id="venueMenu" class="collapse">
-        <li class="navbutton navL2" (click)="page = 'team'">{{ 'platform.jammer.navbar.myjam.myteam' | translate}}</li>
-        <li class="navbutton navL2" (click)="page = 'submission'">{{ 'platform.jammer.navbar.myjam.mysubmission' | translate}}</li>
-        <li class="navbutton navL2" (click)="page = 'feedback'">{{ 'platform.jammer.navbar.myjam.feedback' | translate}}</li>
+        <li class="navbutton navL2" (click)="page = 'team'">{{ 'platform.navbar.myjam.myteam' | translate}}</li>
+        <li class="navbutton navL2" (click)="page = 'submission'">{{ 'platform.navbar.myjam.mysubmission' | translate}}</li>
+        <li class="navbutton navL2" (click)="page = 'feedback'">{{ 'platform.navbar.myjam.feedback' | translate}}</li>
       </ul>
 
-      <div class="navbutton navL1" (click)="page = 'rules'">{{ 'platform.jammer.navbar.rules.rulesandconditions' | translate}}</div>
+      <div class="navbutton navL1" (click)="page = 'rules'">{{ 'platform.navbar.rules.rulesandconditions' | translate}}</div>
     </div>
     <!-- #endregion -->
 
@@ -218,10 +218,13 @@
           <hr class="my-4">
 
           <!-- STAGES -->
+          <h2 class="col-12 text-center">{{ 'platform.jammer.home.jaminfo.stages' | translate}}
+            <a matTooltip="{{ 'platform.jammer.home.jaminfo.stagetooltip' | translate}}" class="tooltip-trigger">?</a>
+          </h2>
+          <div class="warning d-block text-center py-2">
+            {{ 'platform.jammer.home.jaminfo.stagesinfo' | translate }}
+          </div>
           <div class="row pb-3 align-items-end">
-            <h2 class="col-12 text-center">{{ 'platform.jammer.home.jaminfo.stages' | translate}}
-              <a matTooltip="{{ 'platform.jammer.home.jaminfo.stagetooltip' | translate}}" class="tooltip-trigger">?</a>
-            </h2>
             <div class="col-3 p-2" *ngFor="let stage of jam.stages">
               <div [ngClass]="getStageClass(stage)" [ngStyle]="getStageStyle(stage)">
                 <h3 class="text-center">{{ stage.stageName }}</h3>
@@ -1063,40 +1066,7 @@
 
     <!-- #region SIDEBAR -->
     <div id="localHomeSideBar" class="col-2">
-      <div class="p-2 mb-2">
-        <div class="card text-center p-2 shadow">
-          <fa-icon [icon]="faCoffee" class="fa-3x"></fa-icon>
-          <p>{{ 'platform.jammer.sidebar.welcome' | translate }}</p>
-          <p><a href="mailto:support@gamejamplus.com">support&#64;gamejamplus.com</a></p>
-        </div>
-      </div>
-
-      <div class="p-2 mb-2">
-        <div class="card text-center p-2 shadow">
-          <fa-icon [icon]="faJar" class="fa-3x"></fa-icon>
-          <span><b>{{ 'platform.common.venues' | translate }}</b> {{ jamData.siteCount }}</span>
-          <span><b>{{ 'platform.common.countries' | translate }}</b> {{ jamData.countryCount }}</span>
-          <span><b>{{ 'platform.common.jammers' | translate }}</b>  {{ jamData.jammerCount }}</span>
-          <span><b>{{ 'platform.common.teams' | translate }}</b> {{ jamData.teamCount }} <br></span>
-          <span><b>{{ 'platform.common.submissions' | translate }}</b> {{ jamData.submissionCount }}</span>
-          <span class="mb-2"></span>
-        </div>
-      </div>
-
-      <div class="p-2 mb-2">
-        <div class="card text-center p-2 shadow">
-          <img src="/assets/Images/cidev.png" style="width: 40%; margin: auto;">
-          <p>Powered by CIDeV</p>
-        </div>
-      </div>
-
-      <div class="p-2 mb-2">
-        <div class="card text-center p-2 shadow">
-          <fa-icon [icon]="faUsers" class="fa-3x"></fa-icon>
-          <p><b>{{ 'platform.common.specialthanks' | translate }}</b></p>
-          <p>CIDeV<br>Sharon Chacón<br>David Pastor<br>Jeffry Cuendiz<br>Paublo Ávila</p>
-        </div>
-      </div>
+      <app-side-bar [jamData]="jamData"></app-side-bar>
     </div>
     <!-- #endregion -->
   </div>

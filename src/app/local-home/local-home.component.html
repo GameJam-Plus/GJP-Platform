@@ -10,31 +10,31 @@
 
   <!-- #region NO REGION -->
   <div *ngIf="!user.region" class="warning p-5 text-center m-2">
-    <p>You haven't been assigned to a region, please select your region to proceed.</p>
-    <p>NOTE: this action is not reversible, get in touch with a Global Organizer if you require to change your region.</p>
+    <p>{{ 'platform.localorganizer.noregion' | translate }}</p>
+    <p>{{ 'platform.localorganizer.noregionnote' | translate }}</p>
 
     <button *ngFor="let region of regions" type="button" class="btn btn-primary m-1" (click)="selectRegion(region)">{{ region.name }}</button>
   </div>
   <!-- #endregion -->
 
-  <!-- #region NO SITE -->
+  <!-- #region NO VENUE -->
   <div *ngIf="user.region && !user.site" class="warning p-5 text-center m-2">
-    <p>You haven't been assigned to a site. Please create your site or join another site as co-organizer.</p>
-    <p>NOTE: this action is not reversible, get in touch with a Global Organizer if you require to change your venue.</p>
+    <p>{{ 'platform.localorganizer.novenue' | translate }}</p>
+    <p>{{ 'platform.localorganizer.novenuenote' | translate }}</p>
 
-    <button type="button" class="btn btn-primary m-1" (click)="createNewSite()">Create new site</button>
+    <button type="button" class="btn btn-primary m-1" (click)="createNewSite()">{{ 'platform.localorganizer.createnewvenue' | translate }}</button>
 
     <hr>
 
-    <p>Or join an existing venue (ask the site's organizer of the secret code)</p>
+    <p>{{ 'platform.localorganizer.joinvenue' | translate }}</p>
     <div class="row mb-2">
       <div class="col-3 p-2" *ngFor="let site of sites">
         <div class="card text-center p-2 shadow">
           <h3>{{ site.name }}</h3>
-          <p><b>Country:</b> {{ site.country.code }} - {{ site.country.name }}</p>
-          <p><b>City:</b> {{ site.city }}</p>
-          <p><b>Modality:</b> {{ site.modality }}</p>
-          <button class="btn btn-black" (click)="joinSite(site)">JOIN VENUE</button>
+          <p><b>{{ 'platform.common.country' | translate }}</b> {{ site.country.code }} - {{ site.country.name }}</p>
+          <p><b>{{ 'platform.common.city' | translate }}</b> {{ site.city }}</p>
+          <p><b>{{ 'platform.common.modality' | translate }}</b> {{ site.modality }}</p>
+          <button class="btn btn-black" (click)="joinSite(site)">{{ 'platform.common.joinvenue' | translate }}</button>
         </div>
       </div>
     </div>
@@ -50,23 +50,23 @@
 
     <!-- #region NAV BAR -->
     <div id="localHomeNavBar" class="col-2 container-fluid">
-      <div class="navbutton navL1" data-toggle="collapse" data-target="#homeMenu">Home</div>
+      <div class="navbutton navL1" data-toggle="collapse" data-target="#homeMenu">{{ 'platform.navbar.home.home' | translate }}</div>
       <ul #homeMenu id="homeMenu" class="collapse">
         <li class="navbutton navL2" (click)="page = 'jam'">GJ+</li>
-        <li class="navbutton navL2" (click)="page = 'calendar'">Event Calendar</li>
+        <li class="navbutton navL2" (click)="page = 'calendar'">{{ 'platform.navbar.home.eventcalendar' | translate }}</li>
         <!--<li class="navbutton navL2" (click)="page = 'news'">Notifications</li>-->
       </ul>
 
-      <div class="navbutton navL1" data-toggle="collapse" data-target="#venueMenu">My Venue</div>
+      <div class="navbutton navL1" data-toggle="collapse" data-target="#venueMenu">{{ 'platform.navbar.venue.myvenue' | translate }}</div>
       <ul #venueMenu id="venueMenu" class="collapse">
-        <li class="navbutton navL2" (click)="page = 'site'">Venue Information</li>
-        <li class="navbutton navL2" (click)="page = 'organizers'">My Staff</li>
-        <li class="navbutton navL2" (click)="page = 'jammers'">Jammers and Teams</li>
-        <li class="navbutton navL2" (click)="page = 'games'">Submissions</li>
+        <li class="navbutton navL2" (click)="page = 'site'">{{ 'platform.navbar.venue.venueinfo' | translate }}</li>
+        <li class="navbutton navL2" (click)="page = 'organizers'">{{ 'platform.navbar.venue.mystaff' | translate }}</li>
+        <li class="navbutton navL2" (click)="page = 'jammers'">{{ 'platform.navbar.venue.jammers' | translate }}</li>
+        <li class="navbutton navL2" (click)="page = 'games'">{{ 'platform.navbar.venue.submissions' | translate }}</li>
         <li class="navbutton navL2" (click)="page = 'fellows'">Fellowship</li>
       </ul>
 
-      <div class="navbutton navL1" (click)="page = 'rules'">Rules and Conditions</div>
+      <div class="navbutton navL1" (click)="page = 'rules'">{{ 'platform.navbar.rules.rulesandconditions' | translate }}</div>
     </div>
     <!-- #endregion -->
 
@@ -75,7 +75,7 @@
       <div *ngIf="page == 'jam'" class="container container-lg p-3">
         <div *ngIf="!jam">
           <h1>JOIN A GAME JAM</h1>
-          <p class="warning">This site is not linked to an open gamejam. Join to a gamejam below to start managing your venue.</p>
+          <p class="warning">This venue is not linked to an open gamejam. Join to a gamejam below to start managing your venue.</p>
           <div class="row">
             <div class="col-4 card" *ngFor="let gj of jams">
               <h3 class="text-center">{{gj.title}}</h3>
@@ -150,10 +150,10 @@
           <div class="row pb-3 align-items-end">
             <h2 class="col-12 text-center">Stages<a matTooltip="All stages start at 00:00:00 and end at 11:59:59 in Brazilian Time (GMT-3)." class="tooltip-trigger">?</a></h2>
             <div class="col-3 p-2" *ngFor="let stage of jam.stages">
-              <div [ngClass]="getStageClass(stage)">
+              <div [ngClass]="getStageClass(stage)" [ngStyle]="getStageStyle(stage)">
                 <h3 class="text-center">{{ stage.stageName }}</h3>
                 <p class="text-center">{{ formatDate(stage.startDate) }} - {{ formatDate(stage.endDate) }}</p>
-                <p class="text-center" *ngIf="isCurrentStage(stage)">Current Stage</p>
+                <p class="text-center" *ngIf="isCurrentStage(stage)">{{ 'platform.jammer.home.jaminfo.currentstage' | translate }}</p>
               </div>
             </div>
           </div>
@@ -490,41 +490,7 @@
 
     <!-- #region SIDEBAR -->
     <div id="localHomeSideBar" class="col-2">
-
-      <div class="p-2 mb-2">
-        <div class="card text-center p-2 shadow">
-          <fa-icon [icon]="faCoffee" class="fa-3x"></fa-icon>
-          <p>Welcome to the new and improved GJ+ platform.</p>
-          <p><a href="mailto:support@gamejamplus.com">support&#64;gamejamplus.com</a></p>
-        </div>
-      </div>
-
-      <div class="p-2 mb-2">
-        <div class="card text-center p-2 shadow">
-          <fa-icon [icon]="faJar" class="fa-3x"></fa-icon>
-          <span><b>Venues:</b> {{ jamData.siteCount }}</span>
-          <span><b>Countries:</b> {{ jamData.countryCount }}</span>
-          <span><b>Jammers:</b>  {{ jamData.jammerCount }}</span>
-          <span><b>Teams:</b> {{ jamData.teamCount }} <br></span>
-          <span><b>Submissions:</b> {{ jamData.submissionCount }}</span>
-          <span class="mb-2"></span>
-        </div>
-      </div>
-
-      <div class="p-2 mb-2">
-        <div class="card text-center p-2 shadow">
-          <img src="/assets/Images/cidev.png" style="width: 40%; margin: auto;">
-          <p>Powered by CIDeV</p>
-        </div>
-      </div>
-
-      <div class="p-2 mb-2">
-        <div class="card text-center p-2 shadow">
-          <fa-icon [icon]="faUsers" class="fa-3x"></fa-icon>
-          <p><b>Special Thanks</b></p>
-          <p>Sharon Chacón<br>David Pastor<br>Jeffry Cuendiz<br>Paublo Ávila</p>
-        </div>
-      </div>
+      <app-side-bar [jamData]="jamData"></app-side-bar>
     </div>
     <!-- #endregion -->
   </div>

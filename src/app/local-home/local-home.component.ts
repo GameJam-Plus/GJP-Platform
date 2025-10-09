@@ -14,6 +14,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { environment } from '../../environments/environment.prod';
 import { RulesComponent } from '../rules/rules.component';
 import { saveAs } from 'file-saver';
+import { toJamStage, getJamStageColor } from '../../types';
+import { SideBarComponent } from '../side-bar/side-bar.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
@@ -46,7 +49,9 @@ import tinymce from 'tinymce';
     FontAwesomeModule,
     EditorComponent,
     MatTooltipModule,
-    RulesComponent
+    RulesComponent,
+    SideBarComponent,
+    TranslatePipe
   ],
   templateUrl: './local-home.component.html',
   styleUrl: './local-home.component.css',
@@ -636,7 +641,7 @@ export class LocalHomeComponent implements OnDestroy {
   {
     if(this.isCurrentStage(stage))
     {
-      return 'card inverted border border-dark';
+      return 'card text-white double-border';
     }
     else
     {
@@ -863,5 +868,12 @@ export class LocalHomeComponent implements OnDestroy {
         }
       });
     }
+  }
+
+  getStageStyle(stage: any)
+  {
+    const enumStage = toJamStage(stage?.stageName);
+    const bg = enumStage ? getJamStageColor(enumStage) : '#9CA3AF';
+    return { 'background-color': bg };
   }
 }
