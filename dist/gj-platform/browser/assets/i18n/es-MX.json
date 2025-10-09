@@ -16,6 +16,7 @@
 			"sendpitch": "ENVIAR PITCH",
 			"closedsubmissions": "ENVÍOS CERRADOS",
 			"venues": "Sedes:",
+			"venue": "Sede:",
 			"countries": "Países:",
 			"jammers": "Participantes:",
 			"teams": "Equipos:",
@@ -28,7 +29,8 @@
 			"discord": "Usuario de Discord",
 			"cellnumber": "Número de celular",
 			"selecthere": "Selecciona aquí",
-			"writehere": "Escribe aquí"
+			"writehere": "Escribe aquí",
+			"goback": "Regresar"
 		},
 		"errors": {
 			"requiredfields": "¡Por favor completa todos los campos obligatorios!"
@@ -50,6 +52,14 @@
 					"title": "Título"
 				}
 			}
+		},
+		"localorganizer": {
+			"noregion": "Aún no se te ha asignado una región, selecciona tu región para continuar.",
+			"noregionnote": "NOTA: esta acción no es reversible. Ponte en contacto con un Organizador Global si necesitas cambiar tu región.",
+			"novenue": "Aún no se te ha asignado una sede. Crea tu propia sede o únete a otra como coorganizador.",
+			"novenuenote": "NOTA: esta acción no es reversible. Ponte en contacto con un Organizador Global si necesitas cambiar tu sede.",
+			"createnewvenue": "Crear nueva sede",
+			"joinvenue": "O únete a una sede existente (pide el código secreto al organizador del sitio)"
 		},
 		"jammer": {
 			"home": {
@@ -74,7 +84,8 @@
 					"notpublictext2": "Los organizadores globales publicarán los temas y categorías pronto, revisa nuevamente más tarde.",
 					"stages": "Etapas",
 					"stagetooltip": "Todas las etapas comienzan a las 00:00:00 y terminan a las 11:59:59 en hora de Brasil (GMT-3).",
-					"themes": "Temas"
+					"themes": "Temas",
+					"stagesinfo": "Las fechas oficiales de la Game Jam son del 17 al 19 de octubre, pero algunas sedes se llevarán a cabo en diferentes fechas (verifica con tu Organizador Local). La Incubación comienza oficialmente el 27 de octubre, pero TODOS tendrán acceso al contenido completo, incluidas las grabaciones de reuniones y los materiales enviados."
 				},
 				"venueinfo": {
 					"address": "Dirección",
@@ -114,8 +125,8 @@
 						"line2": "Revisa todos los elementos de esta lista antes de realizar tu envío:"
 					},
 					"submissioninfochecklist": {
-						"item1": "Todos los miembros de mi equipo se unieron al <b><a href='{{itchioLink}}' target='_blank'>itch.io oficial de GameJam+</a></b>",
-						"item2": "Nuestro juego ya fue enviado al itch.io oficial de GameJam+",
+						"item1": "Todos los miembros de mi equipo se unieron al <b><a href='{{itchioLink}}' target='_blank'>itch.io oficial de GameJamPlus</a></b>",
+						"item2": "Nuestro juego ya fue enviado al itch.io oficial de GameJamPlus",
 						"item3": "La página del juego es pública",
 						"item4": "La versión del juego es jugable",
 						"item5": "Agregamos capturas de pantalla, una descripción, etiquetas y toda la información necesaria para jugar nuestro juego"
@@ -125,7 +136,7 @@
 						"goingtoacceleration": "¿Quieres participar en la etapa de ACELERACIÓN?",
 						"gamejamtitle": "Título de tu juego",
 						"gamejambuild": "Enlace a la página de tu juego en itch.io",
-						"gamejamcontact": "¿Quién es la persona responsable del equipo?<br>Este miembro será el punto de contacto para GJ+ si es necesario.",
+						"gamejamcontact": "¿Quién es la persona responsable del equipo?<br>Este miembro será el punto de contacto para GameJamPlus si es necesario.",
 						"gamejamdescription": "Escribe una breve descripción de tu juego aquí",
 						"gamejamgenres": "¿Cuáles son los géneros de tu juego?",
 						"gamejamtopics": "¿Tu juego aborda alguno de los siguientes temas?<br>El enfoque puede ser en narrativa, jugabilidad, arte u otros. Puedes seleccionar más de una opción.",
@@ -137,12 +148,12 @@
 						"gamejamrecommendation": "De 0 a 10, ¿recomendarías GameJamPlus a un amigo?",
 						"gamejamenjoyment": "De 0 a 10, ¿cómo fue tu experiencia durante GameJamPlus? ¿Lo disfrutaste?",
 						"gamejamsuggestions": "¿Tienes alguna otra consideración, consejo, queja o algo más que quieras compartir con nosotros?",
-						"gamejamauthorization": "Autorizo el uso y tratamiento de los datos proporcionados por mí a GameJam+, incluidos mis datos personales, para buscar oportunidades de mi interés, incluyendo la transferencia de estos datos a terceros, con el fin de conectarme con entidades y oportunidades en el mercado de los videojuegos, a nivel nacional e internacional, y segmentos relacionados.",
+						"gamejamauthorization": "Autorizo el uso y tratamiento de los datos proporcionados por mí a GameJamPlus, incluidos mis datos personales, para buscar oportunidades de mi interés, incluyendo la transferencia de estos datos a terceros, con el fin de conectarme con entidades y oportunidades en el mercado de los videojuegos, a nivel nacional e internacional, y segmentos relacionados.",
 						"pitchtext": "Enviar un video pitch es obligatorio para avanzar a la siguiente etapa.",
 						"pitchlink": "Enlace a tu video pitch",
 						"innertext": {
 							"selectteammember": "Selecciona un miembro del equipo",
-							"tooltipcontact": "Este miembro será el punto de contacto de GJ+ en caso de que necesitemos comunicarnos.",
+							"tooltipcontact": "Este miembro será el punto de contacto de GameJamPlus en caso de que necesitemos comunicarnos.",
 							"tooltiptopics": "El enfoque puede ser en narrativa, jugabilidad, arte u otros. Puedes seleccionar más de una opción.",
 							"tooltipsuggestions": "Por favor, no seas grosero =)"
 						}
@@ -260,7 +271,7 @@
 					"option5": "Trabajé en la industria de videojuegos, pero ya no trabajo en ella.",
 					"option6": "No me interesa trabajar en la industria de videojuegos, participo solo por diversión."
 				},
-				"participation": "¿Has participado alguna vez en alguna edición de GJ+?",
+				"participation": "¿Has participado alguna vez en alguna edición de GameJamPlus?",
 				"participationoptions": {
 					"option1": "Nunca participé",
 					"option2": "Una vez",
@@ -274,27 +285,35 @@
 					"option3": "Entiendo que mi juego, videos y materiales producidos y enviados a este evento serán compartidos por GameJamPlus con fines de comunicación, evaluación y marketing."
 				},
 				"error": "Por favor completa todos los campos obligatorios para continuar."
-			},
-			"navbar": {
-				"home": {
-					"gamesfromvenue": "Juegos del Lugar",
-					"home": "Inicio",
-					"jaminfo": "Información del Jam",
-					"venueinfo": "Información del Lugar"
-				},
-				"myjam": {
-					"feedback": "Comentarios",
-					"myjam": "Mi Jam",
-					"mysubmission": "Mi Envío",
-					"myteam": "Mi Equipo"
-				},
-				"rules": {
-					"rulesandconditions": "Reglas y Condiciones"
-				}
-			},
-			"sidebar": {
-				"welcome": "Bienvenido a la nueva y mejorada plataforma de GJ+."
 			}
+		},
+		"navbar": {
+			"home": {
+				"gamesfromvenue": "Juegos del Lugar",
+				"home": "Inicio",
+				"jaminfo": "Información del Jam",
+				"venueinfo": "Información del Lugar",
+				"eventcalendar": "Calendario de Eventos"
+			},
+			"myjam": {
+				"feedback": "Comentarios",
+				"myjam": "Mi Jam",
+				"mysubmission": "Mi Envío",
+				"myteam": "Mi Equipo"
+			},
+			"venue": {
+				"myvenue": "Mi Sede",
+				"venueinfo": "Información de la Sede",
+				"mystaff": "Mi Equipo",
+				"jammers": "Participantes y Equipos",
+				"submissions": "Envíos"
+			},
+			"rules": {
+				"rulesandconditions": "Reglas y Condiciones"
+			}
+		},
+		"sidebar": {
+			"welcome": "Bienvenido a la nueva y mejorada plataforma de GameJamPlus."
 		}
 	}
 }

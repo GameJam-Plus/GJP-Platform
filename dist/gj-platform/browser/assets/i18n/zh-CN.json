@@ -16,6 +16,7 @@
 			"sendpitch": "提交演示",
 			"closedsubmissions": "提交已关闭",
 			"venues": "会场：",
+			"venue": "会场：",
 			"countries": "国家：",
 			"jammers": "参与者：",
 			"teams": "团队：",
@@ -28,7 +29,8 @@
 			"discord": "Discord 用户名",
 			"cellnumber": "手机号",
 			"selecthere": "在这里选择",
-			"writehere": "在这里输入"
+			"writehere": "在这里输入",
+			"goback": "返回"
 		},
 		"errors": {
 			"requiredfields": "请填写所有必填字段！"
@@ -50,6 +52,14 @@
 					"title": "标题"
 				}
 			}
+		},
+		"localorganizer": {
+			"noregion": "您尚未被分配到地区，请选择您的地区以继续。",
+			"noregionnote": "注意：此操作不可逆。如果您需要更改地区，请联系全球组织者。",
+			"novenue": "您尚未被分配到会场。请创建一个新的会场或作为协同组织者加入其他会场。",
+			"novenuenote": "注意：此操作不可逆。如果您需要更改会场，请联系全球组织者。",
+			"createnewvenue": "创建新会场",
+			"joinvenue": "或加入现有会场（向该场地的组织者索取密钥）"
 		},
 		"jammer": {
 			"home": {
@@ -74,7 +84,8 @@
 					"notpublictext2": "全球组织者将很快公布主题和类别，请稍后再查看。",
 					"stages": "阶段",
 					"stagetooltip": "所有阶段均从巴西时间（GMT-3）00:00:00开始，到11:59:59结束。",
-					"themes": "主题"
+					"themes": "主题",
+					"stagesinfo": "Game Jam 的官方日期是 10 月 17 日至 19 日，但有些会场将在不同日期举行（请与您的本地组织者确认）。孵化阶段将于 10 月 27 日正式开始，但所有人都可以访问完整的内容，包括会议录音和提交的材料。"
 				},
 				"venueinfo": {
 					"address": "地址",
@@ -114,8 +125,8 @@
 						"line2": "在提交前，请检查以下所有项目："
 					},
 					"submissioninfochecklist": {
-						"item1": "我团队的所有成员已加入 <b><a href='{{itchioLink}}' target='_blank'>GameJam+ 官方 itch.io</a></b>",
-						"item2": "我们的游戏已提交至 GameJam+ 官方 itch.io",
+						"item1": "我团队的所有成员已加入 <b><a href='{{itchioLink}}' target='_blank'>GameJamPlus 官方 itch.io</a></b>",
+						"item2": "我们的游戏已提交至 GameJamPlus 官方 itch.io",
 						"item3": "游戏页面已公开",
 						"item4": "游戏版本可玩",
 						"item5": "我们添加了截图、描述、标签以及所有必要的游戏信息"
@@ -125,7 +136,7 @@
 						"goingtoacceleration": "您是否想参加加速阶段？",
 						"gamejamtitle": "您的游戏标题",
 						"gamejambuild": "您游戏的 itch.io 页面链接",
-						"gamejamcontact": "谁是团队负责人？<br>此成员将在需要时作为 GJ+ 的联系人。",
+						"gamejamcontact": "谁是团队负责人？<br>此成员将在需要时作为 GameJamPlus 的联系人。",
 						"gamejamdescription": "在此输入您游戏的简要描述",
 						"gamejamgenres": "您的游戏属于哪些类型？",
 						"gamejamtopics": "您的游戏是否涉及以下任何主题？<br>可以通过叙事、玩法、美术等方式呈现。可选择多个选项。",
@@ -137,12 +148,12 @@
 						"gamejamrecommendation": "从 0 到 10，您会向朋友推荐 GameJamPlus 吗？",
 						"gamejamenjoyment": "从 0 到 10，您在 GameJamPlus 的体验如何？您喜欢吗？",
 						"gamejamsuggestions": "您还有其他意见、建议、投诉或想与我们分享的内容吗？",
-						"gamejamauthorization": "我授权 GameJam+ 使用和处理我提供的数据，包括我的个人数据，以寻找我感兴趣的机会，包括将这些数据传输给第三方，目的是将我与国内外游戏市场及相关领域的实体和机会联系起来。",
+						"gamejamauthorization": "我授权 GameJamPlus 使用和处理我提供的数据，包括我的个人数据，以寻找我感兴趣的机会，包括将这些数据传输给第三方，目的是将我与国内外游戏市场及相关领域的实体和机会联系起来。",
 						"pitchtext": "提交视频演示是进入下一阶段的强制要求。",
 						"pitchlink": "您的视频演示链接",
 						"innertext": {
 							"selectteammember": "选择一名团队成员",
-							"tooltipcontact": "如果我们需要联系，该成员将作为 GJ+ 的联系人。",
+							"tooltipcontact": "如果我们需要联系，该成员将作为 GameJamPlus 的联系人。",
 							"tooltiptopics": "可以通过叙事、玩法、美术等方式呈现。可选择多个选项。",
 							"tooltipsuggestions": "请不要刻薄 =)"
 						}
@@ -260,7 +271,7 @@
 					"option5": "我曾经在游戏行业工作过，但现在不再从事。",
 					"option6": "我对游戏行业不感兴趣，只是为了娱乐参与。"
 				},
-				"participation": "您是否参加过任何一届 GJ+？",
+				"participation": "您是否参加过任何一届 GameJamPlus？",
 				"participationoptions": {
 					"option1": "我从未参加过",
 					"option2": "一次",
@@ -274,27 +285,35 @@
 					"option3": "我理解我在本活动中制作和提交的游戏、视频和素材将由 GameJamPlus 用于传播、评估和营销目的。"
 				},
 				"error": "请填写所有必填字段以继续。"
-			},
-			"navbar": {
-				"home": {
-					"gamesfromvenue": "场馆游戏",
-					"home": "主页",
-					"jaminfo": "Jam 信息",
-					"venueinfo": "场馆信息"
-				},
-				"myjam": {
-					"feedback": "反馈",
-					"myjam": "我的 Jam",
-					"mysubmission": "我的提交",
-					"myteam": "我的团队"
-				},
-				"rules": {
-					"rulesandconditions": "规则和条件"
-				}
-			},
-			"sidebar": {
-				"welcome": "欢迎使用全新改进的 GJ+ 平台。"
 			}
+		},
+		"navbar": {
+			"home": {
+				"gamesfromvenue": "场馆游戏",
+				"home": "主页",
+				"jaminfo": "Jam 信息",
+				"venueinfo": "场馆信息",
+				"eventcalendar": "活动日历"
+			},
+			"myjam": {
+				"feedback": "反馈",
+				"myjam": "我的 Jam",
+				"mysubmission": "我的提交",
+				"myteam": "我的团队"
+			},
+			"venue": {
+				"myvenue": "我的会场",
+				"venueinfo": "会场信息",
+				"mystaff": "我的工作人员",
+				"jammers": "参与者和团队",
+				"submissions": "提交内容"
+			},
+			"rules": {
+				"rulesandconditions": "规则和条件"
+			}
+		},
+		"sidebar": {
+			"welcome": "欢迎使用全新改进的 GameJamPlus 平台。"
 		}
 	}
 }
