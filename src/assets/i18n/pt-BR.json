@@ -30,7 +30,22 @@
 			"cellnumber": "Número de celular",
 			"selecthere": "Selecione aqui",
 			"writehere": "Escreva aqui",
-			"goback": "Voltar"
+			"goback": "Voltar",
+			"notpublictext1": "Os temas e as categorias são secretos.",
+			"notpublictext2": "Os Organizadores Globais divulgarão os temas e as categorias em breve.",
+			"categories": "Categorias",
+			"currentstage": "Estágio Atual",
+			"manual": "Manual",
+			"stages": "Estágios",
+			"themes": "Temas",
+			"stagetooltip": "Todas as etapas começam às 00:00:00 e terminam às 11:59:59 no horário brasileiro (GMT-3).",
+			"stagesinfo": "As datas oficiais da Game Jam são de 17 a 19 de outubro, mas algumas sedes acontecerão em datas diferentes (Verifique com seu Organizador Local). A Incubação começa oficialmente no dia 27 de outubro, mas TODOS terão acesso ao conteúdo completo, incluindo gravações de reuniões e materiais enviados.",
+			"country": "País:",
+			"city": "Cidade:",
+			"modality": "Modalidade:",
+			"joinvenue": "ENTRAR NA SEDE",
+			"joinjam": "ENTRAR EM UMA GAME JAM",
+			"join": "ENTRAR"
 		},
 		"errors": {
 			"requiredfields": "Por favor, preencha todos os campos obrigatórios!"
@@ -59,7 +74,12 @@
 			"novenue": "Você ainda não foi atribuído a um local. Crie seu próprio local ou entre em outro como coorganizador.",
 			"novenuenote": "OBS: esta ação não é reversível. Entre em contato com um Organizador Global caso precise alterar seu local.",
 			"createnewvenue": "Criar novo local",
-			"joinvenue": "Ou entre em um local existente (peça o código secreto ao organizador do local)"
+			"joinvenue": "Ou entre em um local existente (peça o código secreto ao organizador do local)",
+			"venuenojam": "Esta sede não está vinculado a uma Game Jam aberta. Entre em uma Game Jam abaixo para começar a gerenciar sua sede.",
+			"toolbox": "Toolbox",
+			"guides": "Guides",
+			"arts": "Arts",
+			"presentations": "Presentations"
 		},
 		"jammer": {
 			"home": {
@@ -76,16 +96,7 @@
 					"statusopen": "Status: Aberto para inscrições",
 					"joinvenue": "Entrar na sede",
 					"statusclosed": "Status: Fechado",
-					"contactvenue": "Entre em contato com os organizadores da sede para mais informações sobre como participar desta sede",
-					"categories": "Categorias",
-					"currentstage": "Estágio Atual",
-					"manual": "Manual",
-					"notpublictext1": "Os temas e as categorias são secretos.",
-					"notpublictext2": "Os Organizadores Globais divulgarão os temas e as categorias em breve.",
-					"stages": "Estágios",
-					"stagetooltip": "Todas as etapas começam às 00:00:00 e terminam às 11:59:59 no horário brasileiro (GMT-3).",
-					"themes": "Temas",
-					"stagesinfo": "As datas oficiais da Game Jam são de 17 a 19 de outubro, mas algumas sedes acontecerão em datas diferentes (Verifique com seu Organizador Local). A Incubação começa oficialmente no dia 27 de outubro, mas TODOS terão acesso ao conteúdo completo, incluindo gravações de reuniões e materiais enviados."
+					"contactvenue": "Entre em contato com os organizadores da sede para mais informações sobre como participar desta sede"
 				},
 				"venueinfo": {
 					"address": "Endereço",

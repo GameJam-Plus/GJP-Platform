@@ -74,8 +74,8 @@
       <!-- #region HOME -->
       <div *ngIf="page == 'jam'" class="container container-lg p-3">
         <div *ngIf="!jam">
-          <h1>JOIN A GAME JAM</h1>
-          <p class="warning">This venue is not linked to an open gamejam. Join to a gamejam below to start managing your venue.</p>
+          <h1>{{ 'platform.common.joinjam' | translate }}</h1>
+          <p class="warning">T{{ 'platform.localorganizer.venuenojam' | translate }}</p>
           <div class="row">
             <div class="col-4 card" *ngFor="let gj of jams">
               <h3 class="text-center">{{gj.title}}</h3>
@@ -83,7 +83,7 @@
                 <div class="col-4"><b>{{ stage.stageName }}</b></div>
                 <div class="col-8">{{ stage.startDate | date: 'dd/MM/yyyy' }} - {{ stage.endDate | date: 'dd/MM/yyyy' }}</div>
               </div>
-              <button class="navbutton navL1" (click)="joinJam(gj)">JOIN</button>
+              <button class="navbutton navL1" (click)="joinJam(gj)">{{ 'platform.common.join' | translate }}</button>
             </div>
           </div>
         </div>
@@ -94,13 +94,13 @@
           <hr class="my-4">
 
           <div class="info d-block text-center p-5 mb-5" *ngIf="!jam.public">
-            <p>Themes and categories are secret.</p>
-            <p>Global Organizers will publish the themes and categories soon, check again later.</p>
+            <p>{{ 'platform.common.notpublictext1' | translate }}</p>
+            <p>{{ 'platform.common.notpublictext2' | translate }}</p>
           </div>
 
           <!-- THEMES -->
           <div class="row" *ngIf="jam.public">
-            <h2 class="col-12 text-center">Themes</h2>
+            <h2 class="col-12 text-center">{{ 'platform.common.themes' | translate}}</h2>
             <div class="col-md-4 p-2" *ngFor="let theme of jam.themes">
               <div class="card p-2 minh-2">
                 <h3 *ngIf="site.language == 'PT'" class="text-center">{{ theme.titlePT }}</h3>
@@ -113,9 +113,9 @@
 
                 <span style="flex-grow: 1;"></span>
 
-                <a *ngIf="site.language == 'PT'" href="{{ theme.manualPT }}" class="btn btn-black align-bottom">Manual</a>
-                <a *ngIf="site.language == 'ES'" href="{{ theme.manualES }}" class="btn btn-black align-bottom">Manual</a>
-                <a *ngIf="site.language == 'EN'" href="{{ theme.manualEN }}" class="btn btn-black align-bottom">Manual</a>
+                <a *ngIf="site.language == 'PT'" href="{{ theme.manualPT }}" class="btn btn-black align-bottom">{{ 'platform.common.manual' | translate}}</a>
+                <a *ngIf="site.language == 'ES'" href="{{ theme.manualES }}" class="btn btn-black align-bottom">{{ 'platform.common.manual' | translate}}</a>
+                <a *ngIf="site.language == 'EN'" href="{{ theme.manualEN }}" class="btn btn-black align-bottom">{{ 'platform.common.manual' | translate}}</a>
               </div>
             </div>
           </div>
@@ -124,7 +124,7 @@
 
           <!-- CATEGORIES -->
           <div class="row" *ngIf="jam.public">
-            <h2 class="col-12 text-center">Categories</h2>
+            <h2 class="col-12 text-center">{{ 'platform.common.categories' | translate}}</h2>
             <div class="col-md-4 p-2" *ngFor="let category of jam.categories">
               <div class="card p-2 minh-2">
                 <h3 *ngIf="site.language == 'PT'" class="text-center">{{ category.titlePT }}</h3>
@@ -137,9 +137,9 @@
 
                 <span style="flex-grow: 1;"></span>
 
-                <a *ngIf="site.language == 'PT'" href="{{ category.manualPT }}" class="btn btn-black align-bottom">Manual</a>
-                <a *ngIf="site.language == 'ES'" href="{{ category.manualES }}" class="btn btn-black align-bottom">Manual</a>
-                <a *ngIf="site.language == 'EN'" href="{{ category.manualEN }}" class="btn btn-black align-bottom">Manual</a>
+                <a *ngIf="site.language == 'PT'" href="{{ category.manualPT }}" class="btn btn-black align-bottom">{{ 'platform.common.manual' | translate}}</a>
+                <a *ngIf="site.language == 'ES'" href="{{ category.manualES }}" class="btn btn-black align-bottom">{{ 'platform.common.manual' | translate}}</a>
+                <a *ngIf="site.language == 'EN'" href="{{ category.manualEN }}" class="btn btn-black align-bottom">{{ 'platform.common.manual' | translate}}</a>
               </div>
             </div>
           </div>
@@ -148,12 +148,14 @@
 
           <!-- STAGES -->
           <div class="row pb-3 align-items-end">
-            <h2 class="col-12 text-center">Stages<a matTooltip="All stages start at 00:00:00 and end at 11:59:59 in Brazilian Time (GMT-3)." class="tooltip-trigger">?</a></h2>
+            <h2 class="col-12 text-center">{{ 'platform.common.stages' | translate}}
+              <a matTooltip="{{ 'platform.common.stagetooltip' | translate}}" class="tooltip-trigger">?</a>
+            </h2>
             <div class="col-3 p-2" *ngFor="let stage of jam.stages">
               <div [ngClass]="getStageClass(stage)" [ngStyle]="getStageStyle(stage)">
                 <h3 class="text-center">{{ stage.stageName }}</h3>
                 <p class="text-center">{{ formatDate(stage.startDate) }} - {{ formatDate(stage.endDate) }}</p>
-                <p class="text-center" *ngIf="isCurrentStage(stage)">{{ 'platform.jammer.home.jaminfo.currentstage' | translate }}</p>
+                <p class="text-center" *ngIf="isCurrentStage(stage)">{{ 'platform.common.currentstage' | translate }}</p>
               </div>
             </div>
           </div>
@@ -195,11 +197,13 @@
 
       <div *ngIf="page == 'calendar'" class="container container-lg p-3">
         <h1>EVENT CALENDAR</h1>
+        <fa-icon [icon]="faPersonDigging" class="fa-2x"></fa-icon>
         <p>This section is still under construction</p>
       </div>
 
       <div *ngIf="page == 'news'" class="container container-lg p-3">
         <h1>NOTIFICATIONS</h1>
+        <fa-icon [icon]="faPersonDigging" class="fa-2x"></fa-icon>
         <p>This section is still under construction</p>
       </div>
       <!-- #endregion -->
@@ -479,6 +483,7 @@
 
       <div *ngIf="page == 'fellows'" class="container container-lg p-3">
         <h1>MY FELLOWSHIP</h1>
+        <fa-icon [icon]="faPersonDigging" class="fa-2x"></fa-icon>
         <p>This section is still under construction</p>
       </div>
       <!-- #endregion -->

@@ -30,7 +30,22 @@
 			"cellnumber": "手机号",
 			"selecthere": "在这里选择",
 			"writehere": "在这里输入",
-			"goback": "返回"
+			"goback": "返回",
+			"notpublictext1": "主题和类别是保密的。",
+			"notpublictext2": "全球组织者将很快公布主题和类别，请稍后再查看。",
+			"categories": "类别",
+			"currentstage": "当前阶段",
+			"manual": "手册",
+			"stages": "阶段",
+			"themes": "主题",
+			"stagetooltip": "所有阶段均从巴西时间（GMT-3）00:00:00开始，到11:59:59结束。",
+			"stagesinfo": "Game Jam 的官方日期是 10 月 17 日至 19 日，但有些会场将在不同日期举行（请与您的本地组织者确认）。孵化阶段将于 10 月 27 日正式开始，但所有人都可以访问完整的内容，包括会议录音和提交的材料。",
+			"country": "国家：",
+			"city": "城市：",
+			"modality": "形式：",
+			"joinvenue": "加入会场",
+			"joinjam": "加入游戏创作活动",
+			"join": "加入"
 		},
 		"errors": {
 			"requiredfields": "请填写所有必填字段！"
@@ -59,7 +74,8 @@
 			"novenue": "您尚未被分配到会场。请创建一个新的会场或作为协同组织者加入其他会场。",
 			"novenuenote": "注意：此操作不可逆。如果您需要更改会场，请联系全球组织者。",
 			"createnewvenue": "创建新会场",
-			"joinvenue": "或加入现有会场（向该场地的组织者索取密钥）"
+			"joinvenue": "或加入现有会场（向该场地的组织者索取密钥）",
+			"venuenojam": "此会场尚未关联到开放的 Game Jam。请加入下方的 Game Jam 以开始管理您的会场。"
 		},
 		"jammer": {
 			"home": {
@@ -76,16 +92,7 @@
 					"statusopen": "状态：开放注册",
 					"joinvenue": "加入会场",
 					"statusclosed": "状态：已关闭",
-					"contactvenue": "请联系该会场的组织者以获取有关如何加入的更多信息",
-					"categories": "类别",
-					"currentstage": "当前阶段",
-					"manual": "手册",
-					"notpublictext1": "主题和类别是保密的。",
-					"notpublictext2": "全球组织者将很快公布主题和类别，请稍后再查看。",
-					"stages": "阶段",
-					"stagetooltip": "所有阶段均从巴西时间（GMT-3）00:00:00开始，到11:59:59结束。",
-					"themes": "主题",
-					"stagesinfo": "Game Jam 的官方日期是 10 月 17 日至 19 日，但有些会场将在不同日期举行（请与您的本地组织者确认）。孵化阶段将于 10 月 27 日正式开始，但所有人都可以访问完整的内容，包括会议录音和提交的材料。"
+					"contactvenue": "请联系该会场的组织者以获取有关如何加入的更多信息"
 				},
 				"venueinfo": {
 					"address": "地址",

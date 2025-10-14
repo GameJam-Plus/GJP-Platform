@@ -31,10 +31,21 @@
 			"selecthere": "Select here",
 			"writehere": "Write here",
 			"goback": "Go back",
+			"notpublictext1": "Themes and categories are secret.",
+			"notpublictext2": "GlobalOrganizers will publish the themes and categories soon, check again later.",
+			"categories": "Categories",
+			"currentstage": "Current Stage",
+			"manual": "Manual",
+			"stages": "Stages",
+			"themes": "Themes",
+			"stagetooltip": "All stages start at 00:00:00 and end at 11:59:59 in Brazilian Time (GMT-3).",
+			"stagesinfo": "The official Game Jam dates are from October 17 to 19, but some venues will take place on different dates (check with your Local Organizer). The Incubation officially begins on October 27, but EVERYONE will have access to the full content, including meeting recordings and submitted materials.",
 			"country": "Country:",
 			"city": "City:",
 			"modality": "Modality:",
-			"joinvenue": "JOIN VENUE"
+			"joinvenue": "JOIN VENUE",
+			"joinjam": "JOIN A GAME JAM",
+			"join": "JOIN"
 		},
 		"errors": {
 			"requiredfields": "Please fill all the required fields!"
@@ -63,7 +74,8 @@
 			"novenue": "You haven't been assigned to a venue. Please create your venue or join another venue as co-organizer.",
 			"novenuenote": "NOTE: this action is not reversible, get in touch with a Global Organizer if you require to change your venue.",
 			"createnewvenue": "Create new venue",
-			"joinvenue": "Or join an existing venue (ask the site's organizer of the secret code)"
+			"joinvenue": "Or join an existing venue (ask the site's organizer of the secret code)",
+			"venuenojam": "This venue is not linked to an open gamejam. Join to a gamejam below to start managing your venue."
 		},
 		"jammer": {
 			"home": {
@@ -80,16 +92,7 @@
 					"statusopen": "Status: Open for registration",
 					"joinvenue": "Join Venue",
 					"statusclosed": "Status: Closed",
-					"contactvenue": "Contact the venue's organizers for more information on how to join this venue",
-					"categories": "Categories",
-					"currentstage": "Current Stage",
-					"manual": "Manual",
-					"notpublictext1": "Themes and categories are secret.",
-					"notpublictext2": "Global Organizers will publish the themes and categories soon, check again later.",
-					"stages": "Stages",
-					"stagetooltip": "All stages start at 00:00:00 and end at 11:59:59 in Brazilian Time (GMT-3).",
-					"themes": "Themes",
-					"stagesinfo": "The official Game Jam dates are from October 17 to 19, but some venues will take place on different dates (check with your Local Organizer). The Incubation officially begins on October 27, but EVERYONE will have access to the full content, including meeting recordings and submitted materials."
+					"contactvenue": "Contact the venue's organizers for more information on how to join this venue"
 				},
 				"venueinfo": {
 					"address": "Address",

@@ -165,13 +165,13 @@
           <hr class="my-4">
 
           <div class="info d-block text-center p-5 mb-5" *ngIf="!jam.public">
-            <p>{{ 'platform.jammer.home.jaminfo.notpublictext1' | translate}}</p>
-            <p>{{ 'platform.jammer.home.jaminfo.notpublictext2' | translate}}</p>
+            <p>{{ 'platform.common.notpublictext1' | translate}}</p>
+            <p>{{ 'platform.common.notpublictext2' | translate}}</p>
           </div>
 
           <!-- THEMES -->
           <div class="row" *ngIf="jam.public">
-            <h2 class="col-12 text-center">{{ 'platform.jammer.home.jaminfo.themes' | translate}}</h2>
+            <h2 class="col-12 text-center">{{ 'platform.common.themes' | translate}}</h2>
             <div class="col-md-4 p-2" *ngFor="let theme of jam.themes">
               <div class="card p-2 minh-2">
                 <h3 *ngIf="site.language == 'PT'" class="text-center">{{ theme.titlePT }}</h3>
@@ -184,9 +184,9 @@
 
                 <span style="flex-grow: 1;"></span>
 
-                <a *ngIf="site.language == 'PT'" href="{{ theme.manualPT }}" class="btn btn-black align-bottom">{{ 'platform.jammer.home.jaminfo.manual' | translate}}</a>
-                <a *ngIf="site.language == 'ES'" href="{{ theme.manualES }}" class="btn btn-black align-bottom">{{ 'platform.jammer.home.jaminfo.manual' | translate}}</a>
-                <a *ngIf="site.language == 'EN'" href="{{ theme.manualEN }}" class="btn btn-black align-bottom">{{ 'platform.jammer.home.jaminfo.manual' | translate}}</a>
+                <a *ngIf="site.language == 'PT'" href="{{ theme.manualPT }}" class="btn btn-black align-bottom">{{ 'platform.common.manual' | translate}}</a>
+                <a *ngIf="site.language == 'ES'" href="{{ theme.manualES }}" class="btn btn-black align-bottom">{{ 'platform.common.manual' | translate}}</a>
+                <a *ngIf="site.language == 'EN'" href="{{ theme.manualEN }}" class="btn btn-black align-bottom">{{ 'platform.common.manual' | translate}}</a>
               </div>
             </div>
           </div>
@@ -195,7 +195,7 @@
 
           <!-- CATEGORIES -->
           <div class="row" *ngIf="jam.public">
-            <h2 class="col-12 text-center">{{ 'platform.jammer.home.jaminfo.categories' | translate}}</h2>
+            <h2 class="col-12 text-center">{{ 'platform.common.categories' | translate}}</h2>
             <div class="col-md-4 p-2" *ngFor="let category of jam.categories">
               <div class="card p-2 minh-2">
                 <h3 *ngIf="site.language == 'PT'" class="text-center">{{ category.titlePT }}</h3>
@@ -208,9 +208,9 @@
 
                 <span style="flex-grow: 1;"></span>
 
-                <a *ngIf="site.language == 'PT'" href="{{ category.manualPT }}" class="btn btn-black align-bottom">{{ 'platform.jammer.home.jaminfo.manual' | translate}}</a>
-                <a *ngIf="site.language == 'ES'" href="{{ category.manualES }}" class="btn btn-black align-bottom">{{ 'platform.jammer.home.jaminfo.manual' | translate}}</a>
-                <a *ngIf="site.language == 'EN'" href="{{ category.manualEN }}" class="btn btn-black align-bottom">{{ 'platform.jammer.home.jaminfo.manual' | translate}}</a>
+                <a *ngIf="site.language == 'PT'" href="{{ category.manualPT }}" class="btn btn-black align-bottom">{{ 'platform.common.manual' | translate}}</a>
+                <a *ngIf="site.language == 'ES'" href="{{ category.manualES }}" class="btn btn-black align-bottom">{{ 'platform.common.manual' | translate}}</a>
+                <a *ngIf="site.language == 'EN'" href="{{ category.manualEN }}" class="btn btn-black align-bottom">{{ 'platform.common.manual' | translate}}</a>
               </div>
             </div>
           </div>
@@ -218,18 +218,18 @@
           <hr class="my-4">
 
           <!-- STAGES -->
-          <h2 class="col-12 text-center">{{ 'platform.jammer.home.jaminfo.stages' | translate}}
-            <a matTooltip="{{ 'platform.jammer.home.jaminfo.stagetooltip' | translate}}" class="tooltip-trigger">?</a>
+          <h2 class="col-12 text-center">{{ 'platform.common.stages' | translate}}
+            <a matTooltip="{{ 'platform.common.stagetooltip' | translate}}" class="tooltip-trigger">?</a>
           </h2>
           <div class="warning d-block text-center py-2">
-            {{ 'platform.jammer.home.jaminfo.stagesinfo' | translate }}
+            {{ 'platform.common.stagesinfo' | translate }}
           </div>
           <div class="row pb-3 align-items-end">
             <div class="col-3 p-2" *ngFor="let stage of jam.stages">
               <div [ngClass]="getStageClass(stage)" [ngStyle]="getStageStyle(stage)">
                 <h3 class="text-center">{{ stage.stageName }}</h3>
                 <p class="text-center">{{ formatDate(stage.startDate) }} - {{ formatDate(stage.endDate) }}</p>
-                <p class="text-center" *ngIf="isCurrentStage(stage)">{{ 'platform.jammer.home.jaminfo.currentstage' | translate}}</p>
+                <p class="text-center" *ngIf="isCurrentStage(stage)">{{ 'platform.common.currentstage' | translate}}</p>
               </div>
             </div>
           </div>
@@ -524,6 +524,8 @@
                     </option>
                   </select>
                 </div>
+
+                <!-- SPECIAL QUESTION FOR CATEGORY: 'Level Up Your Launch'-->
 
                 <div class="form-group col-4"> <!-- PLATFORMS -->
                   <label for="Platforms" class="required">

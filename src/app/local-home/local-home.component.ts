@@ -33,6 +33,7 @@ import { faDownload } from '@fortawesome/free-solid-svg-icons';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
 import { faFileExport } from '@fortawesome/free-solid-svg-icons';
 import { faFileCsv } from '@fortawesome/free-solid-svg-icons';
+import { faPersonDigging } from '@fortawesome/free-solid-svg-icons';
 
 import { EditorComponent } from '@tinymce/tinymce-angular';
 
@@ -97,6 +98,7 @@ export class LocalHomeComponent implements OnDestroy {
   faUpload = faUpload;
   faFileExport = faFileExport;
   faFileCsv = faFileCsv;
+  faPersonDigging = faPersonDigging;
 
   locationAdjectives = [
     "Spacious",

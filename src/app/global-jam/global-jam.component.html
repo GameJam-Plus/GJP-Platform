@@ -242,7 +242,7 @@
 </div>
 
 <div *ngIf="activeJam && page == 'jam-jammers'" class="w-100 p-5">
-  <h1 class="text-center">Active Jammers</h1>
+  <h1 class="text-center">Active Jammers By Submissions</h1>
   <button class="btn btn-black btn-block" (click)="getActiveUsers()">LOAD JAMMERS</button>
   <div class="d-block text-center my-3" *ngIf="activeUsersRequest"><b>{{ activeUsersRequest }}</b></div>
 
