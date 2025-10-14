@@ -175,7 +175,7 @@ const loginUser = async (req, res) => {
 
         if (!existingUser) {
             const registerLink = `${process.env.URL}/register`;
-            const subject = 'Login in GameJam Platform';
+            const subject = 'Register in GameJam Platform';
             const message = `Hi, click on this link to create an account:`;
             const link = registerLink;
             await sendEmail(email, subject, message, link);
@@ -189,7 +189,7 @@ const loginUser = async (req, res) => {
             const token = jwt.sign({ userId, roles }, 'MY_JWT_SECRET', { expiresIn: 6000000 });
             const magicLink = `${process.env.URL}/api/user/magic-link/${token}`;
             const subject = 'Login in GameJam Platform';
-            const message = `Hi, click on this link to continue to the app:`;
+            const message = `Hi, click on this link to continue to the platform:`;
             const link = magicLink;
             await sendEmail(email, subject, message, link);
             return res.status(200).json({ success: true, msg: `Magic Link sent to user's email`, email, magicLink });
