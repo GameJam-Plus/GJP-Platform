@@ -192,7 +192,7 @@ const loginUser = async (req, res) => {
             const message = `Hi, click on this link to continue to the platform:`;
             const link = magicLink;
             await sendEmail(email, subject, message, link);
-            return res.status(200).json({ success: true, msg: `Magic Link sent to user's email`, email, magicLink });
+            return res.status(200).json({ success: true, msg: `Magic Link sent to user's email`, email });
         }
     }catch(error){
         return res.status(400).send.json({ success: false, message: error.message })
