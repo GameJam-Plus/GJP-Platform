@@ -1,0 +1,332 @@
+{
+	"platform": {
+		"common": {
+			"by": "by",
+			"dangerzone": "Danger Zone",
+			"exitteam": "Exit Team",
+			"exitvenue": "Exit Venue",
+			"late": "LATE",
+			"notavailable": "Not available",
+			"pending": "PENDING",
+			"submittedon": "Submitted on:",
+			"valid": "VALID",
+			"yes": "Yes",
+			"no": "No",
+			"sendgame": "SEND GAME",
+			"sendpitch": "SEND PITCH",
+			"closedsubmissions": "CLOSED SUBMISSIONS",
+			"venues": "Venues:",
+			"venue": "Venue:",
+			"countries": "Countries:",
+			"jammers": "Jammers:",
+			"teams": "Teams:",
+			"submissions": "Submissions:",
+			"specialthanks": "Special Thanks",
+			"sendform": "SEND FORM",
+			"register": "Register",
+			"email": "Email",
+			"name": "Name",
+			"discord": "Discord Username",
+			"cellnumber": "Cell Number",
+			"selecthere": "Select here",
+			"writehere": "Write here",
+			"goback": "Go back",
+			"notpublictext1": "Themes and categories are secret.",
+			"notpublictext2": "GlobalOrganizers will publish the themes and categories soon, check again later.",
+			"categories": "Categories",
+			"currentstage": "Current Stage",
+			"manual": "Manual",
+			"stages": "Stages",
+			"themes": "Themes",
+			"stagetooltip": "All stages start at 00:00:00 and end at 11:59:59 in Brazilian Time (GMT-3).",
+			"stagesinfo": "The official Game Jam dates are from October 17 to 19, but some venues will take place on different dates (check with your Local Organizer). The Incubation officially begins on October 27, but EVERYONE will have access to the full content, including meeting recordings and submitted materials.",
+			"country": "Country:",
+			"city": "City:",
+			"modality": "Modality:",
+			"joinvenue": "JOIN VENUE",
+			"joinjam": "JOIN A GAME JAM",
+			"join": "JOIN"
+		},
+		"errors": {
+			"requiredfields": "Please fill all the required fields!"
+		},
+		"register": {
+			"innertext": {
+				"tooltipline1": "Why are we asking this?",
+				"tooltipline2": "These questions help us in several important ways:",
+				"tooltipline3": "They support our participation in public and private funding opportunities that require that kind of data.",
+				"tooltipline4": "They allow us to assess whether we're successfully building a more diverse, inclusive, and representative community.",
+				"tooltipline5": "They help us create specific categories, awards, or initiatives within GameJamPlus that celebrate and promote diversity.",
+				"tooltipline6": "Your answers are confidential and will be used solely for statistical and strategic purposes. You can always choose 'Prefer not to declare' if you're not comfortable sharing."
+			}
+		},
+		"globalorganizer": {
+			"home": {
+				"activejam": {
+					"header": "Active GameJam Information",
+					"title": "Title"
+				}
+			}
+		},
+		"localorganizer": {
+			"noregion": "You haven't been assigned to a region, please select your region to proceed.",
+			"noregionnote": "NOTE: this action is not reversible, get in touch with a Global Organizer if you require to change your region.",
+			"novenue": "You haven't been assigned to a venue. Please create your venue or join another venue as co-organizer.",
+			"novenuenote": "NOTE: this action is not reversible, get in touch with a Global Organizer if you require to change your venue.",
+			"createnewvenue": "Create new venue",
+			"joinvenue": "Or join an existing venue (ask the site's organizer of the secret code)",
+			"venuenojam": "This venue is not linked to an open gamejam. Join to a gamejam below to start managing your venue.",
+			"toolbox": "Toolbox",
+			"guides": "Guides",
+			"arts": "Arts",
+			"presentations": "Presentations"
+		},
+		"jammer": {
+			"home": {
+				"gamesfromvenue": {
+					"gamesofthisvenue": "Games of this venue",
+					"loadsubmissions": "LOAD SUBMISSIONS"
+				},
+				"jaminfo": {
+					"nojamtext1": "You haven't been assigned to a Venue yet.",
+					"nojamtext2": "Select a venue from the list below to proceed.",
+					"regions": "Regions:",
+					"venuesof": "Venues of",
+					"modality": "Modality:",
+					"statusopen": "Status: Open for registration",
+					"joinvenue": "Join Venue",
+					"statusclosed": "Status: Closed",
+					"contactvenue": "Contact the venue's organizers for more information on how to join this venue"
+				},
+				"venueinfo": {
+					"address": "Address",
+					"city": "City",
+					"contactinfo": "Contact Info",
+					"email": "Email",
+					"phone": "Phone",
+					"website": "Website",
+					"country": "Country",
+					"format": "Format",
+					"language": "Language",
+					"location": "Location",
+					"modality": "Modality",
+					"server": "Server",
+					"start": "Start",
+					"status": "Status"
+				}
+			},
+			"myjam": {
+				"mysubmission": {
+					"gamesubmissionstatus": "Game Submission Status:",
+					"mysubmission": "My Submission",
+					"noteam": "You are not assigned to a team, please create a new team or join a team in your venue to submit a game.",
+					"pitchsubmissionstatus": "Pitch Submission Status:",
+					"incubationsubmissionstatus": "Incubation Submission Status:",
+					"incubationpitchsubmissionstatus": "Incubation Pitch Submission Status:",
+					"accelerationsubmissionstatus": "Acceleration Submission Status:",
+					"accelerationpitchsubmissionstatus": "Acceleration Pitch Submission Status:",
+					"gamesubmission": "GAME SUBMISSION",
+					"pitchsubmission": "PITCH SUBMISSION",
+					"incubationsubmission": "INCUBATION SUBMISSION",
+					"pitchincubation": "INCUBATION PITCH SUBMISSION",
+					"accelerationsubmission": "ACCELERATION SUBMISSION",
+					"pitchacceleration": "ACCELERATION PITCH SUBMISSION",
+					"submissioninfo": {
+						"line1": "Before submitting your game, make sure to read the <b><a href='{{rulesLink}}' target='_blank'>Rules and Regulations</a></b>.",
+						"line2": "Review all the items on this checklist before making your submission:"
+					},
+					"submissioninfochecklist": {
+						"item1": "All members of my team have joined the <b><a href='{{itchioLink}}' target='_blank'>official GameJamPlus itch.io</a></b>",
+						"item2": "Our game has already been submitted to the official GameJamPlus itch.io",
+						"item3": "The game page is public",
+						"item4": "The game version is playable",
+						"item5": "We added screenshots, a description, tags, and all the necessary information to play our game"
+					},
+					"formquestion": {
+						"goingtoincubation": "Do you want to participate in the INCUBATION stage?",
+						"goingtoacceleration": "Do you want to participate in the ACCELERATION stage?",
+						"gamejamtitle": "Title of your game",
+						"gamejambuild": "Link to your game page on itch.io",
+						"gamejamcontact": "Who is the person responsible for the team?<br>This team member will be the contact point for GameJamPlus if needed.",
+						"gamejamdescription": "Write a brief description of your game here",
+						"gamejamgenres": "What are the genres of your game?",
+						"gamejamtopics": "Does your game address any of the following topics?<br>The approach can be in narrative, gameplay, art, or others. You can select more than one option.",
+						"gamejamthemes": "In which THEMES is your game registered?",
+						"gamejamcategories": "CATEGORY in which your game competes?",
+						"gamejamplatforms": "For which platforms was it developed?",
+						"specialcategory": "Put here the prints of the category.",
+						"gamejamgraphics": "What type of graphics does your game use?",
+						"gamejamengine": "Which engine was used in this build?",
+						"gamejamrecommendation": "From 0 to 10, would you recommend GameJamPlus to a friend?",
+						"gamejamenjoyment": "From 0 to 10, how was your experience during GameJamPlus? Did you enjoy it?",
+						"gamejamsuggestions": "Do you have any other consideration, tip, complaint, or anything else you would like to share with us?",
+						"gamejamauthorization": "I authorize the use and processing of the data provided by me to GameJamPlus, including my personal data, to seek opportunities of my interest, including the transfer of this data to third parties, with the aim of connecting me to entities and opportunities in the digital games market, nationally and internationally, and related segments.",
+						"pitchtext": "Submitting a video pitch is mandatory to advance to the next stage.",
+						"pitchlink": "Link to your video pitch",
+						"innertext": {
+							"selectteammember": "Select a team member",
+							"tooltipcontact": "This team member will be the contact point for GameJamPlus if we need to get in touch.",
+							"tooltiptopics": "The approach can be in narrative, gameplay, art, or others. You can select more than one option.",
+							"tooltipsuggestions": "Please, don't be mean =)",
+							"tooltipspecialcategory": "Remember to set the drive folder as public."
+						}
+					}
+				},
+				"myteam": {
+					"joincode": "Join Code:",
+					"joincodetooltip": "Share this code with your fellow jammers to invite them to your team.",
+					"jointeam": "Join an existing team",
+					"myteam": "My Team:",
+					"newteam": "Create a new team",
+					"noteamtext1": "You don't have a team yet.",
+					"noteamtext2": "Create a new team or join an existing team with the secret code.",
+					"teamleader": "Team Leader",
+					"teammembers": "Team Members",
+					"teamname": "Team Name:",
+					"updateteamname": "Update Team Name"
+				},
+				"feedback": {
+					"feedbacksfromjudges": "Feedback from the Judges",
+					"construction": "This section is still under construction."
+				}
+			},
+			"rules": {
+
+			},
+			"dataform": {
+				"jammerinformation": "Jammer Information",
+				"info1": "To access your dashboard, please complete this short form.",
+				"info2": "This information will help GameJamPlus provide you with a better service in the future.",
+				"name": "What is your name?",
+				"countryborn": "What country are you from?",
+				"countryoforigin": "Country of origin",
+				"countryliving": "What country do you live in?",
+				"countryofresidence": "Country of residence",
+				"city": "What city do you live in?",
+				"email": "What is your contact email?",
+				"discord": "What is your Discord tag?",
+				"no": "Prefer not to declare",
+				"other": "Other",
+				"ethnicity": "Please select the option that represents your self-declared race/ethnicity:",
+				"ethnicityoptions": {
+					"asian": "Asian",
+					"black": "Black",
+					"brown": "Brown(Mix)",
+					"indiginous": "Indigenous",
+					"white": "White"
+				},
+				"gender": "Please select your gender:",
+				"genderoptions": {
+					"male": "Male",
+					"female": "Female",
+					"nonbinary": "Non-binary"
+				},
+				"intersex": "Are you an intersex person?",
+				"orientation": "Please select your sexual orientation:",
+				"orientationoptions": {
+					"asexual": "Asexual",
+					"bisexual": "Bisexual",
+					"gay": "Gay",
+					"heterosexual": "Heterosexual",
+					"lesbian": "Lesbian",
+					"pansexual": "Pansexual"
+				},
+				"identity": "Please select your gender identity:",
+				"identityoptions": {
+					"agender": "Agender",
+					"cisman": "Cisgender Man",
+					"ciswoman": "Cisgender Woman",
+					"genderfluid": "Gender Fluid",
+					"queer": "Queer",
+					"transman": "Transgender Man",
+					"transwoman": "Transgender Woman",
+					"travesti": "Travesti"
+				},
+				"disability": "Do you have any disabilities?",
+				"disabilityoptions": {
+					"intellectual": "Yes. Intelectual disability.",
+					"physical": "Yes. Physical disability.",
+					"visual": "Yes. Visual disability.",
+					"hearing": "Yes. Hearing disability."
+				},
+				"student": "Are you a student?",
+				"school": "What is the name of your School/College/University?",
+				"degree": "Select your highest level of education to date.",
+				"degreeoptions": {
+					"hsimcomplete": "I'm in high school.",
+					"hscomplete": "I have a high school diploma.",
+					"technical": "I have a technical degree.",
+					"undergraduate": "I'm in college.",
+					"bachelor": "I have a Bachelor's or Licentiate degree.",
+					"postgraduate": "I have a Master's or Doctorate degree."
+				},
+				"studies": "Check all options that apply to your studies:",
+				"studiesoptions": {
+					"option1": "I didn't study anything related to game development.",
+					"option2": "I took free courses or learned game development on my own.",
+					"option3": "I took a technical course or degree in game development at an institution.",
+					"option4": "I have an academic degree in game development (Diploma, Bachelor's or Licentiate).",
+					"option5": "I did a postgraduate degree in game development (Masters or PhD).",
+					"option6": "I have a degree in computer science, programming or equivalent.",
+					"option7": "I have a degree in Design, Graphic Design, Product Design or equivalent.",
+					"option8": "I have a degree in Visual Arts or equivalent.",
+					"option9": "I have a degree in Music Production, Composition, Sound Engineering or equivalent.",
+					"option10": "I have a degree in Narrative, Communication, Literature or equivalent.",
+					"option11": "I have a degree in Business, Administration or equivalent.",
+					"option12": "I have done other studies related to the gaming industry."
+				},
+				"industry": "Check all that apply to your career:",
+				"industryoptions": {
+					"option1": "I work in the gaming industry as a freelancer.",
+					"option2": "I work in the gaming industry in a studio.",
+					"option3": "I own a game studio.",
+					"option4": "I haven't worked in the games industry yet, but I'm looking forward to it.",
+					"option5": "I used to work in the gaming industry, but I don't anymore.",
+					"option6": "I'm not interested in working in the gaming industry, I'm in it for fun."
+				},
+				"participation": "Have you ever participated in any edition of GameJamPlus?",
+				"participationoptions": {
+					"option1": "I never participated",
+					"option2": "Once",
+					"option3": "Two or three times",
+					"option4": "Four or more times"
+				},
+				"termsandconditions": "To participate in this edition, I confirm that I have read, understood, and agreed to the <a href='{{rulesLink}}' target='_blank'>Terms and Conditions</a> of the event.",
+				"termsoptions": {
+					"option1": "I understand that I must treat other participants, organizers, mentors, and judges with respect and courtesy.",
+					"option2": "I understand that my image and likeness will be recorded and may be used by GameJamPlus for communication and marketing purposes.",
+					"option3": "I understand that my game, videos, and assets produced and submitted to this event will be shared by GameJamPlus for communication, evaluation, and marketing purposes."
+				},
+				"error": "Please fill in all required fields to proceed."
+			}
+		},
+		"navbar": {
+			"home": {
+				"gamesfromvenue": "Games from Venue",
+				"home": "Home",
+				"jaminfo": "Jam Info",
+				"venueinfo": "Venue Info",
+				"eventcalendar": "Event Calendar"
+			},
+			"myjam": {
+				"feedback": "Feedback",
+				"myjam": "My Jam",
+				"mysubmission": "My Submission",
+				"myteam": "My Team"
+			},
+			"venue": {
+				"myvenue": "My Venue",
+				"venueinfo": "Venue Information",
+				"mystaff": "My Staff",
+				"jammers": "Jammers and Teams",
+				"submissions": "Submissions"
+			},
+			"rules": {
+				"rulesandconditions": "Rules and Conditions"
+			}
+		},
+		"sidebar": {
+			"welcome": "Welcome to the new and improved GameJamPlus platform."
+		}
+	}
+}
