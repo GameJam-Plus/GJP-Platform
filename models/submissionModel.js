@@ -38,6 +38,7 @@ const submissionSchema = mongoose.Schema({
     gamejamThemes: [{ type: String, required: true }],
     gamejamCategories: [{ type: String, required: true }],
     gamejamPlatforms: [{ type: String, required: true }],
+    gamejamSpecialQuestion: { type: String, required: false},
     gamejamGraphics: { type: String, required: true },
     gamejamEngine: { type: String, required: true },
     goingToIncubation: { type: Boolean, required: false },

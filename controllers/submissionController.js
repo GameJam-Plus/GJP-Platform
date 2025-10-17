@@ -58,6 +58,7 @@ const createSubmission = async (req, res) => {
                 gamejamTopics: req.body.gamejamTopics,
                 gamejamGenres: req.body.gamejamGenres,
                 gamejamPlatforms: req.body.gamejamPlatforms,
+                gamejamSpecialQuestion: req.body.gamejamSpecialQuestion,
                 gamejamGraphics: req.body.gamejamGraphics,
                 gamejamEngine: req.body.gamejamEngine,
                 goingToIncubation: req.body.goingToIncubation,
@@ -81,6 +82,7 @@ const createSubmission = async (req, res) => {
             submission.gamejamTopics = req.body.gamejamTopics;
             submission.gamejamGenres = req.body.gamejamGenres;
             submission.gamejamPlatforms = req.body.gamejamPlatforms;
+            submission.gamejamSpecialQuestion = req.body.gamejamSpecialQuestion;
             submission.gamejamGraphics = req.body.gamejamGraphics;
             submission.gamejamEngine = req.body.gamejamEngine;
             submission.goingToIncubation = req.body.goingToIncubation;
