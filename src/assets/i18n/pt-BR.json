@@ -76,10 +76,10 @@
 			"createnewvenue": "Criar novo local",
 			"joinvenue": "Ou entre em um local existente (peça o código secreto ao organizador do local)",
 			"venuenojam": "Esta sede não está vinculado a uma Game Jam aberta. Entre em uma Game Jam abaixo para começar a gerenciar sua sede.",
-			"toolbox": "Toolbox",
-			"guides": "Guides",
-			"arts": "Arts",
-			"presentations": "Presentations"
+			"toolbox": "Ferramentas",
+			"guides": "Guias",
+			"arts": "Artes",
+			"presentations": "Apresentações"
 		},
 		"jammer": {
 			"home": {
@@ -117,10 +117,10 @@
 			},
 			"myjam": {
 				"mysubmission": {
-					"gamesubmissionstatus": "Status da submissão do jogo:",
+					"gamesubmissionstatus": "Status da submissão do Jogo:",
 					"mysubmission": "Meu envio",
 					"noteam": "Você não está atribuído a uma equipe. Crie uma nova equipe ou entre em uma equipe no seu local de jogo para enviar um jogo.",
-					"pitchsubmissionstatus": "Status da submissão do Pitch",
+					"pitchsubmissionstatus": "Status da submissão do Pitch:",
 					"incubationsubmissionstatus": "Status da submissão da Incubação:",
 					"incubationpitchsubmissionstatus": "Status da submissão do Pitch da Incubação:",
 					"accelerationsubmissionstatus": "Status da submissão da Aceleração:",
@@ -154,6 +154,7 @@
 						"gamejamthemes": "Em quais TEMAS seu jogo está inscrito?",
 						"gamejamcategories": "CATEGORIA na qual seu jogo compete?",
 						"gamejamplatforms": "Para quais plataformas ele foi desenvolvido?",
+						"specialcategory": "Coloque aqui as capturas de tela da categoria.",
 						"gamejamgraphics": "Que tipo de gráficos seu jogo utiliza?",
 						"gamejamengine": "Qual engine foi usada nesta versão?",
 						"gamejamrecommendation": "De 0 a 10, você recomendaria o GameJamPlus a um amigo?",
@@ -166,7 +167,8 @@
 							"selectteammember": "Selecione um membro da equipe",
 							"tooltipcontact": "Esse membro será o ponto de contato da GameJamPlus caso precisemos entrar em contato.",
 							"tooltiptopics": "A abordagem pode ser na narrativa, jogabilidade, arte ou outros. Você pode selecionar mais de uma opção.",
-							"tooltipsuggestions": "Por favor, não seja maldoso =)"
+							"tooltipsuggestions": "Por favor, não seja maldoso =)",
+							"tooltipspecialcategory": "Lembre-se de definir a pasta do drive como pública."
 						}
 					}
 				},

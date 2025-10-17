@@ -75,7 +75,11 @@
 			"novenuenote": "注意：此操作不可逆。如果您需要更改会场，请联系全球组织者。",
 			"createnewvenue": "创建新会场",
 			"joinvenue": "或加入现有会场（向该场地的组织者索取密钥）",
-			"venuenojam": "此会场尚未关联到开放的 Game Jam。请加入下方的 Game Jam 以开始管理您的会场。"
+			"venuenojam": "此会场尚未关联到开放的 Game Jam。请加入下方的 Game Jam 以开始管理您的会场。",
+			"toolbox": "工具箱",
+			"guides": "指南",
+			"arts": "美术资源",
+			"presentations": "演示文稿"
 		},
 		"jammer": {
 			"home": {
@@ -116,7 +120,7 @@
 					"gamesubmissionstatus": "游戏提交状态：",
 					"mysubmission": "我的提交",
 					"noteam": "您没有被分配到团队，请创建一个新团队或加入您所在场馆的团队以提交游戏。",
-					"pitchsubmissionstatus": "演示提交状态",
+					"pitchsubmissionstatus": "演示提交状态：",
 					"incubationsubmissionstatus": "孵化阶段提交状态：",
 					"incubationpitchsubmissionstatus": "孵化阶段演示提交状态：",
 					"accelerationsubmissionstatus": "加速阶段提交状态：",
@@ -150,6 +154,7 @@
 						"gamejamthemes": "您的游戏注册在哪些主题下？",
 						"gamejamcategories": "您的游戏参赛的类别？",
 						"gamejamplatforms": "该游戏开发于哪些平台？",
+						"specialcategory": "在此处放置该类别的截图。",
 						"gamejamgraphics": "您的游戏使用哪种图形类型？",
 						"gamejamengine": "此版本使用了哪个引擎？",
 						"gamejamrecommendation": "从 0 到 10，您会向朋友推荐 GameJamPlus 吗？",
@@ -162,7 +167,8 @@
 							"selectteammember": "选择一名团队成员",
 							"tooltipcontact": "如果我们需要联系，该成员将作为 GameJamPlus 的联系人。",
 							"tooltiptopics": "可以通过叙事、玩法、美术等方式呈现。可选择多个选项。",
-							"tooltipsuggestions": "请不要刻薄 =)"
+							"tooltipsuggestions": "请不要刻薄 =)",
+							"tooltipspecialcategory": "请记得将云端硬盘文件夹设置为公开。"
 						}
 					}
 				},

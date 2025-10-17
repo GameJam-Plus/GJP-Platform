@@ -75,7 +75,11 @@
 			"novenuenote": "NOTE: this action is not reversible, get in touch with a Global Organizer if you require to change your venue.",
 			"createnewvenue": "Create new venue",
 			"joinvenue": "Or join an existing venue (ask the site's organizer of the secret code)",
-			"venuenojam": "This venue is not linked to an open gamejam. Join to a gamejam below to start managing your venue."
+			"venuenojam": "This venue is not linked to an open gamejam. Join to a gamejam below to start managing your venue.",
+			"toolbox": "Toolbox",
+			"guides": "Guides",
+			"arts": "Arts",
+			"presentations": "Presentations"
 		},
 		"jammer": {
 			"home": {
@@ -116,7 +120,7 @@
 					"gamesubmissionstatus": "Game Submission Status:",
 					"mysubmission": "My Submission",
 					"noteam": "You are not assigned to a team, please create a new team or join a team in your venue to submit a game.",
-					"pitchsubmissionstatus": "Pitch Submission Status",
+					"pitchsubmissionstatus": "Pitch Submission Status:",
 					"incubationsubmissionstatus": "Incubation Submission Status:",
 					"incubationpitchsubmissionstatus": "Incubation Pitch Submission Status:",
 					"accelerationsubmissionstatus": "Acceleration Submission Status:",
@@ -150,6 +154,7 @@
 						"gamejamthemes": "In which THEMES is your game registered?",
 						"gamejamcategories": "CATEGORY in which your game competes?",
 						"gamejamplatforms": "For which platforms was it developed?",
+						"specialcategory": "Put here the prints of the category.",
 						"gamejamgraphics": "What type of graphics does your game use?",
 						"gamejamengine": "Which engine was used in this build?",
 						"gamejamrecommendation": "From 0 to 10, would you recommend GameJamPlus to a friend?",
@@ -162,7 +167,8 @@
 							"selectteammember": "Select a team member",
 							"tooltipcontact": "This team member will be the contact point for GameJamPlus if we need to get in touch.",
 							"tooltiptopics": "The approach can be in narrative, gameplay, art, or others. You can select more than one option.",
-							"tooltipsuggestions": "Please, don't be mean =)"
+							"tooltipsuggestions": "Please, don't be mean =)",
+							"tooltipspecialcategory": "Remember to set the drive folder as public."
 						}
 					}
 				},

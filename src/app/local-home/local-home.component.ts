@@ -532,9 +532,7 @@ export class LocalHomeComponent implements OnDestroy {
       let submissionDateString = '';
       if(this.site.customSubmissionTime)
       {
-        let submissionTime = new Date(this.site.customSubmissionTime);
-        console.log(submissionTime);
-        submissionDateString = formatDate(submissionTime, 'yyyy-MM-dd HH:mm', 'en');
+        submissionDateString = this.utcIsoToLocalInputValue(this.site.customSubmissionTime);
       }
 
       this.siteForm.setValue({
@@ -686,11 +684,35 @@ export class LocalHomeComponent implements OnDestroy {
     return formatDate(date, 'yyyy-MM-dd', 'en');
   }
 
+  localToUtcIso(localStr: string): string {
+    if (!localStr) return '';
+
+    const localDate = new Date(localStr);
+
+    return localDate.toISOString();
+  }
+
+  utcIsoToLocalInputValue(utcIso: string): string {
+    if (!utcIso) return '';
+
+    const d = new Date(utcIso);
+    const pad = (n: number) => n.toString().padStart(2, '0');
+    const yyyy = d.getFullYear();
+    const mm = pad(d.getMonth() + 1);
+    const dd = pad(d.getDate());
+    const hh = pad(d.getHours());
+    const min = pad(d.getMinutes());
+
+    return `${yyyy}-${mm}-${dd}T${hh}:${min}`;
+  }
+  
+
   saveSite() : void {
     if(this.site)
     {
       let countryName: any = this.siteForm.get('country')?.value.name;
       let customSubmissionTime: string = this.siteForm.get('customSubmissionTime')?.value;
+      let customSubmissionTimeUtc: string = this.localToUtcIso(customSubmissionTime);
 
       let site: Site = {
         name : this.siteForm.get('name')?.value,
@@ -711,7 +733,7 @@ export class LocalHomeComponent implements OnDestroy {
         discord: this.siteForm.get('discord')?.value,
         whatsapp: this.siteForm.get('whatsapp')?.value,
         igda: this.siteForm.get('igda')?.value,
-        customSubmissionTime: customSubmissionTime ? customSubmissionTime : ''
+        customSubmissionTime: customSubmissionTimeUtc ? customSubmissionTimeUtc : ''
       };
 
       this.siteService.updateSite(`${environment.apiUrl}/api/site/update-site/${this.site._id}`, site).subscribe({

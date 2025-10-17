@@ -99,6 +99,8 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
   rulesLink = "/rules";
   itchioLink = "https://itch.io/jam/gamejamplus-2526-10th-edition-";
 
+  specialCategory = "Level Up Your Launch";
+
   availableGenres = [
     "Action",
     "Adventure",
@@ -210,6 +212,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
       gamejamThemes: [[], Validators.required],
       gamejamCategories: [[], Validators.required],
       gamejamPlatforms: [[], Validators.required],
+      gamejamSpecialQuestion: [{ value: '', disabled: true }],
       gamejamGraphics: ['', Validators.required],
       gamejamEngine: ['', Validators.required],
       goingToIncubation: [null, Validators.required],
@@ -217,6 +220,21 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
       gamejamEnjoyment: [null],
       gamejamSuggestions: [''],
       gamejamAuthorization: [null, Validators.required]
+    });
+
+    this.submissionGamejamForm.get('gamejamCategories')!.valueChanges.subscribe((value) => {
+      const control = this.submissionGamejamForm.get('gamejamSpecialQuestion');
+
+      if(Array.isArray(value) && value.includes(this.specialCategory)) {
+        control?.enable();
+        control?.setValidators([Validators.required]);
+      } else {
+        control?.setValue('');
+        control?.clearValidators();
+        control?.disable();
+      }
+
+      control?.updateValueAndValidity();
     });
 
     this.submissionPitchGamejamForm = this.fb.group({
@@ -923,14 +941,35 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
   getStageTimeDelta(stage: JamStage) {
     if (this.jam && this.site && this.team) {
       let now = new Date();
-      const offset = now.getTimezoneOffset() * 60000;
-      now = new Date(now.getTime() - offset); // Convert to UTC
+      now = new Date(now.getTime());
   
       const targetStage = this.jam.stages.find((s: any) => s.stageName === stage);
-      if (targetStage && targetStage.endDate) {
-        let endDate = new Date(targetStage.endDate);
-        endDate = new Date(endDate.getTime() - (180 * 60000));
-        return endDate.getTime() - now.getTime();
+
+      if (targetStage) {
+        let endDate: Date | null = null;
+
+        if(this.site.customSubmissionTime &&
+          this.site.customSubmissionTime.trim() !== ''
+        ) {
+          switch (targetStage.stageName) {
+            case JamStage.GAMEJAM:
+              endDate = new Date(this.site.customSubmissionTime);
+              break;
+            case JamStage.GAMEJAM_SUBMISSION:
+              const customDate = new Date(this.site.customSubmissionTime);
+              endDate = new Date(customDate.getTime() + SUBMISSION_GRACE_PERIOD_MS);
+              break;
+            default:
+              break;
+          }
+        }
+        else if(targetStage.endDate) {
+          endDate = new Date(targetStage.endDate);
+        }
+
+        if(endDate) {
+          return endDate.getTime() - now.getTime();
+        }
       }
     }
   
@@ -999,63 +1038,30 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
     return new Date(millis);
   }
 
-  setGameGenre(value: any)
-  {
-    let genres = new Array();
-    for(var g = 0; g < value.length; ++g)
-    {
-      genres.push(value[g].value);
+  getThemeTitle(theme : any) : string {
+    if (!this.site || !this.site.language) return theme.titleEN;
+
+    switch(this.site.language.toUpperCase()) {
+      case 'PT':
+        return theme.titlePT || theme.titleEN;
+      case 'ES':
+        return theme.titleES || theme.titleEN;
+      default:
+        return theme.titleEN;
     }
-    this.gameGenres = genres;
   }
 
-  setGameTopics(value: any)
-  {
-    let topics = new Array();
-    for(var t = 0; t < value.length; ++t)
-    {
-      topics.push(value[t].value);
-    }
-    this.gameTopics = topics;
-  }
+  getCategoryTitle(category : any) : string {
+    if (!this.site || !this.site.language) return category.titleEN;
 
-  setGameThemes(value: any)
-  {
-    let topics = new Array();
-    for(var t = 0; t < value.length; ++t)
-    {
-      topics.push(value[t].value);
+    switch(this.site.language.toUpperCase()) {
+      case 'PT':
+        return category.titlePT || category.titleEN;
+      case 'ES':
+        return category.titleES || category.titleEN;
+      default:
+        return category.titleEN;
     }
-    this.gameThemes = topics;
-  }
-
-  setGameCategories(value: any)
-  {
-    let categories = new Array();
-    for(var c = 0; c < value.length; ++c)
-    {
-      categories.push(value[c].value);
-    }
-    this.gameCategories = categories;
-  }
-
-  setGamePlatforms(value: any)
-  {
-    let platforms = new Array();
-    for(var p = 0; p < value.length; ++p)
-    {
-      platforms.push(value[p].value);
-    }
-    this.gamePlatforms = platforms;
-  }
-
-  setAccelerationPlatforms(value: any) {
-    let platforms = new Array();
-    for(var p = 0; p < value.length; ++p) {
-      platforms.push(value[p].value);
-    }
-    console.log('Setting platforms:', platforms);
-    this.submissionAccelerationForm.patchValue({ accelerationPlatforms: platforms });
   }
 
   // Setting the forms default values when opening the page
@@ -1081,6 +1087,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
           gamejamThemes: submission.gamejamThemes,
           gamejamCategories: submission.gamejamCategories,
           gamejamPlatforms: submission.gamejamPlatforms,
+          gamejamSpecialQuestion: submission.gamejamSpecialQuestion,
           gamejamGraphics: submission.gamejamGraphics,
           gamejamEngine: submission.gamejamEngine,
           goingToIncubation: submission.goingToIncubation,
@@ -1261,6 +1268,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
           gamejamThemes: formValues.gamejamThemes,
           gamejamCategories: formValues.gamejamCategories,
           gamejamPlatforms: formValues.gamejamPlatforms,
+          gamejamSpecialQuestion: formValues.gamejamSpecialQuestion,
           gamejamGraphics: formValues.gamejamGraphics,
           gamejamEngine: formValues.gamejamEngine,
           goingToIncubation: formValues.goingToIncubation,

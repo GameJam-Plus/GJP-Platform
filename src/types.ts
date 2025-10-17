@@ -317,6 +317,7 @@ export interface Submission {
   gamejamThemes: string[];
   gamejamCategories: string[];
   gamejamPlatforms: string[];
+  gamejamSpecialQuestion: string;
   gamejamGraphics: string;
   gamejamEngine: string;
   goingToIncubation: boolean;
