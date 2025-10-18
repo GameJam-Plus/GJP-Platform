@@ -112,7 +112,8 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
     "Puzzle",
     "Runner",
     "Sandbox",
-    "Shooter"
+    "Shooter",
+    "Other"
   ]
 
   availableTopics = [
