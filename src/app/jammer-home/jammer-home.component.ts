@@ -130,7 +130,8 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
     "Folk Tales",
     "Finantial Education",
     "Music or Rhythm",
-    "Mental Health"
+    "Mental Health",
+    "Other"
   ]
 
   availablePlatforms = [
