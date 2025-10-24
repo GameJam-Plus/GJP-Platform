@@ -1545,17 +1545,51 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
   }
 
   isStageActiveWithDelay(stage: JamStage): boolean {
-    const targetStage = this.jam?.stages.find(s => s.stageName === stage);
-    
+    if (!this.jam || !this.site) return false;
+  
+    const targetStage = this.jam.stages.find((s: any) => s.stageName === stage);
     if (!targetStage) return false;
-    
-    const currentTime = new Date().getTime();
-    const stageStartTime = this.offsetDate(targetStage.startDate).getTime();
-    const stageEndTime = this.offsetDate(targetStage.endDate).getTime();
-    
-    return currentTime >= stageStartTime &&
-            currentTime <= stageEndTime + SUBMISSION_GRACE_PERIOD_MS;
-  }
+  
+    const now = new Date();
+  
+    let startDate: Date | null = null;
+    let endDate: Date | null = null;
+  
+    if (this.site.customSubmissionTime && this.site.customSubmissionTime.trim() !== '') 
+    {
+      const customDate = new Date(this.site.customSubmissionTime);
+  
+      switch (targetStage.stageName) {
+        case JamStage.GAMEJAM:
+          startDate = new Date(targetStage.startDate);
+          endDate = customDate;
+          break;
+  
+        case JamStage.GAMEJAM_SUBMISSION:
+          startDate = new Date(targetStage.startDate);
+          endDate = new Date(customDate.getTime() + SUBMISSION_GRACE_PERIOD_MS);
+          break;
+  
+        default:
+          startDate = new Date(targetStage.startDate);
+          endDate = new Date(targetStage.endDate);
+          break;
+      }
+    } 
+    else 
+    {
+      startDate = new Date(targetStage.startDate);
+      endDate = new Date(targetStage.endDate);
+    }
+  
+    if (!startDate || !endDate) return false;
+  
+    const currentTime = now.getTime();
+    const startTime = startDate.getTime();
+    const endTime = endDate.getTime();
+  
+    return currentTime >= startTime && currentTime <= endTime;
+  }  
 
   hasSubmittedOn(stage: JamStage): boolean {
     if (!this.submission) return false;

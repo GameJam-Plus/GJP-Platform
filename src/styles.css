@@ -35,6 +35,15 @@ h4, h5, h6
   font-family: 'Changa', sans-serif;
 }
 
+a
+{
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  white-space: normal;
+  max-width: 100%;
+}
+
 select,
 input[type="radio"],
 input[type="checkbox"],
