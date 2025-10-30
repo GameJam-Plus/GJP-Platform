@@ -1640,6 +1640,20 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
     return hasPassed;
   }
 
+  hasAccepetedToGoTo(stage: JamStage): boolean {
+    if (!this.jam || !this.jam.stages || !this.submission) return false;
+
+    switch(stage) {
+      case JamStage.INCUBATION:
+        return this.submission.goingToIncubation;
+      case JamStage.ACCELERATION:
+        return this.submission.goingToAcceleration ?
+          this.submission.goingToAcceleration : false;
+      default:
+        return false;
+    }
+  }
+
   getBackgroundClass(stage: JamStage): string {
     switch(stage) {
       case JamStage.GAMEJAM:

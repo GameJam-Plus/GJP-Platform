@@ -348,7 +348,8 @@
           </div>
 
           <!-- Incubation Submission Status -->
-          <div *ngIf="isStageActive(JamStages.INCUBATION_SUBMISSION) || hasStagePassed(JamStages.INCUBATION_SUBMISSION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.INCUBATION)">
+          <div *ngIf="(isStageActive(JamStages.INCUBATION_SUBMISSION) || hasStagePassed(JamStages.INCUBATION_SUBMISSION)) 
+                        && hasAccepetedToGoTo(JamStages.INCUBATION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.INCUBATION)">
             <h2 class="text-white">
               {{ 'platform.jammer.myjam.mysubmission.incubationsubmissionstatus' | translate}} 
               <ng-container [ngSwitch]="true">
@@ -362,7 +363,8 @@
           </div>
 
           <!-- Incubation Pitch Submission Status -->
-          <div *ngIf="isStageActive(JamStages.INCUBATION_SUBMISSION) || hasStagePassed(JamStages.INCUBATION_SUBMISSION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.INCUBATION_SUBMISSION)">
+          <div *ngIf="(isStageActive(JamStages.INCUBATION_SUBMISSION) || hasStagePassed(JamStages.INCUBATION_SUBMISSION)) 
+                        && hasAccepetedToGoTo(JamStages.INCUBATION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.INCUBATION_SUBMISSION)">
             <h2 class="text-white">
               {{ 'platform.jammer.myjam.mysubmission.incubationpitchsubmissionstatus' | translate}} 
               <ng-container [ngSwitch]="true">
@@ -376,7 +378,8 @@
           </div>
 
           <!-- Acceleration Submission Status -->
-          <div *ngIf="isStageActive(JamStages.ACCELERATION_SUBMISSION) || hasStagePassed(JamStages.ACCELERATION_SUBMISSION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.ACCELERATION)">
+          <div *ngIf="(isStageActive(JamStages.ACCELERATION_SUBMISSION) || hasStagePassed(JamStages.ACCELERATION_SUBMISSION))
+                        && hasAccepetedToGoTo(JamStages.ACCELERATION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.ACCELERATION)">
             <h2 class="text-white">
               {{ 'platform.jammer.myjam.mysubmission.accelerationsubmissionstatus' | translate}} 
               <ng-container [ngSwitch]="true">
@@ -390,7 +393,8 @@
           </div>
 
           <!-- Acceleration Pitch Submission Status -->
-          <div *ngIf="isStageActive(JamStages.ACCELERATION_SUBMISSION) || hasStagePassed(JamStages.ACCELERATION_SUBMISSION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.ACCELERATION_SUBMISSION)">
+          <div *ngIf="(isStageActive(JamStages.ACCELERATION_SUBMISSION) || hasStagePassed(JamStages.ACCELERATION_SUBMISSION))
+                        && hasAccepetedToGoTo(JamStages.ACCELERATION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.ACCELERATION_SUBMISSION)">
             <h2 class="text-white">
               {{ 'platform.jammer.myjam.mysubmission.accelerationpitchsubmissionstatus' | translate}} 
               <ng-container [ngSwitch]="true">
@@ -645,11 +649,11 @@
           </div>
 
           <!-- INCUBATION SUBMISSION FORM -->
-          <div *ngIf="isStageActiveWithDelay(JamStages.INCUBATION_SUBMISSION)">
+          <div *ngIf="isStageActiveWithDelay(JamStages.INCUBATION_SUBMISSION) && hasAccepetedToGoTo(JamStages.INCUBATION)">
             <hr class="my-2">
             <h2>{{ 'platform.jammer.myjam.mysubmission.incubationsubmission' | translate }}</h2>
-            <div *ngIf="getStageTimeDelta(JamStages.INCUBATION) > 0">
-              <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.INCUBATION))}}</b>
+            <div *ngIf="getStageTimeDelta(JamStages.INCUBATION_SUBMISSION) > 0">
+              <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.INCUBATION_SUBMISSION))}}</b>
             </div>
 
             <form (submit)="saveIncubationSubmission()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionIncubationForm" enctype="multipart/form-data">
@@ -824,14 +828,14 @@
                   </div>
                 </div>
 
-                <button type="submit" class="btn btn-black col-12" *ngIf="getStageTimeDelta(JamStages.INCUBATION) > 0">{{ 'platform.common.sendgame' | translate }}</button>
-                <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.INCUBATION) < 0">{{ 'platform.common.closedsubmissions' | translate }}</div>
+                <button type="submit" class="btn btn-black col-12" *ngIf="getStageTimeDelta(JamStages.INCUBATION_SUBMISSION) > 0">{{ 'platform.common.sendgame' | translate }}</button>
+                <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.INCUBATION_SUBMISSION) < 0">{{ 'platform.common.closedsubmissions' | translate }}</div>
               </div>
             </form>
           </div>
 
           <!-- INCUBATION PITCH SUBMISSION FORM -->
-          <div *ngIf="isStageActiveWithDelay(JamStages.INCUBATION_SUBMISSION)">
+          <div *ngIf="isStageActiveWithDelay(JamStages.INCUBATION_SUBMISSION) && hasAccepetedToGoTo(JamStages.INCUBATION)">
             <hr class="my-2">
             <h2>{{ 'platform.jammer.myjam.mysubmission.incubationsubmission' | translate }}</h2>
             <div *ngIf="getStageTimeDelta(JamStages.INCUBATION_SUBMISSION) > 0">
@@ -862,11 +866,11 @@
           </div>
 
           <!-- ACCELERATION SUBMISSION FORM -->
-          <div *ngIf="isStageActiveWithDelay(JamStages.ACCELERATION)">
+          <div *ngIf="isStageActiveWithDelay(JamStages.ACCELERATION_SUBMISSION) && hasAccepetedToGoTo(JamStages.ACCELERATION)">
             <hr class="my-2">
             <h2>{{ 'platform.jammer.myjam.mysubmission.accelerationsubmission' | translate }}</h2>
-            <div *ngIf="getStageTimeDelta(JamStages.ACCELERATION) > 0">
-              <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.ACCELERATION)) }}</b>
+            <div *ngIf="getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION) > 0">
+              <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION)) }}</b>
             </div>
 
             <form (submit)="saveAccelerationSubmission()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionAccelerationForm" enctype="multipart/form-data">
@@ -1023,14 +1027,14 @@
                   </div>
                 </div>
 
-                <button type="submit" class="btn btn-black col-12" *ngIf="getStageTimeDelta(JamStages.ACCELERATION) > 0">{{ 'platform.common.sendgame' | translate }}</button>
-                <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.ACCELERATION) < 0">{{ 'platform.common.closedsubmissions' | translate }}</div>
+                <button type="submit" class="btn btn-black col-12" *ngIf="getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION) > 0">{{ 'platform.common.sendgame' | translate }}</button>
+                <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION) < 0">{{ 'platform.common.closedsubmissions' | translate }}</div>
               </div>
             </form>
           </div>
 
           <!-- ACCELERATION PITCH SUBMISSION FORM -->
-          <div *ngIf="isStageActiveWithDelay(JamStages.ACCELERATION_SUBMISSION)">
+          <div *ngIf="isStageActiveWithDelay(JamStages.ACCELERATION_SUBMISSION) && hasAccepetedToGoTo(JamStages.ACCELERATION)">
             <hr class="my-2">
             <h2>{{ 'platform.jammer.myjam.mysubmission.pitchacceleration' | translate }}</h2>
             <div *ngIf="getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION) > 0">
