@@ -51,6 +51,13 @@
     max-width: 140px;
 }
 
+.btn-redirect{
+    background: #31a04d;
+    border-radius: 15px;
+    margin-bottom: 35px;
+    max-width: 140px;
+}
+
 .btnText{
     color: white;
     font-size: 24px;
@@ -66,6 +73,15 @@
 
 .btn-default:hover .btnText{
     color: #3EB9FF;
+}
+
+.btn-redirect:hover{
+    background: white;
+    border-color: #31a04d;
+}
+
+.btn-redirect:hover .btnText{
+    color: #31a04d;
 }
 
 .popUp{

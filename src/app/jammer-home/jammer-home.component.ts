@@ -12,10 +12,10 @@ import { environment } from '../../environments/environment.prod';
 import { MessagesComponent } from '../messages/messages.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DataFormComponent } from './data-form/data-form.component';
+import { SideBarComponent } from '../side-bar/side-bar.component';
 import { RulesComponent } from '../rules/rules.component';
-import { User, Site, Region, Country, Jam, Stage, Team, Submission, JamStage, JamStageColors, getJamStageColor, toJamStage } from '../../types';
+import { User, Site, Region, Country, Jam, Stage, Team, Submission, JamStage, getJamStageColor, toJamStage } from '../../types';
 import { TranslatePipe } from '@ngx-translate/core';
-import { switchMap } from 'rxjs';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
@@ -54,6 +54,7 @@ const SUBMISSION_GRACE_PERIOD_MS = 48 * 60 * 60 * 1000;
         FormsModule,
         ReactiveFormsModule,
         RulesComponent,
+        SideBarComponent,
         DataFormComponent,
         TranslatePipe
     ]
@@ -74,7 +75,6 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
   page: string = "site";
   intervalId: any;
 
-  currentJam?: Jam;
   site?: Site;
   jam?: Jam;
   team?: Team;
@@ -99,6 +99,8 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
   rulesLink = "/rules";
   itchioLink = "https://itch.io/jam/gamejamplus-2526-10th-edition-";
 
+  specialCategory = "Level Up Your Launch";
+
   availableGenres = [
     "Action",
     "Adventure",
@@ -110,7 +112,8 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
     "Puzzle",
     "Runner",
     "Sandbox",
-    "Shooter"
+    "Shooter",
+    "Other"
   ]
 
   availableTopics = [
@@ -127,7 +130,8 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
     "Folk Tales",
     "Finantial Education",
     "Music or Rhythm",
-    "Mental Health"
+    "Mental Health",
+    "Other"
   ]
 
   availablePlatforms = [
@@ -183,7 +187,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
   ];
 
   randomColors = [
-    "red", "blue", "green", "yellow", "purple", "orange", "pink", "brown", "black", "white"
+    "red", "blue", "green", "yellow", "purple", "orange", "pink", "brown", "black", "white", "gray"
   ];
 
   randomPluralNouns = [
@@ -210,6 +214,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
       gamejamThemes: [[], Validators.required],
       gamejamCategories: [[], Validators.required],
       gamejamPlatforms: [[], Validators.required],
+      gamejamSpecialQuestion: [{ value: '', disabled: true }],
       gamejamGraphics: ['', Validators.required],
       gamejamEngine: ['', Validators.required],
       goingToIncubation: [null, Validators.required],
@@ -217,6 +222,21 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
       gamejamEnjoyment: [null],
       gamejamSuggestions: [''],
       gamejamAuthorization: [null, Validators.required]
+    });
+
+    this.submissionGamejamForm.get('gamejamCategories')!.valueChanges.subscribe((value) => {
+      const control = this.submissionGamejamForm.get('gamejamSpecialQuestion');
+
+      if(Array.isArray(value) && value.includes(this.specialCategory)) {
+        control?.enable();
+        control?.setValidators([Validators.required]);
+      } else {
+        control?.setValue('');
+        control?.clearValidators();
+        control?.disable();
+      }
+
+      control?.updateValueAndValidity();
     });
 
     this.submissionPitchGamejamForm = this.fb.group({
@@ -312,44 +332,51 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  getJamOfUser(): void {
-    this.jamService.getCurrentJam().pipe(
-      switchMap((jam: Jam) => {
-        this.currentJam = jam;
-        return this.jamService.getJamByUser(this.user._id!, jam._id!);
-      })
-    ).subscribe({
+  getJamOfUser() : void
+  {
+    this.jamService.getJamByUser(this.user._id!).subscribe({
       next: (data) => {
-        console.log("Jammer data: ", data.jammerData);
-  
-        if (
-          data.jammerData.ethnicity &&
-          data.jammerData.gender &&
-          data.jammerData.intersex &&
-          data.jammerData.orientation
-        ) {
-          this.jammerData = true;
-        }
-  
+        console.log("Jam: ", data.jam.title);
+        console.log("Site: ", data.site.name);
+        if(this.hasJammerDataCompleted(data)) {
+            console.log("Jammer data found.");
+            this.jammerData = true;}
         this.jam = data.jam;
         this.site = data.site;
         this.team = data.team;
-  
         this.listStaff();
         this.listJammers();
         this.countJamData();
         this.getSubmission();
-  
-        console.log(this.team);
       },
       error: (error) => {
-        console.log("Error: ", error.error.message);
+        //if(error.status === 404)
         this.listRegions();
         this.listSites();
       }
     });
   }
-  
+
+  hasJammerDataCompleted(data : any) : boolean 
+  {
+    return data.jammerData.countryOfOrigin && 
+      data.jammerData.countryOfResidence && 
+      data.jammerData.city && 
+      data.jammerData.ethnicity && 
+      data.jammerData.gender && 
+      data.jammerData.intersex && 
+      data.jammerData.identity.length > 0 && 
+      data.jammerData.orientation.length > 0 && 
+      data.jammerData.disability.length > 0 && 
+      data.jammerData.student && 
+      data.jammerData.degree && 
+      data.jammerData.studies.length > 0 && 
+      data.jammerData.industry.length > 0 && 
+      data.jammerData.participation && 
+      data.jammerData.termsOfConduct && 
+      data.jammerData.termsOfImage && 
+      data.jammerData.termsOfIP;
+  }
 
   countJamData(): void{
     if(this.jam)
@@ -401,7 +428,6 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
   {
     if(this.site && this.jam && this.team)
     {
-      console.log('Fetching submission for team:', this.team.teamName,'/', this.team._id);
       this.submissionService.getSubmissionByTeam(this.team._id!).subscribe({
         next: (submission: Submission) => {
           this.submission = submission;
@@ -508,7 +534,6 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
     const url = `${environment.apiUrl}/api/region/get-regions`;
     this.regionService.getRegions(url).subscribe({
       next: (regions: Region[]) => {
-        console.log("Regions: ", regions);
         this.regions = regions;
         this.selectedRegion = regions[0];
       },
@@ -562,10 +587,6 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
         });
       }
     );
-  }
-
-  hasJammerData() {
-
   }
 
   exitSite() : void
@@ -919,14 +940,36 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
   getStageTimeDelta(stage: JamStage) {
     if (this.jam && this.site && this.team) {
       let now = new Date();
-      const offset = now.getTimezoneOffset() * 60000;
-      now = new Date(now.getTime() - offset); // Convert to UTC
+      now = new Date(now.getTime());
   
       const targetStage = this.jam.stages.find((s: any) => s.stageName === stage);
-      if (targetStage && targetStage.endDate) {
-        let endDate = new Date(targetStage.endDate);
-        endDate = new Date(endDate.getTime() - (180 * 60000));
-        return endDate.getTime() - now.getTime();
+
+      if (targetStage) {
+        let endDate: Date | null = null;
+
+        if(this.site.customSubmissionTime &&
+          this.site.customSubmissionTime.trim() !== ''
+        ) {
+          switch (targetStage.stageName) {
+            case JamStage.GAMEJAM:
+              endDate = new Date(this.site.customSubmissionTime);
+              break;
+            case JamStage.GAMEJAM_SUBMISSION:
+              const customDate = new Date(this.site.customSubmissionTime);
+              endDate = new Date(customDate.getTime() + SUBMISSION_GRACE_PERIOD_MS);
+              break;
+            default:
+              endDate = new Date(targetStage.endDate);
+              break;
+          }
+        }
+        else if(targetStage.endDate) {
+          endDate = new Date(targetStage.endDate);
+        }
+
+        if(endDate) {
+          return endDate.getTime() - now.getTime();
+        }
       }
     }
   
@@ -995,63 +1038,30 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
     return new Date(millis);
   }
 
-  setGameGenre(value: any)
-  {
-    let genres = new Array();
-    for(var g = 0; g < value.length; ++g)
-    {
-      genres.push(value[g].value);
+  getThemeTitle(theme : any) : string {
+    if (!this.site || !this.site.language) return theme.titleEN;
+
+    switch(this.site.language.toUpperCase()) {
+      case 'PT':
+        return theme.titlePT || theme.titleEN;
+      case 'ES':
+        return theme.titleES || theme.titleEN;
+      default:
+        return theme.titleEN;
     }
-    this.gameGenres = genres;
   }
 
-  setGameTopics(value: any)
-  {
-    let topics = new Array();
-    for(var t = 0; t < value.length; ++t)
-    {
-      topics.push(value[t].value);
-    }
-    this.gameTopics = topics;
-  }
+  getCategoryTitle(category : any) : string {
+    if (!this.site || !this.site.language) return category.titleEN;
 
-  setGameThemes(value: any)
-  {
-    let topics = new Array();
-    for(var t = 0; t < value.length; ++t)
-    {
-      topics.push(value[t].value);
+    switch(this.site.language.toUpperCase()) {
+      case 'PT':
+        return category.titlePT || category.titleEN;
+      case 'ES':
+        return category.titleES || category.titleEN;
+      default:
+        return category.titleEN;
     }
-    this.gameThemes = topics;
-  }
-
-  setGameCategories(value: any)
-  {
-    let categories = new Array();
-    for(var c = 0; c < value.length; ++c)
-    {
-      categories.push(value[c].value);
-    }
-    this.gameCategories = categories;
-  }
-
-  setGamePlatforms(value: any)
-  {
-    let platforms = new Array();
-    for(var p = 0; p < value.length; ++p)
-    {
-      platforms.push(value[p].value);
-    }
-    this.gamePlatforms = platforms;
-  }
-
-  setAccelerationPlatforms(value: any) {
-    let platforms = new Array();
-    for(var p = 0; p < value.length; ++p) {
-      platforms.push(value[p].value);
-    }
-    console.log('Setting platforms:', platforms);
-    this.submissionAccelerationForm.patchValue({ accelerationPlatforms: platforms });
   }
 
   // Setting the forms default values when opening the page
@@ -1077,6 +1087,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
           gamejamThemes: submission.gamejamThemes,
           gamejamCategories: submission.gamejamCategories,
           gamejamPlatforms: submission.gamejamPlatforms,
+          gamejamSpecialQuestion: submission.gamejamSpecialQuestion,
           gamejamGraphics: submission.gamejamGraphics,
           gamejamEngine: submission.gamejamEngine,
           goingToIncubation: submission.goingToIncubation,
@@ -1257,6 +1268,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
           gamejamThemes: formValues.gamejamThemes,
           gamejamCategories: formValues.gamejamCategories,
           gamejamPlatforms: formValues.gamejamPlatforms,
+          gamejamSpecialQuestion: formValues.gamejamSpecialQuestion,
           gamejamGraphics: formValues.gamejamGraphics,
           gamejamEngine: formValues.gamejamEngine,
           goingToIncubation: formValues.goingToIncubation,
@@ -1531,17 +1543,51 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
   }
 
   isStageActiveWithDelay(stage: JamStage): boolean {
-    const targetStage = this.jam?.stages.find(s => s.stageName === stage);
-    
+    if (!this.jam || !this.site) return false;
+  
+    const targetStage = this.jam.stages.find((s: any) => s.stageName === stage);
     if (!targetStage) return false;
-    
-    const currentTime = new Date().getTime();
-    const stageStartTime = this.offsetDate(targetStage.startDate).getTime();
-    const stageEndTime = this.offsetDate(targetStage.endDate).getTime();
-    
-    return currentTime >= stageStartTime &&
-            currentTime <= stageEndTime + SUBMISSION_GRACE_PERIOD_MS;
-  }
+  
+    const now = new Date();
+  
+    let startDate: Date | null = null;
+    let endDate: Date | null = null;
+  
+    if (this.site.customSubmissionTime && this.site.customSubmissionTime.trim() !== '') 
+    {
+      const customDate = new Date(this.site.customSubmissionTime);
+  
+      switch (targetStage.stageName) {
+        case JamStage.GAMEJAM:
+          startDate = new Date(targetStage.startDate);
+          endDate = customDate;
+          break;
+  
+        case JamStage.GAMEJAM_SUBMISSION:
+          startDate = new Date(targetStage.startDate);
+          endDate = new Date(customDate.getTime() + SUBMISSION_GRACE_PERIOD_MS);
+          break;
+  
+        default:
+          startDate = new Date(targetStage.startDate);
+          endDate = new Date(targetStage.endDate);
+          break;
+      }
+    } 
+    else 
+    {
+      startDate = new Date(targetStage.startDate);
+      endDate = new Date(targetStage.endDate);
+    }
+  
+    if (!startDate || !endDate) return false;
+  
+    const currentTime = now.getTime();
+    const startTime = startDate.getTime();
+    const endTime = endDate.getTime();
+  
+    return currentTime >= startTime && currentTime <= endTime;
+  }  
 
   hasSubmittedOn(stage: JamStage): boolean {
     if (!this.submission) return false;
@@ -1594,6 +1640,20 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
     return hasPassed;
   }
 
+  hasAccepetedToGoTo(stage: JamStage): boolean {
+    if (!this.jam || !this.jam.stages || !this.submission) return false;
+
+    switch(stage) {
+      case JamStage.INCUBATION:
+        return this.submission.goingToIncubation;
+      case JamStage.ACCELERATION:
+        return this.submission.goingToAcceleration ?
+          this.submission.goingToAcceleration : false;
+      default:
+        return false;
+    }
+  }
+
   getBackgroundClass(stage: JamStage): string {
     switch(stage) {
       case JamStage.GAMEJAM:
@@ -1613,7 +1673,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
       case JamStage.INCUBATION:
         return this.hasSubmittedOn(this.JamStages.INCUBATION)
           ? 'bg-success'
-          : this.getStageTimeDelta(this.JamStages.INCUBATION) > 0
+          : this.getStageTimeDelta(this.JamStages.INCUBATION_SUBMISSION) > 0
             ? 'bg-warning'
             : 'bg-danger';
 
@@ -1627,7 +1687,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
       case JamStage.ACCELERATION:
         return this.hasSubmittedOn(this.JamStages.ACCELERATION)
           ? 'bg-success'
-          : this.getStageTimeDelta(this.JamStages.ACCELERATION) > 0
+          : this.getStageTimeDelta(this.JamStages.ACCELERATION_SUBMISSION) > 0
             ? 'bg-warning'
             : 'bg-danger';
 
@@ -1648,8 +1708,8 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
   getPitchErrorMessage(): string {
     const control = this.submissionPitchGamejamForm.get('gamejamPitch');
     if (!control) return '';
-    if (control.hasError('required')) return 'O link do pitch é requirido';
-    if (control.hasError('pattern')) return 'Por favor coloque uma URL do Youtube válida';
+    if (control.hasError('required')) return 'Pitch link is required';
+    if (control.hasError('pattern')) return 'Please put a valid Youtube URL';
     return '';
   }
 

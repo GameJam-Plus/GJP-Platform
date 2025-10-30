@@ -41,8 +41,8 @@ export class JamService {
     );
   }
 
-  getJamByUser(userId: string, jamId: string): Observable<any>{
-    return this.http.get<any>(this.url + `get-jam-by-user/${userId}/${jamId}`).pipe(
+  getJamByUser(userId: string): Observable<any>{
+    return this.http.get<any>(this.url + `get-jam-by-user/${userId}`).pipe(
       map(response => response.data)
     );
   }

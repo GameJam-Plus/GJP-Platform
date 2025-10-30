@@ -43,7 +43,16 @@
 
   <!-- #region NO JAMMER DATA -->
   
-  <div *ngIf="jam && site && !jammerData" class="row w-100 p-5">
+  <div *ngIf="jam && site && !jammerData" class="row w-100 p-5 align-items-center position-relative">
+    <div class="">
+      
+      <button class="btn btn-primary btn-arrow-left" (click)="exitSite()">
+        {{ 'platform.common.goback' | translate }}
+      </button>
+    </div>
+    <div class="pb-3">
+      <h2 class="m-0">{{ 'platform.common.venue' | translate }} {{site.name}}</h2>
+    </div>
     <app-data-form [user]="user" [site]="site" [jam]="jam" [countries]="countries" (jammerData)="setJammerData($event)"></app-data-form>
   </div>
 
@@ -57,19 +66,19 @@
 
     <!-- #region NAV BAR -->
     <div id="localHomeNavBar" class="col-2 container-fluid">
-      <div class="navbutton navL1" data-toggle="collapse" data-target="#homeMenu">{{ 'platform.jammer.navbar.home.home' | translate}}</div>
+      <div class="navbutton navL1" data-toggle="collapse" data-target="#homeMenu">{{ 'platform.navbar.home.home' | translate}}</div>
       <ul #homeMenu id="homeMenu" class="collapse">
-        <li class="navbutton navL2" (click)="page = 'site'">{{ 'platform.jammer.navbar.home.venueinfo' | translate}}</li>
-        <li class="navbutton navL2" (click)="page = 'jam'">{{ 'platform.jammer.navbar.home.jaminfo' | translate}}</li>
-        <li class="navbutton navL2" (click)="page = 'games'">{{ 'platform.jammer.navbar.home.gamesfromvenue' | translate}}</li>
+        <li class="navbutton navL2" (click)="page = 'site'">{{ 'platform.navbar.home.venueinfo' | translate}}</li>
+        <li class="navbutton navL2" (click)="page = 'jam'">{{ 'platform.navbar.home.jaminfo' | translate}}</li>
+        <li class="navbutton navL2" (click)="page = 'games'">{{ 'platform.navbar.home.gamesfromvenue' | translate}}</li>
         <!--<li class="navbutton navL2" (click)="page = 'news'">Notifications</li>-->
       </ul>
 
-      <div class="navbutton navL1" data-toggle="collapse" data-target="#venueMenu">{{ 'platform.jammer.navbar.myjam.myjam' | translate}}</div>
+      <div class="navbutton navL1" data-toggle="collapse" data-target="#venueMenu">{{ 'platform.navbar.myjam.myjam' | translate}}</div>
       <ul #venueMenu id="venueMenu" class="collapse">
-        <li class="navbutton navL2" (click)="page = 'team'">{{ 'platform.jammer.navbar.myjam.myteam' | translate}}</li>
-        <li class="navbutton navL2" (click)="page = 'submission'">{{ 'platform.jammer.navbar.myjam.mysubmission' | translate}}</li>
-        <li class="navbutton navL2" (click)="page = 'feedback'">{{ 'platform.jammer.navbar.myjam.feedback' | translate}}</li>
+        <li class="navbutton navL2" (click)="page = 'team'">{{ 'platform.navbar.myjam.myteam' | translate}}</li>
+        <li class="navbutton navL2" (click)="page = 'submission'">{{ 'platform.navbar.myjam.mysubmission' | translate}}</li>
+        <li class="navbutton navL2" (click)="page = 'feedback'">{{ 'platform.navbar.myjam.feedback' | translate}}</li>
       </ul>
 
       
@@ -86,15 +95,15 @@
             <div class="pseudocard inverted m-1 py-2 minh-3">
               <div class="row align-items-start">
                 <fa-icon [icon]="faLandmark" class="fa-2x col-4 text-right maxh-05"></fa-icon>
-                <h2 class="col-8 maxh-05 fs-4">{{ 'platform.jammer.home.venueinfo.location' | translate}}</h2>
+                <h2 class="col-8 maxh-05 fs-4">{{ 'platform.venueinfo.location' | translate}}</h2>
                 <hr>
               </div>
 
               <div class="row align-items-end p-2">
-                <span class="col-4 text-right heavy mb-1">{{ 'platform.jammer.home.venueinfo.country' | translate}}</span> <span class="col-8">{{ site.country.code }} - {{ site.country.name }}</span>
-                <span class="col-4 text-right heavy mb-1">{{ 'platform.jammer.home.venueinfo.city' | translate}}</span> <span class="col-8">{{ site.city }}</span>
-                <span class="col-4 text-right heavy mb-1" *ngIf="site.address">{{ 'platform.jammer.home.venueinfo.address' | translate}}</span> <span class="col-8" *ngIf="site.address">{{ site.address }}</span>
-                <span class="col-4 text-right heavy mb-1" *ngIf="site.server">{{ 'platform.jammer.home.venueinfo.server' | translate}}</span> <a [href]="formatURL(site.server)" target="_blank" class="col-8" *ngIf="site.server">{{ site.server }}</a>
+                <span class="col-4 text-right heavy mb-1">{{ 'platform.venueinfo.country' | translate}}</span> <span class="col-8">{{ site.country.code }} - {{ site.country.name }}</span>
+                <span class="col-4 text-right heavy mb-1">{{ 'platform.venueinfo.city' | translate}}</span> <span class="col-8">{{ site.city }}</span>
+                <span class="col-4 text-right heavy mb-1" *ngIf="site.address">{{ 'platform.venueinfo.address' | translate}}</span> <span class="col-8" *ngIf="site.address">{{ site.address }}</span>
+                <span class="col-4 text-right heavy mb-1" *ngIf="site.server">{{ 'platform.venueinfo.server' | translate}}</span> <a [href]="formatURL(site.server)" target="_blank" class="col-8" *ngIf="site.server">{{ site.server }}</a>
               </div>
             </div>
           </div>
@@ -103,15 +112,15 @@
             <div class="pseudocard inverted m-1 py-2 minh-3">
               <div class="row align-items-start">
                 <fa-icon [icon]="faPeopleRoof" class="fa-2x col-4 text-right maxh-05"></fa-icon>
-                <h2 class="col-8 maxh-05 fs-4">{{ 'platform.jammer.home.venueinfo.format' | translate}}</h2>
+                <h2 class="col-8 maxh-05 fs-4">{{ 'platform.venueinfo.format' | translate}}</h2>
                 <hr>
               </div>
 
               <div class="row align-items-end p-2">
-                <span class="col-4 text-right heavy mb-1">{{ 'platform.jammer.home.venueinfo.modality' | translate}}</span> <span class="col-8">{{ site.modality }}</span>
-                <span class="col-4 text-right heavy mb-1">{{ 'platform.jammer.home.venueinfo.status' | translate}}</span> <span class="col-8">{{ site.open ? 'Open' : 'Closed' }}</span>
-                <span class="col-4 text-right heavy mb-1">{{ 'platform.jammer.home.venueinfo.start' | translate}}</span> <span class="col-8">{{ site.startTime ? convertTo12h(site.startTime) : '' }}</span>
-                <span class="col-4 text-right heavy mb-1">{{ 'platform.jammer.home.venueinfo.language' | translate}}</span> <span class="col-8">{{ site.language }}</span>
+                <span class="col-4 text-right heavy mb-1">{{ 'platform.venueinfo.modality' | translate}}</span> <span class="col-8">{{ site.modality }}</span>
+                <span class="col-4 text-right heavy mb-1">{{ 'platform.venueinfo.status' | translate}}</span> <span class="col-8">{{ site.open ? 'Open' : 'Closed' }}</span>
+                <span class="col-4 text-right heavy mb-1">{{ 'platform.venueinfo.start' | translate}}</span> <span class="col-8">{{ site.startTime ? convertTo12h(site.startTime) : '' }}</span>
+                <span class="col-4 text-right heavy mb-1">{{ 'platform.venueinfo.language' | translate}}</span> <span class="col-8">{{ site.language }}</span>
               </div>
             </div>
           </div>
@@ -120,14 +129,14 @@
             <div class="pseudocard inverted m-1 py-2 minh-3">
               <div class="row align-items-start">
                 <fa-icon [icon]="faEnvelope" class="fa-2x col-4 text-right maxh-05"></fa-icon>
-                <h2 class="col-8 maxh-05 fs-4">{{ 'platform.jammer.home.venueinfo.contactinfo' | translate}}</h2>
+                <h2 class="col-8 maxh-05 fs-4">{{ 'platform.venueinfo.contactinfo' | translate}}</h2>
                 <hr>
               </div>
 
               <div class="row align-items-end p-2">
-                <span class="col-4 text-right heavy mb-1 align-bottom" *ngIf="site.email">{{ 'platform.jammer.home.venueinfo.email' | translate}}</span> <a *ngIf="site.email" [href]="'mailto:' + site.email" class="col-8">{{ site.email }}</a>
-                <span class="col-4 text-right heavy mb-1 align-bottom" *ngIf="site.phoneNumber">{{ 'platform.jammer.home.venueinfo.phone' | translate}}</span> <span *ngIf="site.phoneNumber" class="col-8">{{ site.phoneNumber }}</span>
-                <span class="col-4 text-right heavy mb-1 align-bottom" *ngIf="site.website">{{ 'platform.jammer.home.venueinfo.website' | translate}}</span> <a *ngIf="site.website" target="_blank" [href]="formatURL(site.website)" class="col-8">{{ site.website }}</a>
+                <span class="col-4 text-right heavy mb-1 align-bottom" *ngIf="site.email">{{ 'platform.venueinfo.email' | translate}}</span> <a *ngIf="site.email" [href]="'mailto:' + site.email" class="col-8">{{ site.email }}</a>
+                <span class="col-4 text-right heavy mb-1 align-bottom" *ngIf="site.phoneNumber">{{ 'platform.venueinfo.phone' | translate}}</span> <span *ngIf="site.phoneNumber" class="col-8">{{ site.phoneNumber }}</span>
+                <span class="col-4 text-right heavy mb-1 align-bottom" *ngIf="site.website">{{ 'platform.venueinfo.website' | translate}}</span> <a *ngIf="site.website" target="_blank" [href]="formatURL(site.website)" class="col-8">{{ site.website }}</a>
                 <fa-icon [icon]="faInstagram" class="col-4 text-right" *ngIf="site.instagram"></fa-icon><a *ngIf="site.instagram" [href]="formatURL(site.instagram)" class="col-8">{{ site.instagram }}</a>
                 <fa-icon [icon]="faWhatsapp" class="col-4 text-right" *ngIf="site.whatsapp"></fa-icon><a *ngIf="site.whatsapp" [href]="formatURL(site.whatsapp)" class="col-8">{{ site.whatsapp }}</a>
                 <fa-icon [icon]="faDiscord" class="col-4 text-right" *ngIf="site.discord"></fa-icon><a *ngIf="site.discord" [href]="formatURL(site.discord)" class="col-8">{{ site.discord }}</a>
@@ -156,13 +165,13 @@
           <hr class="my-4">
 
           <div class="info d-block text-center p-5 mb-5" *ngIf="!jam.public">
-            <p>{{ 'platform.jammer.home.jaminfo.notpublictext1' | translate}}</p>
-            <p>{{ 'platform.jammer.home.jaminfo.notpublictext2' | translate}}</p>
+            <p>{{ 'platform.common.notpublictext1' | translate}}</p>
+            <p>{{ 'platform.common.notpublictext2' | translate}}</p>
           </div>
 
           <!-- THEMES -->
           <div class="row" *ngIf="jam.public">
-            <h2 class="col-12 text-center">{{ 'platform.jammer.home.jaminfo.themes' | translate}}</h2>
+            <h2 class="col-12 text-center">{{ 'platform.common.themes' | translate}}</h2>
             <div class="col-md-4 p-2" *ngFor="let theme of jam.themes">
               <div class="card p-2 minh-2">
                 <h3 *ngIf="site.language == 'PT'" class="text-center">{{ theme.titlePT }}</h3>
@@ -175,9 +184,9 @@
 
                 <span style="flex-grow: 1;"></span>
 
-                <a *ngIf="site.language == 'PT'" href="{{ theme.manualPT }}" class="btn btn-black align-bottom">{{ 'platform.jammer.home.jaminfo.manual' | translate}}</a>
-                <a *ngIf="site.language == 'ES'" href="{{ theme.manualES }}" class="btn btn-black align-bottom">{{ 'platform.jammer.home.jaminfo.manual' | translate}}</a>
-                <a *ngIf="site.language == 'EN'" href="{{ theme.manualEN }}" class="btn btn-black align-bottom">{{ 'platform.jammer.home.jaminfo.manual' | translate}}</a>
+                <a *ngIf="site.language == 'PT'" href="{{ theme.manualPT }}" class="btn btn-black align-bottom">{{ 'platform.common.manual' | translate}}</a>
+                <a *ngIf="site.language == 'ES'" href="{{ theme.manualES }}" class="btn btn-black align-bottom">{{ 'platform.common.manual' | translate}}</a>
+                <a *ngIf="site.language == 'EN'" href="{{ theme.manualEN }}" class="btn btn-black align-bottom">{{ 'platform.common.manual' | translate}}</a>
               </div>
             </div>
           </div>
@@ -186,7 +195,7 @@
 
           <!-- CATEGORIES -->
           <div class="row" *ngIf="jam.public">
-            <h2 class="col-12 text-center">{{ 'platform.jammer.home.jaminfo.categories' | translate}}</h2>
+            <h2 class="col-12 text-center">{{ 'platform.common.categories' | translate}}</h2>
             <div class="col-md-4 p-2" *ngFor="let category of jam.categories">
               <div class="card p-2 minh-2">
                 <h3 *ngIf="site.language == 'PT'" class="text-center">{{ category.titlePT }}</h3>
@@ -199,9 +208,9 @@
 
                 <span style="flex-grow: 1;"></span>
 
-                <a *ngIf="site.language == 'PT'" href="{{ category.manualPT }}" class="btn btn-black align-bottom">{{ 'platform.jammer.home.jaminfo.manual' | translate}}</a>
-                <a *ngIf="site.language == 'ES'" href="{{ category.manualES }}" class="btn btn-black align-bottom">{{ 'platform.jammer.home.jaminfo.manual' | translate}}</a>
-                <a *ngIf="site.language == 'EN'" href="{{ category.manualEN }}" class="btn btn-black align-bottom">{{ 'platform.jammer.home.jaminfo.manual' | translate}}</a>
+                <a *ngIf="site.language == 'PT'" href="{{ category.manualPT }}" class="btn btn-black align-bottom">{{ 'platform.common.manual' | translate}}</a>
+                <a *ngIf="site.language == 'ES'" href="{{ category.manualES }}" class="btn btn-black align-bottom">{{ 'platform.common.manual' | translate}}</a>
+                <a *ngIf="site.language == 'EN'" href="{{ category.manualEN }}" class="btn btn-black align-bottom">{{ 'platform.common.manual' | translate}}</a>
               </div>
             </div>
           </div>
@@ -209,15 +218,18 @@
           <hr class="my-4">
 
           <!-- STAGES -->
+          <h2 class="col-12 text-center">{{ 'platform.common.stages' | translate}}
+            <a matTooltip="{{ 'platform.common.stagetooltip' | translate}}" class="tooltip-trigger">?</a>
+          </h2>
+          <div class="warning d-block text-center py-2">
+            {{ 'platform.common.stagesinfo' | translate }}
+          </div>
           <div class="row pb-3 align-items-end">
-            <h2 class="col-12 text-center">{{ 'platform.jammer.home.jaminfo.stages' | translate}}
-              <a matTooltip="{{ 'platform.jammer.home.jaminfo.stagetooltip' | translate}}" class="tooltip-trigger">?</a>
-            </h2>
             <div class="col-3 p-2" *ngFor="let stage of jam.stages">
               <div [ngClass]="getStageClass(stage)" [ngStyle]="getStageStyle(stage)">
                 <h3 class="text-center">{{ stage.stageName }}</h3>
                 <p class="text-center">{{ formatDate(stage.startDate) }} - {{ formatDate(stage.endDate) }}</p>
-                <p class="text-center" *ngIf="isCurrentStage(stage)">{{ 'platform.jammer.home.jaminfo.currentstage' | translate}}</p>
+                <p class="text-center" *ngIf="isCurrentStage(stage)">{{ 'platform.common.currentstage' | translate}}</p>
               </div>
             </div>
           </div>
@@ -264,7 +276,7 @@
               </div>
             </div>
             <div class="col-4">
-              <h3 class="text-center">{{ 'platform.jammer.myjam.myteam.joincode' | translate}}</h3>
+              <h3 class="text-center">{{ 'platform.common.joincode' | translate}}</h3>
               <p class="text-center">
                 {{ team.teamCode }}
                 <a matTooltip="{{ 'platform.jammer.myjam.myteam.joincodetooltip' | translate}}" class="tooltip-trigger">?</a>
@@ -336,13 +348,14 @@
           </div>
 
           <!-- Incubation Submission Status -->
-          <div *ngIf="isStageActive(JamStages.INCUBATION) || hasStagePassed(JamStages.INCUBATION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.INCUBATION)">
+          <div *ngIf="(isStageActive(JamStages.INCUBATION_SUBMISSION) || hasStagePassed(JamStages.INCUBATION_SUBMISSION)) 
+                        && hasAccepetedToGoTo(JamStages.INCUBATION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.INCUBATION)">
             <h2 class="text-white">
               {{ 'platform.jammer.myjam.mysubmission.incubationsubmissionstatus' | translate}} 
               <ng-container [ngSwitch]="true">
                 <span *ngSwitchCase="hasSubmittedOn(JamStages.INCUBATION)">{{ 'platform.common.valid' | translate}}</span>
-                <span *ngSwitchCase="!hasSubmittedOn(JamStages.INCUBATION) && getStageTimeDelta(JamStages.INCUBATION) > 0">{{ 'platform.common.pending' | translate}}</span>
-                <span *ngSwitchCase="!hasSubmittedOn(JamStages.INCUBATION) && getStageTimeDelta(JamStages.INCUBATION) < 0">{{ 'platform.common.late' | translate}}</span>
+                <span *ngSwitchCase="!hasSubmittedOn(JamStages.INCUBATION) && getStageTimeDelta(JamStages.INCUBATION_SUBMISSION) > 0">{{ 'platform.common.pending' | translate}}</span>
+                <span *ngSwitchCase="!hasSubmittedOn(JamStages.INCUBATION) && getStageTimeDelta(JamStages.INCUBATION_SUBMISSION) < 0">{{ 'platform.common.late' | translate}}</span>
                 <span *ngSwitchDefault>{{ 'platform.common.notavailable' | translate}}</span>
               </ng-container>
             </h2>
@@ -350,7 +363,8 @@
           </div>
 
           <!-- Incubation Pitch Submission Status -->
-          <div *ngIf="isStageActive(JamStages.INCUBATION_SUBMISSION) || hasStagePassed(JamStages.INCUBATION_SUBMISSION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.INCUBATION_SUBMISSION)">
+          <div *ngIf="(isStageActive(JamStages.INCUBATION_SUBMISSION) || hasStagePassed(JamStages.INCUBATION_SUBMISSION)) 
+                        && hasAccepetedToGoTo(JamStages.INCUBATION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.INCUBATION_SUBMISSION)">
             <h2 class="text-white">
               {{ 'platform.jammer.myjam.mysubmission.incubationpitchsubmissionstatus' | translate}} 
               <ng-container [ngSwitch]="true">
@@ -364,7 +378,8 @@
           </div>
 
           <!-- Acceleration Submission Status -->
-          <div *ngIf="isStageActive(JamStages.ACCELERATION) || hasStagePassed(JamStages.ACCELERATION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.ACCELERATION)">
+          <div *ngIf="(isStageActive(JamStages.ACCELERATION_SUBMISSION) || hasStagePassed(JamStages.ACCELERATION_SUBMISSION))
+                        && hasAccepetedToGoTo(JamStages.ACCELERATION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.ACCELERATION)">
             <h2 class="text-white">
               {{ 'platform.jammer.myjam.mysubmission.accelerationsubmissionstatus' | translate}} 
               <ng-container [ngSwitch]="true">
@@ -378,7 +393,8 @@
           </div>
 
           <!-- Acceleration Pitch Submission Status -->
-          <div *ngIf="isStageActive(JamStages.ACCELERATION_SUBMISSION) || hasStagePassed(JamStages.ACCELERATION_SUBMISSION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.ACCELERATION_SUBMISSION)">
+          <div *ngIf="(isStageActive(JamStages.ACCELERATION_SUBMISSION) || hasStagePassed(JamStages.ACCELERATION_SUBMISSION))
+                        && hasAccepetedToGoTo(JamStages.ACCELERATION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.ACCELERATION_SUBMISSION)">
             <h2 class="text-white">
               {{ 'platform.jammer.myjam.mysubmission.accelerationpitchsubmissionstatus' | translate}} 
               <ng-container [ngSwitch]="true">
@@ -497,7 +513,7 @@
                   </label>
                   <select id="Themes" class="form-select" formControlName="gamejamThemes" multiple>
                     <option *ngFor="let theme of jam.themes" [value]="theme.titleEN">
-                      {{ theme.titlePT }}
+                      {{ getThemeTitle(theme) }}
                     </option>
                   </select>
                 </div>
@@ -508,7 +524,7 @@
                   </label>
                   <select id="Categories" class="form-select" formControlName="gamejamCategories" multiple>
                     <option *ngFor="let category of jam.categories" [value]="category.titleEN">
-                      {{ category.titlePT }}
+                      {{ getCategoryTitle(category) }}
                     </option>
                   </select>
                 </div>
@@ -522,6 +538,15 @@
                       {{ platform }}
                     </option>
                   </select>
+                </div>
+
+                <!-- SPECIAL QUESTION FOR CATEGORY: 'Level Up Your Launch'-->
+                <div *ngIf="submissionGamejamForm.get('gamejamSpecialQuestion')?.enabled" class="form-group col-12"> <!-- SPECIAL CATEGORY QUESTION -->
+                  <label for="special">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.specialcategory' | translate }}
+                    <a matTooltip="{{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.tooltipspecialcategory' | translate }}" class="tooltip-trigger">?</a>
+                  </label>
+                  <input type="url" id="special" class="form-control" placeholder="https://drive.google.com/drive/folders/my-drive-folder" formControlName="gamejamSpecialQuestion">
                 </div>
 
                 <div class="form-group col-6"> <!-- GRAPHICS -->
@@ -624,11 +649,11 @@
           </div>
 
           <!-- INCUBATION SUBMISSION FORM -->
-          <div *ngIf="isStageActiveWithDelay(JamStages.INCUBATION)">
+          <div *ngIf="isStageActiveWithDelay(JamStages.INCUBATION_SUBMISSION) && hasAccepetedToGoTo(JamStages.INCUBATION)">
             <hr class="my-2">
             <h2>{{ 'platform.jammer.myjam.mysubmission.incubationsubmission' | translate }}</h2>
-            <div *ngIf="getStageTimeDelta(JamStages.INCUBATION) > 0">
-              <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.INCUBATION))}}</b>
+            <div *ngIf="getStageTimeDelta(JamStages.INCUBATION_SUBMISSION) > 0">
+              <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.INCUBATION_SUBMISSION))}}</b>
             </div>
 
             <form (submit)="saveIncubationSubmission()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionIncubationForm" enctype="multipart/form-data">
@@ -803,14 +828,14 @@
                   </div>
                 </div>
 
-                <button type="submit" class="btn btn-black col-12" *ngIf="getStageTimeDelta(JamStages.INCUBATION) > 0">{{ 'platform.common.sendgame' | translate }}</button>
-                <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.INCUBATION) < 0">{{ 'platform.common.closedsubmissions' | translate }}</div>
+                <button type="submit" class="btn btn-black col-12" *ngIf="getStageTimeDelta(JamStages.INCUBATION_SUBMISSION) > 0">{{ 'platform.common.sendgame' | translate }}</button>
+                <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.INCUBATION_SUBMISSION) < 0">{{ 'platform.common.closedsubmissions' | translate }}</div>
               </div>
             </form>
           </div>
 
           <!-- INCUBATION PITCH SUBMISSION FORM -->
-          <div *ngIf="isStageActiveWithDelay(JamStages.INCUBATION_SUBMISSION)">
+          <div *ngIf="isStageActiveWithDelay(JamStages.INCUBATION_SUBMISSION) && hasAccepetedToGoTo(JamStages.INCUBATION)">
             <hr class="my-2">
             <h2>{{ 'platform.jammer.myjam.mysubmission.incubationsubmission' | translate }}</h2>
             <div *ngIf="getStageTimeDelta(JamStages.INCUBATION_SUBMISSION) > 0">
@@ -841,11 +866,11 @@
           </div>
 
           <!-- ACCELERATION SUBMISSION FORM -->
-          <div *ngIf="isStageActiveWithDelay(JamStages.ACCELERATION)">
+          <div *ngIf="isStageActiveWithDelay(JamStages.ACCELERATION_SUBMISSION) && hasAccepetedToGoTo(JamStages.ACCELERATION)">
             <hr class="my-2">
             <h2>{{ 'platform.jammer.myjam.mysubmission.accelerationsubmission' | translate }}</h2>
-            <div *ngIf="getStageTimeDelta(JamStages.ACCELERATION) > 0">
-              <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.ACCELERATION)) }}</b>
+            <div *ngIf="getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION) > 0">
+              <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION)) }}</b>
             </div>
 
             <form (submit)="saveAccelerationSubmission()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionAccelerationForm" enctype="multipart/form-data">
@@ -1002,14 +1027,14 @@
                   </div>
                 </div>
 
-                <button type="submit" class="btn btn-black col-12" *ngIf="getStageTimeDelta(JamStages.ACCELERATION) > 0">{{ 'platform.common.sendgame' | translate }}</button>
-                <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.ACCELERATION) < 0">{{ 'platform.common.closedsubmissions' | translate }}</div>
+                <button type="submit" class="btn btn-black col-12" *ngIf="getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION) > 0">{{ 'platform.common.sendgame' | translate }}</button>
+                <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION) < 0">{{ 'platform.common.closedsubmissions' | translate }}</div>
               </div>
             </form>
           </div>
 
           <!-- ACCELERATION PITCH SUBMISSION FORM -->
-          <div *ngIf="isStageActiveWithDelay(JamStages.ACCELERATION_SUBMISSION)">
+          <div *ngIf="isStageActiveWithDelay(JamStages.ACCELERATION_SUBMISSION) && hasAccepetedToGoTo(JamStages.ACCELERATION)">
             <hr class="my-2">
             <h2>{{ 'platform.jammer.myjam.mysubmission.pitchacceleration' | translate }}</h2>
             <div *ngIf="getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION) > 0">
@@ -1054,40 +1079,7 @@
 
     <!-- #region SIDEBAR -->
     <div id="localHomeSideBar" class="col-2">
-      <div class="p-2 mb-2">
-        <div class="card text-center p-2 shadow">
-          <fa-icon [icon]="faCoffee" class="fa-3x"></fa-icon>
-          <p>{{ 'platform.jammer.sidebar.welcome' | translate }}</p>
-          <p><a href="mailto:support@gamejamplus.com">support&#64;gamejamplus.com</a></p>
-        </div>
-      </div>
-
-      <div class="p-2 mb-2">
-        <div class="card text-center p-2 shadow">
-          <fa-icon [icon]="faJar" class="fa-3x"></fa-icon>
-          <span><b>{{ 'platform.common.venues' | translate }}</b> {{ jamData.siteCount }}</span>
-          <span><b>{{ 'platform.common.countries' | translate }}</b> {{ jamData.countryCount }}</span>
-          <span><b>{{ 'platform.common.jammers' | translate }}</b>  {{ jamData.jammerCount }}</span>
-          <span><b>{{ 'platform.common.teams' | translate }}</b> {{ jamData.teamCount }} <br></span>
-          <span><b>{{ 'platform.common.submissions' | translate }}</b> {{ jamData.submissionCount }}</span>
-          <span class="mb-2"></span>
-        </div>
-      </div>
-
-      <div class="p-2 mb-2">
-        <div class="card text-center p-2 shadow">
-          <img src="/assets/Images/cidev.png" style="width: 40%; margin: auto;">
-          <p>Powered by CIDeV</p>
-        </div>
-      </div>
-
-      <div class="p-2 mb-2">
-        <div class="card text-center p-2 shadow">
-          <fa-icon [icon]="faUsers" class="fa-3x"></fa-icon>
-          <p><b>{{ 'platform.common.specialthanks' | translate }}</b></p>
-          <p>CIDeV<br>Sharon Chacón<br>David Pastor<br>Jeffry Cuendiz<br>Paublo Ávila</p>
-        </div>
-      </div>
+      <app-side-bar [jamData]="jamData"></app-side-bar>
     </div>
     <!-- #endregion -->
   </div>

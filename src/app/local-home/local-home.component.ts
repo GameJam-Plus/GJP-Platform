@@ -14,6 +14,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { environment } from '../../environments/environment.prod';
 import { RulesComponent } from '../rules/rules.component';
 import { saveAs } from 'file-saver';
+import { toJamStage, getJamStageColor } from '../../types';
+import { SideBarComponent } from '../side-bar/side-bar.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
@@ -30,6 +33,7 @@ import { faDownload } from '@fortawesome/free-solid-svg-icons';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
 import { faFileExport } from '@fortawesome/free-solid-svg-icons';
 import { faFileCsv } from '@fortawesome/free-solid-svg-icons';
+import { faPersonDigging } from '@fortawesome/free-solid-svg-icons';
 
 import { EditorComponent } from '@tinymce/tinymce-angular';
 
@@ -46,7 +50,9 @@ import tinymce from 'tinymce';
     FontAwesomeModule,
     EditorComponent,
     MatTooltipModule,
-    RulesComponent
+    RulesComponent,
+    SideBarComponent,
+    TranslatePipe
   ],
   templateUrl: './local-home.component.html',
   styleUrl: './local-home.component.css',
@@ -92,6 +98,7 @@ export class LocalHomeComponent implements OnDestroy {
   faUpload = faUpload;
   faFileExport = faFileExport;
   faFileCsv = faFileCsv;
+  faPersonDigging = faPersonDigging;
 
   locationAdjectives = [
     "Spacious",
@@ -525,9 +532,7 @@ export class LocalHomeComponent implements OnDestroy {
       let submissionDateString = '';
       if(this.site.customSubmissionTime)
       {
-        let submissionTime = new Date(this.site.customSubmissionTime);
-        console.log(submissionTime);
-        submissionDateString = formatDate(submissionTime, 'yyyy-MM-dd HH:mm', 'en');
+        submissionDateString = this.utcIsoToLocalInputValue(this.site.customSubmissionTime);
       }
 
       this.siteForm.setValue({
@@ -636,7 +641,7 @@ export class LocalHomeComponent implements OnDestroy {
   {
     if(this.isCurrentStage(stage))
     {
-      return 'card inverted border border-dark';
+      return 'card text-white double-border';
     }
     else
     {
@@ -679,11 +684,35 @@ export class LocalHomeComponent implements OnDestroy {
     return formatDate(date, 'yyyy-MM-dd', 'en');
   }
 
+  localToUtcIso(localStr: string): string {
+    if (!localStr) return '';
+
+    const localDate = new Date(localStr);
+
+    return localDate.toISOString();
+  }
+
+  utcIsoToLocalInputValue(utcIso: string): string {
+    if (!utcIso) return '';
+
+    const d = new Date(utcIso);
+    const pad = (n: number) => n.toString().padStart(2, '0');
+    const yyyy = d.getFullYear();
+    const mm = pad(d.getMonth() + 1);
+    const dd = pad(d.getDate());
+    const hh = pad(d.getHours());
+    const min = pad(d.getMinutes());
+
+    return `${yyyy}-${mm}-${dd}T${hh}:${min}`;
+  }
+  
+
   saveSite() : void {
     if(this.site)
     {
       let countryName: any = this.siteForm.get('country')?.value.name;
       let customSubmissionTime: string = this.siteForm.get('customSubmissionTime')?.value;
+      let customSubmissionTimeUtc: string = this.localToUtcIso(customSubmissionTime);
 
       let site: Site = {
         name : this.siteForm.get('name')?.value,
@@ -704,7 +733,7 @@ export class LocalHomeComponent implements OnDestroy {
         discord: this.siteForm.get('discord')?.value,
         whatsapp: this.siteForm.get('whatsapp')?.value,
         igda: this.siteForm.get('igda')?.value,
-        customSubmissionTime: customSubmissionTime ? customSubmissionTime : ''
+        customSubmissionTime: customSubmissionTimeUtc ? customSubmissionTimeUtc : ''
       };
 
       this.siteService.updateSite(`${environment.apiUrl}/api/site/update-site/${this.site._id}`, site).subscribe({
@@ -863,5 +892,12 @@ export class LocalHomeComponent implements OnDestroy {
         }
       });
     }
+  }
+
+  getStageStyle(stage: any)
+  {
+    const enumStage = toJamStage(stage?.stageName);
+    const bg = enumStage ? getJamStageColor(enumStage) : '#9CA3AF';
+    return { 'background-color': bg };
   }
 }

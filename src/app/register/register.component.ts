@@ -122,13 +122,28 @@ export class RegisterComponent implements OnInit {
       this.userService.registerUser(user).subscribe({
         next: (data) => {
           if (data.success) {
-            this.message.showMessage(
-              "Registration Successful",
-              "You have registered successfully, we'll redirect you to the login page",
-              () => {
-                this.redirectToLogin();
+            this.userService.loginUser(user.email).subscribe({
+              next: (info) => {
+                if (info.success){
+                  this.message.showMessage(
+                    "Registration Successful",
+                    `You have registered successfully. Login link sent to: ${info.email}`,
+                    () => {
+                      this.redirectToLogin();
+                    }
+                  );
+                } else {
+                  this.errorMessage = 'Something went wrong with the login';
+                }
+              },
+              error: (error) => {
+                console.log(error);
+                this.message.showMessage(
+                  "Error",
+                  "An error has ocurred processing your request, please refresh the page and try again.<br>If the error persists, send an email to support@"
+                );
               }
-            )
+            });
           } else {
             this.errorMessage = 'Something went wrong';
           }
