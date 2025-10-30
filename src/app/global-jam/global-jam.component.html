@@ -199,26 +199,57 @@
   <h2>Jammers: {{ jamData.jammerCount }}</h2>
   <h2>Teams: {{ jamData.teamCount }}</h2>
 
-  <div class="row">
-    <div *ngFor="let site of activeSites pointer" class="col-3 p-2" (click)="selectSite(site)" data-toggle="modal" data-target="#siteInfoModal">
-      <div class="bg-white shadow p-4 rounded hover-effect">
-        <h3>{{ site.name }}</h3>
-        <b>Region: </b>{{ site.regionName }} <br>
-        <b>Country: </b>{{ site.country.name }} <br>
-        <b>City: </b>{{ site.city }} <br>
-        <b>Modality: </b>{{ site.modality }} <br>
-        <b>Status: </b>{{ site.open ? "Open" : "Closed" }}<br>
-        <b>Jammers: </b>{{ site.jammers }} <br>
-        <b>Teams: </b>{{ site.teams }} <br>
-        <b>Organizers: </b> <br>
-        <ul>
-          <li *ngFor="let org of site.organizers">
-            <small>{{ org.name }} (<a [href]="'mailto:'+org.email">{{ org.email }}</a>)<br></small>
-          </li>
-        </ul>
+
+  <div class="input-group mb-3">
+  <input type="text" name="filterVenue" #filterVenue class="form-control" (change)="setTextFilter('venue', filterVenue.value)">
+  <div class="input-group-append">
+    <button class="btn btn-primary" type="button" (click)="setTextFilter('venue', filterVenue.value)">Search</button>
+  </div>
+</div>
+
+  
+    <div *ngIf="filteredSites.length <= 0" class="row">
+
+      <div *ngFor="let site of activeSites pointer" class="col-3 p-2" (click)="selectSite(site)" data-toggle="modal" data-target="#siteInfoModal">
+        <div class="bg-white shadow p-4 rounded hover-effect">
+          <h3>{{ site.name }}</h3>
+          <b>Region: </b>{{ site.regionName }} <br>
+          <b>Country: </b>{{ site.country.name }} <br>
+          <b>City: </b>{{ site.city }} <br>
+          <b>Modality: </b>{{ site.modality }} <br>
+          <b>Status: </b>{{ site.open ? "Open" : "Closed" }}<br>
+          <b>Jammers: </b>{{ site.jammers }} <br>
+          <b>Teams: </b>{{ site.teams }} <br>
+          <b>Organizers: </b> <br>
+          <ul>
+            <li *ngFor="let org of site.organizers">
+              <small>{{ org.name }} (<a [href]="'mailto:'+org.email">{{ org.email }}</a>)<br></small>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
+    <div *ngIf="filteredSites.length > 0" class="row">
+      <div *ngFor="let site of filteredSites pointer" class="col-3 p-2" (click)="selectSite(site)" data-toggle="modal" data-target="#siteInfoModal">
+        <div class="bg-white shadow p-4 rounded hover-effect">
+          <h3>{{ site.name }}</h3>
+          <b>Region: </b>{{ site.regionName }} <br>
+          <b>Country: </b>{{ site.country.name }} <br>
+          <b>City: </b>{{ site.city }} <br>
+          <b>Modality: </b>{{ site.modality }} <br>
+          <b>Status: </b>{{ site.open ? "Open" : "Closed" }}<br>
+          <b>Jammers: </b>{{ site.jammers }} <br>
+          <b>Teams: </b>{{ site.teams }} <br>
+          <b>Organizers: </b> <br>
+          <ul>
+            <li *ngFor="let org of site.organizers">
+              <small>{{ org.name }} (<a [href]="'mailto:'+org.email">{{ org.email }}</a>)<br></small>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  
 
   <h2>Inactive Venues: {{ inactiveSites.length }}</h2>
 

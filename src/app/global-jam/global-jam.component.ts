@@ -64,13 +64,17 @@ export class GlobalJamComponent {
   @ViewChild(MessagesComponent) message!: MessagesComponent;
   @ViewChild('closeStageModal') closeStageModal?: ElementRef;
   @ViewChild('siteInfoModal') siteInfoModal?: ElementRef;
+  filterValue: string = '';
+  filter: any = {};
+  filteredSites: any[] = [];
+  sites: Site[] = [];
 
   constructor(private route: ActivatedRoute, private jamService: JamService, private siteService: SiteService, private userService: UserService, private submissionService: SubmissionService, private fb: FormBuilder){}
 
   ngOnInit(): void {
     this.loadActiveJam();
     this.getSitesInfo();
-
+   
     // Add modal event listener
     const modalElement = document.getElementById('siteInfoModal');
     if (modalElement) {
@@ -154,6 +158,42 @@ export class GlobalJamComponent {
     });
   }
 
+  setTextFilter(filterType: string, value: string)
+  {
+    console.log("valor: ", value);
+    switch(filterType)
+    {
+      case 'venue':
+        if(value === ''){
+          delete this.filter.venues;
+          this.filteredSites = [];
+          break;
+        }
+
+        this.filter.venues = value;
+        
+        break;      
+    }
+
+    console.log(this.filter);
+    
+    this.filteredSites = this.getCards();
+  }
+  getCards() {
+    let filteredData = this.activeSites;
+    console.log("filteredData inicial: ", filteredData);
+
+    filteredData = filteredData.filter(item => {
+      let valid = true;
+      
+      if(this.filter.venues && this.filter.venues !== '')
+          valid = valid && (item.name ? item.name.toLowerCase().includes(this.filter.venues.toLowerCase()) : false);
+      return valid;
+    });
+
+   // const startIndex = (this.currentPage - 1) * this.pageSize;
+    return filteredData;//.slice(startIndex, startIndex + this.pageSize);
+  }
   countJamData(): void{
     if(this.activeJam)
     {
@@ -751,8 +791,10 @@ export class GlobalJamComponent {
     if(site && this.activeJam)
     {
       const url = `${environment.apiUrl}/api/user/get-jammers-per-site/${site._id}/${this.activeJam._id}`;
+      this.selectedJammers = [];
       this.userService.getJammersPerSite(url).subscribe({
         next: (jammers: User[]) => {
+          
           this.selectedJammers = jammers;
           this.selectedJammers.sort((a,b) =>{
             if(!a.team && b.team) return -1;

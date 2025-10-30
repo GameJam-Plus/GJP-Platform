@@ -7,3 +7,12 @@
   transform: translateY(-5px);
   box-shadow: 0 8px 20px 5px rgba(238, 46, 88, 0.486) !important;
 }
+
+.input-group{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    width: 400px;
+}
