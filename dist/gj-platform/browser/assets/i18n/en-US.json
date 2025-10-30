@@ -40,12 +40,52 @@
 			"themes": "Themes",
 			"stagetooltip": "All stages start at 00:00:00 and end at 11:59:59 in Brazilian Time (GMT-3).",
 			"stagesinfo": "The official Game Jam dates are from October 17 to 19, but some venues will take place on different dates (check with your Local Organizer). The Incubation officially begins on October 27, but EVERYONE will have access to the full content, including meeting recordings and submitted materials.",
+			"region": "Region:",
 			"country": "Country:",
+			"joincode": "Join Code:",
 			"city": "City:",
 			"modality": "Modality:",
 			"joinvenue": "JOIN VENUE",
 			"joinjam": "JOIN A GAME JAM",
-			"join": "JOIN"
+			"join": "JOIN",
+			"open": "Open",
+			"closed": "Closed",
+			"onsite": "On Site",
+			"online": "Online",
+			"hybrid": "Hybrid",
+			"savechanges": "SAVE CHANGES"
+		},
+		"venueinfo": {
+			"venuename": "Venue Name",
+			"venueoptions": "Venue Options",
+			"address": "Address",
+			"city": "City",
+			"contactinfo": "Contact Info",
+			"email": "Email",
+			"phone": "Phone",
+			"website": "Link/Website",
+			"country": "Country",
+			"countryvenue": "Country of the venue",
+			"format": "Format",
+			"language": "Language",
+			"location": "Location",
+			"modality": "Modality",
+			"server": "Server",
+			"start": "Start",
+			"status": "Status",
+			"igdavenue": "IGDA Venue",
+			"starttime": "Start time",
+			"customsubmission": "Custom Submission Time",
+			"socialmedia": "Social Media",
+			"description": "Description and Instructions",
+			"innertext": {
+				"tooltipaddress": "If your venue has a physical location, specify the address.",
+				"tooltipserver": "An URL to your virtual venue if any (discord server, whatsapp group, telegram group, or any other that applies)",
+				"tooltipigda": "Mark this check if your venue is affiliated to IGDA",
+				"tooltipstatus": "Is your venue open for new jammers to sign in?",
+				"tooltiplanguage": "GameJamPlus supports three official languages: Português, Español (limited support), and English (limited support)",
+				"tooltipcustomsubmission": "Change this value if your site has an authorized custom submission time. Leave blank otherwise."
+			}
 		},
 		"errors": {
 			"requiredfields": "Please fill all the required fields!"
@@ -79,7 +119,8 @@
 			"toolbox": "Toolbox",
 			"guides": "Guides",
 			"arts": "Arts",
-			"presentations": "Presentations"
+			"presentations": "Presentations",
+			"venueinfo": "Venue Main Info"
 		},
 		"jammer": {
 			"home": {
@@ -97,22 +138,6 @@
 					"joinvenue": "Join Venue",
 					"statusclosed": "Status: Closed",
 					"contactvenue": "Contact the venue's organizers for more information on how to join this venue"
-				},
-				"venueinfo": {
-					"address": "Address",
-					"city": "City",
-					"contactinfo": "Contact Info",
-					"email": "Email",
-					"phone": "Phone",
-					"website": "Website",
-					"country": "Country",
-					"format": "Format",
-					"language": "Language",
-					"location": "Location",
-					"modality": "Modality",
-					"server": "Server",
-					"start": "Start",
-					"status": "Status"
 				}
 			},
 			"myjam": {
@@ -173,7 +198,6 @@
 					}
 				},
 				"myteam": {
-					"joincode": "Join Code:",
 					"joincodetooltip": "Share this code with your fellow jammers to invite them to your team.",
 					"jointeam": "Join an existing team",
 					"myteam": "My Team:",
