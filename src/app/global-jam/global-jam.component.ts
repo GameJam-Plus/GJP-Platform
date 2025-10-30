@@ -791,8 +791,10 @@ export class GlobalJamComponent {
     if(site && this.activeJam)
     {
       const url = `${environment.apiUrl}/api/user/get-jammers-per-site/${site._id}/${this.activeJam._id}`;
+      this.selectedJammers = [];
       this.userService.getJammersPerSite(url).subscribe({
         next: (jammers: User[]) => {
+          
           this.selectedJammers = jammers;
           this.selectedJammers.sort((a,b) =>{
             if(!a.team && b.team) return -1;
