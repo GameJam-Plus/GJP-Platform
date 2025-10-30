@@ -348,8 +348,6 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
         this.listJammers();
         this.countJamData();
         this.getSubmission();
-
-        console.log("Team: ", this.team);
       },
       error: (error) => {
         //if(error.status === 404)
@@ -430,7 +428,6 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
   {
     if(this.site && this.jam && this.team)
     {
-      console.log('Fetching submission for team:', this.team.teamName,'/', this.team._id);
       this.submissionService.getSubmissionByTeam(this.team._id!).subscribe({
         next: (submission: Submission) => {
           this.submission = submission;
@@ -962,6 +959,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
               endDate = new Date(customDate.getTime() + SUBMISSION_GRACE_PERIOD_MS);
               break;
             default:
+              endDate = new Date(targetStage.endDate);
               break;
           }
         }
@@ -1661,7 +1659,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
       case JamStage.INCUBATION:
         return this.hasSubmittedOn(this.JamStages.INCUBATION)
           ? 'bg-success'
-          : this.getStageTimeDelta(this.JamStages.INCUBATION) > 0
+          : this.getStageTimeDelta(this.JamStages.INCUBATION_SUBMISSION) > 0
             ? 'bg-warning'
             : 'bg-danger';
 
@@ -1675,7 +1673,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
       case JamStage.ACCELERATION:
         return this.hasSubmittedOn(this.JamStages.ACCELERATION)
           ? 'bg-success'
-          : this.getStageTimeDelta(this.JamStages.ACCELERATION) > 0
+          : this.getStageTimeDelta(this.JamStages.ACCELERATION_SUBMISSION) > 0
             ? 'bg-warning'
             : 'bg-danger';
 
@@ -1696,8 +1694,8 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
   getPitchErrorMessage(): string {
     const control = this.submissionPitchGamejamForm.get('gamejamPitch');
     if (!control) return '';
-    if (control.hasError('required')) return 'O link do pitch é requirido';
-    if (control.hasError('pattern')) return 'Por favor coloque uma URL do Youtube válida';
+    if (control.hasError('required')) return 'Pitch link is required';
+    if (control.hasError('pattern')) return 'Please put a valid Youtube URL';
     return '';
   }
 

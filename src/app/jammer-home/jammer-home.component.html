@@ -95,15 +95,15 @@
             <div class="pseudocard inverted m-1 py-2 minh-3">
               <div class="row align-items-start">
                 <fa-icon [icon]="faLandmark" class="fa-2x col-4 text-right maxh-05"></fa-icon>
-                <h2 class="col-8 maxh-05 fs-4">{{ 'platform.jammer.home.venueinfo.location' | translate}}</h2>
+                <h2 class="col-8 maxh-05 fs-4">{{ 'platform.venueinfo.location' | translate}}</h2>
                 <hr>
               </div>
 
               <div class="row align-items-end p-2">
-                <span class="col-4 text-right heavy mb-1">{{ 'platform.jammer.home.venueinfo.country' | translate}}</span> <span class="col-8">{{ site.country.code }} - {{ site.country.name }}</span>
-                <span class="col-4 text-right heavy mb-1">{{ 'platform.jammer.home.venueinfo.city' | translate}}</span> <span class="col-8">{{ site.city }}</span>
-                <span class="col-4 text-right heavy mb-1" *ngIf="site.address">{{ 'platform.jammer.home.venueinfo.address' | translate}}</span> <span class="col-8" *ngIf="site.address">{{ site.address }}</span>
-                <span class="col-4 text-right heavy mb-1" *ngIf="site.server">{{ 'platform.jammer.home.venueinfo.server' | translate}}</span> <a [href]="formatURL(site.server)" target="_blank" class="col-8" *ngIf="site.server">{{ site.server }}</a>
+                <span class="col-4 text-right heavy mb-1">{{ 'platform.venueinfo.country' | translate}}</span> <span class="col-8">{{ site.country.code }} - {{ site.country.name }}</span>
+                <span class="col-4 text-right heavy mb-1">{{ 'platform.venueinfo.city' | translate}}</span> <span class="col-8">{{ site.city }}</span>
+                <span class="col-4 text-right heavy mb-1" *ngIf="site.address">{{ 'platform.venueinfo.address' | translate}}</span> <span class="col-8" *ngIf="site.address">{{ site.address }}</span>
+                <span class="col-4 text-right heavy mb-1" *ngIf="site.server">{{ 'platform.venueinfo.server' | translate}}</span> <a [href]="formatURL(site.server)" target="_blank" class="col-8" *ngIf="site.server">{{ site.server }}</a>
               </div>
             </div>
           </div>
@@ -112,15 +112,15 @@
             <div class="pseudocard inverted m-1 py-2 minh-3">
               <div class="row align-items-start">
                 <fa-icon [icon]="faPeopleRoof" class="fa-2x col-4 text-right maxh-05"></fa-icon>
-                <h2 class="col-8 maxh-05 fs-4">{{ 'platform.jammer.home.venueinfo.format' | translate}}</h2>
+                <h2 class="col-8 maxh-05 fs-4">{{ 'platform.venueinfo.format' | translate}}</h2>
                 <hr>
               </div>
 
               <div class="row align-items-end p-2">
-                <span class="col-4 text-right heavy mb-1">{{ 'platform.jammer.home.venueinfo.modality' | translate}}</span> <span class="col-8">{{ site.modality }}</span>
-                <span class="col-4 text-right heavy mb-1">{{ 'platform.jammer.home.venueinfo.status' | translate}}</span> <span class="col-8">{{ site.open ? 'Open' : 'Closed' }}</span>
-                <span class="col-4 text-right heavy mb-1">{{ 'platform.jammer.home.venueinfo.start' | translate}}</span> <span class="col-8">{{ site.startTime ? convertTo12h(site.startTime) : '' }}</span>
-                <span class="col-4 text-right heavy mb-1">{{ 'platform.jammer.home.venueinfo.language' | translate}}</span> <span class="col-8">{{ site.language }}</span>
+                <span class="col-4 text-right heavy mb-1">{{ 'platform.venueinfo.modality' | translate}}</span> <span class="col-8">{{ site.modality }}</span>
+                <span class="col-4 text-right heavy mb-1">{{ 'platform.venueinfo.status' | translate}}</span> <span class="col-8">{{ site.open ? 'Open' : 'Closed' }}</span>
+                <span class="col-4 text-right heavy mb-1">{{ 'platform.venueinfo.start' | translate}}</span> <span class="col-8">{{ site.startTime ? convertTo12h(site.startTime) : '' }}</span>
+                <span class="col-4 text-right heavy mb-1">{{ 'platform.venueinfo.language' | translate}}</span> <span class="col-8">{{ site.language }}</span>
               </div>
             </div>
           </div>
@@ -129,14 +129,14 @@
             <div class="pseudocard inverted m-1 py-2 minh-3">
               <div class="row align-items-start">
                 <fa-icon [icon]="faEnvelope" class="fa-2x col-4 text-right maxh-05"></fa-icon>
-                <h2 class="col-8 maxh-05 fs-4">{{ 'platform.jammer.home.venueinfo.contactinfo' | translate}}</h2>
+                <h2 class="col-8 maxh-05 fs-4">{{ 'platform.venueinfo.contactinfo' | translate}}</h2>
                 <hr>
               </div>
 
               <div class="row align-items-end p-2">
-                <span class="col-4 text-right heavy mb-1 align-bottom" *ngIf="site.email">{{ 'platform.jammer.home.venueinfo.email' | translate}}</span> <a *ngIf="site.email" [href]="'mailto:' + site.email" class="col-8">{{ site.email }}</a>
-                <span class="col-4 text-right heavy mb-1 align-bottom" *ngIf="site.phoneNumber">{{ 'platform.jammer.home.venueinfo.phone' | translate}}</span> <span *ngIf="site.phoneNumber" class="col-8">{{ site.phoneNumber }}</span>
-                <span class="col-4 text-right heavy mb-1 align-bottom" *ngIf="site.website">{{ 'platform.jammer.home.venueinfo.website' | translate}}</span> <a *ngIf="site.website" target="_blank" [href]="formatURL(site.website)" class="col-8">{{ site.website }}</a>
+                <span class="col-4 text-right heavy mb-1 align-bottom" *ngIf="site.email">{{ 'platform.venueinfo.email' | translate}}</span> <a *ngIf="site.email" [href]="'mailto:' + site.email" class="col-8">{{ site.email }}</a>
+                <span class="col-4 text-right heavy mb-1 align-bottom" *ngIf="site.phoneNumber">{{ 'platform.venueinfo.phone' | translate}}</span> <span *ngIf="site.phoneNumber" class="col-8">{{ site.phoneNumber }}</span>
+                <span class="col-4 text-right heavy mb-1 align-bottom" *ngIf="site.website">{{ 'platform.venueinfo.website' | translate}}</span> <a *ngIf="site.website" target="_blank" [href]="formatURL(site.website)" class="col-8">{{ site.website }}</a>
                 <fa-icon [icon]="faInstagram" class="col-4 text-right" *ngIf="site.instagram"></fa-icon><a *ngIf="site.instagram" [href]="formatURL(site.instagram)" class="col-8">{{ site.instagram }}</a>
                 <fa-icon [icon]="faWhatsapp" class="col-4 text-right" *ngIf="site.whatsapp"></fa-icon><a *ngIf="site.whatsapp" [href]="formatURL(site.whatsapp)" class="col-8">{{ site.whatsapp }}</a>
                 <fa-icon [icon]="faDiscord" class="col-4 text-right" *ngIf="site.discord"></fa-icon><a *ngIf="site.discord" [href]="formatURL(site.discord)" class="col-8">{{ site.discord }}</a>
@@ -276,7 +276,7 @@
               </div>
             </div>
             <div class="col-4">
-              <h3 class="text-center">{{ 'platform.jammer.myjam.myteam.joincode' | translate}}</h3>
+              <h3 class="text-center">{{ 'platform.common.joincode' | translate}}</h3>
               <p class="text-center">
                 {{ team.teamCode }}
                 <a matTooltip="{{ 'platform.jammer.myjam.myteam.joincodetooltip' | translate}}" class="tooltip-trigger">?</a>
@@ -348,13 +348,13 @@
           </div>
 
           <!-- Incubation Submission Status -->
-          <div *ngIf="isStageActive(JamStages.INCUBATION) || hasStagePassed(JamStages.INCUBATION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.INCUBATION)">
+          <div *ngIf="isStageActive(JamStages.INCUBATION_SUBMISSION) || hasStagePassed(JamStages.INCUBATION_SUBMISSION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.INCUBATION)">
             <h2 class="text-white">
               {{ 'platform.jammer.myjam.mysubmission.incubationsubmissionstatus' | translate}} 
               <ng-container [ngSwitch]="true">
                 <span *ngSwitchCase="hasSubmittedOn(JamStages.INCUBATION)">{{ 'platform.common.valid' | translate}}</span>
-                <span *ngSwitchCase="!hasSubmittedOn(JamStages.INCUBATION) && getStageTimeDelta(JamStages.INCUBATION) > 0">{{ 'platform.common.pending' | translate}}</span>
-                <span *ngSwitchCase="!hasSubmittedOn(JamStages.INCUBATION) && getStageTimeDelta(JamStages.INCUBATION) < 0">{{ 'platform.common.late' | translate}}</span>
+                <span *ngSwitchCase="!hasSubmittedOn(JamStages.INCUBATION) && getStageTimeDelta(JamStages.INCUBATION_SUBMISSION) > 0">{{ 'platform.common.pending' | translate}}</span>
+                <span *ngSwitchCase="!hasSubmittedOn(JamStages.INCUBATION) && getStageTimeDelta(JamStages.INCUBATION_SUBMISSION) < 0">{{ 'platform.common.late' | translate}}</span>
                 <span *ngSwitchDefault>{{ 'platform.common.notavailable' | translate}}</span>
               </ng-container>
             </h2>
@@ -376,7 +376,7 @@
           </div>
 
           <!-- Acceleration Submission Status -->
-          <div *ngIf="isStageActive(JamStages.ACCELERATION) || hasStagePassed(JamStages.ACCELERATION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.ACCELERATION)">
+          <div *ngIf="isStageActive(JamStages.ACCELERATION_SUBMISSION) || hasStagePassed(JamStages.ACCELERATION_SUBMISSION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.ACCELERATION)">
             <h2 class="text-white">
               {{ 'platform.jammer.myjam.mysubmission.accelerationsubmissionstatus' | translate}} 
               <ng-container [ngSwitch]="true">
@@ -645,7 +645,7 @@
           </div>
 
           <!-- INCUBATION SUBMISSION FORM -->
-          <div *ngIf="isStageActiveWithDelay(JamStages.INCUBATION)">
+          <div *ngIf="isStageActiveWithDelay(JamStages.INCUBATION_SUBMISSION)">
             <hr class="my-2">
             <h2>{{ 'platform.jammer.myjam.mysubmission.incubationsubmission' | translate }}</h2>
             <div *ngIf="getStageTimeDelta(JamStages.INCUBATION) > 0">

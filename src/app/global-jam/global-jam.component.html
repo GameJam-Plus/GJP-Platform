@@ -318,6 +318,7 @@
         <b>{{ s.teamName }}</b><br>
         <a [href]="s.gamejamBuild" target="_blank">{{ s.gamejamBuild }}</a><br>
         <a [href]="s.gamejamPitch" target="_blank" *ngIf="s.gamejamPitch">{{ s.gamejamPitch }}</a><br>
+        Submission time: {{ utcIsoToLocalInputValue(s.gamejamSubmissionTime) }}<br>
         Going to Incubation? <span *ngIf="s.goingToIncubation">YES</span> <span *ngIf="!s.goingToIncubation">NO</span>
         <span *ngIf="s.goingToAcceleration != null">Going to Acceleration? 
           <span *ngIf="s.goingToAcceleration">YES</span> 

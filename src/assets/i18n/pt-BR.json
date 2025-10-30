@@ -40,12 +40,52 @@
 			"themes": "Temas",
 			"stagetooltip": "Todas as etapas começam às 00:00:00 e terminam às 11:59:59 no horário brasileiro (GMT-3).",
 			"stagesinfo": "As datas oficiais da Game Jam são de 17 a 19 de outubro, mas algumas sedes acontecerão em datas diferentes (Verifique com seu Organizador Local). A Incubação começa oficialmente no dia 27 de outubro, mas TODOS terão acesso ao conteúdo completo, incluindo gravações de reuniões e materiais enviados.",
+			"region": "Região:",
 			"country": "País:",
+			"joincode": "Código de Participação:",
 			"city": "Cidade:",
 			"modality": "Modalidade:",
 			"joinvenue": "ENTRAR NA SEDE",
 			"joinjam": "ENTRAR EM UMA GAME JAM",
-			"join": "ENTRAR"
+			"join": "ENTRAR",
+			"open": "Aberto",
+			"closed": "Fechado",
+			"onsite": "Presencial",
+			"online": "Online",
+			"hybrid": "Híbrido",
+			"savechanges": "SALVAR ALTERAÇÕES"
+		},
+		"venueinfo": {
+			"venuename": "Nome do Local",
+			"venueoptions": "Opções do Local",
+			"address": "Endereço",
+			"city": "Cidade",
+			"contactinfo": "Informações de Contato",
+			"email": "E-mail",
+			"phone": "Telefone",
+			"website": "Link/Site",
+			"country": "País",
+			"countryvenue": "País do Local",
+			"format": "Formato",
+			"language": "Idioma",
+			"location": "Localização",
+			"modality": "Modalidade",
+			"server": "Servidor",
+			"start": "Início",
+			"status": "Status",
+			"igdavenue": "Local IGDA",
+			"starttime": "Horário de Início",
+			"customsubmission": "Prazo de Envio Personalizado",
+			"socialmedia": "Redes Sociais",
+			"description": "Descrição e Instruções",
+			"innertext": {
+				"tooltipaddress": "Se o seu local tiver um endereço físico, especifique-o aqui.",
+				"tooltipserver": "Uma URL para o seu local virtual, se houver (servidor do Discord, grupo do WhatsApp, Telegram ou outro aplicável).",
+				"tooltipigda": "Marque esta opção se o seu local for afiliado à IGDA.",
+				"tooltipstatus": "Seu local está aberto para novos participantes se inscreverem?",
+				"tooltiplanguage": "GameJamPlus oferece suporte a três idiomas oficiais: Português, Español (suporte limitado) e English (suporte limitado).",
+				"tooltipcustomsubmission": "Altere este valor se o seu local tiver um prazo de envio personalizado autorizado. Deixe em branco caso contrário."
+			}
 		},
 		"errors": {
 			"requiredfields": "Por favor, preencha todos os campos obrigatórios!"
@@ -79,7 +119,8 @@
 			"toolbox": "Ferramentas",
 			"guides": "Guias",
 			"arts": "Artes",
-			"presentations": "Apresentações"
+			"presentations": "Apresentações",
+			"venueinfo": "Informações Principais do Local"
 		},
 		"jammer": {
 			"home": {
@@ -97,22 +138,6 @@
 					"joinvenue": "Entrar na sede",
 					"statusclosed": "Status: Fechado",
 					"contactvenue": "Entre em contato com os organizadores da sede para mais informações sobre como participar desta sede"
-				},
-				"venueinfo": {
-					"address": "Endereço",
-					"city": "Cidade",
-					"contactinfo": "Informações de contato",
-					"email": "Email",
-					"phone": "Telefone",
-					"website": "Website",
-					"country": "País",
-					"format": "Formato",
-					"language": "Idioma",
-					"location": "Localização",
-					"modality": "Modalidade",
-					"server": "Servidor",
-					"start": "Início",
-					"status": "Status"
 				}
 			},
 			"myjam": {
@@ -173,7 +198,6 @@
 					}
 				},
 				"myteam": {
-					"joincode": "Código de Participação:",
 					"joincodetooltip": "Compartilhe este código com seus colegas para convidá-los para sua equipe.",
 					"jointeam": "Entrar em uma equipe existente",
 					"myteam": "Minha Equipe:",

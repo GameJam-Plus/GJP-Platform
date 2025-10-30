@@ -40,12 +40,52 @@
 			"themes": "主题",
 			"stagetooltip": "所有阶段均从巴西时间（GMT-3）00:00:00开始，到11:59:59结束。",
 			"stagesinfo": "Game Jam 的官方日期是 10 月 17 日至 19 日，但有些会场将在不同日期举行（请与您的本地组织者确认）。孵化阶段将于 10 月 27 日正式开始，但所有人都可以访问完整的内容，包括会议录音和提交的材料。",
+			"region": "地区：",
 			"country": "国家：",
+			"joincode": "加入代码：",
 			"city": "城市：",
 			"modality": "形式：",
 			"joinvenue": "加入会场",
 			"joinjam": "加入游戏创作活动",
-			"join": "加入"
+			"join": "加入",
+			"open": "开放",
+			"closed": "关闭",
+			"onsite": "现场",
+			"online": "线上",
+			"hybrid": "混合",
+			"savechanges": "保存更改"
+		},
+		"venueinfo": {
+			"venuename": "会场名称",
+			"venueoptions": "会场选项",
+			"address": "地址",
+			"city": "城市",
+			"contactinfo": "联系信息",
+			"email": "电子邮箱",
+			"phone": "电话",
+			"website": "网站",
+			"country": "国家",
+			"countryvenue": "会场所在国家",
+			"format": "格式",
+			"language": "语言",
+			"location": "地点",
+			"modality": "形式",
+			"server": "服务器",
+			"start": "开始",
+			"status": "状态",
+			"igdavenue": "IGDA 会场",
+			"starttime": "开始时间",
+			"customsubmission": "自定义提交时间",
+			"socialmedia": "社交媒体",
+			"description": "描述与说明",
+			"innertext": {
+				"tooltipaddress": "如果您的会场有实体地点，请在此填写地址。",
+				"tooltipserver": "如果有虚拟会场，请填写其 URL（如 Discord 服务器、WhatsApp 群组、Telegram 群组等）。",
+				"tooltipigda": "如果您的会场隶属于 IGDA，请勾选此项。",
+				"tooltipstatus": "您的会场是否开放供新的参与者注册？",
+				"tooltiplanguage": "GameJamPlus 支持三种官方语言：葡萄牙语、西班牙语（有限支持）和英语（有限支持）。",
+				"tooltipcustomsubmission": "如果您的会场有授权的自定义提交时间，请在此更改该值；否则留空。"
+			}
 		},
 		"errors": {
 			"requiredfields": "请填写所有必填字段！"
@@ -79,7 +119,8 @@
 			"toolbox": "工具箱",
 			"guides": "指南",
 			"arts": "美术资源",
-			"presentations": "演示文稿"
+			"presentations": "演示文稿",
+			"venueinfo": "会场主要信息"
 		},
 		"jammer": {
 			"home": {
@@ -97,22 +138,6 @@
 					"joinvenue": "加入会场",
 					"statusclosed": "状态：已关闭",
 					"contactvenue": "请联系该会场的组织者以获取有关如何加入的更多信息"
-				},
-				"venueinfo": {
-					"address": "地址",
-					"city": "城市",
-					"contactinfo": "联系信息",
-					"email": "电子邮箱",
-					"phone": "电话",
-					"website": "网站",	
-					"country": "国家",
-					"format": "格式",
-					"language": "语言",
-					"location": "地点",
-					"modality": "形式",
-					"server": "服务器",
-					"start": "开始",
-					"status": "状态"
 				}
 			},
 			"myjam": {
@@ -173,7 +198,6 @@
 					}
 				},
 				"myteam": {
-					"joincode": "加入代码：",
 					"joincodetooltip": "将此代码分享给队友，邀请他们加入您的团队。",
 					"jointeam": "加入现有团队",
 					"myteam": "我的团队：",

@@ -164,13 +164,13 @@
 
           <!-- TOOLBOX -->
           <div class="row pb-3 align-items-end">
-            <h2 class="col-12 text-center">Toolbox</h2>
+            <h2 class="col-12 text-center">{{ 'platform.localorganizer.toolbox' | translate }}</h2>
             <div class="col-4 p-2 pointer" (click)="goTo(jam.toolboxGuides)">
               <div class="card p-2">
                 <div class="text-center">
                   <fa-icon [icon]="faCircleInfo" class="fa-5x"></fa-icon>
                 </div>
-                <h3 class="text-center">Guides</h3>
+                <h3 class="text-center">{{ 'platform.localorganizer.guides' | translate }}</h3>
               </div>
             </div>
 
@@ -179,7 +179,7 @@
                 <div class="text-center">
                   <fa-icon [icon]="faPalette" class="fa-5x"></fa-icon>
                 </div>
-                <h3 class="text-center">Arts</h3>
+                <h3 class="text-center">{{ 'platform.localorganizer.arts' | translate }}</h3>
               </div>
             </div>
 
@@ -188,7 +188,7 @@
                 <div class="text-center">
                   <fa-icon [icon]="faFilePowerpoint" class="fa-5x"></fa-icon>
                 </div>
-                <h3 class="text-center">Presentations</h3>
+                <h3 class="text-center">{{ 'platform.localorganizer.presentations' | translate }}</h3>
               </div>
             </div>
           </div>
@@ -213,17 +213,17 @@
         <h1 class="text-center">{{ site!.name.toUpperCase() }}</h1>
         <div class="row">
           <div class="col-4">
-            <h3 class="text-center">Region:</h3>
+            <h3 class="text-center">{{ 'platform.common.region' | translate }}</h3>
             <p class="text-center">{{ user.region.name }}</p>
           </div>
 
           <div class="col-4">
-            <h3 class="text-center">Country:</h3>
+            <h3 class="text-center">{{ 'platform.common.country' | translate }}</h3>
             <p class="text-center">{{ site.country.code }} - {{ site.country.name }}</p>
           </div>
 
           <div class="col-4">
-            <h3 class="text-center">Join Code:</h3>
+            <h3 class="text-center">{{ 'platform.common.joincode' | translate }}</h3>
             <p class="text-center">
               {{ site.code }}
               <a matTooltip="Share this code with other venue organizers so they can access your venue's dashboard." class="tooltip-trigger">?</a>
@@ -236,31 +236,31 @@
         <form (submit)="saveSite()" [formGroup]="siteForm" class="row">
 
           <div class="col-12 input-group input-group-lg mb-3">
-            <div class="input-group-prepend"><span class="input-group-text required">Venue Name</span></div>
+            <div class="input-group-prepend"><span class="input-group-text required">{{ 'platform.venueinfo.venuename' | translate }}</span></div>
             <input type="text" class="form-control" id="siteName" formControlName="name">
           </div>
 
           <div class="col-6">
-            <h3>Venue Main Info</h3>
+            <h3>{{ 'platform.localorganizer.presentations' | translate }}</h3>
             <hr>
             <div class="input-group"> <!--COUNTRY-->
-              <div class="input-group-prepend"><span class="input-group-text required">Country</span></div>
+              <div class="input-group-prepend"><span class="input-group-text required">{{ 'platform.venueinfo.country' | translate }}</span></div>
               <select class="form-control formList" id="countries" formControlName="country">
-                <option value="" disabled selected hidden>Country of the venue</option>
+                <option value="" disabled selected hidden>{{ 'platform.venueinfo.countryvenue' | translate }}</option>
                 <option *ngFor="let country of countries" [ngValue]="country">{{ country.name }}</option>
               </select>
             </div>
 
             <div class="input-group"> <!--CITY-->
-              <div class="input-group-prepend"><span class="input-group-text required">City</span></div>
+              <div class="input-group-prepend"><span class="input-group-text required">{{ 'platform.venueinfo.city' | translate }}</span></div>
               <input type="text" class="form-control" id="siteCity" formControlName="city">
             </div>
 
             <div class="input-group"> <!--ADDRESS-->
               <div class="input-group-prepend">
                 <span class="input-group-text">
-                  Address
-                  <a matTooltip="If your venue has a physical location, specify the address." class="tooltip-trigger">?</a>
+                  {{ 'platform.venueinfo.address' | translate }}
+                  <a matTooltip="{{ 'platform.venueinfo.innertext.tooltipaddress' | translate }}" class="tooltip-trigger">?</a>
                 </span>
               </div>
               <input type="text" class="form-control" id="siteAddress" formControlName="address">
@@ -269,8 +269,8 @@
             <div class="input-group"> <!--SERVER-->
               <div class="input-group-prepend">
                 <span class="input-group-text">
-                  Server
-                  <a matTooltip="An URL to your virtual venue if any (discord server, whatsapp group, telegram group, or any other that applies)" class="tooltip-trigger">?</a>
+                  {{ 'platform.venueinfo.server' | translate }}
+                  <a matTooltip="{{ 'platform.venueinfo.innertext.tooltipserver' | translate }}" class="tooltip-trigger">?</a>
                 </span>
               </div>
               <input type="text" class="form-control" id="siteServer" formControlName="server">
@@ -280,8 +280,8 @@
             <div class="input-group"> <!-- IGDA -->
               <div class="input-group-prepend">
                 <span class="input-group-text">
-                  IGDA Venue
-                  <a matTooltip="Mark this check if your venue is affiliated to IGDA" class="tooltip-trigger">?</a>
+                  {{ 'platform.venueinfo.igdavenue' | translate }}
+                  <a matTooltip="{{ 'platform.venueinfo.innertext.tooltipigda' | translate }}" class="tooltip-trigger">?</a>
                 </span>
               </div>
               <div class="input-group-append">
@@ -291,57 +291,57 @@
               </div>
             </div>
 
-            <h3 class="mt-3">Contact Info</h3>
+            <h3 class="mt-3">{{ 'platform.venueinfo.contactinfo' | translate }}</h3>
             <hr>
 
             <div class="input-group input-group-sm"> <!--SERVER-->
-              <div class="input-group-prepend"><span class="input-group-text">Email</span></div>
+              <div class="input-group-prepend"><span class="input-group-text">{{ 'platform.venueinfo.email' | translate }}</span></div>
               <input type="email" class="form-control" id="siteEmail" formControlName="email">
             </div>
 
             <div class="input-group input-group-sm"> <!--PHONE-->
-              <div class="input-group-prepend"><span class="input-group-text">Phone Number</span></div>
+              <div class="input-group-prepend"><span class="input-group-text">{{ 'platform.venueinfo.phone' | translate }}</span></div>
               <input type="tel" class="form-control" id="sitePhone" formControlName="phoneNumber">
             </div>
 
             <div class="input-group input-group-sm"> <!--LINK-->
-              <div class="input-group-prepend"><span class="input-group-text">Link/Website</span></div>
+              <div class="input-group-prepend"><span class="input-group-text">{{ 'platform.venueinfo.website' | translate }}</span></div>
               <input type="url" class="form-control" id="siteWebsite" formControlName="website">
             </div>
 
           </div>
 
           <div class="col-6">
-            <h3>Venue Options</h3>
+            <h3>{{ 'platform.venueinfo.venueoptions' | translate }}</h3>
             <hr>
 
             <div class="input-group"> <!--STATUS-->
               <div class="input-group-prepend">
                 <span class="input-group-text">
-                  Status
-                  <a matTooltip="Is your venue open for new jammers to sign in?" class="tooltip-trigger">?</a>
+                  {{ 'platform.venueinfo.status' | translate }}
+                  <a matTooltip="{{ 'platform.venueinfo.innertext.tooltipstatus' | translate }}" class="tooltip-trigger">?</a>
                 </span>
               </div>
               <select class="form-select" formControlName="open">
-                <option [value]="true">Open</option>
-                <option [value]="false">Closed</option>
+                <option [value]="true">{{ 'platform.common.open' | translate }}</option>
+                <option [value]="false">{{ 'platform.common.closed' | translate }}</option>
               </select>
             </div>
 
             <div class="input-group"> <!--MODALITY-->
-              <div class="input-group-prepend"><span class="input-group-text">Modality</span></div>
+              <div class="input-group-prepend"><span class="input-group-text">{{ 'platform.venueinfo.modality' | translate }}</span></div>
               <select class="form-select" formControlName="modality">
-                <option value="on site">On Site</option>
-                <option value="online">Online</option>
-                <option value="hybrid">Hybrid</option>
+                <option value="on site">{{ 'platform.common.onsite' | translate }}</option>
+                <option value="online">{{ 'platform.common.online' | translate }}</option>
+                <option value="hybrid">{{ 'platform.common.hybrid' | translate }}</option>
               </select>
             </div>
 
             <div class="input-group"> <!--LANGUAGE-->
               <div class="input-group-prepend">
                 <span class="input-group-text">
-                  Language
-                  <a matTooltip="GameJam+ supports three official languages: Português, Español (limited support), and English (limited support)" class="tooltip-trigger">?</a>
+                  {{ 'platform.venueinfo.language' | translate }}
+                  <a matTooltip="{{ 'platform.venueinfo.innertext.tooltiplanguage' | translate }}" class="tooltip-trigger">?</a>
                 </span>
               </div>
               <select class="form-select" formControlName="language">
@@ -352,21 +352,21 @@
             </div>
 
             <div class="input-group input-group"> <!--START TIME-->
-              <div class="input-group-prepend"><span class="input-group-text">Start time</span></div>
+              <div class="input-group-prepend"><span class="input-group-text">{{ 'platform.venueinfo.starttime' | translate }}</span></div>
               <input type="time" class="form-control" id="siteStartTime" formControlName="startTime">
             </div>
 
             <div class="input-group input-group"> <!--CUSTOM SUBMISSION TIME-->
               <div class="input-group-prepend">
                 <span class="input-group-text">
-                  Custom Submission Time
-                  <a matTooltip="Change this value if your site has an authorized custom submission time. Leave blank otherwise." class="tooltip-trigger">?</a>
+                  {{ 'platform.venueinfo.customsubmission' | translate }}
+                  <a matTooltip="{{ 'platform.venueinfo.innertext.tooltipcustomsubmission' | translate }}" class="tooltip-trigger">?</a>
                 </span>
               </div>
               <input type="datetime-local" class="form-control" id="siteStartTime" formControlName="customSubmissionTime">
             </div>
 
-            <h3 class="mt-3">Social Media</h3>
+            <h3 class="mt-3">{{ 'platform.venueinfo.socialmedia' | translate }}</h3>
             <hr>
 
             <div class="input-group input-group-sm"> <!--INSTAGRAM-->
@@ -386,7 +386,7 @@
           </div>
 
           <div class="col-12 mt-3">
-            <h3>Description and Instructions</h3>
+            <h3>{{ 'platform.venueinfo.description' | translate }}</h3>
             <hr>
             <editor
               apiKey="no-api-key"
@@ -401,7 +401,7 @@
             </div>-->
           </div>
 
-          <button type="submit" class="navbutton navL1 flex-center m-3">SAVE CHANGES</button>
+          <button type="submit" class="navbutton navL1 flex-center m-3">{{ 'platform.common.savechanges' | translate }}</button>
         </form>
       </div>
 
@@ -460,6 +460,7 @@
               <b>{{ s.teamName }}</b><br>
               <a [href]="s.gamejamBuild" target="_blank">{{ s.gamejamBuild }}</a><br>
               <a [href]="s.gamejamPitch" target="_blank" *ngIf="s.gamejamPitch">{{ s.gamejamPitch }}</a><br>
+              Submission time: {{ utcIsoToLocalInputValue(s.gamejamSubmissionTime) }}<br>
               Going to Incubation? <span *ngIf="s.goingToIncubation">YES</span> <span *ngIf="!s.goingToIncubation">NO</span><br>
               <span *ngIf="s.goingToAcceleration != null">Going to Acceleration? 
                 <span *ngIf="s.goingToAcceleration">YES</span> 
