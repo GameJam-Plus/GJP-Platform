@@ -58,6 +58,12 @@ export class GlobalJamComponent {
   submissionsData: any[] = [];
 
   faFileCsv = faFileCsv;
+  ubmissions: any[] = [];
+  displayedSubmissions: any[] = [];
+  accelerations: any[] = [];
+  displayedAccelerations: any[] = [];
+  filterIncubationOnly: boolean = false;
+  filterAccelerationOnly: boolean = false;
 
   @Input() page: string = '';
 
@@ -222,6 +228,40 @@ export class GlobalJamComponent {
     });
   }
 
+  toggleIncubationFilter(value: boolean) {
+    this.filterIncubationOnly = value;
+    this.applySubmissionFilters();
+  }
+
+  toggleAcelerationFilter(value: boolean) {
+    this.filterAccelerationOnly = value;
+    this.applyAccelerationFilters();
+  }
+
+  applyAccelerationFilters() {
+    if(!this.submissions) {
+      this.displayedAccelerations = [];
+      return;
+    }
+    if(this.filterAccelerationOnly) {
+      this.displayedAccelerations = this.submissions.filter(s => !!s.goingToAcceleration);
+    } else {
+      this.displayedAccelerations = [...this.submissions];
+    }
+  }
+
+  applySubmissionFilters() {
+    if(!this.submissions) {
+      this.displayedSubmissions = [];
+      return;
+    }
+    if(this.filterIncubationOnly) {
+      this.displayedSubmissions = this.submissions.filter(s => !!s.goingToIncubation);
+    } else {
+      this.displayedSubmissions = [...this.submissions];
+    }
+  }
+
   getSubmissions()
   {
     if(this.activeJam?._id)
@@ -234,8 +274,11 @@ export class GlobalJamComponent {
           this.message.showMessage("Error", error.error.message);
         }
       });
+      this.applySubmissionFilters();
     }
   }
+
+
 
   getActiveUsers()
   {
@@ -757,6 +800,7 @@ export class GlobalJamComponent {
 
 // #region SiteView functions
   selectSite(site: any) {
+    console.log('selectSite payload:', site);
     this.selectedSite = site;
     this.listJammersOfSite(site);
     // Reset modal state before opening
