@@ -163,6 +163,7 @@ const updateIncubation = async(req, res) => {
         updateValue.incubationThemes = req.body.incubationThemes;
         updateValue.incubationCategories = req.body.incubationCategories;
         updateValue.incubationPlatforms = req.body.incubationPlatforms;
+        updateValue.incubationSpecialQuestion = req.body.incubationSpecialQuestion;
         updateValue.incubationGraphics = req.body.incubationGraphics;
         updateValue.incubationEngine = req.body.incubationEngine;
         updateValue.goingToAcceleration = req.body.goingToAcceleration;
@@ -246,6 +247,7 @@ const updateAcceleration = async(req, res) => {
         updateValue.accelerationThemes = req.body.accelerationThemes;
         updateValue.accelerationCategories = req.body.accelerationCategories;
         updateValue.accelerationPlatforms = req.body.accelerationPlatforms;
+        updateValue.accelerationSpecialQuestion = req.body.accelerationSpecialQuestion;
         updateValue.accelerationGraphics = req.body.accelerationGraphics;
         updateValue.accelerationEngine = req.body.accelerationEngine;
         updateValue.accelerationRecommendation = req.body.accelerationRecommendation;
