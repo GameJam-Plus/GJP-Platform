@@ -53,7 +53,8 @@
 			"onsite": "Presencial",
 			"online": "Online",
 			"hybrid": "Híbrido",
-			"savechanges": "SALVAR ALTERAÇÕES"
+			"savechanges": "SALVAR ALTERAÇÕES",
+			"requiredfields": "Por favor, preencha todos os campos obrigatórios."
 		},
 		"venueinfo": {
 			"venuename": "Nome do Local",

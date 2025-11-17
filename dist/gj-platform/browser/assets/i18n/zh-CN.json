@@ -53,7 +53,8 @@
 			"onsite": "现场",
 			"online": "线上",
 			"hybrid": "混合",
-			"savechanges": "保存更改"
+			"savechanges": "保存更改",
+			"requiredfields": "请填写所有必填字段。"
 		},
 		"venueinfo": {
 			"venuename": "会场名称",
