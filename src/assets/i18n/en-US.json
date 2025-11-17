@@ -53,7 +53,8 @@
 			"onsite": "On Site",
 			"online": "Online",
 			"hybrid": "Hybrid",
-			"savechanges": "SAVE CHANGES"
+			"savechanges": "SAVE CHANGES",
+			"requiredfields": "Please fill all the required fields."
 		},
 		"venueinfo": {
 			"venuename": "Venue Name",

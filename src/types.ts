@@ -349,6 +349,7 @@ export interface Submission {
   incubationThemes?: string[];
   incubationCategories?: string[];
   incubationPlatforms?: string[];
+  incubationSpecialQuestion?: string;
   incubationGraphics?: string;
   incubationEngine?: string;
   goingToAcceleration?: boolean;
@@ -380,6 +381,7 @@ export interface Submission {
   accelerationThemes?: string[];
   accelerationCategories?: string[];
   accelerationPlatforms?: string[];
+  accelerationSpecialQuestion?: string;
   accelerationGraphics?: string;
   accelerationEngine?: string;
   accelerationAuthorization?: boolean;
@@ -388,9 +390,6 @@ export interface Submission {
   accelerationSuggestions?: string;
   accelerationSubmissionTime?: Date;
   accelerationSubmissionDelta?: number;
-
-  accelerationGameplayVideo?: string; // Remove later
-  accelerationSoundtrack?: string; // Remove later
 
   // Informations for the acceleration pitch form
   accelerationPitch?: string;

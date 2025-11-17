@@ -411,18 +411,18 @@
         <!-- Forms -->
         <div *ngIf="team">
           <!-- GAMEJAM SUBMISSION FORM -->
-          <div *ngIf="isStageActiveWithDelay(JamStages.GAMEJAM)">
+          <div *ngIf="isStageActiveWithDelay(JamStages.GAMEJAM_SUBMISSION, 1)">
             <hr class="my-2">
             <h2>{{ 'platform.jammer.myjam.mysubmission.gamesubmission' | translate}}</h2>
-            <div *ngIf="getStageTimeDelta(JamStages.GAMEJAM) > 0">
-              <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.GAMEJAM))}}</b>
+            <div *ngIf="getStageTimeDelta(JamStages.GAMEJAM_SUBMISSION) > 0">
+              <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.GAMEJAM_SUBMISSION))}}</b>
             </div>
             <div class="info m-3 p-4">
               <p class="py-2" [innerHTML]="'platform.jammer.myjam.mysubmission.submissioninfo.line1' | translate:{ rulesLink }"></p>
               <p class="py-2" [innerHTML]="'platform.jammer.myjam.mysubmission.submissioninfo.line2' | translate"></p>
 
               <ul>
-                <li [innerHTML]="'platform.jammer.myjam.mysubmission.submissioninfochecklist.item1' | translate:{ itchioLink }"></li>
+                <!-- <li [innerHTML]="'platform.jammer.myjam.mysubmission.submissioninfochecklist.item1' | translate:{ itchioLink }"></li> -->
                 <li>{{ 'platform.jammer.myjam.mysubmission.submissioninfochecklist.item2' | translate }}</li>
                 <li>{{ 'platform.jammer.myjam.mysubmission.submissioninfochecklist.item3' | translate }}</li>
                 <li>{{ 'platform.jammer.myjam.mysubmission.submissioninfochecklist.item4' | translate }}</li>
@@ -432,183 +432,293 @@
 
             <form (submit)="saveGamejamSubmission()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionGamejamForm" enctype="multipart/form-data">
               <div class="row">
-                <div class="form-group col-12"> <!-- GOING TO INCUBATION -->
-                  <label for="goingToIncubation" class="required">
+                <!-- GOING TO INCUBATION -->
+                <div class="col-12">
+                  <div class="inputTitle">
                     <b>{{ 'platform.jammer.myjam.mysubmission.formquestion.goingtoincubation' | translate }}</b>
-                  </label>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="goingToIncubation" [value]="true" formControlName="goingToIncubation" id="goingToIncubationYes">
-                    <label class="form-check-label" for="goingToIncubationYes">
+                  </div>
+                  <mat-radio-group formControlName="goingToIncubation" class="selectorStyle" style="padding-left: 0; padding-right: 1.5rem;">
+                    <mat-radio-button [value]="true">
                       {{ 'platform.common.yes' | translate }}
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="goingToIncubation" [value]="false" formControlName="goingToIncubation" id="goingToIncubationNo">
-                    <label class="form-check-label" for="goingToIncubationNo">
+                    </mat-radio-button>
+                    <mat-radio-button [value]="false">
                       {{ 'platform.common.no' | translate }}
-                    </label>
-                  </div>
+                    </mat-radio-button>
+                  </mat-radio-group>
                 </div>
 
-                <div class="form-group col-12"> <!-- TITLE -->
-                  <label for="title" class="required">
+                <!-- TITLE -->
+                <div class="col-12">
+                  <div class="inputTitle">
                     {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamtitle' | translate }}
-                  </label>
-                  <input type="text" id="title" class="form-control form-control-lg" placeholder="Next GOTY" formControlName="gamejamTitle">
+                  </div>
+                  <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                    <mat-label>
+                      {{ 'platform.common.writehere' | translate }}
+                    </mat-label>
+                    <input matInput
+                           id="title"
+                           required
+                           placeholder="Next GOTY"
+                           formControlName="gamejamTitle">
+                  </mat-form-field>
                 </div>
 
-                <div class="form-group col-6"> <!-- LINK -->
-                  <label for="link" class="required">
+                <!-- LINK and CONTACT in same row -->
+                <div class="col-md-6">
+                  <div class="inputTitle">
                     {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejambuild' | translate }}
-                  </label>
-                  <input type="url" id="link" class="form-control" placeholder="https://myteam.itch.io/mygame" formControlName="gamejamBuild">
+                  </div>
+                  <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                    <mat-label>
+                      {{ 'platform.common.writehere' | translate }}
+                    </mat-label>
+                    <input matInput
+                           type="url"
+                           id="link"
+                           required
+                           placeholder="https://myteam.itch.io/mygame"
+                           formControlName="gamejamBuild">
+                  </mat-form-field>
                 </div>
 
-                <div class="form-group col-6"> <!-- CONTACT -->
-                  <label for="contact" class="required">
+                <div class="col-md-6">
+                  <div class="inputTitle">
                     <span [innerHTML]="'platform.jammer.myjam.mysubmission.formquestion.gamejamcontact' | translate"></span>
-                    <a matTooltip="{{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.tooltipcontact' | translate }}" class="tooltip-trigger">?</a>
-                  </label>
-                  <select id="contact" class="form-control" formControlName="gamejamContact">
-                    <option value="" disabled selected hidden>{{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.selectteammember' | translate }}</option>
-                    <option *ngFor="let jammer of team.jammers; index as i" [value]="i">
-                      {{ jammer.name }} - {{ jammer.email }}
-                    </option>
-                  </select>
+                    <mat-icon matTooltip="{{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.tooltipcontact' | translate }}" style="vertical-align: middle; cursor: help;">info</mat-icon>
+                  </div>
+                  <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                    <mat-label>
+                      {{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.selectteammember' | translate }}
+                    </mat-label>
+                    <mat-select formControlName="gamejamContact" required>
+                      <mat-option *ngFor="let jammer of team.jammers; index as i" [value]="i">
+                        {{ jammer.name }} - {{ jammer.email }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
                 </div>
 
-                <div class="form-group col-12"> <!-- DESCRIPTION -->
-                  <label for="description" class="required">
+                <!-- DESCRIPTION -->
+                <div class="col-12">
+                  <div class="inputTitle">
                     {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamdescription' | translate }}
-                  </label>
-                  <textarea id="description" class="form-control" formControlName="gamejamDescription" rows="5"></textarea>
+                  </div>
+                  <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                    <mat-label>
+                      {{ 'platform.common.writehere' | translate }}
+                    </mat-label>
+                    <textarea matInput
+                              id="description"
+                              required
+                              rows="5"
+                              formControlName="gamejamDescription"></textarea>
+                  </mat-form-field>
                 </div>
 
-                <div class="form-group col-6"> <!-- GENRE -->
-                  <label for="genre" class="required">
+                <!-- GENRE and TOPICS in same row -->
+                <div class="col-md-6">
+                  <div class="inputTitle">
                     {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamgenres' | translate }}
-                  </label>
-                  <select id="genre" class="form-select" formControlName="gamejamGenres" multiple>
-                    <option *ngFor="let genre of availableGenres" [value]="genre">
-                      {{ genre }}
-                    </option>
-                  </select>
+                  </div>
+                  <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                    <mat-label>
+                      {{ 'platform.common.selecthere' | translate }}
+                    </mat-label>
+                    <mat-select formControlName="gamejamGenres" multiple required>
+                      <mat-option *ngFor="let genre of availableGenres" [value]="genre">
+                        {{ genre }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
                 </div>
 
-                <div class="form-group col-6"> <!-- TOPICS -->
-                  <label for="topic" class="required">
+                <div class="col-md-6">
+                  <div class="inputTitle">
                     <span [innerHTML]="'platform.jammer.myjam.mysubmission.formquestion.gamejamtopics' | translate"></span>
-                    <a matTooltip="{{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.tooltiptopics' | translate }}" class="tooltip-trigger">?</a>
-                  </label>
-                  <select id="topic" class="form-select" formControlName="gamejamTopics" multiple>
-                    <option *ngFor="let topic of availableTopics" [value]="topic">
-                      {{ topic }}
-                    </option>
-                  </select>
+                    <mat-icon matTooltip="{{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.tooltiptopics' | translate }}" style="vertical-align: middle; cursor: help;">info</mat-icon>
+                  </div>
+                  <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                    <mat-label>
+                      {{ 'platform.common.selecthere' | translate }}
+                    </mat-label>
+                    <mat-select formControlName="gamejamTopics" multiple required>
+                      <mat-option *ngFor="let topic of availableTopics" [value]="topic">
+                        {{ topic }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
                 </div>
 
-                <div class="form-group col-4"> <!-- THEMES -->
-                  <label for="Themes" class="required">
+                <!-- THEMES, CATEGORIES, PLATFORMS in same row -->
+                <div class="col-md-4">
+                  <div class="inputTitle">
                     {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamthemes' | translate }}
-                  </label>
-                  <select id="Themes" class="form-select" formControlName="gamejamThemes" multiple>
-                    <option *ngFor="let theme of jam.themes" [value]="theme.titleEN">
-                      {{ getThemeTitle(theme) }}
-                    </option>
-                  </select>
+                  </div>
+                  <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                    <mat-label>
+                      {{ 'platform.common.selecthere' | translate }}
+                    </mat-label>
+                    <mat-select formControlName="gamejamThemes" multiple required>
+                      <mat-option *ngFor="let theme of jam.themes" [value]="theme.titleEN">
+                        {{ getThemeTitle(theme) }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
                 </div>
 
-                <div class="form-group col-4"> <!-- CATEGORIES -->
-                  <label for="Categories" class="required">
+                <div class="col-md-4">
+                  <div class="inputTitle">
                     {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamcategories' | translate }}
-                  </label>
-                  <select id="Categories" class="form-select" formControlName="gamejamCategories" multiple>
-                    <option *ngFor="let category of jam.categories" [value]="category.titleEN">
-                      {{ getCategoryTitle(category) }}
-                    </option>
-                  </select>
+                  </div>
+                  <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                    <mat-label>
+                      {{ 'platform.common.selecthere' | translate }}
+                    </mat-label>
+                    <mat-select formControlName="gamejamCategories" multiple required>
+                      <mat-option *ngFor="let category of jam.categories" [value]="category.titleEN">
+                        {{ getCategoryTitle(category) }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
                 </div>
 
-                <div class="form-group col-4"> <!-- PLATFORMS -->
-                  <label for="Platforms" class="required">
+                <div class="col-md-4">
+                  <div class="inputTitle">
                     {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamplatforms' | translate }}
-                  </label>
-                  <select id="Platforms" class="form-select" formControlName="gamejamPlatforms" multiple>
-                    <option *ngFor="let platform of availablePlatforms" [value]="platform">
-                      {{ platform }}
-                    </option>
-                  </select>
+                  </div>
+                  <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                    <mat-label>
+                      {{ 'platform.common.selecthere' | translate }}
+                    </mat-label>
+                    <mat-select formControlName="gamejamPlatforms" multiple required>
+                      <mat-option *ngFor="let platform of availablePlatforms" [value]="platform">
+                        {{ platform }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
                 </div>
 
                 <!-- SPECIAL QUESTION FOR CATEGORY: 'Level Up Your Launch'-->
-                <div *ngIf="submissionGamejamForm.get('gamejamSpecialQuestion')?.enabled" class="form-group col-12"> <!-- SPECIAL CATEGORY QUESTION -->
-                  <label for="special">
+                <div *ngIf="submissionGamejamForm.get('gamejamSpecialQuestion')?.enabled" class="col-12">
+                  <div class="inputTitle">
                     {{ 'platform.jammer.myjam.mysubmission.formquestion.specialcategory' | translate }}
-                    <a matTooltip="{{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.tooltipspecialcategory' | translate }}" class="tooltip-trigger">?</a>
-                  </label>
-                  <input type="url" id="special" class="form-control" placeholder="https://drive.google.com/drive/folders/my-drive-folder" formControlName="gamejamSpecialQuestion">
+                    <mat-icon matTooltip="{{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.tooltipspecialcategory' | translate }}" style="vertical-align: middle; cursor: help;">info</mat-icon>
+                  </div>
+                  <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                    <mat-label>
+                      {{ 'platform.common.writehere' | translate }}
+                    </mat-label>
+                    <input matInput
+                           type="url"
+                           id="special"
+                           placeholder="https://drive.google.com/drive/folders/my-drive-folder"
+                           formControlName="gamejamSpecialQuestion">
+                  </mat-form-field>
                 </div>
 
-                <div class="form-group col-6"> <!-- GRAPHICS -->
-                  <label for="Graphics" class="required">
+                <!-- GRAPHICS and ENGINE in same row -->
+                <div class="col-md-6">
+                  <div class="inputTitle">
                     {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamgraphics' | translate }}
-                  </label>
-                  <select id="Graphics" class="form-select" formControlName="gamejamGraphics">
-                    <option *ngFor="let graphic of availableGraphics" [value]="graphic">
-                      {{ graphic }}
-                    </option>
-                  </select>
+                  </div>
+                  <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                    <mat-label>
+                      {{ 'platform.common.selecthere' | translate }}
+                    </mat-label>
+                    <mat-select formControlName="gamejamGraphics" required>
+                      <mat-option *ngFor="let graphic of availableGraphics" [value]="graphic">
+                        {{ graphic }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
                 </div>
 
-                <div class="form-group col-6"> <!-- ENGINE -->
-                  <label for="Engine" class="required">
+                <div class="col-md-6">
+                  <div class="inputTitle">
                     {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamengine' | translate }}
-                  </label>
-                  <select id="Engine" class="form-select" formControlName="gamejamEngine">
-                    <option *ngFor="let engine of availableEngines" [value]="engine">
-                      {{ engine }}
-                    </option>
-                  </select>
+                  </div>
+                  <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                    <mat-label>
+                      {{ 'platform.common.selecthere' | translate }}
+                    </mat-label>
+                    <mat-select formControlName="gamejamEngine" required>
+                      <mat-option *ngFor="let engine of availableEngines" [value]="engine">
+                        {{ engine }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
                 </div>
                 
-                <div class="form-group col-6"> <!-- RECOMMENDATION -->
-                  <label for="Recommendation" class="required">
+                <!-- RECOMMENDATION and ENJOYMENT in same row -->
+                <div class="col-md-6">
+                  <div class="inputTitle">
                     {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamrecommendation' | translate }}
-                  </label>
-                  <input type="number" id="Recommendation" class="form-control" min="0" max="10" step="1" value="5" formControlName="gamejamRecommendation">
+                  </div>
+                  <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                    <mat-label>
+                      {{ 'platform.common.writehere' | translate }}
+                    </mat-label>
+                    <input matInput
+                           type="number"
+                           id="Recommendation"
+                           required
+                           min="0"
+                           max="10"
+                           step="1"
+                           formControlName="gamejamRecommendation">
+                  </mat-form-field>
                 </div>
 
-                <div class="form-group col-6"> <!-- ENJOYMENT -->
-                  <label for="Enjoyment" class="required">
+                <div class="col-md-6">
+                  <div class="inputTitle">
                     {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamenjoyment' | translate }}
-                  </label>
-                  <input type="number" id="Enjoyment" class="form-control" min="0" max="10" step="1" value="5" formControlName="gamejamEnjoyment">
+                  </div>
+                  <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                    <mat-label>
+                      {{ 'platform.common.writehere' | translate }}
+                    </mat-label>
+                    <input matInput
+                           type="number"
+                           id="Enjoyment"
+                           required
+                           min="0"
+                           max="10"
+                           step="1"
+                           formControlName="gamejamEnjoyment">
+                  </mat-form-field>
                 </div>
 
-                <div class="form-group col-12"> <!-- SUGGESTIONS -->
-                  <label for="Suggestions">
+                <!-- SUGGESTIONS -->
+                <div class="col-12">
+                  <div class="inputTitle">
                     {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamsuggestions' | translate }}
-                    <a matTooltip="{{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.tooltipsuggestions' | translate }}" class="tooltip-trigger">?</a>
-                  </label>
-                  <textarea id="Suggestions" rows="5" class="form-control" formControlName="gamejamSuggestions"></textarea>
+                    <mat-icon matTooltip="{{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.tooltipsuggestions' | translate }}" style="vertical-align: middle; cursor: help;">info</mat-icon>
+                  </div>
+                  <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                    <mat-label>
+                      {{ 'platform.common.writehere' | translate }}
+                    </mat-label>
+                    <textarea matInput
+                              id="Suggestions"
+                              rows="5"
+                              formControlName="gamejamSuggestions"></textarea>
+                  </mat-form-field>
                 </div>
 
-                <div class="form-group col-12"> <!-- AUTHORIZATION -->
-                  <label for="Authorization" class="required">
+                <!-- AUTHORIZATION -->
+                <div class="col-12">
+                  <div class="inputTitle">
                     {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamauthorization' | translate }}
-                  </label>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="gamejamAuthorization" [value]="true" formControlName="gamejamAuthorization" id="authorizationYes">
-                    <label class="form-check-label" for="authorizationYes">
+                  </div>
+                  <mat-radio-group formControlName="gamejamAuthorization" class="selectorStyle" style="padding-left: 0; padding-right: 1.5rem;">
+                    <mat-radio-button [value]="true">
                       {{ 'platform.common.yes' | translate }}
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="gamejamAuthorization" [value]="false" formControlName="gamejamAuthorization" id="authorizationNo">
-                    <label class="form-check-label" for="authorizationNo">
+                    </mat-radio-button>
+                    <mat-radio-button [value]="false">
                       {{ 'platform.common.no' | translate }}
-                    </label>
-                  </div>
+                    </mat-radio-button>
+                  </mat-radio-group>
                 </div>
 
                 <button type="submit" class="btn btn-black col-12" *ngIf="getStageTimeDelta(JamStages.GAMEJAM) > 0">{{ 'platform.common.sendgame' | translate }}</button>
@@ -618,38 +728,46 @@
           </div>
 
           <!-- GAMEJAM PITCH SUBMISSION FORM -->
-          <div *ngIf="isStageActiveWithDelay(JamStages.GAMEJAM_SUBMISSION)">
+          <div *ngIf="isStageActiveWithDelay(JamStages.GAMEJAM_SUBMISSION, 2)">
             <hr class="my-2">
             <h2>{{ 'platform.jammer.myjam.mysubmission.pitchsubmission' | translate }}</h2>
-            <div *ngIf="getStageTimeDelta(JamStages.GAMEJAM_SUBMISSION) > 0">
-              <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.GAMEJAM_SUBMISSION)) }}</b>
+            <div *ngIf="getStageTimeDelta(JamStages.GAMEJAM_SUBMISSION, 1) > 0">
+              <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.GAMEJAM_SUBMISSION, 1)) }}</b>
             </div>
 
             <form (submit)="savePitchGamejam()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionPitchGamejamForm" enctype="multipart/form-data">
-              <div class="form-group col-12"> <!-- LINK -->
-                {{ 'platform.jammer.myjam.mysubmission.formquestion.pitchtext' | translate }}<br>
-                <label for="gamejamPitch" class="required">
-                  {{ 'platform.jammer.myjam.mysubmission.formquestion.pitchlink' | translate }}
-                </label>
-                <input 
-                id="gamejamPitch" 
-                type="url" 
-                class="form-control form-control-lg" 
-                placeholder="https://www.youtube.com/my-pitch-video" 
-                formControlName="gamejamPitch"
-                pattern="^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(?:-nocookie)?\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|live\/|v\/)?)([\w\-]+)(\S+)?$">
-                <div class="text-danger mt-1" *ngIf="submissionPitchGamejamForm.get('gamejamPitch')?.touched && submissionPitchGamejamForm.get('gamejamPitch')?.invalid">
-                  {{ getPitchErrorMessage() }}
+              <!-- LINK -->
+              <div class="row">
+                <div class="col-12">
+                  <div class="inputTitle">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.pitchtext' | translate }}<br>
+                  </div>
+                  <mat-form-field appearance="fill">
+                    <mat-label>
+                      {{ 'platform.jammer.myjam.mysubmission.formquestion.pitchlink' | translate }}
+                    </mat-label>
+                    <input matInput
+                            type="url" 
+                            id="gamejamPitch" 
+                            required
+                            class="form-control form-control-lg" 
+                            placeholder="https://www.youtube.com/my-pitch-video" 
+                            formControlName="gamejamPitch"
+                            pattern="^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(?:-nocookie)?\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|live\/|v\/)?)([\w\-]+)(\S+)?$">
+                  </mat-form-field>
+                  <div class="text-danger mt-1" *ngIf="submissionPitchGamejamForm.get('gamejamPitch')?.touched && submissionPitchGamejamForm.get('gamejamPitch')?.invalid">
+                    {{ getPitchErrorMessage() }}
+                  </div>
                 </div>
               </div>
 
-              <button type="submit" *ngIf="getStageTimeDelta(JamStages.GAMEJAM_SUBMISSION) > 0" class="btn btn-black col-12">{{ 'platform.common.sendpitch' | translate }}</button>
-              <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.GAMEJAM_SUBMISSION) < 0">{{ 'platform.common.closedsubmissions' | translate }}</div>
+              <button type="submit" *ngIf="getStageTimeDelta(JamStages.GAMEJAM_SUBMISSION, 1) > 0" class="btn btn-black col-12">{{ 'platform.common.sendpitch' | translate }}</button>
+              <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.GAMEJAM_SUBMISSION, 1) < 0">{{ 'platform.common.closedsubmissions' | translate }}</div>
             </form>
           </div>
 
           <!-- INCUBATION SUBMISSION FORM -->
-          <div *ngIf="isStageActiveWithDelay(JamStages.INCUBATION_SUBMISSION) && hasAccepetedToGoTo(JamStages.INCUBATION)">
+          <div *ngIf="isStageActiveWithDelay(JamStages.INCUBATION_SUBMISSION, 1) && hasAccepetedToGoTo(JamStages.INCUBATION)">
             <hr class="my-2">
             <h2>{{ 'platform.jammer.myjam.mysubmission.incubationsubmission' | translate }}</h2>
             <div *ngIf="getStageTimeDelta(JamStages.INCUBATION_SUBMISSION) > 0">
@@ -658,174 +776,293 @@
 
             <form (submit)="saveIncubationSubmission()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionIncubationForm" enctype="multipart/form-data">
               <div class="row">
-                <div class="form-group col-12"> <!-- GOING TO ACCELERATION -->
-                  <label for="incubationGoingToAcceleration" class="required">
+                <!-- GOING TO ACCELERATION -->
+                <div class="col-12">
+                  <div class="inputTitle">
                     <b>{{ 'platform.jammer.myjam.mysubmission.formquestion.goingtoacceleration' | translate }}</b>
-                  </label>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="goingToAcceleration" [value]="true" formControlName="goingToAcceleration" id="incubationGoingToAccelerationYes">
-                    <label class="form-check-label" for="incubationGoingToAccelerationYes">
+                  </div>
+                  <mat-radio-group formControlName="goingToAcceleration" class="selectorStyle" style="padding-left: 0; padding-right: 1.5rem;">
+                    <mat-radio-button [value]="true">
                       {{ 'platform.common.yes' | translate }}
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="goingToAcceleration" [value]="false" formControlName="goingToAcceleration" id="incubationGoingToAccelerationNo">
-                    <label class="form-check-label" for="incubationGoingToAccelerationNo">
+                    </mat-radio-button>
+                    <mat-radio-button [value]="false">
                       {{ 'platform.common.no' | translate }}
-                    </label>
-                  </div>
+                    </mat-radio-button>
+                  </mat-radio-group>
                 </div>
 
-                <div class="form-group col-12"> <!-- TITLE -->
-                  <label for="incubationTitle" class="required">
+                <!-- TITLE -->
+                <div class="col-12">
+                  <div class="inputTitle">
                     {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamtitle' | translate }}
-                  </label>
-                  <input type="text" id="incubationTitle" class="form-control form-control-lg" placeholder="Next GOTY" formControlName="incubationTitle">
+                  </div>
+                  <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                    <mat-label>
+                      {{ 'platform.common.writehere' | translate }}
+                    </mat-label>
+                    <input matInput
+                           id="incubationTitle"
+                           required
+                           placeholder="Next GOTY"
+                           formControlName="incubationTitle">
+                  </mat-form-field>
                 </div>
 
-                <div class="form-group col-6"> <!-- LINK -->
-                  <label for="incubationLink" class="required">
+                <!-- LINK and CONTACT in same row -->
+                <div class="col-md-6">
+                  <div class="inputTitle">
                     {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejambuild' | translate }}
-                  </label>
-                  <input type="url" id="incubationLink" class="form-control" placeholder="https://myteam.itch.io/mygame" formControlName="incubationBuild">
+                  </div>
+                  <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                    <mat-label>
+                      {{ 'platform.common.writehere' | translate }}
+                    </mat-label>
+                    <input matInput
+                           type="url"
+                           id="link"
+                           required
+                           placeholder="https://myteam.itch.io/mygame"
+                           formControlName="incubationBuild">
+                  </mat-form-field>
                 </div>
 
-                <div class="form-group col-6"> <!-- CONTACT -->
-                  <label for="incubationContact" class="required">
+                <div class="col-md-6">
+                  <div class="inputTitle">
                     <span [innerHTML]="'platform.jammer.myjam.mysubmission.formquestion.gamejamcontact' | translate"></span>
-                    <a matTooltip="{{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.tooltipcontact' | translate }}" class="tooltip-trigger">?</a>
-                  </label>
-                  <select id="incubationContact" class="form-control" formControlName="incubationContact">
-                    <option value="" disabled selected hidden>{{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.selectteammember' | translate }}</option>
-                    <option *ngFor="let jammer of team.jammers; index as i" [value]="i">
-                      {{ jammer.name }} - {{ jammer.email }}
-                    </option>
-                  </select>
+                    <mat-icon matTooltip="{{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.tooltipcontact' | translate }}" style="vertical-align: middle; cursor: help;">info</mat-icon>
+                  </div>
+                  <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                    <mat-label>
+                      {{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.selectteammember' | translate }}
+                    </mat-label>
+                    <mat-select formControlName="incubationContact" required>
+                      <mat-option *ngFor="let jammer of team.jammers; index as i" [value]="i">
+                        {{ jammer.name }} - {{ jammer.email }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
                 </div>
 
-                <div class="form-group col-12"> <!-- DESCRIPTION -->
-                  <label for="incubationDescription" class="required">
+                <!-- DESCRIPTION -->
+                <div class="col-12">
+                  <div class="inputTitle">
                     {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamdescription' | translate }}
-                  </label>
-                  <textarea id="incubationDescription" class="form-control" formControlName="incubationDescription" rows="5"></textarea>
+                  </div>
+                  <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                    <mat-label>
+                      {{ 'platform.common.writehere' | translate }}
+                    </mat-label>
+                    <textarea matInput
+                              id="incubationDescription"
+                              required
+                              rows="5"
+                              formControlName="incubationDescription"></textarea>
+                  </mat-form-field>
                 </div>
 
-                <div class="form-group col-6"> <!-- GENRE -->
-                  <label for="incubationGenre" class="required">
+                <!-- GENRE and TOPICS in same row -->
+                <div class="col-md-6">
+                  <div class="inputTitle">
                     {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamgenres' | translate }}
-                  </label>
-                  <select id="incubationGenre" class="form-select" formControlName="incubationGenres" multiple>
-                    <option *ngFor="let genre of availableGenres" [value]="genre">
-                      {{ genre }}
-                    </option>
-                  </select>
+                  </div>
+                  <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                    <mat-label>
+                      {{ 'platform.common.selecthere' | translate }}
+                    </mat-label>
+                    <mat-select formControlName="incubationGenres" multiple required>
+                      <mat-option *ngFor="let genre of availableGenres" [value]="genre">
+                        {{ genre }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
                 </div>
 
-                <div class="form-group col-6"> <!-- TOPICS -->
-                  <label for="incubationTopic" class="required">
+                <div class="col-md-6">
+                  <div class="inputTitle">
                     <span [innerHTML]="'platform.jammer.myjam.mysubmission.formquestion.gamejamtopics' | translate"></span>
-                    <a matTooltip="{{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.tooltiptopics' | translate }}" class="tooltip-trigger">?</a>
-                  </label>
-                  <select id="incubationTopic" class="form-select" formControlName="incubationTopics" multiple>
-                    <option *ngFor="let topic of availableTopics" [value]="topic">
-                      {{ topic }}
-                    </option>
-                  </select>
+                    <mat-icon matTooltip="{{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.tooltiptopics' | translate }}" style="vertical-align: middle; cursor: help;">info</mat-icon>
+                  </div>
+                  <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                    <mat-label>
+                      {{ 'platform.common.selecthere' | translate }}
+                    </mat-label>
+                    <mat-select formControlName="incubationTopics" multiple required>
+                      <mat-option *ngFor="let topic of availableTopics" [value]="topic">
+                        {{ topic }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
                 </div>
 
-                <div class="form-group col-4"> <!-- THEMES -->
-                  <label for="incubationThemes" class="required">
+                <!-- THEMES, CATEGORIES, PLATFORMS in same row -->
+                <div class="col-md-4">
+                  <div class="inputTitle">
                     {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamthemes' | translate }}
-                  </label>
-                  <select id="incubationThemes" class="form-select" formControlName="incubationThemes" multiple>
-                    <option *ngFor="let theme of jam.themes" [value]="theme.titleEN">
-                      {{ theme.titlePT }}
-                    </option>
-                  </select>
+                  </div>
+                  <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                    <mat-label>
+                      {{ 'platform.common.selecthere' | translate }}
+                    </mat-label>
+                    <mat-select formControlName="incubationThemes" multiple required>
+                      <mat-option *ngFor="let theme of jam.themes" [value]="theme.titleEN">
+                        {{ getThemeTitle(theme) }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
                 </div>
 
-                <div class="form-group col-4"> <!-- CATEGORIES -->
-                  <label for="incubationCategories" class="required">
+                <div class="col-md-4">
+                  <div class="inputTitle">
                     {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamcategories' | translate }}
-                  </label>
-                  <select id="incubationCategories" class="form-select" formControlName="incubationCategories" multiple>
-                    <option *ngFor="let category of jam.categories" [value]="category.titleEN">
-                      {{ category.titlePT }}
-                    </option>
-                  </select>
+                  </div>
+                  <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                    <mat-label>
+                      {{ 'platform.common.selecthere' | translate }}
+                    </mat-label>
+                    <mat-select formControlName="incubationCategories" multiple required>
+                      <mat-option *ngFor="let category of jam.categories" [value]="category.titleEN">
+                        {{ getCategoryTitle(category) }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
                 </div>
 
-                <div class="form-group col-4"> <!-- PLATFORMS -->
-                  <label for="incubationPlatforms" class="required">
+                <div class="col-md-4">
+                  <div class="inputTitle">
                     {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamplatforms' | translate }}
-                  </label>
-                  <select id="incubationPlatforms" class="form-select" formControlName="incubationPlatforms" multiple>
-                    <option *ngFor="let platform of availablePlatforms" [value]="platform">
-                      {{ platform }}
-                    </option>
-                  </select>
+                  </div>
+                  <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                    <mat-label>
+                      {{ 'platform.common.selecthere' | translate }}
+                    </mat-label>
+                    <mat-select formControlName="incubationPlatforms" multiple required>
+                      <mat-option *ngFor="let platform of availablePlatforms" [value]="platform">
+                        {{ platform }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
                 </div>
 
-                <div class="form-group col-6"> <!-- GRAPHICS -->
-                  <label for="incubationGraphics" class="required">
+                <!-- SPECIAL QUESTION FOR CATEGORY: 'Level Up Your Launch'-->
+                <div *ngIf="submissionIncubationForm.get('incubationSpecialQuestion')?.enabled" class="col-12">
+                  <div class="inputTitle">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.specialcategory' | translate }}
+                    <mat-icon matTooltip="{{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.tooltipspecialcategory' | translate }}" style="vertical-align: middle; cursor: help;">info</mat-icon>
+                  </div>
+                  <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                    <mat-label>
+                      {{ 'platform.common.writehere' | translate }}
+                    </mat-label>
+                    <input matInput
+                           type="url"
+                           id="special"
+                           placeholder="https://drive.google.com/drive/folders/my-drive-folder"
+                           formControlName="incubationSpecialQuestion">
+                  </mat-form-field>
+                </div>
+
+                <!-- GRAPHICS and ENGINE in same row -->
+                <div class="col-md-6">
+                  <div class="inputTitle">
                     {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamgraphics' | translate }}
-                  </label>
-                  <select id="incubationGraphics" class="form-select" formControlName="incubationGraphics">
-                    <option *ngFor="let graphic of availableGraphics" [value]="graphic">
-                      {{ graphic }}
-                    </option>
-                  </select>
+                  </div>
+                  <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                    <mat-label>
+                      {{ 'platform.common.selecthere' | translate }}
+                    </mat-label>
+                    <mat-select formControlName="incubationGraphics" required>
+                      <mat-option *ngFor="let graphic of availableGraphics" [value]="graphic">
+                        {{ graphic }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
                 </div>
 
-                <div class="form-group col-6"> <!-- ENGINE -->
-                  <label for="incubationEngine" class="required">
+                <div class="col-md-6">
+                  <div class="inputTitle">
                     {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamengine' | translate }}
-                  </label>
-                  <select id="incubationEngine" class="form-select" formControlName="incubationEngine">
-                    <option *ngFor="let engine of availableEngines" [value]="engine">
-                      {{ engine }}
-                    </option>
-                  </select>
+                  </div>
+                  <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                    <mat-label>
+                      {{ 'platform.common.selecthere' | translate }}
+                    </mat-label>
+                    <mat-select formControlName="incubationEngine" required>
+                      <mat-option *ngFor="let engine of availableEngines" [value]="engine">
+                        {{ engine }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
                 </div>
-                
-                <div class="form-group col-6"> <!-- RECOMMENDATION -->
-                  <label for="incubationRecommendation" class="required">
+
+                <!-- RECOMMENDATION and ENJOYMENT in same row -->
+                <div class="col-md-6">
+                  <div class="inputTitle">
                     {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamrecommendation' | translate }}
-                  </label>
-                  <input type="number" id="incubationRecommendation" class="form-control" min="0" max="10" step="1" value="5" formControlName="incubationRecommendation">
+                  </div>
+                  <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                    <mat-label>
+                      {{ 'platform.common.writehere' | translate }}
+                    </mat-label>
+                    <input matInput
+                           type="number"
+                           id="incubationRecommendation"
+                           required
+                           min="0"
+                           max="10"
+                           step="1"
+                           formControlName="incubationRecommendation">
+                  </mat-form-field>
                 </div>
 
-                <div class="form-group col-6"> <!-- ENJOYMENT -->
-                  <label for="incubationEnjoyment" class="required">
+                <div class="col-md-6">
+                  <div class="inputTitle">
                     {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamenjoyment' | translate }}
-                  </label>
-                  <input type="number" id="incubationEnjoyment" class="form-control" min="0" max="10" step="1" value="5" formControlName="incubationEnjoyment">
+                  </div>
+                  <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                    <mat-label>
+                      {{ 'platform.common.writehere' | translate }}
+                    </mat-label>
+                    <input matInput
+                           type="number"
+                           id="incubationEnjoyment"
+                           required
+                           min="0"
+                           max="10"
+                           step="1"
+                           formControlName="incubationEnjoyment">
+                  </mat-form-field>
                 </div>
 
-                <div class="form-group col-12"> <!-- SUGGESTIONS -->
-                  <label for="incubationSuggestions">
+                <!-- SUGGESTIONS -->
+                <div class="col-12">
+                  <div class="inputTitle">
                     {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamsuggestions' | translate }}
-                    <a matTooltip="{{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.tooltipsuggestions' | translate }}" class="tooltip-trigger">?</a>
-                  </label>
-                  <textarea id="incubationSuggestions" rows="5" class="form-control" formControlName="incubationSuggestions"></textarea>
+                    <mat-icon matTooltip="{{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.tooltipsuggestions' | translate }}" style="vertical-align: middle; cursor: help;">info</mat-icon>
+                  </div>
+                  <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                    <mat-label>
+                      {{ 'platform.common.writehere' | translate }}
+                    </mat-label>
+                    <textarea matInput
+                              id="Suggestions"
+                              rows="5"
+                              formControlName="incubationSuggestions"></textarea>
+                  </mat-form-field>
                 </div>
 
-                <div class="form-group col-12"> <!-- AUTHORIZATION -->
-                  <label for="incubationAuthorization" class="required">
+                <!-- AUTHORIZATION -->
+                <div class="col-12">
+                  <div class="inputTitle">
                     {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamauthorization' | translate }}
-                  </label>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="incubationAuthorization" [value]="true" formControlName="incubationAuthorization" id="incubationAuthorizationYes">
-                    <label class="form-check-label" for="incubationAuthorizationYes">
+                  </div>
+                  <mat-radio-group formControlName="incubationAuthorization" class="selectorStyle" style="padding-left: 0; padding-right: 1.5rem;">
+                    <mat-radio-button [value]="true">
                       {{ 'platform.common.yes' | translate }}
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="incubationAuthorization" [value]="false" formControlName="incubationAuthorization" id="incubationAuthorizationNo">
-                    <label class="form-check-label" for="incubationAuthorizationNo">
+                    </mat-radio-button>
+                    <mat-radio-button [value]="false">
                       {{ 'platform.common.no' | translate }}
-                    </label>
-                  </div>
+                    </mat-radio-button>
+                  </mat-radio-group>
                 </div>
 
                 <button type="submit" class="btn btn-black col-12" *ngIf="getStageTimeDelta(JamStages.INCUBATION_SUBMISSION) > 0">{{ 'platform.common.sendgame' | translate }}</button>
@@ -835,11 +1072,11 @@
           </div>
 
           <!-- INCUBATION PITCH SUBMISSION FORM -->
-          <div *ngIf="isStageActiveWithDelay(JamStages.INCUBATION_SUBMISSION) && hasAccepetedToGoTo(JamStages.INCUBATION)">
+          <div *ngIf="isStageActiveWithDelay(JamStages.INCUBATION_SUBMISSION, 2) && hasAccepetedToGoTo(JamStages.INCUBATION)">
             <hr class="my-2">
-            <h2>{{ 'platform.jammer.myjam.mysubmission.incubationsubmission' | translate }}</h2>
-            <div *ngIf="getStageTimeDelta(JamStages.INCUBATION_SUBMISSION) > 0">
-              <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.INCUBATION_SUBMISSION)) }}</b>
+            <h2>{{ 'platform.jammer.myjam.mysubmission.pitchincubation' | translate }}</h2>
+            <div *ngIf="getStageTimeDelta(JamStages.INCUBATION_SUBMISSION, 1) > 0">
+              <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.INCUBATION_SUBMISSION, 1)) }}</b>
             </div>
 
             <form (submit)="savePitchIncubation()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionPitchIncubationForm" enctype="multipart/form-data">
@@ -860,13 +1097,13 @@
                 </div>
               </div>
 
-              <button type="submit" *ngIf="getStageTimeDelta(JamStages.INCUBATION_SUBMISSION) > 0" class="btn btn-black col-12">{{ 'platform.common.sendpitch' | translate }}</button>
-              <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.INCUBATION_SUBMISSION) < 0">{{ 'platform.common.closedsubmissions' | translate }}</div>
+              <button type="submit" *ngIf="getStageTimeDelta(JamStages.INCUBATION_SUBMISSION, 1) > 0" class="btn btn-black col-12">{{ 'platform.common.sendpitch' | translate }}</button>
+              <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.INCUBATION_SUBMISSION, 1) < 0">{{ 'platform.common.closedsubmissions' | translate }}</div>
             </form>
           </div>
 
           <!-- ACCELERATION SUBMISSION FORM -->
-          <div *ngIf="isStageActiveWithDelay(JamStages.ACCELERATION_SUBMISSION) && hasAccepetedToGoTo(JamStages.ACCELERATION)">
+          <div *ngIf="isStageActiveWithDelay(JamStages.ACCELERATION_SUBMISSION, 1) && hasAccepetedToGoTo(JamStages.ACCELERATION)">
             <hr class="my-2">
             <h2>{{ 'platform.jammer.myjam.mysubmission.accelerationsubmission' | translate }}</h2>
             <div *ngIf="getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION) > 0">
@@ -1034,11 +1271,11 @@
           </div>
 
           <!-- ACCELERATION PITCH SUBMISSION FORM -->
-          <div *ngIf="isStageActiveWithDelay(JamStages.ACCELERATION_SUBMISSION) && hasAccepetedToGoTo(JamStages.ACCELERATION)">
+          <div *ngIf="isStageActiveWithDelay(JamStages.ACCELERATION_SUBMISSION, 2) && hasAccepetedToGoTo(JamStages.ACCELERATION)">
             <hr class="my-2">
             <h2>{{ 'platform.jammer.myjam.mysubmission.pitchacceleration' | translate }}</h2>
-            <div *ngIf="getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION) > 0">
-              <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION)) }}</b>
+            <div *ngIf="getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION, 1) > 0">
+              <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION, 1)) }}</b>
             </div>
 
             <form (submit)="savePitchAcceleration()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionPitchAccelerationForm" enctype="multipart/form-data">
@@ -1059,8 +1296,8 @@
                 </div>
               </div>
 
-              <button type="submit" *ngIf="getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION) > 0" class="btn btn-black col-12">{{ 'platform.common.sendpitch' | translate }}</button>
-              <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION) < 0">{{ 'platform.common.closedsubmissions' | translate }}</div>
+              <button type="submit" *ngIf="getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION, 1) > 0" class="btn btn-black col-12">{{ 'platform.common.sendpitch' | translate }}</button>
+              <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION, 1) < 0">{{ 'platform.common.closedsubmissions' | translate }}</div>
             </form>
           </div>
         </div>

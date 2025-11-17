@@ -392,3 +392,61 @@ label {
 .tooltip.bs-tooltip-bottom .tooltip-arrow::before {
   border-bottom-color: rgb(77, 77, 77) !important;
 }
+
+/* Fix vertical alignment for Material form fields with selectorStyle class */
+/* These styles ensure mat-label and input/select are properly vertically aligned */
+
+.mat-mdc-form-field.selectorStyle .mdc-text-field {
+  display: flex;
+  align-items: center;
+}
+
+.mat-mdc-form-field.selectorStyle .mdc-text-field__input {
+  line-height: 1.5;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.mat-mdc-form-field.selectorStyle .mat-mdc-text-field-wrapper {
+  display: flex;
+  align-items: stretch;
+}
+
+.mat-mdc-form-field.selectorStyle .mat-mdc-form-field-input-control {
+  display: flex;
+  align-items: center;
+}
+
+.mat-mdc-form-field.selectorStyle .mat-mdc-form-field-input-control input,
+.mat-mdc-form-field.selectorStyle .mat-mdc-form-field-input-control .mat-mdc-select-value {
+  line-height: 1.5;
+  display: inline-flex;
+  align-items: center;
+}
+
+.mat-mdc-form-field.selectorStyle .mat-mdc-select {
+  display: flex;
+  align-items: center;
+}
+
+.mat-mdc-form-field.selectorStyle .mat-mdc-select-trigger {
+  display: flex;
+  align-items: center;
+  min-height: 100%;
+}
+
+/* Textareas should align to top, not center */
+.mat-mdc-form-field.selectorStyle textarea {
+  align-self: flex-start;
+  padding-top: 16px;
+  min-height: 56px;
+}
+
+.mat-mdc-form-field.selectorStyle textarea + .mat-mdc-form-field-input-control {
+  align-items: flex-start !important;
+}
+
+/* Ensure label floats properly when field has value */
+.mat-mdc-form-field.selectorStyle .mat-mdc-floating-label {
+  line-height: 1.5;
+}

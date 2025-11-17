@@ -103,3 +103,122 @@
 .navbar {
     border-bottom: 1px solid #000000;
 }
+
+.inputTitle {
+    margin-left: 50px;
+    text-align: left;
+    color: black;
+    font-size: 18px;
+    font-family: K2D;
+    font-weight: 400;
+    word-wrap: break-word;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+/* For columns, reduce left margin to avoid excessive spacing */
+.row > .col-md-6 > .inputTitle,
+.row > .col-md-4 > .inputTitle,
+.row > .col-md-3 > .inputTitle,
+.row > .col-12 > .inputTitle {
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.inputSpace {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    max-width: 425px;
+}
+
+.selectorStyle {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    max-width: 400px;
+    width: 100%;
+}
+
+.selectorStyle mat-radio-group {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+mat-form-field.selectorStyle {
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Full width form field - removes max-width constraint and ensures consistent sizing */
+mat-form-field.selectorStyle.full-width-field {
+    max-width: 100% !important;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Also update inputSpace max-width for full-width fields */
+.full-width-field.inputSpace {
+    max-width: 100% !important;
+}
+
+/* Fix vertical alignment for mat-label and input in Material form fields */
+/* Using global styles in styles.css, but adding component-specific overrides if needed */
+
+/* Ensure ALL Material form fields in columns expand to fill their container */
+.row .col-md-6 mat-form-field.selectorStyle,
+.row .col-md-4 mat-form-field.selectorStyle,
+.row .col-md-3 mat-form-field.selectorStyle,
+.row .col-12 mat-form-field.selectorStyle {
+    max-width: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box;
+}
+
+/* Ensure inputSpace also expands in columns */
+.row .col-md-6 .inputSpace,
+.row .col-md-4 .inputSpace,
+.row .col-md-3 .inputSpace,
+.row .col-12 .inputSpace {
+    max-width: 100% !important;
+    width: 100%;
+}
+
+/* Ensure Bootstrap columns properly contain the form fields */
+.row .col-md-6,
+.row .col-md-4,
+.row .col-md-3,
+.row .col-12 {
+    display: flex;
+    flex-direction: column;
+    padding-left: 15px;
+    padding-right: 15px;
+    box-sizing: border-box;
+}
+
+/* Ensure form fields fill the column width completely */
+.row .col-md-6 mat-form-field,
+.row .col-md-4 mat-form-field,
+.row .col-md-3 mat-form-field,
+.row .col-12 mat-form-field {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0;
+    margin-right: 0;
+    box-sizing: border-box;
+}
+
+/* Ensure the actual Material input wrapper fills its container */
+.row .col-md-6 .mat-mdc-text-field-wrapper,
+.row .col-md-4 .mat-mdc-text-field-wrapper,
+.row .col-md-3 .mat-mdc-text-field-wrapper,
+.row .col-12 .mat-mdc-text-field-wrapper {
+    width: 100% !important;
+    box-sizing: border-box;
+}
+
+/* Remove the full-width-field class since we're using col-12 now */
+mat-form-field.selectorStyle.full-width-field {
+    max-width: 100% !important;
+    width: 100%;
+}

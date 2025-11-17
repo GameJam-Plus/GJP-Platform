@@ -11,11 +11,16 @@ import { Router } from '@angular/router';
 import { environment } from '../../environments/environment.prod';
 import { MessagesComponent } from '../messages/messages.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatIconModule } from '@angular/material/icon';
 import { DataFormComponent } from './data-form/data-form.component';
 import { SideBarComponent } from '../side-bar/side-bar.component';
 import { RulesComponent } from '../rules/rules.component';
 import { User, Site, Region, Country, Jam, Stage, Team, Submission, JamStage, getJamStageColor, toJamStage } from '../../types';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
@@ -51,6 +56,11 @@ const SUBMISSION_GRACE_PERIOD_MS = 48 * 60 * 60 * 1000;
         MessagesComponent,
         FontAwesomeModule,
         MatTooltipModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatRadioModule,
+        MatIconModule,
         FormsModule,
         ReactiveFormsModule,
         RulesComponent,
@@ -95,6 +105,8 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
   gameThemes: string[] = [];
   gameCategories: string[] = [];
   gamePlatforms: string[] = [];
+
+  requiredFields: any;
 
   rulesLink = "/rules";
   itchioLink = "https://itch.io/jam/gamejamplus-2526-10th-edition-";
@@ -200,7 +212,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
 
   readonly JamStages = JamStage;
 
-  constructor(private fb: FormBuilder, private router: Router, private teamService: TeamService, private userService: UserService, private siteService: SiteService, private regionService: RegionService, private jamService: JamService, private submissionService: SubmissionService) {}
+  constructor(private fb: FormBuilder, private router: Router, private teamService: TeamService, private userService: UserService, private siteService: SiteService, private regionService: RegionService, private jamService: JamService, private submissionService: SubmissionService, private translate: TranslateService) {}
 
   ngOnInit(): void
   {
@@ -258,6 +270,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
       incubationThemes: [[], Validators.required],
       incubationCategories: [[], Validators.required],
       incubationPlatforms: [[], Validators.required],
+      incubationSpecialQuestion: [{ value: '', disabled: true }],
       incubationGraphics: ['', Validators.required],
       incubationEngine: ['', Validators.required],
       goingToAcceleration: [null, Validators.required],
@@ -265,6 +278,21 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
       incubationEnjoyment: [null],
       incubationSuggestions: [''],
       incubationAuthorization: [null, Validators.required]
+    });
+
+    this.submissionIncubationForm.get('incubationCategories')!.valueChanges.subscribe((value) => {
+      const control = this.submissionIncubationForm.get('incubationSpecialQuestion');
+
+      if(Array.isArray(value) && value.includes(this.specialCategory)) {
+        control?.enable();
+        control?.setValidators([Validators.required]);
+      } else {
+        control?.setValue('');
+        control?.clearValidators();
+        control?.disable();
+      }
+
+      control?.updateValueAndValidity();
     });
 
     this.submissionPitchIncubationForm = this.fb.group({
@@ -286,6 +314,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
       accelerationThemes: [[], Validators.required],
       accelerationCategories: [[], Validators.required],
       accelerationPlatforms: [[], Validators.required],
+      accelerationSpecialQuestion: [{ value: '', disabled: true }],
       accelerationGraphics: ['', Validators.required],
       accelerationEngine: ['', Validators.required],
       accelerationRecommendation: [''],
@@ -937,7 +966,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
     return 0;
   }
 
-  getStageTimeDelta(stage: JamStage) {
+  getStageTimeDelta(stage: JamStage, extraDelay: number = 0) {
     if (this.jam && this.site && this.team) {
       let now = new Date();
       now = new Date(now.getTime());
@@ -955,8 +984,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
               endDate = new Date(this.site.customSubmissionTime);
               break;
             case JamStage.GAMEJAM_SUBMISSION:
-              const customDate = new Date(this.site.customSubmissionTime);
-              endDate = new Date(customDate.getTime() + SUBMISSION_GRACE_PERIOD_MS);
+              endDate = new Date(this.site.customSubmissionTime);
               break;
             default:
               endDate = new Date(targetStage.endDate);
@@ -968,7 +996,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
         }
 
         if(endDate) {
-          return endDate.getTime() - now.getTime();
+          return endDate.getTime() + (extraDelay * SUBMISSION_GRACE_PERIOD_MS) - now.getTime();
         }
       }
     }
@@ -1122,6 +1150,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
           incubationThemes: submission.incubationThemes,
           incubationCategories: submission.incubationCategories,
           incubationPlatforms: submission.incubationPlatforms,
+          incubationSpecialQuestion: submission.incubationSpecialQuestion,
           incubationGraphics: submission.incubationGraphics,
           incubationEngine: submission.incubationEngine,
           goingToAcceleration: submission.goingToAcceleration,
@@ -1141,6 +1170,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
           incubationThemes: submission.gamejamThemes,
           incubationCategories: submission.gamejamCategories,
           incubationPlatforms: submission.gamejamPlatforms,
+          incubationSpecialQuestion: submission.gamejamSpecialQuestion,
           incubationGraphics: submission.gamejamGraphics,
           incubationEngine: submission.gamejamEngine,
           incubationRecommendation: submission.gamejamRecommendation,
@@ -1240,7 +1270,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
               console.log(`Errors:`, controls[name].errors);
             }
         }
-        this.message.showMessage("Error", "Please fill all the required fields");
+        this.message.showMessage("Error", this.translate.instant('platform.common.requiredfields'));
       }
       else
       {
@@ -1318,8 +1348,8 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
 
         this.submissionService.updateGamejamPitch(pitch).subscribe({
           next: (submission: any) => {
-              this.patchGamejamPitchForm(submission);
-              this.message.showMessage("Success", "Submission updated");
+            this.patchGamejamPitchForm(submission);
+            this.message.showMessage("Success", "Submission updated");
           },
           error: (error) => {
             this.message.showMessage("Error", error.error.message);
@@ -1342,7 +1372,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
                 console.log(`Errors:`, controls[name].errors);
             }
         }
-        this.message.showMessage("Error", "Please fill all the required fields");
+        this.message.showMessage("Error", this.translate.instant('platform.common.requiredfields'));
       }
       else
       {
@@ -1370,6 +1400,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
           incubationThemes: formValues.incubationThemes,
           incubationCategories: formValues.incubationCategories,
           incubationPlatforms: formValues.incubationPlatforms,
+          incubationSpecialQuestion: formValues.incubationSpecialQuestion,
           incubationGraphics: formValues.incubationGraphics,
           incubationEngine: formValues.incubationEngine,
           goingToAcceleration: formValues.goingToAcceleration,
@@ -1453,22 +1484,42 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
       }
       else
       {
-        let acceleration = {
-          jamId: this.jam._id,
-          siteId: this.site._id,
-          teamId: this.team._id,
-          accelerationBuildLink: this.submissionAccelerationForm.get('accelerationBuildLink')?.value,
-          accelerationPitchVideo: this.submissionAccelerationForm.get('accelerationPitchVideo')?.value,
-          accelerationGameplayVideo: this.submissionAccelerationForm.get('accelerationGameplayVideo')?.value,
-          accelerationSoundtrack: this.submissionAccelerationForm.get('accelerationSoundtrack')?.value,
-          accelerationPlatforms: this.submissionAccelerationForm.get('accelerationPlatforms')?.value,
-          accelerationTimeDelta: this.getAccelerationTimeDelta(),
-          recommendationAcceleration: this.submissionAccelerationForm.get('recommendationAcceleration')?.value,
-          enjoymentAcceleration: this.submissionAccelerationForm.get('enjoymentAcceleration')?.value
-        }
-        console.log('Sending acceleration data:', acceleration);
+        const formValues = this.submissionAccelerationForm.value;
 
-        this.submissionService.updateAcceleration(acceleration).subscribe({
+        const contactIndex: number = formValues.accelerationContact;
+        
+        const contact: any = {
+          _id: this.team.jammers[contactIndex]._id,
+          name: "",
+          email: ""
+        }
+
+        let accelerationSubmission = {
+          jamId: this.jam._id!,
+          siteId: this.site._id!,
+          teamId: this.team._id!,
+          accelerationJammerId: this.user._id!,
+          accelerationTitle: formValues.accelerationTitle,
+          accelerationBuild: formValues.accelerationBuild,
+          accelerationContact: contact,
+          accelerationDescription: formValues.accelerationDescription,
+          accelerationGenres: formValues.accelerationGenres,
+          accelerationTopics: formValues.accelerationTopics,
+          accelerationThemes: formValues.accelerationThemes,
+          accelerationCategories: formValues.accelerationCategories,
+          accelerationPlatforms: formValues.accelerationPlatforms,
+          accelerationSpecialQuestion: formValues.accelerationSpecialQuestion,
+          accelerationGraphics: formValues.accelerationGraphics,
+          accelerationEngine: formValues.accelerationEngine,
+          accelerationRecommendation: formValues.accelerationRecommendation,
+          accelerationEnjoyment: formValues.accelerationEnjoyment,
+          accelerationSuggestions: formValues.accelerationSuggestions,
+          accelerationAuthorization: formValues.accelerationAuthorization,
+          accelerationSubmissionTime: new Date(),
+          accelerationSubmissionDelta: this.getStageTimeDelta(this.JamStages.ACCELERATION)
+        };
+
+        this.submissionService.updateAcceleration(accelerationSubmission).subscribe({
           next: (submission: Submission) => {
             this.getSubmission();
             this.patchSubmissionForm(submission);
@@ -1542,7 +1593,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
     return now >= start && now <= end;
   }
 
-  isStageActiveWithDelay(stage: JamStage): boolean {
+  isStageActiveWithDelay(stage: JamStage, extraDelay: number = 0): boolean {
     if (!this.jam || !this.site) return false;
   
     const targetStage = this.jam.stages.find((s: any) => s.stageName === stage);
@@ -1565,7 +1616,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
   
         case JamStage.GAMEJAM_SUBMISSION:
           startDate = new Date(targetStage.startDate);
-          endDate = new Date(customDate.getTime() + SUBMISSION_GRACE_PERIOD_MS);
+          endDate = new Date(customDate.getTime());
           break;
   
         default:
@@ -1584,7 +1635,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
   
     const currentTime = now.getTime();
     const startTime = startDate.getTime();
-    const endTime = endDate.getTime();
+    const endTime = endDate.getTime() + (extraDelay * SUBMISSION_GRACE_PERIOD_MS);
   
     return currentTime >= startTime && currentTime <= endTime;
   }  
