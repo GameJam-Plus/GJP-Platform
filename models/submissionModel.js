@@ -78,6 +78,7 @@ const submissionSchema = mongoose.Schema({
     incubationThemes: [{ type: String, required: false }],
     incubationCategories: [{ type: String, required: false }],
     incubationPlatforms: [{ type: String, required: false }],
+    incubationSpecialQuestion: { type: String, required: false},
     incubationGraphics: { type: String, required: false },
     incubationEngine: { type: String, required: false },
     goingToAcceleration: { type: Boolean, required: false },
@@ -117,6 +118,7 @@ const submissionSchema = mongoose.Schema({
     accelerationThemes: [{ type: String, required: false }],
     accelerationCategories: [{ type: String, required: false }],
     accelerationPlatforms: [{ type: String, required: false }],
+    accelerationSpecialQuestion: { type: String, required: false},
     accelerationGraphics: { type: String, required: false },
     accelerationEngine: { type: String, required: false },
     accelerationRecommendation: { type: Number, required: false },
@@ -135,10 +137,6 @@ const submissionSchema = mongoose.Schema({
     accelerationPitch: { type: String, required: false },
     accelerationPitchTime: { type: Date, required: false },
     accelerationPitchDelta: { type: Number, required: false },
-
-    // Deprecated/legacy fields (to be removed later)
-    accelerationGameplayVideo: { type: String, required: false },
-    accelerationSoundtrack: { type: String, required: false }
 });
 
 module.exports = mongoose.model("Submission", submissionSchema);
