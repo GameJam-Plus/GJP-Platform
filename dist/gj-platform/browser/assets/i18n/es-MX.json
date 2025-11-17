@@ -53,7 +53,8 @@
 			"onsite": "Presencial",
 			"online": "En línea",
 			"hybrid": "Híbrido",
-			"savechanges": "GUARDAR CAMBIOS"
+			"savechanges": "GUARDAR CAMBIOS",
+			"requiredfields": "Por favor, complete todos los campos obligatorios."
 		},
 		"venueinfo": {
 			"venuename": "Nombre de la Sede",
