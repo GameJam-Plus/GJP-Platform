@@ -45,7 +45,7 @@ export class SubmissionService {
   }
 
   updateAccelerationPitch(pitchAcc: any): Observable<Submission> {
-    return this.http.put<any>(`${ this.url }update-acceleration`, pitchAcc, { withCredentials: true }).pipe(
+    return this.http.put<any>(`${ this.url }update-acceleration-pitch`, pitchAcc, { withCredentials: true }).pipe(
       map(response => response.data)
     );
   }

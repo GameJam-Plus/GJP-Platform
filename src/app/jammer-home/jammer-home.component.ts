@@ -106,8 +106,6 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
   gameCategories: string[] = [];
   gamePlatforms: string[] = [];
 
-  requiredFields: any;
-
   rulesLink = "/rules";
   itchioLink = "https://itch.io/jam/gamejamplus-2526-10th-edition-";
 
@@ -321,6 +319,21 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
       accelerationEnjoyment: [''],
       accelerationSuggestions: [''],
       accelerationAuthorization: [null, Validators.required]
+    });
+
+    this.submissionAccelerationForm.get('accelerationCategories')!.valueChanges.subscribe((value) => {
+      const control = this.submissionAccelerationForm.get('accelerationSpecialQuestion');
+
+      if(Array.isArray(value) && value.includes(this.specialCategory)) {
+        control?.enable();
+        control?.setValidators([Validators.required]);
+      } else {
+        control?.setValue('');
+        control?.clearValidators();
+        control?.disable();
+      }
+
+      control?.updateValueAndValidity();
     });
 
     this.submissionPitchAccelerationForm = this.fb.group({
@@ -819,56 +832,6 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
     return { 'background-color': bg };
   }
 
-  //TODO: CAN REMOVE THIS FUNCTION
-  onTimeForSubmission()
-  {
-    // for now we rather don't close the form and track late entries
-    return true;
-
-    /*
-    if(this.site && this.jam)
-    {
-      // If this site has a customSubmissionTime ignore the stage submission and use that instead
-      if(this.site.customSubmissionTime)
-      {
-        let endDate = new Date(this.site.customSubmissionTime);
-        let now = new Date();
-        let delta = endDate.getTime() - now.getTime();
-        return delta > 0;
-      }
-
-      // if this site doesn't have a custom submission form, find the current stage of the jam
-      let currentStage: any = null;
-      let now = new Date().getTime();
-
-      for(let s = 0; s < this.jam.stages.length; ++s)
-      {
-        let startDate = this.offsetDate(this.jam.stages[s].startDate).getTime();
-        let endDate = this.offsetDate(this.jam.stages[s].endDate).getTime();
-        if(startDate <= now && now <= endDate)
-        {
-          currentStage = this.jam.stages[s];
-          break;
-        }
-      }
-
-      if(currentStage)
-      {
-        const jammerRole = currentStage?.roles.find((role: any) => role.roleName == 'Jammer');
-
-        if(currentStage && jammerRole)
-        {
-          let endDate = this.offsetDate(currentStage.endDate);
-          let now = new Date();
-          let delta = endDate.getTime() - now.getTime();
-          return delta > 0;
-        }
-      }
-    }
-    return false;
-    */
-  }
-
   getTimeZoneOffset()
   {
     return (new Date()).getTimezoneOffset();
@@ -1013,43 +976,6 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
     const seconds = Math.floor((delta % (1000 * 60)) / 1000).toString().padStart(2, '0');
 
     return `${days}d : ${hours}h : ${minutes}m : ${seconds}s`;
-  }
-
-  // TODO: Not used. Check to delete
-  getSubmissionDelta()
-  {
-    if(this.jam)
-    {
-      let currentStage: any = null;
-      let now = new Date().getTime();
-      let startDate = 0;
-      let endDate = 0;
-      for(let s = 0; s < this.jam.stages.length; ++s)
-      {
-        startDate = this.offsetDate(this.jam.stages[s].startDate).getTime();
-        endDate = this.offsetDate(this.jam.stages[s].endDate).getTime();
-        if(startDate <= now && now <= endDate)
-        {
-          currentStage = this.jam.stages[s];
-          break;
-        }
-      }
-
-      if(currentStage)
-      {
-        let delta = endDate - now;
-        return this.formatTimeDelta(delta);
-      }
-    }
-    return '';
-  }
-
-  getDeadline()
-  {
-    let currentStage = this.getCurrentStage();
-    let deadline = new Date(currentStage.endDate);
-    if(this.site?.customSubmissionTime) deadline = new Date(this.site.customSubmissionTime);
-    return formatDate(deadline, 'yyyy-MM-dd HH:mm', 'en');
   }
 
   /**
@@ -1270,7 +1196,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
               console.log(`Errors:`, controls[name].errors);
             }
         }
-        this.message.showMessage("Error", this.translate.instant('platform.common.requiredfields'));
+        this.message.showMessage("Error", this.translate.instant('platform.errors.requiredfields'));
       }
       else
       {
@@ -1307,14 +1233,14 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
           gamejamSuggestions: formValues.gamejamSuggestions,
           gamejamAuthorization: formValues.gamejamAuthorization,
           gamejamSubmissionTime: new Date(),
-          gamejamSubmissionDelta: this.getStageTimeDelta(this.JamStages.GAMEJAM)
+          gamejamSubmissionDelta: this.getStageTimeDelta(this.JamStages.GAMEJAM_SUBMISSION)
         };
 
         this.submissionService.createSubmission(submission).subscribe({
           next: (submission: Submission) => {
             this.getSubmission();
             this.patchSubmissionForm(submission);
-            this.message.showMessage("Success", "Submission accepted");
+            this.message.showMessage("Success", this.translate.instant('platform.common.submissionaccepted'));
           },
           error: (error) => {
             this.message.showMessage("Error", error.error.message);
@@ -1330,26 +1256,32 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
     {
       if(!this.submissionPitchGamejamForm.valid)
       {
-        this.submissionPitchGamejamForm.markAllAsTouched();
-        const errorMsg = this.getPitchErrorMessage();
-        this.message.showMessage("Error", errorMsg || "Please correct the highlighted fields");
+        const controls = this.submissionPitchGamejamForm.controls;
+        for (const name in controls) {
+          if (controls[name].invalid) {
+              console.log(`Invalid field: ${name}`);
+              console.log(`Value: ${controls[name].value}`);
+              console.log(`Errors:`, controls[name].errors);
+          }
+        }
+        this.message.showMessage("Error", this.translate.instant('platform.errors.requiredformat'));
       }
       else 
       {
-        let pitch = {
+        const pitch = {
           jamId: this.jam._id,
           siteId: this.site._id,
           teamId: this.team._id,
           gamejamPitchJammerId: this.user._id,
           gamejamPitch: this.submissionPitchGamejamForm.get('gamejamPitch')?.value,
           gamejamPitchTime: new Date(),
-          gamejamPitchDelta: this.getStageTimeDelta(this.JamStages.GAMEJAM_SUBMISSION)
+          gamejamPitchDelta: this.getStageTimeDelta(this.JamStages.GAMEJAM_SUBMISSION, 1)
         }
 
         this.submissionService.updateGamejamPitch(pitch).subscribe({
           next: (submission: any) => {
             this.patchGamejamPitchForm(submission);
-            this.message.showMessage("Success", "Submission updated");
+            this.message.showMessage("Success", this.translate.instant('platform.common.submissionaccepted'));
           },
           error: (error) => {
             this.message.showMessage("Error", error.error.message);
@@ -1372,7 +1304,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
                 console.log(`Errors:`, controls[name].errors);
             }
         }
-        this.message.showMessage("Error", this.translate.instant('platform.common.requiredfields'));
+        this.message.showMessage("Error", this.translate.instant('platform.errors.requiredfields'));
       }
       else
       {
@@ -1409,14 +1341,14 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
           incubationSuggestions: formValues.incubationSuggestions,
           incubationAuthorization: formValues.incubationAuthorization,
           incubationSubmissionTime: new Date(),
-          incubationSubmissionDelta: this.getStageTimeDelta(this.JamStages.INCUBATION)
+          incubationSubmissionDelta: this.getStageTimeDelta(this.JamStages.INCUBATION_SUBMISSION)
         };
 
         this.submissionService.updateIncubation(incubationSubmission).subscribe({
           next: (submission: Submission) => {
             this.getSubmission();
             this.patchSubmissionForm(submission);
-            this.message.showMessage("Success", "Incubation submission updated");
+            this.message.showMessage("Success", this.translate.instant('platform.common.submissionaccepted'));
           },
           error: (error) => {
             this.message.showMessage("Error", error.error.message);
@@ -1439,7 +1371,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
                 console.log(`Errors:`, controls[name].errors);
             }
         }
-        this.message.showMessage("Error", "Please fill all the required fields");
+        this.message.showMessage("Error", this.translate.instant('platform.errors.requiredformat'));
       }
       else
       {
@@ -1450,13 +1382,13 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
           incubationPitchJammerId: this.user._id,
           incubationPitch: this.submissionPitchIncubationForm.get('incubationPitch')?.value,
           incubationPitchTime: new Date(),
-          incubationPitchDelta: this.getStageTimeDelta(this.JamStages.INCUBATION_SUBMISSION),
+          incubationPitchDelta: this.getStageTimeDelta(this.JamStages.INCUBATION_SUBMISSION, 1),
         };
 
         this.submissionService.updateIncubationPitch(incubationPitch).subscribe({
           next: (submission: any) => {
             this.patchGamejamPitchForm(submission);
-            this.message.showMessage("Success", "Submission updated");
+            this.message.showMessage("Success", this.translate.instant('platform.common.submissionaccepted'));
           },
           error: (error) => {
             this.message.showMessage("Error", error.error.message);
@@ -1480,7 +1412,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
                 console.log(`Errors:`, controls[name].errors);
             }
         }
-        this.message.showMessage("Error", "Please fill all the required fields");
+        this.message.showMessage("Error", this.translate.instant('platform.errors.requiredfields'));
       }
       else
       {
@@ -1516,14 +1448,14 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
           accelerationSuggestions: formValues.accelerationSuggestions,
           accelerationAuthorization: formValues.accelerationAuthorization,
           accelerationSubmissionTime: new Date(),
-          accelerationSubmissionDelta: this.getStageTimeDelta(this.JamStages.ACCELERATION)
+          accelerationSubmissionDelta: this.getStageTimeDelta(this.JamStages.ACCELERATION_SUBMISSION)
         };
 
         this.submissionService.updateAcceleration(accelerationSubmission).subscribe({
           next: (submission: Submission) => {
             this.getSubmission();
             this.patchSubmissionForm(submission);
-            this.message.showMessage("Success", "Acceleration submission updated");
+            this.message.showMessage("Success", this.translate.instant('platform.common.submissionaccepted'));
           },
           error: (error) => {
             this.message.showMessage("Error", error.error.message);
@@ -1546,7 +1478,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
                 console.log(`Errors:`, controls[name].errors);
             }
         }
-        this.message.showMessage("Error", "Please fill all the required fields");
+        this.message.showMessage("Error", this.translate.instant('platform.errors.requiredformat'));
       }
       else
       {
@@ -1557,13 +1489,14 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
           accelerationPitchJammerId: this.user._id,
           accelerationPitch: this.submissionPitchAccelerationForm.get('accelerationPitch')?.value,
           accelerationPitchTime: new Date(),
-          accelerationPitchDelta: this.getStageTimeDelta(this.JamStages.ACCELERATION_SUBMISSION),
+          accelerationPitchDelta: this.getStageTimeDelta(this.JamStages.ACCELERATION_SUBMISSION, 1),
         }
 
         this.submissionService.updateAccelerationPitch(accelerationPitch).subscribe({
           next: (submission: any) => {
+            this.getSubmission();
             this.patchGamejamPitchForm(submission);
-            this.message.showMessage("Success", "Submission updated");
+            this.message.showMessage("Success", this.translate.instant('platform.common.submissionaccepted'));
           },
           error: (error) => {
             this.message.showMessage("Error", error.error.message);
@@ -1754,14 +1687,40 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  // TODO: SUPPORT FOR OTHER LANGUAGES
-  // TODO: MAKE WORK FOR THE OTHER PITCH FORMS
-  getPitchErrorMessage(): string {
-    const control = this.submissionPitchGamejamForm.get('gamejamPitch');
+  getPitchErrorMessage(stage: JamStage): string {
+    const stageControlMap: Partial<Record<JamStage, { form: FormGroup, control: string }>> = {
+      [JamStage.GAMEJAM_SUBMISSION]: {
+        form: this.submissionPitchGamejamForm,
+        control: 'gamejamPitch'
+      },
+      [JamStage.INCUBATION_SUBMISSION]: {
+        form: this.submissionPitchIncubationForm,
+        control: 'incubationPitch'
+      },
+      [JamStage.ACCELERATION_SUBMISSION]: {
+        form: this.submissionPitchAccelerationForm,
+        control: 'accelerationPitch'
+      }
+    };
+
+    const config = stageControlMap[stage];
+    if (!config) return '';
+
+    const control = config.form.get(config.control);
     if (!control) return '';
-    if (control.hasError('required')) return 'Pitch link is required';
-    if (control.hasError('pattern')) return 'Please put a valid Youtube URL';
+
+    if (control.hasError('required')) {
+      return this.translate.instant('platform.errors.requiredlink');
+    }
+    if (control.hasError('pattern')) {
+      return this.translate.instant('platform.errors.requiredformat');
+    }
+
     return '';
+  }
+
+  getLocalDateTime(utcString: string) : Date{
+    return new Date(utcString);
   }
 
   // getJamStageValues(stage: JamStage): Stage | null {
