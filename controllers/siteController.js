@@ -11,7 +11,7 @@ const fs = require('fs');
 const path = require('path');
 const mongoose = require('mongoose');
 const crypto = require('node:crypto');
-
+const idle = "";
 const createSite = async (req, res) => {
     // TODO change this method to receive full country struct
     const { name, regionId, country, city, modality } = req.body;
