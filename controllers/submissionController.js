@@ -222,7 +222,16 @@ const updateIncubationPitch = async(req, res) => {
 const updateAcceleration = async(req, res) => {
     try
     {
-        const user = await User.findById(req.body.gamejamContact._id);
+        const jam = await Jam.findById(req.body.jamId);
+        if(!jam) return res.status(400).json({ success: false, message: 'No valid jam found' });
+        
+        const site = await Site.findById(req.body.siteId);
+        if(!site) return res.status(400).json({ success: false, message: 'No valid site found' });
+        
+        const team = await Team.findById(req.body.teamId);
+        if(!team) return res.status(400).json({ success: false, message: 'No valid team found' });
+
+        const user = await User.findById(req.body.accelerationContact._id);
         if(!user) return res.status(400).json({ success: false, message: 'Contact user not found' });
 
         const contact = {
@@ -230,11 +239,6 @@ const updateAcceleration = async(req, res) => {
             name: user.name,
             email: user.email
         }
-        const jamId = req.body.jamId;
-        const siteId = req.body.siteId;
-        const teamId = req.body.teamId;
-
-        console.log(req.body);
 
         let updateValue = {};
         updateValue.acclerationJammerId = req.body.acclerationJammerId;
@@ -254,22 +258,16 @@ const updateAcceleration = async(req, res) => {
         updateValue.accelerationEnjoyment = req.body.accelerationEnjoyment;
         updateValue.accelerationSuggestions = req.body.accelerationSuggestions;
         updateValue.accelerationAuthorization = req.body.accelerationAuthorization;
-        updateValue.accelerationTime = new Date();
-        updateValue.accelerationTimeDelta = req.body.accelerationTimeDelta;
+        updateValue.accelerationSubmissionTime = new Date();
+        updateValue.accelerationSubmissionDelta = req.body.accelerationSubmissionDelta;
                 
         await Submission.updateOne({
-            jamId: jamId,
-            siteId: siteId,
-            teamId: teamId
+            jamId: jam._id,
+            siteId: site._id,
+            teamId: team._id
         }, updateValue );
-
-        const submission = await Submission.findOne({
-            jamId: jamId,
-            siteId: siteId,
-            teamId: teamId
-        });
         
-        return res.status(200).json({ success: true, data: submission });
+        return res.status(200).json({ success: true, data: updateValue });
     } catch(error) {
         return res.status(400).json({ success: false, message: error.message });
     }
