@@ -115,13 +115,15 @@ export class SiteCrudComponent implements OnInit {
     this.selectedSite = site;
     const selectedRegion = this.regions.find(region => region._id === site.regionId);
     const selectedCountry = this.countries.find(country => country.name === site.country.name);
+    
 
     this.siteForm.patchValue({
       name: site.name,
       modality: site.modality,
       region: selectedRegion,
       country: selectedCountry,
-      city: site.city
+      city: site.city,
+      organizer: site.organizer
     });
   }
 
@@ -148,7 +150,8 @@ export class SiteCrudComponent implements OnInit {
         modality: this.siteForm.value["modality"],
         regionId: this.siteForm.value["region"]?._id,
         country: this.siteForm.value["country"].name,
-        city: this.siteForm.value["city"]
+        city: this.siteForm.value["city"],
+        organizer: this.siteForm.value["creatorUser"]?._id
       }).subscribe({
         next: (data) => {
           this.listSites();
@@ -198,7 +201,8 @@ export class SiteCrudComponent implements OnInit {
         modality: this.siteForm.value["modality"],
         regionId: this.siteForm.value["region"]?._id,
         country: this.siteForm.value["country"].name,
-        city: this.siteForm.value["city"]
+        city: this.siteForm.value["city"],
+        organizer: this.siteForm.value["organizer"]
       }).subscribe({
         next: (data) => {
           if (data.success) {
@@ -439,7 +443,8 @@ export class SiteCrudComponent implements OnInit {
       modality: '',
       country: '',
       city: '',
-      region: ''
+      region: '',
+      organizer: ''
     });
     this.modalError = '';
     this.selectedSite = null;
