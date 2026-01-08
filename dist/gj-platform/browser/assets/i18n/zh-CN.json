@@ -54,7 +54,7 @@
 			"online": "线上",
 			"hybrid": "混合",
 			"savechanges": "保存更改",
-			"requiredfields": "请填写所有必填字段。"
+			"submissionaccepted": "提交已接受"
 		},
 		"venueinfo": {
 			"venuename": "会场名称",
@@ -89,7 +89,9 @@
 			}
 		},
 		"errors": {
-			"requiredfields": "请填写所有必填字段！"
+			"requiredfields": "请填写所有必填字段！",
+			"requiredformat": "格式无效。请使用 YouTube 链接。",
+			"requiredlink": "必须提供 Pitch 链接。"
 		},
 		"register": {
 			"innertext": {

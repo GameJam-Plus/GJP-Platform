@@ -54,7 +54,7 @@
 			"online": "Online",
 			"hybrid": "Híbrido",
 			"savechanges": "SALVAR ALTERAÇÕES",
-			"requiredfields": "Por favor, preencha todos os campos obrigatórios."
+			"submissionaccepted": "Envio aceito"
 		},
 		"venueinfo": {
 			"venuename": "Nome do Local",
@@ -89,7 +89,9 @@
 			}
 		},
 		"errors": {
-			"requiredfields": "Por favor, preencha todos os campos obrigatórios!"
+			"requiredfields": "Por favor, preencha todos os campos obrigatórios!",
+			"requiredformat": "Formato inválido. Por favor, use um link do YouTube.",
+			"requiredlink": "O link do pitch é obrigatório."
 		},
 		"register": {
 			"innertext": {
