@@ -43,8 +43,8 @@ import { faJar } from '@fortawesome/free-solid-svg-icons';
 import { Console } from 'node:console';
 import { now } from 'moment';
 
-// Grace period in milliseconds (default: 48 hours)
-const SUBMISSION_GRACE_PERIOD_MS = 48 * 60 * 60 * 1000;
+// Grace period in milliseconds (default: 1 hour)
+const SUBMISSION_GRACE_PERIOD_MS = 1 * 60 * 60 * 1000;
 
 @Component({
     selector: 'app-jammer-home',
@@ -150,6 +150,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
     "Mobile",
     "VR/AR",
     "Board Game",
+    "Web",
     "Other"
   ]
 
