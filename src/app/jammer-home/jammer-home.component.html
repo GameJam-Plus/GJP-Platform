@@ -946,18 +946,26 @@
                 <!-- SPECIAL QUESTION FOR CATEGORY: 'Level Up Your Launch'-->
                 <div *ngIf="submissionIncubationForm.get('incubationSpecialQuestion')?.enabled" class="col-12">
                   <div class="inputTitle">
+                    <fa-icon [icon]="faLink"></fa-icon>
                     {{ 'platform.jammer.myjam.mysubmission.formquestion.specialcategory' | translate }}
+                    <br>
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.specialcategory2' | translate }}
                     <mat-icon matTooltip="{{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.tooltipspecialcategory' | translate }}" style="vertical-align: middle; cursor: help;">info</mat-icon>
+                    <br>
+                    <fa-icon [icon]="faHandPointRight"></fa-icon>
+                    <span *ngIf="getSelectedSpecialCategories().length > 0" class="special-categories-label">
+                      [{{ getSelectedSpecialCategories().join(', ') }}]
+                    </span>
                   </div>
                   <mat-form-field appearance="fill" class="selectorStyle inputSpace">
                     <mat-label>
                       {{ 'platform.common.writehere' | translate }}
                     </mat-label>
-                    <input matInput
-                           type="url"
+                    <textarea matInput
+                           rows="5"
                            id="incubationSpecialQuestion"
-                           placeholder="https://drive.google.com/drive/folders/my-drive-folder"
-                           formControlName="incubationSpecialQuestion">
+                           placeholder="https://drive.google.com/drive/folders/categoryA&#10;https://drive.google.com/drive/folders/categoryB&#10;https://drive.google.com/drive/folders/categoryC"
+                           formControlName="incubationSpecialQuestion"></textarea>
                   </mat-form-field>
                 </div>
 

@@ -40,6 +40,7 @@ import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { faLandmark } from '@fortawesome/free-solid-svg-icons';
 import { faPeopleRoof } from '@fortawesome/free-solid-svg-icons';
 import { faJar } from '@fortawesome/free-solid-svg-icons';
+import { faLink, faHandPointRight } from '@fortawesome/free-solid-svg-icons';
 import { Console } from 'node:console';
 import { now } from 'moment';
 
@@ -109,7 +110,12 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
   rulesLink = "/rules";
   itchioLink = "https://itch.io/jam/gamejamplus-2526-10th-edition-";
 
-  specialCategory = "Level Up Your Launch";
+  specialCategories = [
+    "Level Up Your Launch",
+    "Eduplay",
+    "Green Play",
+    "Campus Mode"
+  ];
 
   availableGenres = [
     "Action",
@@ -188,6 +194,8 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
   faWhatsapp = faWhatsapp;
   faShareNodes = faShareNodes;
   faJar = faJar;
+  faLink = faLink;
+  faHandPointRight = faHandPointRight;
 
   randomAdjectives = [
     "quick", "happy", "bright", "calm", "gentle", "smooth", "kind", "warm", "polite", "cheerful",
@@ -238,7 +246,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
     this.submissionGamejamForm.get('gamejamCategories')!.valueChanges.subscribe((value) => {
       const control = this.submissionGamejamForm.get('gamejamSpecialQuestion');
 
-      if(Array.isArray(value) && value.includes(this.specialCategory)) {
+      if(Array.isArray(value) && this.specialCategories.some(ct => value.includes(ct))) {
         control?.enable();
         control?.setValidators([Validators.required]);
       } else {
@@ -282,7 +290,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
     this.submissionIncubationForm.get('incubationCategories')!.valueChanges.subscribe((value) => {
       const control = this.submissionIncubationForm.get('incubationSpecialQuestion');
 
-      if(Array.isArray(value) && value.includes(this.specialCategory)) {
+      if(Array.isArray(value) && this.specialCategories.some(ct => value.includes(ct))) {
         control?.enable();
         control?.setValidators([Validators.required]);
       } else {
@@ -325,7 +333,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
     this.submissionAccelerationForm.get('accelerationCategories')!.valueChanges.subscribe((value) => {
       const control = this.submissionAccelerationForm.get('accelerationSpecialQuestion');
 
-      if(Array.isArray(value) && value.includes(this.specialCategory)) {
+      if(Array.isArray(value) && this.specialCategories.some(ct => value.includes(ct))) {
         control?.enable();
         control?.setValidators([Validators.required]);
       } else {
@@ -1019,6 +1027,18 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
     }
   }
 
+  getSelectedSpecialCategories(): string[] {
+    const selectedCategories = this.submissionIncubationForm.get('incubationCategories')?.value || [];
+    
+    if (!selectedCategories.length) {
+      return [];
+    }
+    
+    return selectedCategories.filter((category: string) => 
+      this.specialCategories.includes(category)
+    );
+  }
+
   // Setting the forms default values when opening the page
   patchSubmissionForm(submission: Submission): void {
     if(this.jam && this.site && this.team)
@@ -1029,8 +1049,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
       if(this.submission?.gamejamBuild) {
         for(let i = 0; i < this.team.jammers.length; ++i)
         {
-          if(this.team.jammers[i]._id == this.submission.gamejamContact._id) contact = i; break;
-        }
+          if(this.team.jammers[i]._id == this.submission.gamejamContact._id) { contact = i; break; }        }
         
         this.submissionGamejamForm.patchValue({
           gamejamTitle: submission.gamejamTitle,
@@ -1064,7 +1083,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
       if(this.submission?.incubationBuild) {
         for(let i = 0; i < this.team.jammers.length; ++i)
         {
-          if(this.team.jammers[i]._id == this.submission.incubationContact?._id) contact = i; break;
+          if(this.team.jammers[i]._id == this.submission.incubationContact?._id) { contact = i; break; }
         }
 
         this.submissionIncubationForm.patchValue({
@@ -1121,7 +1140,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
       if(this.submission?.accelerationBuild) {
         for(let i = 0; i < this.team.jammers.length; ++i)
         {
-          if(this.team.jammers[i]._id == this.submission.accelerationContact?._id) contact = i; break;
+          if(this.team.jammers[i]._id == this.submission.accelerationContact?._id) { contact = i; break; }
         }
 
         this.submissionAccelerationForm.patchValue({
