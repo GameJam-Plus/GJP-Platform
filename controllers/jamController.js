@@ -212,7 +212,7 @@ const getJamByUser = async(req, res) => {
             userId: id,
             jamId: jam._id
         });
-        console.log("Jammer data: ", jamOfUser.jammerData);
+        //console.log("Jammer data: ", jamOfUser.jammerData);
         const site = await Site.findById(jamOfUser.siteId);
 
         if(!site) return res.status(400).send({success: false, message: 'Site is invalid'});
