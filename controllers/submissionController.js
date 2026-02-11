@@ -465,15 +465,37 @@ const getSubmissionsData = async (req, res) => {
                     jammer.teamName = "NONE";
                 }
 
+                // Get the most recent information: acceleration -> incubation -> gamejam
                 if(submission)
                 {
-                    jammer.submissionTitle = submission.title;
-                    jammer.submissionLink = submission.link ? submission.link : "NONE";
-                    jammer.pitchLink = submission.pitch ? submission.pitch : "NONE";
-                    jammer.incubation = submission.incubation;
-                    jammer.acceleration = submission.acceleration;
-                    jammer.submissionTime = submission.submissionTime;
-                    jammer.pitchTime = submission.pitchTime;
+                    if(submission.accelerationTitle) {
+                        jammer.submissionTitle = submission.accelerationTitle;
+                        jammer.submissionLink = submission.accelerationBuild ? submission.accelerationBuild : "NONE";
+                        jammer.pitchLink = submission.accelerationPitch ? submission.accelerationPitch : "NONE";
+                        jammer.incubation = submission.goingToIncubation;
+                        jammer.acceleration = submission.goingToAcceleration;
+                        jammer.submissionTime = submission.accelerationSubmissionTime;
+                        jammer.pitchTime = submission.accelerationPitchTime;
+                    }
+                    else if (submission.incubationTitle)
+                    {
+                        jammer.submissionTitle = submission.incubationTitle;
+                        jammer.submissionLink = submission.incubationBuild ? submission.incubationBuild : "NONE";
+                        jammer.pitchLink = submission.incubationPitch ? submission.incubationPitch : "NONE";
+                        jammer.incubation = submission.goingToIncubation;
+                        jammer.acceleration = submission.goingToAcceleration;
+                        jammer.submissionTime = submission.incubationSubmissionTime;
+                        jammer.pitchTime = submission.incubationPitchTime;
+                    }
+                    else {
+                        jammer.submissionTitle = submission.gamejamTitle;
+                        jammer.submissionLink = submission.gamejamBuild ? submission.gamejamBuild : "NONE";
+                        jammer.pitchLink = submission.gamejamPitch ? submission.gamejamPitch : "NONE";
+                        jammer.incubation = submission.goingToIncubation;
+                        jammer.acceleration = submission.goingToAcceleration;
+                        jammer.submissionTime = submission.gamejamSubmissionTime;
+                        jammer.pitchTime = submission.gamejamPitchTime;
+                    }
                 }
                 else
                 {
@@ -510,16 +532,26 @@ const getSubmissionsData = async (req, res) => {
                 const site = await Site.findOne({ _id: siteId });
                 const regionId = site.regionId;
                 const region = await Region.findOne({ _id: regionId });
-
+                
+                // Check contact from latest to earliest step: acceleration -> incubation -> gamejam
+                let contact = null;
+                if (submissions[i].accelerationContact && submissions[i].accelerationContact._id) {
+                    contact = submissions[i].accelerationContact;
+                } else if (submissions[i].incubationContact && submissions[i].incubationContact._id) {
+                    contact = submissions[i].incubationContact;
+                } else if (submissions[i].gamejamContact && submissions[i].gamejamContact._id) {
+                    contact = submissions[i].gamejamContact;
+                }
+                
                 submissionData.push({
                     submissionId: submissions[i]._id,
                     region: region.name,
                     country: site.country.name,
                     site: site.name,
                     team: team.teamName,
-                    contactId: submissions[i].contact._id,
-                    contactName: submissions[i].contact.name,
-                    contactEmail: submissions[i].contact.email,
+                    contactId: contact ? contact._id : null,
+                    contactName: contact ? contact.name : null,
+                    contactEmail: contact ? contact.email : null,
                     title: submissions[i].title,
                     link: submissions[i].link,
                     pitch: submissions[i].pitch,
@@ -536,7 +568,7 @@ const getSubmissionsData = async (req, res) => {
             }
             catch(error)
             {
-                console.log(error.message);
+                console.log("Submission data error: " + error.message);
             }
         }
 
