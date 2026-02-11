@@ -9,6 +9,8 @@
 
 :root{
   --darkbg: #4c4d54;
+  --darkhover: #101010;
+  --redselect: #f1346d;
 }
 
 html, body
@@ -449,4 +451,47 @@ label {
 /* Ensure label floats properly when field has value */
 .mat-mdc-form-field.selectorStyle .mat-mdc-floating-label {
   line-height: 1.5;
+}
+
+mat-button-toggle-group mat-button-toggle .mdc-button,
+mat-button-toggle-group mat-button-toggle .mat-button-toggle-button {
+  background-color: var(--darkbg);
+  color: white;
+}
+
+mat-button-toggle-group mat-button-toggle.mat-button-toggle-checked .mdc-button,
+mat-button-toggle-group mat-button-toggle.mat-button-toggle-checked .mat-button-toggle-button {
+  background-color: var(--redselect);
+  color: white;
+}
+
+mat-button-toggle-group mat-button-toggle .mdc-button:hover,
+mat-button-toggle-group mat-button-toggle .mat-button-toggle-button:hover {
+  background-color: var(--darkhover);
+}
+
+mat-checkbox .mdc-form-field,
+mat-mdc-checkbox .mdc-form-field {
+  border: 2px solid var(--darkbg);
+  border-radius: 4px;
+  padding: 0px 8px;
+  align-content: center;
+  align-items: center;
+  height: 48px;
+}
+
+.mat-mdc-checkbox .mdc-label {
+  margin: 0;
+}
+
+/* When checked: fill background like a toggle */
+.mat-mdc-checkbox.mat-mdc-checkbox-checked .mdc-form-field {
+  background-color: var(--darkbg);
+  color: white;
+}
+
+/* When not checked */
+.mat-mdc-checkbox:not(.mat-mdc-checkbox-checked) .mdc-form-field {
+  background-color: transparent;
+  color: var(--darkbg);
 }

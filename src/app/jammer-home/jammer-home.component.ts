@@ -41,8 +41,6 @@ import { faLandmark } from '@fortawesome/free-solid-svg-icons';
 import { faPeopleRoof } from '@fortawesome/free-solid-svg-icons';
 import { faJar } from '@fortawesome/free-solid-svg-icons';
 import { faLink, faHandPointRight } from '@fortawesome/free-solid-svg-icons';
-import { Console } from 'node:console';
-import { now } from 'moment';
 
 // Grace period in milliseconds (default: 1 hour)
 const SUBMISSION_GRACE_PERIOD_MS = 1 * 60 * 60 * 1000;

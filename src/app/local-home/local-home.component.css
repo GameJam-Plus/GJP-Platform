@@ -1,3 +1,8 @@
 .nav-bar{
   width: 280px;
 }
+
+.centralize {
+  align-content: center;
+  align-items: center;
+}

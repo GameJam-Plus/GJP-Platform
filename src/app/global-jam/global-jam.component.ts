@@ -235,19 +235,7 @@ export class GlobalJamComponent {
 
   toggleAcelerationFilter(value: boolean) {
     this.filterAccelerationOnly = value;
-    this.applyAccelerationFilters();
-  }
-
-  applyAccelerationFilters() {
-    if(!this.submissions) {
-      this.displayedAccelerations = [];
-      return;
-    }
-    if(this.filterAccelerationOnly) {
-      this.displayedAccelerations = this.submissions.filter(s => !!s.goingToAcceleration);
-    } else {
-      this.displayedAccelerations = [...this.submissions];
-    }
+    this.applySubmissionFilters();
   }
 
   applySubmissionFilters() {
@@ -255,11 +243,13 @@ export class GlobalJamComponent {
       this.displayedSubmissions = [];
       return;
     }
-    if(this.filterIncubationOnly) {
-      this.displayedSubmissions = this.submissions.filter(s => !!s.goingToIncubation);
-    } else {
-      this.displayedSubmissions = [...this.submissions];
-    }
+    
+    this.displayedSubmissions = this.submissions.filter(s => {
+      const matchIncubation = !this.filterIncubationOnly || !!s.goingToIncubation;
+      const matchAcceleration = !this.filterAccelerationOnly || !!s.goingToAcceleration;
+    
+      return matchIncubation && matchAcceleration;
+    });    
   }
 
   getSubmissions()
@@ -269,12 +259,12 @@ export class GlobalJamComponent {
       this.submissionService.getSubmissionsByJam(this.activeJam._id).subscribe({
         next: (data) => {
           this.submissions = data;
+          this.applySubmissionFilters();
         },
         error: (error) => {
           this.message.showMessage("Error", error.error.message);
         }
       });
-      this.applySubmissionFilters();
     }
   }
 
@@ -291,7 +281,7 @@ export class GlobalJamComponent {
           this.activeUsers = data.activeJammers;
           this.inactiveUsers = data.inactiveJammers;
           this.submissionsData = data.submissions;
-          console.log(data.submissions.length);
+          console.log(data.activeJammers.length);
         },
         error: (error) => {
           this.message.showMessage("Error", error.error.message);
