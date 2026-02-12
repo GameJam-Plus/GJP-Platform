@@ -66,11 +66,24 @@
         <li class="navbutton navL2" (click)="page = 'fellows'">Fellowship</li>
       </ul>
 
+      <li class="navbutton navL1" (click)="openCodaIframe()">{{ 'platform.navbar.myjam.letusknow' | translate }}</li>
       
     </div>
     <!-- #endregion -->
 
     <div id="localHomeMainContent" class="col-8">
+      <div *ngIf="showCodaIframe" class="coda-inline">
+        <div class="coda-inline-header">
+          <h2>{{ 'platform.navbar.myjam.letusknow' | translate }}</h2>
+          <button type="button" class="btn btn-sm btn-danger" (click)="closeCodaIframe()">Close</button>
+        </div>
+        <iframe
+          src="https://coda.io/embed/P-Qwkz6ZFl"
+          title="Let us know"
+          class="coda-iframe"
+          allow="fullscreen"
+        ></iframe>
+      </div>
       <!-- #region HOME -->
       <div *ngIf="page == 'jam'" class="container container-lg p-3">
         <div *ngIf="!jam">
@@ -522,12 +535,12 @@
             Each jammer in a new line following this structure:
           </p>
           <p class="info mx-5 p-2">
-            Jammer Name, Jammer Email, Discord Username, Team Name
+            Jammer Name, Jammer Email, Discord Username, Team Name, Instagram, Linkedin, Phone number, Ethnicity, Student, Disability, Participation
           </p>
-          <p>If the jammer has no team, use the value 'None'</p>
+          <p>If the jammer has no value for any field, use the value 'None' for those it doesn't have. (Name, Email and Discord are not optional)</p>
         </div>
 
-        <textarea class="col-12" rows="10" #jammerInfo placeholder="Jammer Name, Jammer Email, Discord Username, Team Name"></textarea>
+        <textarea class="col-12" rows="10" #jammerInfo placeholder="Jammer Name, Jammer Email, Discord Username, Team Name, Instagram, Linkedin, Phone number, Ethnicity, Student, Disability, Participation"></textarea>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>

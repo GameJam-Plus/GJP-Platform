@@ -136,7 +136,11 @@
 					"nojamtext2": "Select a venue from the list below to proceed.",
 					"regions": "Regions:",
 					"venuesof": "Venues of",
+					"filtervenuename": "Filter by venue name...",
+					"filterorganizer": "Filter by organizer...",
+					"filtercity": "Filter by city...",
 					"modality": "Modality:",
+					"organizer":"Organizer:",
 					"statusopen": "Status: Open for registration",
 					"joinvenue": "Join Venue",
 					"statusclosed": "Status: Closed",
@@ -340,7 +344,8 @@
 				"feedback": "Feedback",
 				"myjam": "My Jam",
 				"mysubmission": "My Submission",
-				"myteam": "My Team"
+				"myteam": "My Team",
+				"letusknow": "Let Us Know"
 			},
 			"venue": {
 				"myvenue": "My Venue",

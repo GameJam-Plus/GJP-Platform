@@ -54,7 +54,14 @@
       </tr>
       <tr *ngFor="let row of filteredSites">
         <td>{{ getRegionName(row.regionId) }}</td>
-        <td>{{ row.organizer }}</td> 
+        <td>
+          <div *ngIf="row.organizers && row.organizers.length > 0">
+            <small *ngFor="let org of row.organizers; let last = last">
+              {{ org.name || 'None' }}<span *ngIf="!last">, </span>
+            </small>
+          </div>
+          <span *ngIf="!row.organizers || row.organizers.length === 0">None</span>
+        </td>
         <td>{{ row.country.name }}</td>
         <td>{{ row.city }}</td>
         <td>{{ row.name }}</td>

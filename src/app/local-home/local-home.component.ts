@@ -79,6 +79,7 @@ export class LocalHomeComponent implements OnDestroy {
   deltaTime: string = '00:00:00:00';
   timeZone: string = '';
   intervalId: any;
+  showCodaIframe: boolean = false;
 
   bulkResult: any = undefined;
 
@@ -285,6 +286,14 @@ export class LocalHomeComponent implements OnDestroy {
     {
       clearInterval(this.intervalId);
     }
+  }
+
+  openCodaIframe(): void {
+    this.showCodaIframe = true;
+  }
+
+  closeCodaIframe(): void {
+    this.showCodaIframe = false;
   }
 
   listRegions() : void
@@ -828,13 +837,30 @@ export class LocalHomeComponent implements OnDestroy {
       for(let j = 0; j < jammerRows.length; ++j)
       {
         let jammerRow = jammerRows[j].split(',');
-        if(jammerRow.length == 4)
+        if(jammerRow.length == 11)
         {
           let jammer = {
             name: jammerRow[0].trim(),
             email: jammerRow[1].toLowerCase().trim(),
             discordUsername: jammerRow[2].trim(),
-            teamName: jammerRow[3].trim()
+            teamName: jammerRow[3].trim(),
+            instagram: jammerRow[4].trim(),
+            linkedin: jammerRow[5].trim(),
+            telefoneWhatsApp: jammerRow[6].trim(),
+            ethnicity: jammerRow[7].trim(),
+            student: jammerRow[8].trim().toLowerCase(),
+            disability: ((): string[] => {
+              const rawDisability = jammerRow[9].trim().toLowerCase();
+              if (!rawDisability || rawDisability === 'none') {
+                rawDisability == 'No';
+                return ['No'];
+              }
+              return rawDisability
+                .split(';')
+                .map((value) => value.trim())
+                .filter((value) => value && value !== 'none');
+            })(),
+            participation: jammerRow[10].trim()
           };
           jammers.push(jammer);
         }
@@ -854,9 +880,9 @@ export class LocalHomeComponent implements OnDestroy {
 
   exportJammers()
   {
-    let rows = "#; Name; Email; Discord; Team; Creation Date; Last Update\n";
+    let rows = "#; Name; Email; Discord; Team; Instagram; LinkedIn; Phone/WhatsApp; Ethnicity; Student; Disability; Participation; Creation Date; Last Update\n";
     this.jammers.forEach((jammer, index) => {
-      rows += `${index + 1}; ${jammer.name}; ${jammer.email}; ${jammer.discordUsername}; ${jammer.team ? jammer.team.name : 'None'}; ${jammer.creationDate}; ${jammer.lastUpdateDate}\n`;
+      rows += `${index + 1}; ${jammer.name}; ${jammer.email}; ${jammer.discordUsername}; ${jammer.team ? jammer.team.name : 'None'}; ${jammer.instagram}; ${jammer.linkedin}; ${jammer.telefoneWhatsApp}; ${jammer.ethnicity}; ${jammer.student}; ${jammer.disability}; ${jammer.participation}; ${jammer.creationDate}; ${jammer.lastUpdateDate}\n`;
     });
     rows = rows.trim();
 

@@ -136,7 +136,11 @@
 					"nojamtext2": "Selecione uma sede da lista abaixo para continuar.",
 					"regions": "Regiões:",
 					"venuesof": "Sedes de",
+					"filtervenuename": "Filtrar por nome ...",
+					"filterorganizer": "Filtrar por organizador...",
+					"filtercity": "Filtrar por cidade...",
 					"modality": "Modalidade:",
+					"organizer":"Organizador:",
 					"statusopen": "Status: Aberto para inscrições",
 					"joinvenue": "Entrar na sede",
 					"statusclosed": "Status: Fechado",
@@ -340,7 +344,8 @@
 				"feedback": "Feedback",
 				"myjam": "Minha Jam",
 				"mysubmission": "Minha Submissão",
-				"myteam": "Minha Equipe"
+				"myteam": "Minha Equipe",
+				"letusknow": "Compartilhe Conosco"
 			},
 			"venue": {
 				"myvenue": "Minha Sede",
