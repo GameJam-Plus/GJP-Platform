@@ -293,8 +293,17 @@ const getSitesByJam = async (req, res) => {
         });
 
         if(sites.length > 0)
-        {            
-            return res.status(200).json({success: true, data: sites});
+        {
+            // Add organizers to each site
+            const sitesWithOrganizers = await Promise.all(
+                sites.map(async (site) => {
+                    const siteObj = site.toObject();
+                    const orgs = await User.find({ roles: 'LocalOrganizer', "site._id": site._id });
+                    if(orgs) siteObj.organizers = orgs;
+                    return siteObj;
+                })
+            );
+            return res.status(200).json({success: true, data: sitesWithOrganizers});
         }
         else
         {
