@@ -162,6 +162,7 @@ export interface Site {
     };
     city?: string;
     organizer?: string;
+    organizers?: { name: string; email: string }[];
     igda?: boolean;
     customSubmissionTime?: string;
 }

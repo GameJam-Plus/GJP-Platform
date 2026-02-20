@@ -92,11 +92,11 @@ export class SiteCrudComponent implements OnInit {
   {
     //console.log("Fetching sites...");
     //let start = new Date();
-    this.siteService.getSites(`${environment.apiUrl}/api/site/get-sites`).subscribe({
-      next: (sites: Site[]) => {
+    this.siteService.getAllSitesInfo().subscribe({
+      next: (data: any) => {
         //let delta = (new Date()).getMilliseconds() - start.getMilliseconds();
         //console.log(`Sites loaded at ${delta / 1000} seconds`);
-        this.sites = sites;
+        this.sites = [...data.activeSites, ...data.inactiveSites];
         this.filteredSites = this.getRows();
       },
       error: (error) => {
@@ -323,8 +323,20 @@ export class SiteCrudComponent implements OnInit {
       
       if(this.filter.regions && this.filter.regions.length > 0)
         valid = valid && this.filter.regions.includes(item.regionId);
-      if(this.filter.organizer)
-        valid = valid && (item.organizer ? item.organizer.toLowerCase().includes(this.filter.organizer.toLowerCase()) : false);
+      if(this.filter.organizer) {
+        const organizerFilter = this.filter.organizer.toLowerCase();
+        let matchesOrganizer = false;
+        
+        if (organizerFilter === 'none') {
+          matchesOrganizer = !item.organizers || item.organizers.length === 0;
+        } else if (item.organizers && item.organizers.length > 0) {
+          matchesOrganizer = item.organizers.some(org => org.name && org.name.toLowerCase().includes(organizerFilter));
+        } else if (item.organizer) {
+          matchesOrganizer = item.organizer.toLowerCase().includes(organizerFilter);
+        }
+        
+        valid = valid && matchesOrganizer;
+      }
       if(this.filter.countries && this.filter.countries.length > 0)
         valid = valid && this.filter.countries.includes(item.country.code);
       if(this.filter.city)

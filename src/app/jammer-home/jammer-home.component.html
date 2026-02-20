@@ -16,6 +16,17 @@
 
       <div *ngIf="selectedRegion" class="col-9">
         <h2>{{ 'platform.jammer.home.jaminfo.venuesof' | translate}} {{ selectedRegion!.name }}</h2>
+        <div class="row mb-3">
+          <div class="col-2">
+            <input type="text" class="form-control" placeholder="{{ 'platform.jammer.home.jaminfo.filtervenuename' | translate}}" [(ngModel)]="siteNameFilter" (input)="updateFilteredSites()">
+          </div>
+          <div class="col-2">
+            <input type="text" class="form-control" placeholder="{{ 'platform.jammer.home.jaminfo.filterorganizer' | translate}}" [(ngModel)]="organizerNameFilter" (input)="updateFilteredSites()">
+          </div> 
+          <div class="col-2">
+            <input type="text" class="form-control" placeholder="{{ 'platform.jammer.home.jaminfo.filtercity' | translate}}" [(ngModel)]="cityFilter" (input)="updateFilteredSites()">
+          </div> 
+        </div>
         <div class="row">
           <div class="col-3" *ngFor="let site of filteredSites">
             <div class="card p-2 shadow minh-2">
@@ -25,7 +36,8 @@
                 {{ 'platform.jammer.home.jaminfo.modality' | translate}} {{ site.modality }}<br>
                 <span *ngIf="site.email">{{ site.email }}<br></span>
                 <span *ngIf="site.phoneNumber">{{ site.phoneNumber }}<br></span>
-                <span *ngIf="site.open">{{ 'platform.jammer.home.jaminfo.statusopen' | translate}}</span>
+                <span *ngIf="site.open">{{ 'platform.jammer.home.jaminfo.statusopen' | translate}}</span><br>
+                {{ 'platform.jammer.home.jaminfo.organizer' | translate}} {{ site.organizers && site.organizers.length > 0 ? (site.organizers[0].name || '') : 'none' }}
               </p>
               <span *ngIf="site.open" style="flex-grow: 1;"></span>
               <button *ngIf="site.open" class="btn btn-black align-bottom" (click)="joinSite(site)">{{ 'platform.jammer.home.jaminfo.joinvenue' | translate}}</button>
@@ -81,11 +93,24 @@
         <li class="navbutton navL2" (click)="page = 'feedback'">{{ 'platform.navbar.myjam.feedback' | translate}}</li>
       </ul>
 
+      <li class="navbutton navL1" (click)="openCodaIframe()">{{ 'platform.navbar.myjam.letusknow' | translate }}</li>
       
     </div>
     <!-- #endregion -->
 
     <div id="jammerHomeContent" class="col-8">
+      <div *ngIf="showCodaIframe" class="coda-inline">
+        <div class="coda-inline-header">
+          <h2>{{ 'platform.navbar.myjam.letusknow' | translate }}</h2>
+          <button type="button" class="btn btn-sm btn-danger" (click)="closeCodaIframe()">Close</button>
+        </div>
+        <iframe
+          src="https://coda.io/embed/P-Qwkz6ZFl"
+          title="Let us know"
+          class="coda-iframe"
+          allow="fullscreen"
+        ></iframe>
+      </div>
       <!-- #region HOME -->
       <div *ngIf="page == 'site' && site" class="container container-lg p-3">
         <h1 class="text-center">{{ site.name.toUpperCase() }} [{{ site.language }}]</h1>
@@ -1485,3 +1510,4 @@
 </div>
 
 <app-messages></app-messages>
+

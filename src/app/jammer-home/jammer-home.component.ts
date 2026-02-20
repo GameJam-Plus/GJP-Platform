@@ -79,10 +79,14 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
   jammers: User[] = [];
   selectedRegion?: Region;
   filteredSites: Site[] = [];
+  siteNameFilter: string = '';
+  organizerNameFilter: string = '';
+  cityFilter: string = '';
   deltaTime: string = '00:00:00:00';
   timeZone: string = '';
   page: string = "site";
   intervalId: any;
+  showCodaIframe: boolean = false;
 
   site?: Site;
   jam?: Jam;
@@ -608,7 +612,45 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
   selectRegion(region: Region) : void
   {
     this.selectedRegion = region;
-    this.filteredSites = this.sites.filter((site) => site.regionId == region._id);
+    this.siteNameFilter = '';
+    this.organizerNameFilter = '';
+    this.cityFilter = '';
+    this.updateFilteredSites();
+  }
+
+  updateFilteredSites(): void
+  {
+    let filtered = this.sites.filter((site) => site.regionId == this.selectedRegion?._id);
+    
+    if(this.siteNameFilter && this.siteNameFilter.trim() !== '') {
+      const filterLower = this.siteNameFilter.toLowerCase();
+      filtered = filtered.filter((site) => site.name.toLowerCase().includes(filterLower));
+    }
+    
+    if(this.organizerNameFilter && this.organizerNameFilter.trim() !== '') {
+      const filterLower = this.organizerNameFilter.toLowerCase();
+      filtered = filtered.filter((site) => {
+        if(site.organizers && site.organizers.length > 0) {
+          return site.organizers.some(org => org.name && org.name.toLowerCase().includes(filterLower));
+        }
+        return site.organizer ? site.organizer.toLowerCase().includes(filterLower) : false;
+      });
+    }
+    
+    if(this.cityFilter && this.cityFilter.trim() !== '') {
+      const filterLower = this.cityFilter.toLowerCase();
+      filtered = filtered.filter((site) => site.city && site.city.toLowerCase().includes(filterLower));
+    }
+    
+    this.filteredSites = filtered;
+  }
+
+  openCodaIframe(): void {
+    this.showCodaIframe = true;
+  }
+
+  closeCodaIframe(): void {
+    this.showCodaIframe = false;
   }
 
   // Creates a link between this jammer the site and the jam
