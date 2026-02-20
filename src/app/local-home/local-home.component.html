@@ -464,20 +464,34 @@
 
       <div *ngIf="page == 'games'" class="container container-lg p-3">
         <h1>SUBMISSIONS</h1>
-        <button class="btn btn-black btn-block" (click)="getSubmissionsOfSite()">LOAD SUBMISSIONS</button>
+        <div class="m-2 d-flex align-items-center gap-2">
+          <mat-button-toggle-group 
+            [value]="selectedFilter" 
+            (change)="onFilterChange($event.value)"
+            hideSingleSelectionIndicator>
+            <mat-button-toggle [value]="SubmissionFilter.GAMEJAM">GameJam</mat-button-toggle>
+            <mat-button-toggle [value]="SubmissionFilter.INCUBATION">Incubation</mat-button-toggle>
+            <mat-button-toggle [value]="SubmissionFilter.ACCELERATION">Acceleration</mat-button-toggle>
+          </mat-button-toggle-group>
+          <mat-checkbox
+            (change)="onForceStageChange($event.checked)">
+            Info from this stage
+          </mat-checkbox>
+        </div>
         <div class="row m-2">
-          <div *ngFor="let s of siteSubmissions" class="p-2 col-4">
-            <div class="rounded shadow bg-light text-center p-4">
-              <h2>{{ s.gamejamTitle }}</h2>
+          <div *ngFor="let s of submissionsCards" class="p-2 col-4">
+            <div class="rounded shadow bg-light text-center p-4"
+              [ngStyle]="getStageStyleForCard(s)">
+              <h2>{{ s.title }}</h2>
               by<br>
-              <b>{{ s.teamName }}</b><br>
-              <a [href]="s.gamejamBuild" target="_blank">{{ s.gamejamBuild }}</a><br>
-              <a [href]="s.gamejamPitch" target="_blank" *ngIf="s.gamejamPitch">{{ s.gamejamPitch }}</a><br>
-              Submission time: {{ utcIsoToLocalInputValue(s.gamejamSubmissionTime) }}<br>
-              Going to Incubation? <span *ngIf="s.goingToIncubation">YES</span> <span *ngIf="!s.goingToIncubation">NO</span><br>
-              <span *ngIf="s.goingToAcceleration != null">Going to Acceleration? 
-                <span *ngIf="s.goingToAcceleration">YES</span> 
-                <span *ngIf="!s.goingToAcceleration">NO</span> 
+              <b>{{ s.submission.teamName }}</b><br>
+              <a [href]="s.build" target="_blank">{{ s.build }}</a><br>
+              <a [href]="s.pitch" target="_blank" *ngIf="s.pitch">{{ s.pitch }}</a><br>
+              Submission time: {{ s.time }}<br>
+              Going to Incubation? <span *ngIf="s.submission.goingToIncubation">YES</span> <span *ngIf="!s.submission.goingToIncubation">NO</span><br>
+              <span *ngIf="s.submission.goingToAcceleration != null">Going to Acceleration? 
+                <span *ngIf="s.submission.goingToAcceleration">YES</span> 
+                <span *ngIf="!s.submission.goingToAcceleration">NO</span> 
               </span>
             </div>
           </div>

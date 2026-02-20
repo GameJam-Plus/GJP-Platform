@@ -5,7 +5,7 @@ import { SiteService } from '../services/site.service';
 import { UserService } from '../services/user.service';
 import { JamService } from '../services/jam.service';
 import { SubmissionService } from '../services/submission.service';
-import { User, Site, Region, Country, Jam, Team } from '../../types'
+import { User, Site, Region, Country, Jam, Team, SubmissionFilter, JamStage, Submission } from '../../types'
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { MessagesComponent } from '../messages/messages.component';
@@ -17,6 +17,10 @@ import { saveAs } from 'file-saver';
 import { toJamStage, getJamStageColor } from '../../types';
 import { SideBarComponent } from '../side-bar/side-bar.component';
 import { TranslatePipe } from '@ngx-translate/core';
+import { Observable, map, of, concatMap } from 'rxjs';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
@@ -39,6 +43,15 @@ import { EditorComponent } from '@tinymce/tinymce-angular';
 
 import tinymce from 'tinymce';
 
+export type SubmissionCardVM = {
+  submission: any,
+  title?: string,
+  build?: string,
+  pitch?: string,
+  time?: string,
+  stage: JamStage
+};
+
 @Component({
   selector: 'app-local-home',
   standalone: true,
@@ -52,7 +65,9 @@ import tinymce from 'tinymce';
     MatTooltipModule,
     RulesComponent,
     SideBarComponent,
-    TranslatePipe
+    TranslatePipe,
+    MatButtonToggleModule,
+    MatCheckboxModule
   ],
   templateUrl: './local-home.component.html',
   styleUrl: './local-home.component.css',
@@ -72,6 +87,10 @@ export class LocalHomeComponent implements OnDestroy {
   staff: User[] = [];
   jammers: User[] = [];
   siteSubmissions: any[] = [];
+  submissionsCards: SubmissionCardVM[] = [];
+  forceStage: boolean = false;
+  readonly SubmissionFilter = SubmissionFilter;
+  selectedFilter: SubmissionFilter = SubmissionFilter.GAMEJAM;
   teamColors: any = {};
   teamCount: number = 0;
   modalError: string = '';
@@ -255,26 +274,36 @@ export class LocalHomeComponent implements OnDestroy {
     let tzOffset = 180; // 3 hours * 60 minutes - BRT
     this.timeZone = tzOffset > 0 ? `+${tzOffset}` : `${tzOffset}`;
 
-    this.listCountries(() => {
-      // wait for the list of countries to be ready to load regions sites and the jam
-      if(this.user)
-      {
-        if(!this.user.region)
-        {
-          this.listRegions();
-        }
+    // this.listCountries(() => {
+    //   // wait for the list of countries to be ready to load regions sites and the jam
+    //   if(this.user)
+    //   {
+    //     if(!this.user.region)
+    //     {
+    //       this.listRegions();
+    //     }
 
-        if(!this.user.site)
-        {
-          this.listSitesPerRegion();
-        }
+    //     if(!this.user.site)
+    //     {
+    //       this.listSitesPerRegion();
+    //     }
 
-        if(this.user.site)
-        {
-          this.getSite();
-        }
-      }
-    });
+    //     if(this.user.site)
+    //     {
+    //       this.getSite();
+    //     }
+    //   }
+    // });
+    this.listCountries().pipe(
+      concatMap(() => this.user && !this.user.region ? this.listRegions() : of(void 0)),
+      concatMap(() => this.user && !this.user.site ? this.listSitesPerRegion() : of(void 0)),
+      concatMap(() => this.user?.site ? this.getSite() : of(void 0)),
+    ).subscribe({
+      next: () => {
+        this.getJam();
+      },
+      error: (error) => console.error('Initilization failed', error)
+    })
 
     this.intervalId = setInterval(() => {
       this.getDeltaTime();
@@ -296,52 +325,75 @@ export class LocalHomeComponent implements OnDestroy {
     this.showCodaIframe = false;
   }
 
-  listRegions() : void
+  listRegions() : Observable<void>
   {
     const url = `${environment.apiUrl}/api/region/get-regions`;
-    this.regionService.getRegions(url).subscribe({
-      next: (regions: Region[]) => {
+    // this.regionService.getRegions(url).subscribe({
+    //   next: (regions: Region[]) => {
+    //     this.regions = regions;
+    //     this.loading = false;
+    //   },
+    //   error: (error) => {
+    //     console.error('Error al obtener regiones:', error);
+    //   }
+    // });
+    return this.regionService.getRegions(url).pipe(
+      map((regions) => {
         this.regions = regions;
         this.loading = false;
-      },
-      error: (error) => {
-        console.error('Error al obtener regiones:', error);
-      }
-    });
+        return void 0;
+      })
+    )
   }
 
-  listCountries(callback: Function) : void
+  listCountries() : Observable<void>
   {
-    this.siteService.getCountries(`${environment.apiUrl}/api/site/get-countries`).subscribe({
-      next: (countries) => {
+    const url = `${environment.apiUrl}/api/site/get-countries`;
+    // this.siteService.getCountries(url).subscribe({
+    //   next: (countries) => {
+    //     this.countries = countries;
+    //     callback();
+    //   },
+    //   error: (error) => {
+    //     console.error('Error al obtener países:', error);
+    //   }
+    // });
+    return this.siteService.getCountries(url).pipe(
+      map((countries) => {
         this.countries = countries;
-        callback();
-      },
-      error: (error) => {
-        console.error('Error al obtener países:', error);
-      }
-    });
+        return void 0;
+      })
+    )
   }
 
-  listSitesPerRegion() : void
+  listSitesPerRegion() : Observable<void>
   {
-    this.siteService.getSitesPerRegion(`${environment.apiUrl}/api/site/get-sites-per-region/${this.user!.region!._id}`).subscribe({
-      next: (sites: Site[]) => {
+    const url = `${environment.apiUrl}/api/site/get-sites-per-region/${this.user!.region!._id}`;
+
+    // this.siteService.getSitesPerRegion(url).subscribe({
+    //   next: (sites: Site[]) => {
+    //     this.sites = sites;
+    //     this.loading = false;
+    //   },
+    //   error: (error) => {
+    //     console.log(error);
+    //   }
+    // });
+    return this.siteService.getSitesPerRegion(url).pipe(
+      map((sites) => {
         this.sites = sites;
         this.loading = false;
-      },
-      error: (error) => {
-        console.log(error);
-      }
-    });
+      })
+    )
   }
 
-  getJam(): void{
+  getJam(): void {
     this.jamService.getJamBySite(this.user!.site!._id).subscribe({
       next: (jam: Jam) => {
         this.jam = jam;
         this.countJamData();
         this.listJammers();
+        this.getSubmissionsOfSite();
       },
       error: (error) => { // Try to get the current jam and automatically join
         // if 404 then automatically join the current jam
@@ -426,20 +478,30 @@ export class LocalHomeComponent implements OnDestroy {
     );
   }
 
-  getSite()
+  getSite() : Observable<void>
   {
     const url = `${environment.apiUrl}/api/site/get-site/${this.user!.site!._id}`;
-    this.siteService.getSite(url).subscribe({
-      next: (site: Site) => {
+
+    // this.siteService.getSite(url).subscribe({
+    //   next: (site: Site) => {
+    //     this.site = site;
+    //     console.log(this.site?._id);
+    //     this.listStaff();
+    //     this.patchSiteForm();
+    //     this.getJam();
+    //     this.getSubmissionsOfSite();
+    //   },
+    //   error: (error) => {
+    //     console.error('Error when loading site:', error);
+    //   }
+    // });
+    return this.siteService.getSite(url).pipe(
+      map((site) => {
         this.site = site;
         this.listStaff();
         this.patchSiteForm();
-        this.getJam();
-      },
-      error: (error) => {
-        console.error('Error when loading site:', error);
-      }
-    });
+      })
+    )
   }
 
   listStaff() : void
@@ -490,7 +552,7 @@ export class LocalHomeComponent implements OnDestroy {
             }
           }
         }
-        console.log(this.teamColors);
+        //console.log(this.teamColors);
         this.loading = false;
       },
       error: (error) => {
@@ -701,7 +763,7 @@ export class LocalHomeComponent implements OnDestroy {
     return localDate.toISOString();
   }
 
-  utcIsoToLocalInputValue(utcIso: string): string {
+  utcIsoToLocalInputValue(utcIso: string, hasDefinedFormat = true): string {
     if (!utcIso) return '';
 
     const d = new Date(utcIso);
@@ -712,9 +774,10 @@ export class LocalHomeComponent implements OnDestroy {
     const hh = pad(d.getHours());
     const min = pad(d.getMinutes());
 
-    return `${yyyy}-${mm}-${dd}T${hh}:${min}`;
+    return hasDefinedFormat ? 
+    `${yyyy}-${mm}-${dd}T${hh}:${min}`
+    :`${yyyy}-${mm}-${dd} ${hh}:${min}`;
   }
-  
 
   saveSite() : void {
     if(this.site)
@@ -905,13 +968,21 @@ export class LocalHomeComponent implements OnDestroy {
     }
   }
 
-  getSubmissionsOfSite()
+  getStageStyle(stage: any)
+  {
+    const enumStage = toJamStage(stage?.stageName);
+    const bg = enumStage ? getJamStageColor(enumStage) : '#9CA3AF';
+    return { 'background-color': bg };
+  }
+
+  getSubmissionsOfSite() : void
   {
     if(this.site?._id && this.jam?._id)
     {
       this.submissionService.getSubmissionsBySite(this.site._id, this.jam._id).subscribe({
         next: (data) => {
           this.siteSubmissions = data;
+          this.onFilterChange(SubmissionFilter.GAMEJAM);
         },
         error: (error) => {
           this.message.showMessage("Error", error.error.message);
@@ -920,10 +991,108 @@ export class LocalHomeComponent implements OnDestroy {
     }
   }
 
-  getStageStyle(stage: any)
+  refreshCards() {
+    this.submissionsCards = this.siteSubmissions
+      .filter(s => this.shouldIncludeSubmission(s, this.selectedFilter))
+      .map(s => this.getLatestSubmissionInfo(s, this.forceStage));
+  }
+
+  onFilterChange(filter: SubmissionFilter) 
   {
-    const enumStage = toJamStage(stage?.stageName);
-    const bg = enumStage ? getJamStageColor(enumStage) : '#9CA3AF';
-    return { 'background-color': bg };
+    this.selectedFilter = filter;
+
+    this.refreshCards();
+  }
+
+  
+  onForceStageChange(checked: boolean) {
+    this.forceStage = checked;
+
+    this.refreshCards();
+  }
+
+  private shouldIncludeSubmission(s: Submission, filter: SubmissionFilter) : boolean {
+    switch (filter) {
+      case SubmissionFilter.GAMEJAM:
+        return true;
+      case SubmissionFilter.INCUBATION:
+        return !!s.incubationTitle;
+      case SubmissionFilter.ACCELERATION:
+        return !!s.accelerationTitle;
+      default:
+        return false;
+    }
+  }
+
+  getLatestSubmissionInfo(submission: any, forceStage = false) : SubmissionCardVM
+  {
+    if(forceStage) {
+      switch (this.selectedFilter) {
+        case SubmissionFilter.GAMEJAM:
+          return {
+            submission: submission,
+            title: submission.gamejamTitle,
+            build: submission.gamejamBuild,
+            pitch: submission.gamejamPitch,
+            time: this.utcIsoToLocalInputValue(submission.gamejamSubmissionTime, false),
+            stage: JamStage.GAMEJAM
+          };
+          
+        case SubmissionFilter.INCUBATION:
+          return {
+            submission: submission,
+            title: submission.incubationTitle,
+            build: submission.incubationBuild,
+            pitch: submission.incubationPitch,
+            time: this.utcIsoToLocalInputValue(submission.incubationSubmissionTime, false),
+            stage: JamStage.INCUBATION
+          };
+        case SubmissionFilter.ACCELERATION:
+          return {
+            submission: submission,
+            title: submission.accelerationTitle,
+            build: submission.accelerationBuild,
+            pitch: submission.accelerationPitch,
+            time: this.utcIsoToLocalInputValue(submission.accelerationSubmissionTime, false),
+            stage: JamStage.ACCELERATION
+          }
+      }
+    }
+    
+    if(submission.accelerationTitle) {
+      return {
+        submission: submission,
+        title: submission.accelerationTitle,
+        build: submission.accelerationBuild,
+        pitch: submission.accelerationPitch,
+        time: this.utcIsoToLocalInputValue(submission.accelerationSubmissionTime, false),
+        stage: JamStage.ACCELERATION
+      };
+    }
+    if(submission.incubationTitle) {
+      return {
+        submission: submission,
+        title: submission.incubationTitle,
+        build: submission.incubationBuild,
+        pitch: submission.incubationPitch,
+        time: this.utcIsoToLocalInputValue(submission.incubationSubmissionTime, false),
+        stage: JamStage.INCUBATION
+      };
+    }
+    return {
+      submission: submission,
+      title: submission.gamejamTitle,
+      build: submission.gamejamBuild,
+      pitch: submission.gamejamPitch,
+      time: this.utcIsoToLocalInputValue(submission.gamejamSubmissionTime, false),
+      stage: JamStage.GAMEJAM
+    };
+  }
+
+  getStageStyleForCard(card: SubmissionCardVM) 
+  {
+    return {
+      border: `4px solid ${getJamStageColor(card.stage)}`
+    }
   }
 }

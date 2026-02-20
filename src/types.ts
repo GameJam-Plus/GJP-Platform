@@ -15,6 +15,12 @@ export enum JamStage {
   GLOBAL_FINAL = 'Global Final'
 }
 
+export enum SubmissionFilter {
+  GAMEJAM = 'gamejam',
+  INCUBATION = 'incubation',
+  ACCELERATION = 'acceleration'
+}
+
 export const JamStageColors: Record<JamStage, string> = {
   [JamStage.PRE_PRODUCTION]: '#1E78BC', 
   [JamStage.REGISTER]: '#1E78BC', 
