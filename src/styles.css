@@ -470,28 +470,20 @@ mat-button-toggle-group mat-button-toggle .mat-button-toggle-button:hover {
   background-color: var(--darkhover);
 }
 
-mat-checkbox .mdc-form-field,
-mat-mdc-checkbox .mdc-form-field {
-  border: 2px solid var(--darkbg);
-  border-radius: 4px;
-  padding: 0px 8px;
-  align-content: center;
-  align-items: center;
-  height: 48px;
+.mat-mdc-unelevated-button {
+  --mdc-filled-button-container-color: var(--darkbg);
+  --mdc-filled-button-label-text-color: white;
+  --mdc-filled-button-container-height: 48px;
 }
 
-.mat-mdc-checkbox .mdc-label {
-  margin: 0;
+.mat-mdc-unelevated-button:hover {
+  --mdc-filled-button-container-color: var(--darkhover);
 }
 
-/* When checked: fill background like a toggle */
-.mat-mdc-checkbox.mat-mdc-checkbox-checked .mdc-form-field {
-  background-color: var(--darkbg);
-  color: white;
+.mat-mdc-unelevated-button:active {
+  --mdc-filled-button-container-color: var(--redselect);
 }
 
-/* When not checked */
-.mat-mdc-checkbox:not(.mat-mdc-checkbox-checked) .mdc-form-field {
-  background-color: transparent;
-  color: var(--darkbg);
+.mat-mdc-unelevated-button fa-icon {
+  margin-right: 12px;
 }

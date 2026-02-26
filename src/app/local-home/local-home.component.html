@@ -464,19 +464,20 @@
 
       <div *ngIf="page == 'games'" class="container container-lg p-3">
         <h1>SUBMISSIONS</h1>
-        <div class="m-2 d-flex align-items-center gap-2">
+        <div class="m-2 d-flex justify-content-between align-items-center gap-2">
           <mat-button-toggle-group 
             [value]="selectedFilter" 
             (change)="onFilterChange($event.value)"
             hideSingleSelectionIndicator>
+            <mat-button-toggle [value]="SubmissionFilter.UPDATED">Updated</mat-button-toggle>
             <mat-button-toggle [value]="SubmissionFilter.GAMEJAM">GameJam</mat-button-toggle>
             <mat-button-toggle [value]="SubmissionFilter.INCUBATION">Incubation</mat-button-toggle>
             <mat-button-toggle [value]="SubmissionFilter.ACCELERATION">Acceleration</mat-button-toggle>
           </mat-button-toggle-group>
-          <mat-checkbox
-            (change)="onForceStageChange($event.checked)">
-            Info from this stage
-          </mat-checkbox>
+          <button mat-flat-button (click)="exportStageSubmissions()" [disabled]="!canExport">
+            <fa-icon [icon]="faFileCsv" class="fa-2x"></fa-icon>
+            Export
+          </button>
         </div>
         <div class="row m-2">
           <div *ngFor="let s of submissionsCards" class="p-2 col-4">

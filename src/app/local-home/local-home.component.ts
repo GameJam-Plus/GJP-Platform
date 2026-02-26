@@ -20,6 +20,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { Observable, map, of, concatMap } from 'rxjs';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
 
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -67,7 +68,8 @@ export type SubmissionCardVM = {
     SideBarComponent,
     TranslatePipe,
     MatButtonToggleModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatButtonModule
   ],
   templateUrl: './local-home.component.html',
   styleUrl: './local-home.component.css',
@@ -90,7 +92,7 @@ export class LocalHomeComponent implements OnDestroy {
   submissionsCards: SubmissionCardVM[] = [];
   forceStage: boolean = false;
   readonly SubmissionFilter = SubmissionFilter;
-  selectedFilter: SubmissionFilter = SubmissionFilter.GAMEJAM;
+  selectedFilter: SubmissionFilter = SubmissionFilter.UPDATED;
   teamColors: any = {};
   teamCount: number = 0;
   modalError: string = '';
@@ -952,6 +954,114 @@ export class LocalHomeComponent implements OnDestroy {
     let blob = new Blob([rows], {type: 'text/csv'});
     saveAs(blob, "jammers.csv");
   }
+  
+  exportStageSubmissions() {
+    const header =
+      'Title;Build;Contact Name;Contact Email;Description;Genres;Topics;Themes;Categories;Platforms;Graphics;Engine\n';
+  
+    let rows = header;
+  
+    this.submissionsCards.forEach(card => {
+      const s = card.submission;
+  
+      const data = this.getStageData(card.stage, s);
+  
+      rows +=
+        `${this.csv(data.title)};` +
+        `${this.csv(data.build)};` +
+        `${this.csv(data.contactName)};` +
+        `${this.csv(data.contactEmail)};` +
+        `${this.csv(data.description)};` +
+        `${this.csv(data.genres)};` +
+        `${this.csv(data.topics)};` +
+        `${this.csv(data.themes)};` +
+        `${this.csv(data.categories)};` +
+        `${this.csv(data.platforms)};` +
+        `${this.csv(data.graphics)};` +
+        `${this.csv(data.engine)}\n`;
+    });
+  
+    const blob = new Blob([rows], { type: 'text/csv;charset=utf-8;' });
+    const url = window.URL.createObjectURL(blob);
+  
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${this.site?.name}_${this.selectedFilter}_submissions.csv`;
+    a.click();
+  
+    window.URL.revokeObjectURL(url);
+  }
+
+  get canExport(): boolean {
+    return !!this.submissionsCards && this.submissionsCards.length > 0;
+  }
+
+  private getStageData(stage: JamStage, s: Submission) {
+    switch (stage) {
+      case JamStage.GAMEJAM:
+        return {
+          title: s.gamejamTitle,
+          build: s.gamejamBuild,
+          contactName: s.gamejamContact?.name,
+          contactEmail: s.gamejamContact?.email,
+          description: s.gamejamDescription,
+          genres: this.joinArray(s.gamejamGenres),
+          topics: this.joinArray(s.gamejamTopics),
+          themes: this.joinArray(s.gamejamThemes),
+          categories: this.joinArray(s.gamejamCategories),
+          platforms: this.joinArray(s.gamejamPlatforms),
+          graphics: s.gamejamGraphics,
+          engine: s.gamejamEngine
+        };
+  
+      case JamStage.INCUBATION:
+        return {
+          title: s.incubationTitle,
+          build: s.incubationBuild,
+          contactName: s.incubationContact?.name,
+          contactEmail: s.incubationContact?.email,
+          description: s.incubationDescription,
+          genres: this.joinArray(s.incubationGenres),
+          topics: this.joinArray(s.incubationTopics),
+          themes: this.joinArray(s.incubationThemes),
+          categories: this.joinArray(s.incubationCategories),
+          platforms: this.joinArray(s.incubationPlatforms),
+          graphics: s.incubationGraphics,
+          engine: s.incubationEngine
+        };
+  
+      case JamStage.ACCELERATION:
+        return {
+          title: s.accelerationTitle,
+          build: s.accelerationBuild,
+          contactName: s.accelerationContact?.name,
+          contactEmail: s.accelerationContact?.email,
+          description: s.accelerationDescription,
+          genres: this.joinArray(s.accelerationGenres),
+          topics: this.joinArray(s.accelerationTopics),
+          themes: this.joinArray(s.accelerationThemes),
+          categories: this.joinArray(s.accelerationCategories),
+          platforms: this.joinArray(s.accelerationPlatforms),
+          graphics: s.accelerationGraphics,
+          engine: s.accelerationEngine
+        };
+  
+      default:
+        throw new Error('Unsupported stage');
+    }
+  }
+
+  private joinArray(arr?: string[]): string {
+    return arr && arr.length ? arr.join(', ') : '';
+  }
+  
+  private csv(value: any): string {
+    if (!value) return '';
+    return String(value)
+      .replace(/;/g, ',')
+      .replace(/\n/g, ' ')
+      .replace(/\r/g, '');
+  }
 
   reload()
   {
@@ -982,7 +1092,7 @@ export class LocalHomeComponent implements OnDestroy {
       this.submissionService.getSubmissionsBySite(this.site._id, this.jam._id).subscribe({
         next: (data) => {
           this.siteSubmissions = data;
-          this.onFilterChange(SubmissionFilter.GAMEJAM);
+          this.onFilterChange(this.selectedFilter);
         },
         error: (error) => {
           this.message.showMessage("Error", error.error.message);
@@ -991,28 +1101,25 @@ export class LocalHomeComponent implements OnDestroy {
     }
   }
 
-  refreshCards() {
+  refreshCards() 
+  {
     this.submissionsCards = this.siteSubmissions
       .filter(s => this.shouldIncludeSubmission(s, this.selectedFilter))
-      .map(s => this.getLatestSubmissionInfo(s, this.forceStage));
+      .map(s => this.getSubmissionInfo(s));
   }
 
-  onFilterChange(filter: SubmissionFilter) 
+  onFilterChange(filter: SubmissionFilter)
   {
     this.selectedFilter = filter;
 
     this.refreshCards();
   }
 
-  
-  onForceStageChange(checked: boolean) {
-    this.forceStage = checked;
-
-    this.refreshCards();
-  }
-
-  private shouldIncludeSubmission(s: Submission, filter: SubmissionFilter) : boolean {
+  private shouldIncludeSubmission(s: Submission, filter: SubmissionFilter) : boolean 
+  {
     switch (filter) {
+      case SubmissionFilter.UPDATED:
+        return true;
       case SubmissionFilter.GAMEJAM:
         return true;
       case SubmissionFilter.INCUBATION:
@@ -1024,39 +1131,39 @@ export class LocalHomeComponent implements OnDestroy {
     }
   }
 
-  getLatestSubmissionInfo(submission: any, forceStage = false) : SubmissionCardVM
+  getSubmissionInfo(submission: any) : SubmissionCardVM
   {
-    if(forceStage) {
-      switch (this.selectedFilter) {
-        case SubmissionFilter.GAMEJAM:
-          return {
-            submission: submission,
-            title: submission.gamejamTitle,
-            build: submission.gamejamBuild,
-            pitch: submission.gamejamPitch,
-            time: this.utcIsoToLocalInputValue(submission.gamejamSubmissionTime, false),
-            stage: JamStage.GAMEJAM
-          };
-          
-        case SubmissionFilter.INCUBATION:
-          return {
-            submission: submission,
-            title: submission.incubationTitle,
-            build: submission.incubationBuild,
-            pitch: submission.incubationPitch,
-            time: this.utcIsoToLocalInputValue(submission.incubationSubmissionTime, false),
-            stage: JamStage.INCUBATION
-          };
-        case SubmissionFilter.ACCELERATION:
-          return {
-            submission: submission,
-            title: submission.accelerationTitle,
-            build: submission.accelerationBuild,
-            pitch: submission.accelerationPitch,
-            time: this.utcIsoToLocalInputValue(submission.accelerationSubmissionTime, false),
-            stage: JamStage.ACCELERATION
-          }
-      }
+    switch (this.selectedFilter) {
+      case SubmissionFilter.UPDATED:
+        break;
+      case SubmissionFilter.GAMEJAM:
+        return {
+          submission: submission,
+          title: submission.gamejamTitle,
+          build: submission.gamejamBuild,
+          pitch: submission.gamejamPitch,
+          time: this.utcIsoToLocalInputValue(submission.gamejamSubmissionTime, false),
+          stage: JamStage.GAMEJAM
+        };
+        
+      case SubmissionFilter.INCUBATION:
+        return {
+          submission: submission,
+          title: submission.incubationTitle,
+          build: submission.incubationBuild,
+          pitch: submission.incubationPitch,
+          time: this.utcIsoToLocalInputValue(submission.incubationSubmissionTime, false),
+          stage: JamStage.INCUBATION
+        };
+      case SubmissionFilter.ACCELERATION:
+        return {
+          submission: submission,
+          title: submission.accelerationTitle,
+          build: submission.accelerationBuild,
+          pitch: submission.accelerationPitch,
+          time: this.utcIsoToLocalInputValue(submission.accelerationSubmissionTime, false),
+          stage: JamStage.ACCELERATION
+        };
     }
     
     if(submission.accelerationTitle) {
@@ -1087,6 +1194,35 @@ export class LocalHomeComponent implements OnDestroy {
       time: this.utcIsoToLocalInputValue(submission.gamejamSubmissionTime, false),
       stage: JamStage.GAMEJAM
     };
+  }
+
+  getContactByStage(submission: any, stage: JamStage): { name: string, email: string } {
+    switch(stage) {
+      case JamStage.GAMEJAM:
+        return {
+          name: submission.gamejamContact?.name || '',
+          email: submission.gamejamContact?.email || ''
+        };
+        
+      case JamStage.INCUBATION:
+        return {
+          name: submission.incubationContact?.name || submission.gamejamContact?.name || '',
+          email: submission.incubationContact?.email || submission.gamejamContact?.email || ''
+        };
+        
+      case JamStage.ACCELERATION:
+        return {
+          name: submission.accelerationContact?.name || 
+                submission.incubationContact?.name || 
+                submission.gamejamContact?.name || '',
+          email: submission.accelerationContact?.email || 
+                 submission.incubationContact?.email || 
+                 submission.gamejamContact?.email || ''
+        };
+        
+      default:
+        return { name: '', email: '' };
+    }
   }
 
   getStageStyleForCard(card: SubmissionCardVM) 

@@ -16,6 +16,7 @@ export enum JamStage {
 }
 
 export enum SubmissionFilter {
+  UPDATED = 'updated',
   GAMEJAM = 'gamejam',
   INCUBATION = 'incubation',
   ACCELERATION = 'acceleration'

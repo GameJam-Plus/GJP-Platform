@@ -281,7 +281,6 @@ export class GlobalJamComponent {
           this.activeUsers = data.activeJammers;
           this.inactiveUsers = data.inactiveJammers;
           this.submissionsData = data.submissions;
-          console.log(data.activeJammers.length);
         },
         error: (error) => {
           this.message.showMessage("Error", error.error.message);
@@ -860,7 +859,7 @@ export class GlobalJamComponent {
               }
             }
           }
-          console.log(this.teamColors);
+          //console.log(this.teamColors);
         },
         error: (error) => {
           console.log(error);
