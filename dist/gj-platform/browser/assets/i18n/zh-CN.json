@@ -136,7 +136,11 @@
 					"nojamtext2": "请从下面的列表中选择一个会场以继续。",
 					"regions": "地区：",
 					"venuesof": "会场 - ",
+					"filtervenuename": "按总部名称筛选...",
+					"filterorganizer": "按组织者筛选...",
+					"filtercity": "按城市筛选...",
 					"modality": "形式：",
+					"organizer":"组织者:",
 					"statusopen": "状态：开放注册",
 					"joinvenue": "加入会场",
 					"statusclosed": "状态：已关闭",
@@ -340,7 +344,8 @@
 				"feedback": "反馈",
 				"myjam": "我的 Jam",
 				"mysubmission": "我的提交",
-				"myteam": "我的团队"
+				"myteam": "我的团队",
+				"letusknow": "告诉我们您的想法"
 			},
 			"venue": {
 				"myvenue": "我的会场",
