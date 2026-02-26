@@ -957,18 +957,18 @@ export class LocalHomeComponent implements OnDestroy {
   
   exportStageSubmissions() {
     const header =
-      'Title;Build;Contact Name;Contact Email;Description;Genres;Topics;Themes;Categories;Platforms;Graphics;Engine\n';
+      'Title;Team;Build;Pitch;Contact Name;Contact Email;Description;Genres;Topics;Themes;Categories;Platforms;Graphics;Engine\n';
   
     let rows = header;
   
-    this.submissionsCards.forEach(card => {
-      const s = card.submission;
-  
-      const data = this.getStageData(card.stage, s);
+    this.submissionsCards.forEach(card => {  
+      const data = this.getStageData(card.stage, card.submission);
   
       rows +=
         `${this.csv(data.title)};` +
+        `${this.csv(data.team)};` +
         `${this.csv(data.build)};` +
+        `${this.csv(data.pitch)};` +
         `${this.csv(data.contactName)};` +
         `${this.csv(data.contactEmail)};` +
         `${this.csv(data.description)};` +
@@ -996,12 +996,14 @@ export class LocalHomeComponent implements OnDestroy {
     return !!this.submissionsCards && this.submissionsCards.length > 0;
   }
 
-  private getStageData(stage: JamStage, s: Submission) {
+  private getStageData(stage: JamStage, s: any) {
     switch (stage) {
       case JamStage.GAMEJAM:
         return {
           title: s.gamejamTitle,
+          team: s.teamName,
           build: s.gamejamBuild,
+          pitch: s.gamejamPitch,
           contactName: s.gamejamContact?.name,
           contactEmail: s.gamejamContact?.email,
           description: s.gamejamDescription,
@@ -1017,7 +1019,9 @@ export class LocalHomeComponent implements OnDestroy {
       case JamStage.INCUBATION:
         return {
           title: s.incubationTitle,
+          team: s.teamName,
           build: s.incubationBuild,
+          pitch: s.incubationPitch,
           contactName: s.incubationContact?.name,
           contactEmail: s.incubationContact?.email,
           description: s.incubationDescription,
@@ -1033,7 +1037,9 @@ export class LocalHomeComponent implements OnDestroy {
       case JamStage.ACCELERATION:
         return {
           title: s.accelerationTitle,
+          team: s.teamName,
           build: s.accelerationBuild,
+          pitch: s.accelerationPitch,
           contactName: s.accelerationContact?.name,
           contactEmail: s.accelerationContact?.email,
           description: s.accelerationDescription,
