@@ -11,7 +11,6 @@ const csv = require('csv-parser');
 const fs = require('fs');
 const { deepEqual } = require('assert');
 const crypto = require('node:crypto');
-const test = 0;
 
 const registerUser = async (req, res) => {
     const { name, email, region, site, team, roles, coins, discordUsername, instagram, linkedin, telefoneWhatsApp, ethnicity, gender, intersex, identity, orientation, disability, participation, student, school } = req.body;

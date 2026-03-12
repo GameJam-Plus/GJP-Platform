@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-const test = 0;
 const notificationSchema = new Schema({
   titlePT: {
     type: String,

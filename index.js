@@ -7,7 +7,6 @@ const path = require('path');
 const fs = require('fs');
 const cron = require('node-cron');
 const User = require('./models/userModel');
-const test = 0;
 
 // Start express on port 3000
 const app = express();

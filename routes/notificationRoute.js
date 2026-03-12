@@ -1,6 +1,5 @@
 const express = require('express');
 const notification_route = express();
-const test = 0;
 const bodyParser = require('body-parser');
 notification_route.use(bodyParser.json());
 notification_route.use(bodyParser.urlencoded({ extended: true }));
