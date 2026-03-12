@@ -110,6 +110,10 @@ app.use('/api/submission', submission_route);
 const theme_route = require('./routes/themeRoute');
 app.use('/api/theme', theme_route);
 
+// Rutas de notificaciones
+const notification_route = require('./routes/notificationRoute');
+app.use('/api/notification', notification_route);
+
 app.get('/install', function (req, res){
     User.countDocuments({})
     .then(function(count) {
