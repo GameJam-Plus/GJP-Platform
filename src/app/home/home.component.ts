@@ -14,7 +14,13 @@ import { UserDashboardComponent } from '../user-dashboard/user-dashboard.compone
 import { User, Site, Region } from '../../types';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
+import { faBell } from '@fortawesome/free-solid-svg-icons'; // Se começar a ter muitos icones, deixar na mesma linha
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { environment } from '../../environments/environment.prod';
+import { NotificationService, NotificationPayload } from '../services/notification.service';
+
+type NotificationLanguage = 'PT' | 'ES' | 'EN';
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -42,10 +48,32 @@ export class HomeComponent{
   name: string = '';
   activeRole: string = "";
   faCircleUser = faCircleUser;
+  faBell = faBell;
+  faPlus = faPlus;
+  notificationLanguage: NotificationLanguage = 'EN';
+  notificationDraft: Omit<NotificationPayload, 'createdAt'> = {
+    titlePT: '',
+    titleES: '',
+    titleEN: '',
+    descriptionPT: '',
+    descriptionES: '',
+    descriptionEN: ''
+  };
+  notifications: NotificationPayload[] = [];
+  unreadNotificationsCount: number = 0;
 
-  constructor(private fb: FormBuilder, private router: Router, private userService: UserService, private siteService: SiteService, private regionService: RegionService) {}
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private userService: UserService,
+    private siteService: SiteService,
+    private regionService: RegionService,
+    private notificationService: NotificationService
+  ) {}
 
   ngOnInit(): void {
+    this.notificationLanguage = this.resolveNotificationLanguage();
+
     this.userForm = this.fb.group({
       name: ['', Validators.required],
       discordUsername: ['', Validators.required],
@@ -64,6 +92,161 @@ export class HomeComponent{
     });
 
     this.getUser();
+    this.loadNotifications();
+  }
+
+  private resolveNotificationLanguage(): NotificationLanguage {
+    const language = (typeof navigator !== 'undefined' ? navigator.language : 'en').toLowerCase();
+    if (language.startsWith('pt')) {
+      return 'PT';
+    }
+    if (language.startsWith('es')) {
+      return 'ES';
+    }
+    return 'EN';
+  }
+
+  saveNotification(): void {
+    const payload: Omit<NotificationPayload, 'createdAt'> = {
+      titlePT: this.notificationDraft.titlePT.trim(),
+      titleES: this.notificationDraft.titleES.trim(),
+      titleEN: this.notificationDraft.titleEN.trim(),
+      descriptionPT: this.notificationDraft.descriptionPT.trim(),
+      descriptionES: this.notificationDraft.descriptionES.trim(),
+      descriptionEN: this.notificationDraft.descriptionEN.trim()
+    };
+
+    if (!payload.titlePT && !payload.titleES && !payload.titleEN) {
+      return;
+    }
+
+    this.notificationService.createNotification(payload).subscribe({
+      next: (notification) => {
+        this.notifications.unshift(notification);
+        this.resetNotificationDraft();
+        this.updateUnreadNotificationsCount();
+      },
+      error: () => {
+        this.errorMessage = 'Could not save notification.';
+      }
+    });
+  }
+
+  private loadNotifications(): void {
+    this.notificationService.getNotifications().subscribe({
+      next: (notifications) => {
+        this.notifications = notifications || [];
+        this.updateUnreadNotificationsCount();
+      },
+      error: () => {
+        this.notifications = [];
+      }
+    });
+  }
+
+  removeNotification(notificationId?: string): void {
+    if (!notificationId) {
+      return;
+    }
+
+    this.notificationService.deleteNotification(notificationId).subscribe({
+      next: () => {
+        this.notifications = this.notifications.filter((notification) => notification._id !== notificationId);
+        this.updateUnreadNotificationsCount();
+      },
+      error: () => {
+        this.errorMessage = 'Could not remove notification.';
+      }
+    });
+  }
+
+  private resetNotificationDraft(): void {
+    this.notificationDraft = {
+      titlePT: '',
+      titleES: '',
+      titleEN: '',
+      descriptionPT: '',
+      descriptionES: '',
+      descriptionEN: ''
+    };
+  }
+
+  getNotificationTitle(notification: NotificationPayload): string {
+    if (this.notificationLanguage === 'PT') {
+      return notification.titlePT || notification.titleEN || notification.titleES;
+    }
+    if (this.notificationLanguage === 'ES') {
+      return notification.titleES || notification.titleEN || notification.titlePT;
+    }
+    return notification.titleEN || notification.titlePT || notification.titleES;
+  }
+
+  getNotificationDescription(notification: NotificationPayload): string {
+    if (this.notificationLanguage === 'PT') {
+      return notification.descriptionPT || notification.descriptionEN || notification.descriptionES;
+    }
+    if (this.notificationLanguage === 'ES') {
+      return notification.descriptionES || notification.descriptionEN || notification.descriptionPT;
+    }
+    return notification.descriptionEN || notification.descriptionPT || notification.descriptionES;
+  }
+
+  onOpenNotifications(): void {
+    this.markAllNotificationsAsRead();
+  }
+
+  private markAllNotificationsAsRead(): void {
+    const currentUserId = this.user?._id;
+    if (!currentUserId) {
+      return;
+    }
+
+    this.notificationService.markAllAsRead().subscribe({
+      next: () => {
+        const readMark: NonNullable<NotificationPayload['readBy']>[number] = {
+          userId: currentUserId,
+          readAt: new Date().toISOString()
+        };
+        this.notifications = this.notifications.map((notification) => {
+          const alreadyRead = this.hasUserReadNotification(notification);
+          if (alreadyRead) {
+            return notification;
+          }
+          return {
+            ...notification,
+            readBy: [...(notification.readBy || []), readMark]
+          };
+        });
+        this.updateUnreadNotificationsCount();
+      }
+    });
+  }
+
+  private hasUserReadNotification(notification: NotificationPayload): boolean {
+    if (!this.user || !this.user._id) {
+      return false;
+    }
+
+    return (notification.readBy || []).some((readEntry) => {
+      if (!readEntry || !readEntry.userId) {
+        return false;
+      }
+
+      if (typeof readEntry.userId === 'string') {
+        return readEntry.userId === this.user._id;
+      }
+
+      return !!readEntry.userId._id && readEntry.userId._id === this.user._id;
+    });
+  }
+
+  private updateUnreadNotificationsCount(): void {
+    if (!this.user || !this.user._id) {
+      this.unreadNotificationsCount = 0;
+      return;
+    }
+
+    this.unreadNotificationsCount = this.notifications.filter((notification) => !this.hasUserReadNotification(notification)).length;
   }
 
   getUser() : void{
@@ -71,6 +254,7 @@ export class HomeComponent{
       next: (user:User) =>{
         this.user = user;
         this.activeRole = user.roles[0]; // select the highest role as the active role
+        this.updateUnreadNotificationsCount();
 
         if(user.site)
         {
