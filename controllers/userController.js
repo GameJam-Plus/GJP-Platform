@@ -13,7 +13,8 @@ const { deepEqual } = require('assert');
 const crypto = require('node:crypto');
 
 const registerUser = async (req, res) => {
-    const { name, email, region, site, team, roles, coins, discordUsername, instagram, linkedin, telefoneWhatsApp, ethnicity, gender, intersex, identity, orientation, disability, participation, student, school } = req.body;
+    const { name, email, region, site, team, roles, coins, discordUsername, instagram, linkedin, telefoneWhatsApp, ethnicity, gender, intersex, identity, orientation, disability, participation, student, school, darkMode } = req.body;
+    const parsedDarkMode = typeof darkMode === 'string' ? darkMode === 'true' : darkMode;
 
     try {
         // Validar email
@@ -58,6 +59,7 @@ const registerUser = async (req, res) => {
             participation: participation, //se ja participou de GJ+ anteriores
             student: student,         //se é estudante ou não
             school: school, //nome local que estuda
+            darkMode: parsedDarkMode === undefined ? false : parsedDarkMode,
             creationDate: new Date()
         });
         
@@ -73,7 +75,8 @@ const registerUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
     const { id } = req.params;
-    const { name, email, region, site, team, roles, coins, discordUsername, instagram, linkedin, telefoneWhatsApp, ethnicity, gender, intersex, identity, orientation, disability, participation, student, school } = req.body;
+    const { name, email, region, site, team, roles, coins, discordUsername, instagram, linkedin, telefoneWhatsApp, ethnicity, gender, intersex, identity, orientation, disability, participation, student, school, darkMode } = req.body;
+    const parsedDarkMode = typeof darkMode === 'string' ? darkMode === 'true' : darkMode;
 
     try {
         if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -117,6 +120,7 @@ const updateUser = async (req, res) => {
         if (participation) existingUser.participation = participation;
         if (student) existingUser.student = student;
         if (school) existingUser.school = school;
+        if (parsedDarkMode !== undefined) existingUser.darkMode = parsedDarkMode;
         
         if(existingUser.roles.includes('Jammer')){
             const query = { 'jammers._id': id };

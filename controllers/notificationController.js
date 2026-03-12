@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const Notification = require('../models/notificationModel');
 const User = require('../models/userModel');
+
 const createNotification = async (req, res) => {
   const {
     titlePT,
