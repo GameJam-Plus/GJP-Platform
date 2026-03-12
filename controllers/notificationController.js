@@ -2,6 +2,10 @@ const jwt = require('jsonwebtoken');
 const Notification = require('../models/notificationModel');
 const User = require('../models/userModel');
 const test = 0;
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 const createNotification = async (req, res) => {
   const {
     titlePT,
