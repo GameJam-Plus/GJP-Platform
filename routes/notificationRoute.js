@@ -13,6 +13,7 @@ const notificationController = require('../controllers/notificationController');
 
 notification_route.post('/create-notification', upload.none(), notificationController.createNotification);
 notification_route.get('/get-notifications', notificationController.getNotifications);
+notification_route.put('/update-notification/:id', upload.none(), notificationController.updateNotification);
 notification_route.delete('/delete-notification/:id', notificationController.deleteNotification);
 notification_route.post('/mark-all-read', upload.none(), notificationController.markAllAsRead);
 
