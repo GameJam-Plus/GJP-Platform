@@ -17,6 +17,7 @@ export type NotificationPayload = {
   descriptionES: string;
   descriptionEN: string;
   createdAt?: Date | string;
+  expiresAt?: Date | string;
 };
 
 @Injectable({
@@ -35,6 +36,12 @@ export class NotificationService {
 
   getNotifications(): Observable<NotificationPayload[]> {
     return this.http.get<any>(`${this.url}get-notifications`, { withCredentials: true }).pipe(
+      map(response => response.data)
+    );
+  }
+
+  updateNotification(notificationId: string, notification: NotificationPayload): Observable<NotificationPayload> {
+    return this.http.put<any>(`${this.url}update-notification/${notificationId}`, notification, { withCredentials: true }).pipe(
       map(response => response.data)
     );
   }

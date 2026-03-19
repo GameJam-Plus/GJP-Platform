@@ -16,6 +16,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 import { faBell } from '@fortawesome/free-solid-svg-icons'; // Se começar a ter muitos icones, deixar na mesma linha
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPencil } from '@fortawesome/free-solid-svg-icons';
 import { environment } from '../../environments/environment.prod';
 import { NotificationService, NotificationPayload } from '../services/notification.service';
 
@@ -50,8 +51,9 @@ export class HomeComponent{
   faCircleUser = faCircleUser;
   faBell = faBell;
   faPlus = faPlus;
+  faPencil = faPencil;
   notificationLanguage: NotificationLanguage = 'EN';
-  notificationDraft: Omit<NotificationPayload, 'createdAt'> = {
+  notificationDraft: Omit<NotificationPayload, 'createdAt' | 'expiresAt'> = {
     titlePT: '',
     titleES: '',
     titleEN: '',
@@ -59,8 +61,24 @@ export class HomeComponent{
     descriptionES: '',
     descriptionEN: ''
   };
+  notificationExpirationDate: string = '';
+  notificationExpirationTime: string = '';
+  editingNotificationId: string = '';
+  notificationEditDraft: Omit<NotificationPayload, '_id' | 'createdAt' | 'readBy' | 'expiresAt'> = {
+    titlePT: '',
+    titleES: '',
+    titleEN: '',
+    descriptionPT: '',
+    descriptionES: '',
+    descriptionEN: ''
+  };
+  notificationEditExpirationDate: string = '';
+  notificationEditExpirationTime: string = '';
   notifications: NotificationPayload[] = [];
   unreadNotificationsCount: number = 0;
+  private notificationsRefreshIntervalId?: ReturnType<typeof setInterval>;
+  private expirationRefreshTimeoutId?: ReturnType<typeof setTimeout>;
+  private lastMarkAllAsReadTime: number = 0;
 
   constructor(
     private fb: FormBuilder,
@@ -93,6 +111,19 @@ export class HomeComponent{
 
     this.getUser();
     this.loadNotifications();
+    this.startNotificationsAutoRefresh();
+  }
+
+  ngOnDestroy(): void {
+    if (this.notificationsRefreshIntervalId) {
+      clearInterval(this.notificationsRefreshIntervalId);
+      this.notificationsRefreshIntervalId = undefined;
+    }
+
+    if (this.expirationRefreshTimeoutId) {
+      clearTimeout(this.expirationRefreshTimeoutId);
+      this.expirationRefreshTimeoutId = undefined;
+    }
   }
 
   private resolveNotificationLanguage(): NotificationLanguage {
@@ -113,18 +144,37 @@ export class HomeComponent{
       titleEN: this.notificationDraft.titleEN.trim(),
       descriptionPT: this.notificationDraft.descriptionPT.trim(),
       descriptionES: this.notificationDraft.descriptionES.trim(),
-      descriptionEN: this.notificationDraft.descriptionEN.trim()
+      descriptionEN: this.notificationDraft.descriptionEN.trim(),
+      expiresAt: ''
     };
 
     if (!payload.titlePT && !payload.titleES && !payload.titleEN) {
+      this.errorMessage = 'At least one title is required.';
       return;
     }
 
+    if (!this.notificationExpirationDate || !this.notificationExpirationTime) {
+      this.errorMessage = 'Please select expiration date and time.';
+      return;
+    }
+
+    const expiresAt = new Date(`${this.notificationExpirationDate}T${this.notificationExpirationTime}`);
+    if (Number.isNaN(expiresAt.getTime())) {
+      this.errorMessage = 'Invalid expiration date/time.';
+      return;
+    }
+
+    if (expiresAt.getTime() <= Date.now()) {
+      this.errorMessage = 'Expiration date/time must be in the future.';
+      return;
+    }
+
+    payload.expiresAt = expiresAt.toISOString();
+    this.errorMessage = '';
+
     this.notificationService.createNotification(payload).subscribe({
-      next: (notification) => {
-        this.notifications.unshift(notification);
-        this.resetNotificationDraft();
-        this.updateUnreadNotificationsCount();
+      next: () => {
+        window.location.reload();
       },
       error: () => {
         this.errorMessage = 'Could not save notification.';
@@ -132,16 +182,93 @@ export class HomeComponent{
     });
   }
 
-  private loadNotifications(): void {
+  private loadNotifications(options?: { preserveExistingOnEmpty?: boolean }): void {
     this.notificationService.getNotifications().subscribe({
       next: (notifications) => {
-        this.notifications = notifications || [];
+        const fetchedNotifications = notifications || [];
+        const shouldPreserveExisting = !!options?.preserveExistingOnEmpty
+          && fetchedNotifications.length === 0
+          && this.notifications.length > 0;
+
+        if (!shouldPreserveExisting) {
+          this.notifications = fetchedNotifications;
+        }
+
+        this.removeExpiredNotificationsLocally();
         this.updateUnreadNotificationsCount();
+        this.scheduleRefreshAtNextExpiration();
       },
       error: () => {
-        this.notifications = [];
+        // Keep current list to avoid modal flicker/empty state on transient errors.
+        this.scheduleRefreshAtNextExpiration();
       }
     });
+  }
+
+  private startNotificationsAutoRefresh(): void {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    if (this.notificationsRefreshIntervalId) {
+      clearInterval(this.notificationsRefreshIntervalId);
+    }
+
+    this.notificationsRefreshIntervalId = setInterval(() => {
+      // Avoid reloading if we just marked as read (give 5s grace period).
+      if (Date.now() - this.lastMarkAllAsReadTime < 5000) {
+        return;
+      }
+
+      this.removeExpiredNotificationsLocally();
+      this.loadNotifications();
+    }, 10000);
+  }
+
+  private scheduleRefreshAtNextExpiration(): void {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    if (this.expirationRefreshTimeoutId) {
+      clearTimeout(this.expirationRefreshTimeoutId);
+      this.expirationRefreshTimeoutId = undefined;
+    }
+
+    const now = Date.now();
+    const futureExpirations = this.notifications
+      .map((notification) => new Date(notification.expiresAt || '').getTime())
+      .filter((time) => !Number.isNaN(time) && time > now);
+
+    if (futureExpirations.length === 0) {
+      return;
+    }
+
+    const nextExpiration = Math.min(...futureExpirations);
+    const refreshDelay = Math.max(nextExpiration - now + 1000, 1000);
+
+    this.expirationRefreshTimeoutId = setTimeout(() => {
+      this.removeExpiredNotificationsLocally();
+      this.loadNotifications();
+    }, refreshDelay);
+  }
+
+  private removeExpiredNotificationsLocally(): void {
+    const now = Date.now();
+    const activeNotifications = this.notifications.filter((notification) => {
+      const expirationTime = new Date(notification.expiresAt || '').getTime();
+      if (Number.isNaN(expirationTime)) {
+        return true;
+      }
+
+      return expirationTime > now;
+    });
+
+    if (activeNotifications.length !== this.notifications.length) {
+      this.notifications = activeNotifications;
+      this.updateUnreadNotificationsCount();
+      this.scheduleRefreshAtNextExpiration();
+    }
   }
 
   removeNotification(notificationId?: string): void {
@@ -153,9 +280,84 @@ export class HomeComponent{
       next: () => {
         this.notifications = this.notifications.filter((notification) => notification._id !== notificationId);
         this.updateUnreadNotificationsCount();
+        this.scheduleRefreshAtNextExpiration();
       },
       error: () => {
         this.errorMessage = 'Could not remove notification.';
+      }
+    });
+  }
+
+  openEditNotification(notification: NotificationPayload): void {
+    if (!notification || !notification._id) {
+      return;
+    }
+
+    this.editingNotificationId = notification._id;
+    this.notificationEditDraft = {
+      titlePT: String(notification.titlePT || ''),
+      titleES: String(notification.titleES || ''),
+      titleEN: String(notification.titleEN || ''),
+      descriptionPT: String(notification.descriptionPT || ''),
+      descriptionES: String(notification.descriptionES || ''),
+      descriptionEN: String(notification.descriptionEN || '')
+    };
+
+    const expiresAt = notification.expiresAt ? new Date(notification.expiresAt) : null;
+    if (expiresAt && !Number.isNaN(expiresAt.getTime())) {
+      this.notificationEditExpirationDate = this.formatDateForInput(expiresAt);
+      this.notificationEditExpirationTime = this.formatTimeForInput(expiresAt);
+    } else {
+      this.notificationEditExpirationDate = '';
+      this.notificationEditExpirationTime = '';
+    }
+  }
+
+  saveEditedNotification(): void {
+    if (!this.editingNotificationId) {
+      this.errorMessage = 'Notification not selected.';
+      return;
+    }
+
+    const payload: NotificationPayload = {
+      titlePT: this.notificationEditDraft.titlePT.trim(),
+      titleES: this.notificationEditDraft.titleES.trim(),
+      titleEN: this.notificationEditDraft.titleEN.trim(),
+      descriptionPT: this.notificationEditDraft.descriptionPT.trim(),
+      descriptionES: this.notificationEditDraft.descriptionES.trim(),
+      descriptionEN: this.notificationEditDraft.descriptionEN.trim(),
+      expiresAt: ''
+    };
+
+    if (!payload.titlePT && !payload.titleES && !payload.titleEN) {
+      this.errorMessage = 'At least one title is required.';
+      return;
+    }
+
+    if (!this.notificationEditExpirationDate || !this.notificationEditExpirationTime) {
+      this.errorMessage = 'Please select expiration date and time.';
+      return;
+    }
+
+    const expiresAt = new Date(`${this.notificationEditExpirationDate}T${this.notificationEditExpirationTime}`);
+    if (Number.isNaN(expiresAt.getTime())) {
+      this.errorMessage = 'Invalid expiration date/time.';
+      return;
+    }
+
+    if (expiresAt.getTime() <= Date.now()) {
+      this.errorMessage = 'Expiration date/time must be in the future.';
+      return;
+    }
+
+    payload.expiresAt = expiresAt.toISOString();
+
+    this.notificationService.updateNotification(this.editingNotificationId, payload).subscribe({
+      next: () => {
+        window.location.reload();
+      },
+      error: () => {
+        this.errorMessage = 'Could not update notification.';
       }
     });
   }
@@ -169,6 +371,35 @@ export class HomeComponent{
       descriptionES: '',
       descriptionEN: ''
     };
+    this.notificationExpirationDate = '';
+    this.notificationExpirationTime = '';
+  }
+
+  private formatDateForInput(value: Date): string {
+    const year = value.getFullYear();
+    const month = String(value.getMonth() + 1).padStart(2, '0');
+    const day = String(value.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  private formatTimeForInput(value: Date): string {
+    const hours = String(value.getHours()).padStart(2, '0');
+    const minutes = String(value.getMinutes()).padStart(2, '0');
+    return `${hours}:${minutes}`;
+  }
+
+  private resetEditNotificationDraft(): void {
+    this.editingNotificationId = '';
+    this.notificationEditDraft = {
+      titlePT: '',
+      titleES: '',
+      titleEN: '',
+      descriptionPT: '',
+      descriptionES: '',
+      descriptionEN: ''
+    };
+    this.notificationEditExpirationDate = '';
+    this.notificationEditExpirationTime = '';
   }
 
   getNotificationTitle(notification: NotificationPayload): string {
@@ -192,38 +423,55 @@ export class HomeComponent{
   }
 
   onOpenNotifications(): void {
+    // Always force full reload from backend when opening modal to show latest data.
+    this.loadNotifications({ preserveExistingOnEmpty: false });
+
+    // Immediate visual feedback: hide unread badge as soon as modal opens.
+    this.unreadNotificationsCount = 0;
+
     this.markAllNotificationsAsRead();
   }
 
   private markAllNotificationsAsRead(): void {
-    const currentUserId = this.user?._id;
+    const currentUserId = this.normalizeMongoId(this.user?._id);
     if (!currentUserId) {
       return;
     }
 
+    const readMark: NonNullable<NotificationPayload['readBy']>[number] = {
+      userId: currentUserId,
+      readAt: new Date().toISOString()
+    };
+
+    // Optimistic update to avoid unread badge flicker while modal opens.
+    this.notifications = this.notifications.map((notification) => {
+      const alreadyRead = this.hasUserReadNotification(notification);
+      if (alreadyRead) {
+        return notification;
+      }
+      return {
+        ...notification,
+        readBy: [...(notification.readBy || []), readMark]
+      };
+    });
+    this.updateUnreadNotificationsCount();
+
+    // Update timestamp to prevent auto-refresh race condition.
+    this.lastMarkAllAsReadTime = Date.now();
+
     this.notificationService.markAllAsRead().subscribe({
       next: () => {
-        const readMark: NonNullable<NotificationPayload['readBy']>[number] = {
-          userId: currentUserId,
-          readAt: new Date().toISOString()
-        };
-        this.notifications = this.notifications.map((notification) => {
-          const alreadyRead = this.hasUserReadNotification(notification);
-          if (alreadyRead) {
-            return notification;
-          }
-          return {
-            ...notification,
-            readBy: [...(notification.readBy || []), readMark]
-          };
-        });
+        this.updateUnreadNotificationsCount();
+      },
+      error: () => {
         this.updateUnreadNotificationsCount();
       }
     });
   }
 
   private hasUserReadNotification(notification: NotificationPayload): boolean {
-    if (!this.user || !this.user._id) {
+    const currentUserId = this.normalizeMongoId(this.user?._id);
+    if (!currentUserId) {
       return false;
     }
 
@@ -232,12 +480,42 @@ export class HomeComponent{
         return false;
       }
 
-      if (typeof readEntry.userId === 'string') {
-        return readEntry.userId === this.user._id;
+      const readEntryUserId = this.normalizeMongoId(readEntry.userId);
+      return !!readEntryUserId && readEntryUserId === currentUserId;
+    });
+  }
+
+  private normalizeMongoId(value: unknown): string | null {
+    if (!value) {
+      return null;
+    }
+
+    if (typeof value === 'string') {
+      return value;
+    }
+
+    if (typeof value === 'object') {
+      const objectValue = value as { _id?: unknown; $oid?: unknown; toString?: () => string };
+
+      if (objectValue._id) {
+        return this.normalizeMongoId(objectValue._id);
       }
 
-      return !!readEntry.userId._id && readEntry.userId._id === this.user._id;
-    });
+      if (objectValue.$oid && typeof objectValue.$oid === 'string') {
+        return objectValue.$oid;
+      }
+
+      if (typeof objectValue.toString === 'function') {
+        const parsed = objectValue.toString();
+        if (parsed && parsed !== '[object Object]') {
+          return parsed;
+        }
+      }
+
+      return null;
+    }
+
+    return String(value);
   }
 
   private updateUnreadNotificationsCount(): void {

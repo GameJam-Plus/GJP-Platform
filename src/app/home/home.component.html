@@ -93,6 +93,28 @@
                 [(ngModel)]="$any(notificationDraft)['description' + language]"></textarea>
             </div>
           </div>
+          <div class="row mt-3">
+            <div class="col-sm-6">
+              <label for="notificationExpirationDate">Expiration date</label>
+              <input
+                type="date"
+                class="form-control"
+                id="notificationExpirationDate"
+                name="notificationExpirationDate"
+                [(ngModel)]="notificationExpirationDate"
+                required>
+            </div>
+            <div class="col-sm-6">
+              <label for="notificationExpirationTime">Expiration time</label>
+              <input
+                type="time"
+                class="form-control"
+                id="notificationExpirationTime"
+                name="notificationExpirationTime"
+                [(ngModel)]="notificationExpirationTime"
+                required>
+            </div>
+          </div>
           
         </div>
         <div class="modal-footer">
@@ -121,23 +143,103 @@
         <div *ngFor="let notification of notifications" class="mb-3 pb-3 border-bottom">
           <div class="d-flex justify-content-between align-items-start mb-1">
             <h6 class="mb-0">{{ getNotificationTitle(notification) }}</h6>
-            <button
-              *ngIf="user.roles.includes('GlobalOrganizer')"
-              type="button"
-              class="btn btn-sm btn-outline-danger py-0 px-2"
-              aria-label="Remove notification"
-              (click)="removeNotification(notification._id)">
-              x
-            </button>
+            <div *ngIf="user.roles.includes('GlobalOrganizer')" class="d-flex align-items-center">
+              <button
+                type="button"
+                class="btn btn-sm btn-outline-primary py-0 px-2 mr-1"
+                aria-label="Edit notification"
+                data-toggle="modal"
+                data-target="#editNotificationModal"
+                (click)="openEditNotification(notification)">
+                <fa-icon [icon]="faPencil"></fa-icon>
+              </button>
+              <button
+                type="button"
+                class="btn btn-sm btn-outline-danger py-0 px-2"
+                aria-label="Remove notification"
+                (click)="removeNotification(notification._id)">
+                x
+              </button>
+            </div>
           </div>
           <p class="mb-1">{{ getNotificationDescription(notification) }}</p>
           <small class="text-muted">{{ notification.createdAt | date:'dd/MM/yyyy HH:mm' }}</small>
+          <div *ngIf="user.roles.includes('GlobalOrganizer') && notification.expiresAt" class="mt-1">
+            <small class="text-muted">Expires at: {{ notification.expiresAt | date:'dd/MM/yyyy HH:mm' }}</small>
+          </div>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
+  </div>
+</div>
+
+<div *ngIf="user && user.roles.includes('GlobalOrganizer')" class="modal fade" id="editNotificationModal" tabindex="-1" role="dialog" aria-labelledby="editNotificationModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <form>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editNotificationModalLabel">Edit Notification</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body container no-radius">
+          <div class="row">
+            <div class="col-sm" *ngFor="let language of ['PT', 'ES', 'EN']">
+              <label [for]="'notificationEditTitle' + language">Title ({{ language }})</label>
+              <input
+                type="text"
+                class="form-control"
+                [id]="'notificationEditTitle' + language"
+                [name]="'notificationEditTitle' + language"
+                placeholder="Enter title"
+                [(ngModel)]="$any(notificationEditDraft)['title' + language]">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm" *ngFor="let language of ['PT', 'ES', 'EN']">
+              <label [for]="'notificationEditDescription' + language">Description ({{ language }})</label>
+              <textarea
+                class="form-control"
+                rows="5"
+                [id]="'notificationEditDescription' + language"
+                [name]="'notificationEditDescription' + language"
+                placeholder="Enter description"
+                [(ngModel)]="$any(notificationEditDraft)['description' + language]"></textarea>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-sm-6">
+              <label for="notificationEditExpirationDate">Expiration date</label>
+              <input
+                type="date"
+                class="form-control"
+                id="notificationEditExpirationDate"
+                name="notificationEditExpirationDate"
+                [(ngModel)]="notificationEditExpirationDate"
+                required>
+            </div>
+            <div class="col-sm-6">
+              <label for="notificationEditExpirationTime">Expiration time</label>
+              <input
+                type="time"
+                class="form-control"
+                id="notificationEditExpirationTime"
+                name="notificationEditExpirationTime"
+                [(ngModel)]="notificationEditExpirationTime"
+                required>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="saveEditedNotification()">Save changes</button>
+        </div>
+      </div>
+    </form>
   </div>
 </div>
 
