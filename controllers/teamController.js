@@ -1,6 +1,7 @@
 const Team = require('../models/teamModel');
 const GameJam = require('../models/gameJamEventModel');
 const User = require('../models/userModel');
+const UserOnJam = require('../models/userOnJamModel');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const Site = require('../models/siteModel');
@@ -30,7 +31,7 @@ const createTeam = async (req, res) => {
             existingTeam = await Team.findOne({ siteId: siteId, jamId: jamId, jammers: jammer });
             if(existingTeam)
             {
-                return res.status(400).json({ success: false, message: `Jammer with name ${jammer.name} is already assigned to a team`});
+                return res.status(400).json({ success: false, message: `Jammer with name '${jammer.name}' is already assigned to a team`});
             }
         };
 
@@ -130,6 +131,45 @@ const updateTeam = async (req, res) => {
     }
 };
 
+const updateTeamOwner = async(req, res) => {
+    try {
+        const teamId = req.params.teamId;
+        const newOwner = req.params.jammerId;
+
+        if (!mongoose.Types.ObjectId.isValid(teamId)) {
+            return res.status(400).json({ success: false, message: 'Team ID is invalid' });
+        }
+
+        if (!mongoose.Types.ObjectId.isValid(newOwner)) {
+            return res.status(400).json({ success: false, message: 'Jammer ID is invalid' });
+        }
+
+        const team = await Team.findById(teamId);
+        if (!team) {
+            return res.status(404).json({ success: false, message: 'Team not found' });
+        }
+
+        let ownerFound = false;
+        team.jammers = team.jammers.map(jammer => {
+            if (jammer._id.toString() === newOwner.toString()) {
+                ownerFound = true;
+                return { ...jammer.toObject?.() ?? jammer, role: 'owner' };
+            }
+            return { ...jammer.toObject?.() ?? jammer, role: '' };
+        });
+
+        if (!ownerFound) {
+            return res.status(404).json({ success: false, message: 'Specified jammer not found in team' });
+        }
+
+        await team.save();
+
+        return res.status(200).json({ success: true, message: 'Team owner updated successfully', team });
+    } catch (error) {
+        return res.status(400).json({ success: false, message: error.message });
+    }
+}
+
 const getTeam = async(req,res)=>{
     try{
         const {jammerId, siteId, jamId} = req.params;
@@ -218,6 +258,22 @@ const addJammerToTeam = async (req, res) => {
             return res.status(404).json({ success: false, error: "User not found" });
         }
 
+        // Restriction: jammer can only join teams from the same site (for the same jam)
+        const userOnJam = await UserOnJam.findOne({ userId: jammer._id, jamId: team.jamId });
+        if (!userOnJam || !userOnJam.siteId) {
+            return res.status(403).json({ success: false, message: "User is not registered in this jam/site" });
+        }
+
+        if (userOnJam.siteId.toString() !== team.siteId.toString()) {
+            return res.status(403).json({ success: false, message: "User can only join a team from their own site" });
+        }
+
+        // Avoid duplicates
+        const alreadyInTeam = team.jammers.some(j => j._id?.toString() === jammer._id.toString());
+        if (alreadyInTeam) {
+            return res.status(400).json({ success: false, message: "User is already in this team" });
+        }
+
         team.jammers.push({
             _id: jammer._id,
             name: jammer.name,
@@ -259,13 +315,13 @@ const removeJammerFromTeam = async (req, res) => {
         {
             if(role == 'owner') team.jammers[0].role = "owner";
             await team.save();
+            return res.status(200).json({ success: true, message: 'Jammer removed from team successfully', team });
         }
         else
         {
             await Team.findOneAndDelete({ _id: team._id });
+            return res.status(200).json({ success: true, message: 'Last jammer removed and team deleted successfully', team: null });
         }
-
-        res.status(200).json({ success: true, message: 'Jammer removed from team successfully', team });
     } catch (error) {
         res.status(400).json({ success: false, message: error.message });
     }
@@ -310,6 +366,7 @@ const getCurrentTeamUsers = async (req, res) => {
 module.exports = {
     createTeam,
     updateTeam,
+    updateTeamOwner,
     getTeam,
     getTeams,
     deleteTeam,

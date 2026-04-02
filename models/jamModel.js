@@ -80,6 +80,9 @@ const jamSchema = mongoose.Schema({
         manualEN: {
             type: String
         },
+        isSpecial: {
+            type: Boolean
+        }
     }],
     // TODO: Add startDateEvaluation and endDateEvaluation?
     stages: [{
