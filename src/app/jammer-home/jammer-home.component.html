@@ -345,7 +345,7 @@
         <!-- Submissions Status -->
         <div *ngIf="team" class="p-4">
           <!-- Gamejam Submission Status -->
-          <div *ngIf="isStageActive(JamStages.GAMEJAM) || hasStagePassed(JamStages.GAMEJAM)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.GAMEJAM)">
+          <div *ngIf="isStageActive(JamStages.GAMEJAM_SUBMISSION) || hasStagePassed(JamStages.GAMEJAM_SUBMISSION)" class="d-block my-2 p-4" [ngClass]="getBackgroundClass(JamStages.GAMEJAM)">
             <h2 class="text-white">
               {{ 'platform.jammer.myjam.mysubmission.gamesubmissionstatus' | translate}} 
               <ng-container [ngSwitch]="true">
@@ -409,8 +409,8 @@
               {{ 'platform.jammer.myjam.mysubmission.accelerationsubmissionstatus' | translate}} 
               <ng-container [ngSwitch]="true">
                 <span *ngSwitchCase="hasSubmittedOn(JamStages.ACCELERATION)">{{ 'platform.common.valid' | translate}}</span>
-                <span *ngSwitchCase="!hasSubmittedOn(JamStages.ACCELERATION) && getStageTimeDelta(JamStages.ACCELERATION) > 0">{{ 'platform.common.pending' | translate}}</span>
-                <span *ngSwitchCase="!hasSubmittedOn(JamStages.ACCELERATION) && getStageTimeDelta(JamStages.ACCELERATION) < 0">{{ 'platform.common.late' | translate}}</span>
+                <span *ngSwitchCase="!hasSubmittedOn(JamStages.ACCELERATION) && getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION) > 0">{{ 'platform.common.pending' | translate}}</span>
+                <span *ngSwitchCase="!hasSubmittedOn(JamStages.ACCELERATION) && getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION) < 0">{{ 'platform.common.late' | translate}}</span>
                 <span *ngSwitchDefault>{{ 'platform.common.notavailable' | translate}}</span>
               </ng-container>
             </h2>
@@ -489,7 +489,7 @@
                   </mat-form-field>
                 </div>
 
-                <!-- LINK and CONTACT in same row -->
+                <!-- BUILD and CONTACT in same row -->
                 <div class="col-md-6">
                   <div class="inputTitle">
                     {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejambuild' | translate }}
@@ -624,8 +624,8 @@
                   </mat-form-field>
                 </div>
 
-                <!-- SPECIAL QUESTION FOR CATEGORY: 'Level Up Your Launch'-->
-                <div *ngIf="submissionGamejamForm.get('gamejamSpecialQuestion')?.enabled" class="col-12">
+                <!-- SPECIAL QUESTION FOR CATEGORY -->
+                <div *ngIf="getSelectedSpecialCategories(this.submissionGamejamForm,'gamejamCategories').length > 0" class="col-12">
                   <div class="inputTitle">
                     <fa-icon [icon]="faLink"></fa-icon>
                     {{ 'platform.jammer.myjam.mysubmission.formquestion.specialcategory' | translate }}
@@ -634,20 +634,32 @@
                     <mat-icon matTooltip="{{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.tooltipspecialcategory' | translate }}" style="vertical-align: middle; cursor: help;">info</mat-icon>
                     <br>
                     <fa-icon [icon]="faHandPointRight"></fa-icon>
-                    <span *ngIf="getSelectedSpecialCategories().length > 0" class="special-categories-label">
-                      [{{ getSelectedSpecialCategories().join(', ') }}]
+                    <span *ngIf="getSelectedSpecialCategories(this.submissionGamejamForm,'gamejamCategories').length > 0" class="special-categories-label">
+                      [{{ getSelectedSpecialCategories(this.submissionGamejamForm,'gamejamCategories').join(', ') }}]
                     </span>
                   </div>
-                  <mat-form-field appearance="fill" class="selectorStyle inputSpace">
-                    <mat-label>
-                      {{ 'platform.common.writehere' | translate }}
-                    </mat-label>
-                    <textarea matInput
-                           rows="5"
-                           id="incubationSpecialQuestion"
-                           placeholder="https://drive.google.com/drive/folders/categoryA&#10;https://drive.google.com/drive/folders/categoryB&#10;https://drive.google.com/drive/folders/categoryC"
-                           formControlName="incubationSpecialQuestion"></textarea>
-                  </mat-form-field>
+                
+                  <div formGroupName="gamejamSpecialByCategory">
+                    <div
+                      class="row"
+                      *ngFor="let category of getSelectedSpecialCategories(this.submissionGamejamForm,'gamejamCategories');"
+                    >
+                      <div class="col-2 specialQuestionTitle">
+                        {{ category }}
+                      </div>
+
+                      <div class="col-10">
+                        <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                          <mat-label>{{ 'platform.common.writehere' | translate }}</mat-label>
+                          <input
+                            matInput
+                            [placeholder]="'https://drive.google.com/drive/folders/' + category"
+                            [formControlName]="category"
+                          />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <!-- GRAPHICS and ENGINE in same row -->
@@ -824,8 +836,8 @@
                   </mat-radio-group>
                 </div>
 
-                <!-- TITLE -->
-                <div class="col-12">
+                <!-- TITLE and BUILD in same row -->
+                <div class="col-md-6">
                   <div class="inputTitle">
                     {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamtitle' | translate }}
                   </div>
@@ -841,7 +853,6 @@
                   </mat-form-field>
                 </div>
 
-                <!-- LINK and CONTACT in same row -->
                 <div class="col-md-6">
                   <div class="inputTitle">
                     {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejambuild' | translate }}
@@ -856,6 +867,25 @@
                            required
                            placeholder="https://myteam.itch.io/mygame"
                            formControlName="incubationBuild">
+                  </mat-form-field>
+                </div>
+                
+                <!-- GAMEPLAY and CONTACT in same row -->
+                <div class="col-md-6">
+                  <div class="inputTitle">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamgameplay' | translate }}
+                    <mat-icon matTooltip="{{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.tooltipgameplay' | translate }}" style="vertical-align: middle; cursor: help;">info</mat-icon>
+                  </div>
+                  <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                    <mat-label>
+                      {{ 'platform.common.writehere' | translate }}
+                    </mat-label>
+                    <input matInput
+                           type="url"
+                           id="incubationGameplay"
+                           required
+                           placeholder="https://myteam.itch.io/mygame"
+                           formControlName="incubationGameplay">
                   </mat-form-field>
                 </div>
 
@@ -976,8 +1006,8 @@
                   </mat-form-field>
                 </div>
 
-                <!-- SPECIAL QUESTION FOR CATEGORY: 'Level Up Your Launch'-->
-                <div *ngIf="submissionIncubationForm.get('incubationSpecialQuestion')?.enabled" class="col-12">
+                <!-- SPECIAL QUESTION FOR CATEGORY -->
+                <div *ngIf="getSelectedSpecialCategories(this.submissionIncubationForm,'incubationCategories').length > 0" class="col-12">
                   <div class="inputTitle">
                     <fa-icon [icon]="faLink"></fa-icon>
                     {{ 'platform.jammer.myjam.mysubmission.formquestion.specialcategory' | translate }}
@@ -986,20 +1016,32 @@
                     <mat-icon matTooltip="{{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.tooltipspecialcategory' | translate }}" style="vertical-align: middle; cursor: help;">info</mat-icon>
                     <br>
                     <fa-icon [icon]="faHandPointRight"></fa-icon>
-                    <span *ngIf="getSelectedSpecialCategories().length > 0" class="special-categories-label">
-                      [{{ getSelectedSpecialCategories().join(', ') }}]
+                    <span *ngIf="getSelectedSpecialCategories(this.submissionIncubationForm,'incubationCategories').length > 0" class="special-categories-label">
+                      [{{ getSelectedSpecialCategories(this.submissionIncubationForm,'incubationCategories').join(', ') }}]
                     </span>
                   </div>
-                  <mat-form-field appearance="fill" class="selectorStyle inputSpace">
-                    <mat-label>
-                      {{ 'platform.common.writehere' | translate }}
-                    </mat-label>
-                    <textarea matInput
-                           rows="5"
-                           id="incubationSpecialQuestion"
-                           placeholder="https://drive.google.com/drive/folders/categoryA&#10;https://drive.google.com/drive/folders/categoryB&#10;https://drive.google.com/drive/folders/categoryC"
-                           formControlName="incubationSpecialQuestion"></textarea>
-                  </mat-form-field>
+                
+                  <div formGroupName="incubationSpecialByCategory">
+                    <div
+                      class="row"
+                      *ngFor="let category of getSelectedSpecialCategories(this.submissionIncubationForm,'incubationCategories');"
+                    >
+                      <div class="col-2 specialQuestionTitle">
+                        {{ category }}
+                      </div>
+
+                      <div class="col-10">
+                        <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                          <mat-label>{{ 'platform.common.writehere' | translate }}</mat-label>
+                          <input
+                            matInput
+                            [placeholder]="'https://drive.google.com/drive/folders/' + category"
+                            [formControlName]="category"
+                          />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <!-- GRAPHICS and ENGINE in same row -->
@@ -1156,13 +1198,13 @@
             <hr class="my-2">
             <h2>{{ 'platform.jammer.myjam.mysubmission.accelerationsubmission' | translate }}</h2>
             <div *ngIf="getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION) > 0">
-              <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION)) }}</b>
+              <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION, 2)) }}</b>
             </div>
 
             <form (submit)="saveAccelerationSubmission()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionAccelerationForm" enctype="multipart/form-data">
               <div class="row">
-                <!-- TITLE -->
-                <div class="col-12">
+                <!-- TITLE and BUILD in same row -->
+                <div class="col-md-6">
                   <div class="inputTitle">
                     {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamtitle' | translate }}
                   </div>
@@ -1178,7 +1220,6 @@
                   </mat-form-field>
                 </div>
 
-                <!-- LINK and CONTACT in same row -->
                 <div class="col-md-6">
                   <div class="inputTitle">
                     {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejambuild' | translate }}
@@ -1193,6 +1234,25 @@
                            required
                            placeholder="https://myteam.itch.io/mygame"
                            formControlName="accelerationBuild">
+                  </mat-form-field>
+                </div>
+                
+                <!-- GAMEPLAY and CONTACT in same row -->
+                <div class="col-md-6">
+                  <div class="inputTitle">
+                    {{ 'platform.jammer.myjam.mysubmission.formquestion.gamejamgameplay' | translate }}
+                    <mat-icon matTooltip="{{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.tooltipgameplay' | translate }}" style="vertical-align: middle; cursor: help;">info</mat-icon>
+                  </div>
+                  <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                    <mat-label>
+                      {{ 'platform.common.writehere' | translate }}
+                    </mat-label>
+                    <input matInput
+                           type="url"
+                           id="accelerationGameplay"
+                           required
+                           placeholder="https://myteam.itch.io/mygame"
+                           formControlName="accelerationGameplay">
                   </mat-form-field>
                 </div>
 
@@ -1313,8 +1373,8 @@
                   </mat-form-field>
                 </div>
 
-                <!-- SPECIAL QUESTION FOR CATEGORY: 'Level Up Your Launch'-->
-                <div *ngIf="submissionAccelerationForm.get('accelerationSpecialQuestion')?.enabled" class="col-12">
+                <!-- SPECIAL QUESTION FOR CATEGORY -->
+                <div *ngIf="getSelectedSpecialCategories(this.submissionAccelerationForm,'accelerationCategories').length > 0" class="col-12">
                   <div class="inputTitle">
                     <fa-icon [icon]="faLink"></fa-icon>
                     {{ 'platform.jammer.myjam.mysubmission.formquestion.specialcategory' | translate }}
@@ -1323,20 +1383,32 @@
                     <mat-icon matTooltip="{{ 'platform.jammer.myjam.mysubmission.formquestion.innertext.tooltipspecialcategory' | translate }}" style="vertical-align: middle; cursor: help;">info</mat-icon>
                     <br>
                     <fa-icon [icon]="faHandPointRight"></fa-icon>
-                    <span *ngIf="getSelectedSpecialCategories().length > 0" class="special-categories-label">
-                      [{{ getSelectedSpecialCategories().join(', ') }}]
+                    <span *ngIf="getSelectedSpecialCategories(this.submissionAccelerationForm,'accelerationCategories').length > 0" class="special-categories-label">
+                      [{{ getSelectedSpecialCategories(this.submissionAccelerationForm,'accelerationCategories').join(', ') }}]
                     </span>
                   </div>
-                  <mat-form-field appearance="fill" class="selectorStyle inputSpace">
-                    <mat-label>
-                      {{ 'platform.common.writehere' | translate }}
-                    </mat-label>
-                    <textarea matInput
-                           rows="5"
-                           id="incubationSpecialQuestion"
-                           placeholder="https://drive.google.com/drive/folders/categoryA&#10;https://drive.google.com/drive/folders/categoryB&#10;https://drive.google.com/drive/folders/categoryC"
-                           formControlName="incubationSpecialQuestion"></textarea>
-                  </mat-form-field>
+                
+                  <div formGroupName="accelerationSpecialByCategory">
+                    <div
+                      class="row"
+                      *ngFor="let category of getSelectedSpecialCategories(this.submissionAccelerationForm,'accelerationCategories');"
+                    >
+                      <div class="col-2 specialQuestionTitle">
+                        {{ category }}
+                      </div>
+
+                      <div class="col-10">
+                        <mat-form-field appearance="fill" class="selectorStyle inputSpace">
+                          <mat-label>{{ 'platform.common.writehere' | translate }}</mat-label>
+                          <input
+                            matInput
+                            [placeholder]="'https://drive.google.com/drive/folders/' + category"
+                            [formControlName]="category"
+                          />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <!-- GRAPHICS and ENGINE in same row -->
@@ -1450,11 +1522,11 @@
           </div>
 
           <!-- ACCELERATION PITCH SUBMISSION FORM -->
-          <div *ngIf="isStageActiveWithDelay(JamStages.ACCELERATION_SUBMISSION, 96) && hasAccepetedToGoTo(JamStages.ACCELERATION)">
+          <div *ngIf="isStageActiveWithDelay(JamStages.ACCELERATION_SUBMISSION, 48) && hasAccepetedToGoTo(JamStages.ACCELERATION)">
             <hr class="my-2">
             <h2>{{ 'platform.jammer.myjam.mysubmission.pitchacceleration' | translate }}</h2>
-            <div *ngIf="getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION, 48) > 0">
-              <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION, 48)) }}</b>
+            <div *ngIf="getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION, 2) > 0">
+              <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION, 2)) }}</b>
             </div>
 
             <form (submit)="savePitchAcceleration()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionPitchAccelerationForm" enctype="multipart/form-data">
@@ -1483,8 +1555,8 @@
                 </div>
               </div>
 
-              <button type="submit" *ngIf="getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION, 48) > 0" class="btn btn-black col-12">{{ 'platform.common.sendpitch' | translate }}</button>
-              <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION, 48) < 0">{{ 'platform.common.closedsubmissions' | translate }}</div>
+              <button type="submit" *ngIf="getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION, 2) > 0" class="btn btn-black col-12">{{ 'platform.common.sendpitch' | translate }}</button>
+              <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION, 2) < 0">{{ 'platform.common.closedsubmissions' | translate }}</div>
             </form>
           </div>
         </div>

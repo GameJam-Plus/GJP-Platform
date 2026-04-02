@@ -16,7 +16,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 
 import * as moment from 'moment-timezone';
 
-import { faFileCsv } from '@fortawesome/free-solid-svg-icons';
+import { faFileCsv, faStar } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-global-jam',
@@ -58,6 +58,7 @@ export class GlobalJamComponent {
   submissionsData: any[] = [];
 
   faFileCsv = faFileCsv;
+  faStar = faStar;
   ubmissions: any[] = [];
   displayedSubmissions: any[] = [];
   accelerations: any[] = [];
@@ -126,7 +127,8 @@ export class GlobalJamComponent {
       descriptionEN: [''],
       manualPT: [''],
       manualES: [''],
-      manualEN: ['']
+      manualEN: [''],
+      isSpecial: [false]
     });
 
     this.stageForm = this.fb.group({
@@ -420,7 +422,7 @@ export class GlobalJamComponent {
       let description = s.description;
       description = description.replace(/;/g, ',');
       description = description.replace(/\n/g, '.');
-      if(s.title == "The Chill Protector") console.log(description);
+      //if(s.title == "The Chill Protector") console.log(description);
       rows += `${i}; ${s._id}; ${s.region}; ${s.country}; ${s.site}; ${s.teamName}; ${s.contact.name}; ${s.contact.email}; ${s.title}; ${s.link}; ${description}; ${s.pitch}; ${themesSummary} ; ${themes} ${categoriesSummary} ; ${categories} ${genreSummary} ; ${genres} ${incubation}; ${acceleration}; ${submissionDate}; ${submissionTime}; ${pitchDate}; ${pitchTime}\n`;
     });
 
@@ -598,7 +600,8 @@ export class GlobalJamComponent {
         manualEN: category.manualEN,
         descriptionPT: category.descriptionPT,
         descriptionES: category.descriptionES,
-        descriptionEN: category.descriptionEN
+        descriptionEN: category.descriptionEN,
+        isSpecial: category.isSpecial?? false,
       });
     }
     else
@@ -618,7 +621,8 @@ export class GlobalJamComponent {
       manualEN: "",
       descriptionPT: "",
       descriptionES: "",
-      descriptionEN: ""
+      descriptionEN: "",
+      isSpecial: false,
     });
   }
 
@@ -632,7 +636,8 @@ export class GlobalJamComponent {
       descriptionEN: this.categoryForm.get('descriptionEN')!.value,
       manualPT: this.categoryForm.get('manualPT')!.value,
       manualES: this.categoryForm.get('manualES')!.value,
-      manualEN: this.categoryForm.get('manualEN')!.value
+      manualEN: this.categoryForm.get('manualEN')!.value,
+      isSpecial: this.categoryForm.get('isSpecial')!.value,
     };
 
     if(this.selectedCategoryIndex >= 0)

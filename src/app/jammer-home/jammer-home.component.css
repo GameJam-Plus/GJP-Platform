@@ -116,6 +116,16 @@
     padding-right: 1.5rem;
 }
 
+.specialQuestionTitle {
+    display: flex;
+    text-align: left;
+    align-items: center;
+    color: black;
+    font-size: 18px;
+    font-family: K2D;
+    font-weight: 400;
+}
+
 /* For columns, reduce left margin to avoid excessive spacing */
 .row > .col-md-6 > .inputTitle,
 .row > .col-md-4 > .inputTitle,

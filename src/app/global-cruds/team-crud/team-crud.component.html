@@ -53,6 +53,7 @@
                   <th>Name</th>
                   <th>Email</th>
                   <th>Discord</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -60,6 +61,14 @@
                   <td [ngClass]="{'fw-bold': jammer.role === 'owner'}">{{ jammer.name }}</td>
                   <td>{{ jammer.email }}</td>
                   <td>{{ jammer.discordUsername }}</td>
+                  <td>
+                    <button class="btn btn-primary" *ngIf="jammer.role !== 'owner'" (click)="promoteJammerToLeader(jammer)">
+                      Promote
+                    </button>
+                    <button class="btn btn-danger" (click)="removeJammerFromTeam(jammer)">
+                      Kick
+                    </button>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -67,7 +76,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button #teamModalCloseBtn type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>

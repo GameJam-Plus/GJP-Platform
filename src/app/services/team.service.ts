@@ -44,6 +44,10 @@ export class TeamService {
     return this.http.put(url, team, { withCredentials: true });
   }
 
+  updateTeamOwner(url: string): Observable<any> {
+    return this.http.put(url, { withCredentials: true});
+  }
+
   getTeam(url: string): Observable<Team> {
     return this.http.get<any>(url).pipe(
       map(response => response.data)

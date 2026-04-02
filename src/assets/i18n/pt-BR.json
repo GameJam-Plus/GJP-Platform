@@ -177,10 +177,11 @@
 					"formquestion": {
 						"goingtoincubation": "Você deseja participar da etapa de INCUBAÇÃO?",
 						"goingtoacceleration": "Você deseja participar da etapa de ACELERAÇÃO?",
-						"gamejamtitle": "Título do seu jogo",
-						"gamejambuild": "Link para a página do seu jogo no itch.io",
+						"gamejamtitle": "Título do seu jogo.",
+						"gamejambuild": "Link para a página do seu jogo no itch.io.",
+						"gamejamgameplay": "Link para um vídeo de gameplay.",
 						"gamejamcontact": "Quem é a pessoa responsável pela equipe?<br>Esse membro será o ponto de contato da GameJamPlus se necessário.",
-						"gamejamdescription": "Escreva uma breve descrição do seu jogo aqui",
+						"gamejamdescription": "Escreva uma breve descrição do seu jogo aqui.",
 						"gamejamgenres": "Quais são os gêneros do seu jogo?",
 						"gamejamtopics": "Seu jogo aborda algum dos seguintes tópicos?<br>A abordagem pode ser na narrativa, jogabilidade, arte ou outros. Você pode selecionar mais de uma opção.",
 						"gamejamthemes": "Em quais TEMAS seu jogo está inscrito?",
@@ -197,6 +198,7 @@
 						"pitchtext": "O envio de um vídeo pitch é obrigatório para avançar para a próxima etapa.",
 						"pitchlink": "Link para o seu vídeo pitch",
 						"innertext": {
+							"tooltipgameplay": "Se possível, o vídeo deve conter, pelo menos, 15 segundos do menu inicial do título do jogo, e 1 minuto de gameplay.",
 							"selectteammember": "Selecione um membro da equipe",
 							"tooltipcontact": "Esse membro será o ponto de contato da GameJamPlus caso precisemos entrar em contato.",
 							"tooltiptopics": "A abordagem pode ser na narrativa, jogabilidade, arte ou outros. Você pode selecionar mais de uma opção.",

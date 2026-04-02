@@ -44,6 +44,7 @@ export class TeamCrudComponent implements OnInit {
   jammers: User[] = [];
 
   @ViewChild(MessagesComponent) message!: MessagesComponent;
+  @ViewChild('teamModalCloseBtn') teamModalCloseBtn?: ElementRef<HTMLButtonElement>;
   constructor(private fb: FormBuilder, private teamService: TeamService, private userService: UserService, private regionService: RegionService, private siteService: SiteService, private gamejamService: GamejamService){
   }
   // TODO REBUILD TEAMS CRUD
@@ -71,7 +72,7 @@ export class TeamCrudComponent implements OnInit {
         this.sites = sites;
       },
       error: (error) => {
-        console.error('Error al obtener sitios:', error);
+        console.error('Error getting venues:', error);
       }
     });
   }
@@ -116,7 +117,7 @@ export class TeamCrudComponent implements OnInit {
   }
 
   getJammersPerTeam(teamId: string){
-    const url = `http://${environment.apiUrl}:3000/api/team/get-current-team-users/${teamId}`;
+    const url = `${environment.apiUrl}/api/team/get-current-team-users/${teamId}`;
     this.teamService.getJammersPerTeam(url).subscribe({
       next: (jammers) => {
         this.jammers = jammers;
@@ -134,6 +135,71 @@ export class TeamCrudComponent implements OnInit {
   editTeam(){}
 
   deleteTeam(team: Team){}
+
+  promoteJammerToLeader(jammer: User) {
+    const url = `${environment.apiUrl}/api/team/update-team-owner/${this.selectedTeam?._id}/${jammer._id}`;
+    this.teamService.updateTeamOwner(url).subscribe({
+      next: (data) => {
+        this.updateTeamJammers(jammer, 'promote');
+        this.message.showMessage("Success", data.message);
+      },
+      error: (error) => {
+        this.message.showMessage("Error", error.error.message);
+      }
+    });
+  }
+
+  removeJammerFromTeam(jammer: User) {
+    const teamId = this.selectedTeam?._id;
+    if (!teamId) return;
+
+    const url = `${environment.apiUrl}/api/team/remove-jammer/${this.selectedTeam?._id}/${jammer._id}`
+    this.teamService.removeJammerFromTeam(url).subscribe({
+      next: (data) => {
+        if (!data.team) {
+          this.teams = this.teams.filter(t => t._id !== teamId);
+          this.selectedTeam = null;
+          this.jammers = [];
+          this.teamModalCloseBtn?.nativeElement?.click();
+          this.message.showMessage("Success", data.message);
+          return;
+        }
+        else {
+          this.updateTeamJammers(jammer, 'remove');
+        }
+        this.message.showMessage("Success", data.message);
+      },
+      error: (error) => {
+        this.message.showMessage("Error", error.error.message);
+      }
+    });
+  }
+
+  private updateTeamJammers(jammer: User, action: 'promote' | 'remove') {
+    if (action === 'remove') {
+      this.jammers = this.jammers.filter(j => j._id !== jammer._id);
+
+      // Keep the main teams table in sync (row.jammers.length)
+      if (this.selectedTeam?.jammers) {
+        this.selectedTeam.jammers = this.selectedTeam.jammers.filter(j => j._id !== jammer._id) as any;
+      }
+      return;
+    }
+  
+    if (action === 'promote') {
+      this.jammers = this.jammers.map(j => ({
+        ...j,
+        role: j._id === jammer._id ? 'owner' : ''
+      }));
+
+      if (this.selectedTeam?.jammers) {
+        this.selectedTeam.jammers = this.selectedTeam.jammers.map(j => ({
+          ...j,
+          role: j._id === jammer._id ? 'owner' : ''
+        })) as any;
+      }
+    }
+  }
 
   toggleColumn(column: keyof Team, event: any) {
     if (event.target.checked) {

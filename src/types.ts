@@ -52,6 +52,8 @@ export function toJamStage(input: string | undefined | null): JamStage | undefin
   return match as JamStage | undefined;
 }
 
+export type SpecialCategoryUrls = Record<string, string>;
+
 export interface Options {
   headers?:
     | HttpHeaders
@@ -229,7 +231,8 @@ export interface Jam {
     descriptionEN: string,
     manualPT: string,
     manualES: string,
-    manualEN: string
+    manualEN: string,
+    isSpecial: boolean
   }[],
   stages: {
     stageName: string,
@@ -325,7 +328,8 @@ export interface Submission {
   gamejamThemes: string[];
   gamejamCategories: string[];
   gamejamPlatforms: string[];
-  gamejamSpecialQuestion: string;
+  gamejamSpecialByCategory?: SpecialCategoryUrls;
+  gamejamSpecialQuestion?: string; // Legacy
   gamejamGraphics: string;
   gamejamEngine: string;
   goingToIncubation: boolean;
@@ -346,6 +350,7 @@ export interface Submission {
   incubationJammerId?: string,
   incubationTitle?: string;
   incubationBuild?: string;
+  incubationGameplay?: string;
   incubationContact?: {
     _id?: string,
     name?: string,
@@ -357,7 +362,8 @@ export interface Submission {
   incubationThemes?: string[];
   incubationCategories?: string[];
   incubationPlatforms?: string[];
-  incubationSpecialQuestion?: string;
+  incubationSpecialByCategory?: SpecialCategoryUrls;
+  incubationSpecialQuestion?: string; // Legacy
   incubationGraphics?: string;
   incubationEngine?: string;
   goingToAcceleration?: boolean;
@@ -378,6 +384,7 @@ export interface Submission {
   accelerationJammerId?: string;
   accelerationTitle?: string;
   accelerationBuild?: string;
+  accelerationGameplay?: string;
   accelerationContact?: {
     _id?: string,
     name?: string,
@@ -389,7 +396,8 @@ export interface Submission {
   accelerationThemes?: string[];
   accelerationCategories?: string[];
   accelerationPlatforms?: string[];
-  accelerationSpecialQuestion?: string;
+  accelerationSpecialByCategory?: SpecialCategoryUrls;
+  accelerationSpecialQuestion?: string; // Legacy
   accelerationGraphics?: string;
   accelerationEngine?: string;
   accelerationAuthorization?: boolean;

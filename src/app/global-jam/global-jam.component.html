@@ -106,8 +106,19 @@
             </thead>
             <tbody class="text-xs">
               <tr *ngFor="let row of activeJam.categories; index as i">
-                <td>PT: {{ row.titlePT }}<br>ES: {{ row.titleES }}<br>EN: {{ row.titleEN }}</td>
-                <td><p class="maxh-05 scroll">{{ row.descriptionPT }}</p></td>
+                <td class="d-flex align-items-start">
+                  <div class="me-2">
+                    <fa-icon [icon]="faStar" *ngIf="row.isSpecial" class="text-warning me-2" title="Special Category"></fa-icon>
+                  </div>
+                  <div>
+                    PT: {{ row.titlePT }}<br>
+                    ES: {{ row.titleES }}<br>
+                    EN: {{ row.titleEN }}
+                  </div>
+                </td>
+                <td>
+                  <p class="maxh-05 scroll">{{ row.descriptionPT }}</p>
+                </td>
                 <td>
                   <a href="{{ row.manualPT }}">Manual PT</a><br>
                   <a href="{{ row.manualES }}">Manual ES</a><br>
@@ -435,22 +446,36 @@
           </button>
         </div>
         <div class="modal-body container no-radius">
-            <div class="row">
-              <div class="col-sm" *ngFor="let language of ['PT', 'ES', 'EN']">
-                <label for="title{{language}}">Title ({{language}})</label>
-                <input type="text" class="form-control" id="title{{language}}" placeholder="Enter title" formControlName="title{{language}}">
-              </div>
+          <div class="row">
+            <div class="col-sm" *ngFor="let language of ['PT', 'ES', 'EN']">
+              <label for="title{{language}}">Title ({{language}})</label>
+              <input type="text" class="form-control" id="title{{language}}" placeholder="Enter title" formControlName="title{{language}}">
             </div>
-            <div class="row">
-              <div class="col-sm" *ngFor="let language of ['PT', 'ES', 'EN']">
-                <label for="description{{language}}">Description ({{language}})</label>
-                <textarea class="form-control" rows="5" id="description{{language}}" placeholder="Enter description" formControlName="description{{language}}"></textarea>
-              </div>
+          </div>
+          <div class="row">
+            <div class="col-sm" *ngFor="let language of ['PT', 'ES', 'EN']">
+              <label for="description{{language}}">Description ({{language}})</label>
+              <textarea class="form-control" rows="5" id="description{{language}}" placeholder="Enter description" formControlName="description{{language}}"></textarea>
             </div>
+          </div>
           <div class="row">
             <div class="col-sm" *ngFor="let language of ['PT', 'ES', 'EN']">
               <label for="manual{{language}}">Manual ({{language}})</label>
               <input type="text" class="form-control" id="manual{{language}}" placeholder="Manual public URL" formControlName="manual{{language}}">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              <div class="form-check">
+                <input 
+                  type="checkbox" 
+                  class="form-check-input" 
+                  id="isSpecial" 
+                  formControlName="isSpecial">
+                <label class="form-check-label" for="isSpecial">
+                  Special Category
+                </label>
+              </div>
             </div>
           </div>
         </div>
