@@ -8,7 +8,6 @@ const fs = require('fs');
 const cron = require('node-cron');
 const User = require('./models/userModel');
 
-
 // Start express on port 3000
 const app = express();
 const port = 3000;
@@ -109,6 +108,10 @@ app.use('/api/submission', submission_route);
 // Rutas de temas
 const theme_route = require('./routes/themeRoute');
 app.use('/api/theme', theme_route);
+
+// Rutas de notificaciones
+const notification_route = require('./routes/notificationRoute');
+app.use('/api/notification', notification_route);
 
 app.get('/install', function (req, res){
     User.countDocuments({})

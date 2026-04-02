@@ -38,7 +38,8 @@ const submissionSchema = mongoose.Schema({
     gamejamThemes: [{ type: String, required: true }],
     gamejamCategories: [{ type: String, required: true }],
     gamejamPlatforms: [{ type: String, required: true }],
-    gamejamSpecialQuestion: { type: String, required: false},
+    gamejamSpecialByCategory: { type: Map, of: String, required: false },
+    gamejamSpecialQuestion: { type: String, required: false}, // Legacy
     gamejamGraphics: { type: String, required: true },
     gamejamEngine: { type: String, required: true },
     goingToIncubation: { type: Boolean, required: false },
@@ -67,6 +68,7 @@ const submissionSchema = mongoose.Schema({
     },
     incubationTitle: { type: String, required: false },
     incubationBuild: { type: String, required: false },
+    incubationGameplay: { type: String, required: false },
     incubationContact: {
         _id: { type: Schema.Types.ObjectId, ref: 'User', required: false },
         name: { type: String, required: false },
@@ -78,7 +80,8 @@ const submissionSchema = mongoose.Schema({
     incubationThemes: [{ type: String, required: false }],
     incubationCategories: [{ type: String, required: false }],
     incubationPlatforms: [{ type: String, required: false }],
-    incubationSpecialQuestion: { type: String, required: false},
+    incubationSpecialByCategory: { type: Map, of: String, required: false },
+    incubationSpecialQuestion: { type: String, required: false}, // Legacy
     incubationGraphics: { type: String, required: false },
     incubationEngine: { type: String, required: false },
     goingToAcceleration: { type: Boolean, required: false },
@@ -107,6 +110,7 @@ const submissionSchema = mongoose.Schema({
     },
     accelerationTitle: { type: String, required: false },
     accelerationBuild: { type: String, required: false },
+    accelerationGameplay: { type: String, required: false },
     accelerationContact: {
         _id: { type: Schema.Types.ObjectId, ref: 'User', required: false },
         name: { type: String, required: false },
@@ -118,7 +122,8 @@ const submissionSchema = mongoose.Schema({
     accelerationThemes: [{ type: String, required: false }],
     accelerationCategories: [{ type: String, required: false }],
     accelerationPlatforms: [{ type: String, required: false }],
-    accelerationSpecialQuestion: { type: String, required: false},
+    accelerationSpecialByCategory: { type: Map, of: String, required: false },
+    accelerationSpecialQuestion: { type: String, required: false}, // Legacy
     accelerationGraphics: { type: String, required: false },
     accelerationEngine: { type: String, required: false },
     accelerationRecommendation: { type: Number, required: false },
@@ -138,5 +143,8 @@ const submissionSchema = mongoose.Schema({
     accelerationPitchTime: { type: Date, required: false },
     accelerationPitchDelta: { type: Number, required: false },
 });
+
+submissionSchema.set('toJSON', { flattenMaps: true });
+submissionSchema.set('toObject', { flattenMaps: true });
 
 module.exports = mongoose.model("Submission", submissionSchema);

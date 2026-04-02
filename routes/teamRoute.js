@@ -15,6 +15,7 @@ const teamController = require('../controllers/teamController');
 
 team_route.post('/create-team', upload.none(), teamController.createTeam);
 team_route.put('/update-team/:id', upload.none(), teamController.updateTeam);
+team_route.put('/update-team-owner/:teamId/:jammerId', upload.none(), teamController.updateTeamOwner);
 team_route.get('/get-team/:jammerId/:siteId/:jamId', teamController.getTeam);
 team_route.get('/get-teams', teamController.getTeams);
 team_route.get('/get-teams/:site', teamController.getTeamsBySite);

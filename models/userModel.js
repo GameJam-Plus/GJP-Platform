@@ -67,6 +67,11 @@ const userSchema = new Schema({
         type: String,
         required: false
     }, 
+    darkMode: {
+        type: Boolean,
+        required: false,
+        default: false
+    },
     region: {
         _id: { 
             type: mongoose.Schema.Types.ObjectId,

@@ -14,6 +14,41 @@ const mongoose = require('mongoose');
 const Theme = require('../models/themeModel')
 const { sendScore } = require('../services/mailer');
 
+// Flattens the schema shape: [{ type: Map, of: String }]
+// into a simple object: { [category]: url }
+const flattenSpecialByCategoryFromDb = (value) => {
+    if (!value) return undefined;
+
+    // If already an object (non-array), just return it
+    if (typeof value === 'object' && !Array.isArray(value)) {
+        // For Map: convert to plain object
+        if (value instanceof Map) {
+            const out = {};
+            for (const [k, v] of value.entries()) out[k] = v;
+            return out;
+        }
+        return value;
+    }
+
+    if (!Array.isArray(value)) return undefined;
+
+    const out = {};
+    for (const item of value) {
+        if (!item) continue;
+
+        if (item instanceof Map) {
+            for (const [k, v] of item.entries()) out[k] = v;
+            continue;
+        }
+
+        if (typeof item === 'object') {
+            Object.assign(out, item);
+        }
+    }
+
+    return Object.keys(out).length > 0 ? out : undefined;
+};
+
 const createSubmission = async (req, res) => {
     try {
         const jam = await Jam.findById(req.body.jamId);
@@ -58,7 +93,9 @@ const createSubmission = async (req, res) => {
                 gamejamTopics: req.body.gamejamTopics,
                 gamejamGenres: req.body.gamejamGenres,
                 gamejamPlatforms: req.body.gamejamPlatforms,
-                gamejamSpecialQuestion: req.body.gamejamSpecialQuestion,
+                
+                //gamejamSpecialQuestion: req.body.gamejamSpecialQuestion,
+                gamejamSpecialByCategory: req.body.gamejamSpecialByCategory,
                 gamejamGraphics: req.body.gamejamGraphics,
                 gamejamEngine: req.body.gamejamEngine,
                 goingToIncubation: req.body.goingToIncubation,
@@ -82,7 +119,9 @@ const createSubmission = async (req, res) => {
             submission.gamejamTopics = req.body.gamejamTopics;
             submission.gamejamGenres = req.body.gamejamGenres;
             submission.gamejamPlatforms = req.body.gamejamPlatforms;
-            submission.gamejamSpecialQuestion = req.body.gamejamSpecialQuestion;
+            //submission.gamejamSpecialQuestion = req.body.gamejamSpecialQuestion;
+            submission.gamejamSpecialByCategory = req.body.gamejamSpecialByCategory;
+            submission.gamejam = req.body.incubationSpecialByCategory;
             submission.gamejamGraphics = req.body.gamejamGraphics;
             submission.gamejamEngine = req.body.gamejamEngine;
             submission.goingToIncubation = req.body.goingToIncubation;
@@ -156,6 +195,7 @@ const updateIncubation = async(req, res) => {
         let updateValue = {};
         updateValue.incubationTitle = req.body.incubationTitle;
         updateValue.incubationBuild = req.body.incubationBuild;
+        updateValue.incubationGameplay = req.body.incubationGameplay;
         updateValue.incubationContact = contact;
         updateValue.incubationDescription = req.body.incubationDescription;
         updateValue.incubationGenres = req.body.incubationGenres;
@@ -163,7 +203,8 @@ const updateIncubation = async(req, res) => {
         updateValue.incubationThemes = req.body.incubationThemes;
         updateValue.incubationCategories = req.body.incubationCategories;
         updateValue.incubationPlatforms = req.body.incubationPlatforms;
-        updateValue.incubationSpecialQuestion = req.body.incubationSpecialQuestion;
+        //updateValue.incubationSpecialQuestion = req.body.incubationSpecialQuestion;
+        updateValue.incubationSpecialByCategory = req.body.incubationSpecialByCategory;
         updateValue.incubationGraphics = req.body.incubationGraphics;
         updateValue.incubationEngine = req.body.incubationEngine;
         updateValue.goingToAcceleration = req.body.goingToAcceleration;
@@ -180,7 +221,13 @@ const updateIncubation = async(req, res) => {
             teamId: team._id
         }, updateValue );
         
-        return res.status(200).json({ success: true, data: updateValue });
+        const updatedSubmission = await Submission.findOne({
+            jamId: jam._id,
+            siteId: site._id,
+            teamId: team._id
+        });
+
+        return res.status(200).json({ success: true, data: updatedSubmission });
     } catch(error) {
         return res.status(400).json({ success: false, message: error.message });
     }
@@ -239,11 +286,12 @@ const updateAcceleration = async(req, res) => {
             name: user.name,
             email: user.email
         }
-
+        
         let updateValue = {};
         updateValue.acclerationJammerId = req.body.acclerationJammerId;
         updateValue.accelerationTitle = req.body.accelerationTitle;
         updateValue.accelerationBuild = req.body.accelerationBuild;
+        updateValue.accelerationGameplay = req.body.accelerationGameplay;
         updateValue.accelerationContact = contact;
         updateValue.accelerationDescription = req.body.accelerationDescription;
         updateValue.accelerationGenres = req.body.accelerationGenres;
@@ -251,7 +299,8 @@ const updateAcceleration = async(req, res) => {
         updateValue.accelerationThemes = req.body.accelerationThemes;
         updateValue.accelerationCategories = req.body.accelerationCategories;
         updateValue.accelerationPlatforms = req.body.accelerationPlatforms;
-        updateValue.accelerationSpecialQuestion = req.body.accelerationSpecialQuestion;
+        //updateValue.accelerationSpecialQuestion = req.body.accelerationSpecialQuestion;
+        updateValue.accelerationSpecialByCategory = req.body.accelerationSpecialByCategory;
         updateValue.accelerationGraphics = req.body.accelerationGraphics;
         updateValue.accelerationEngine = req.body.accelerationEngine;
         updateValue.accelerationRecommendation = req.body.accelerationRecommendation;
@@ -267,7 +316,13 @@ const updateAcceleration = async(req, res) => {
             teamId: team._id
         }, updateValue );
         
-        return res.status(200).json({ success: true, data: updateValue });
+        const updatedSubmission = await Submission.findOne({
+            jamId: jam._id,
+            siteId: site._id,
+            teamId: team._id
+        });
+
+        return res.status(200).json({ success: true, data: updatedSubmission });
     } catch(error) {
         return res.status(400).json({ success: false, message: error.message });
     }
@@ -311,7 +366,12 @@ const getSubmissionByTeam = async(req, res) => {
         let submission = await Submission.findOne({ teamId: req.params.teamId });
 
         if(!submission) return res.status(404).json({ success: false, message: "No valid submission found" });
-        else return res.status(200).json({ success: true, data: submission });
+
+        // Flatten incubationSpecialByCategory so the frontend can treat it as { [category]: url }
+        const submissionObj = typeof submission.toObject === 'function' ? submission.toObject() : submission;
+        submissionObj.incubationSpecialByCategory = flattenSpecialByCategoryFromDb(submissionObj.incubationSpecialByCategory);
+
+        return res.status(200).json({ success: true, data: submissionObj });
     } catch(error) {
         return res.status(400).json({ success: false, message: error.message });
     }
