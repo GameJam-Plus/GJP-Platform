@@ -177,10 +177,11 @@
 					"formquestion": {
 						"goingtoincubation": "您是否想参加孵化阶段？",
 						"goingtoacceleration": "您是否想参加加速阶段？",
-						"gamejamtitle": "您的游戏标题",
-						"gamejambuild": "您游戏的 itch.io 页面链接",
+						"gamejamtitle": "您的游戏标题。",
+						"gamejambuild": "您游戏的 itch.io 页面链接。",
+						"gamejamgameplay": "游戏演示视频链接。",
 						"gamejamcontact": "谁是团队负责人？<br>此成员将在需要时作为 GameJamPlus 的联系人。",
-						"gamejamdescription": "在此输入您游戏的简要描述",
+						"gamejamdescription": "在此输入您游戏的简要描述。",
 						"gamejamgenres": "您的游戏属于哪些类型？",
 						"gamejamtopics": "您的游戏是否涉及以下任何主题？<br>可以通过叙事、玩法、美术等方式呈现。可选择多个选项。",
 						"gamejamthemes": "您的游戏注册在哪些主题下？",
@@ -197,6 +198,7 @@
 						"pitchtext": "提交视频演示是进入下一阶段的强制要求。",
 						"pitchlink": "您的视频演示链接",
 						"innertext": {
+							"tooltipgameplay": "如果可以，视频应至少包含15秒的游戏标题菜单画面，以及1分钟的游戏玩法演示。",
 							"selectteammember": "选择一名团队成员",
 							"tooltipcontact": "如果我们需要联系，该成员将作为 GameJamPlus 的联系人。",
 							"tooltiptopics": "可以通过叙事、玩法、美术等方式呈现。可选择多个选项。",
