@@ -22,6 +22,15 @@ export enum SubmissionFilter {
   ACCELERATION = 'acceleration'
 }
 
+export enum StageType {
+  NONE = 'None',
+  PREPARATION = 'Preparation',
+  DEVELOPMENT = 'Development',
+  SUBMISSION = 'Submission',
+  EVALUATION = 'Evaluation',
+  EVENT = 'Event'
+}
+
 export const JamStageColors: Record<JamStage, string> = {
   [JamStage.PRE_PRODUCTION]: '#1E78BC', 
   [JamStage.REGISTER]: '#1E78BC', 
@@ -236,8 +245,11 @@ export interface Jam {
   }[],
   stages: {
     stageName: string,
+    stageType: StageType,
     startDate: Date,
     endDate: Date,
+    extraDelaySubmission: string | null,
+    extraDelayPitch: string | null,
     roles: {
       roleName: string
     }[]

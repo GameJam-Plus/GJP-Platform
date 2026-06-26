@@ -14,16 +14,16 @@ import { FormsModule } from '@angular/forms';
 import { environment } from '../../environments/environment.prod';
 
 @Component({
-  selector: 'app-juez-main',
+  selector: 'app-judge-main',
   standalone: true,
   imports: [
     CommonModule,
     FormsModule
   ],
-  templateUrl: './juez-main.component.html',
-  styleUrl: './juez-main.component.css'
+  templateUrl: './judge-main.component.html',
+  styleUrl: './judge-main.component.css'
 })
-export class JuezMainComponent implements OnInit {
+export class JudgeMainComponent implements OnInit {
   games: any[] = []
   evaluations: any[] = []
   userId!: String | undefined

@@ -50,7 +50,7 @@
       <app-global-home *ngIf="activeRole === 'GlobalOrganizer'"></app-global-home>
       <app-local-home *ngIf="activeRole === 'LocalOrganizer'" [user]="user"></app-local-home>
       <app-jammer-home *ngIf="activeRole === 'Jammer'" [user]="user"></app-jammer-home>
-      <app-juez-main *ngIf="activeRole === 'Judge'"></app-juez-main>
+      <app-judge-main *ngIf="activeRole === 'Judge'"></app-judge-main>
 
     </div>
   </div>

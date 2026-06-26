@@ -32,7 +32,7 @@
 
         <div>
           Stages
-          <button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#stageModal" (click)="patchThemeForm(-1)">Add new stage</button>
+          <button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#stageModal" (click)="patchStageForm(-1)">Add new stage</button>
         </div>
         <div class="table table-striped table-sm">
           <table class="table">
@@ -507,13 +507,32 @@
           </div>
 
           <div class="form-group">
+            <label for="stageType">Stage Type</label>
+            <select class="form-control" id="stageType" formControlName="stageType">
+              <option *ngFor="let stageType of stageTypeOptions" [value]="stageType">{{ stageType }}</option>
+            </select>
+          </div>
+
+          <div class="form-group">
             <label for="startDate">Start Date</label>
-            <input type="date" class="form-control" id="startDate" formControlName="startDate">
+            <input type="datetime-local" class="form-control" id="startDate" formControlName="startDate">
           </div>
 
           <div class="form-group">
             <label for="endDate">End Date</label>
-            <input type="date" class="form-control" id="endDate" formControlName="endDate">
+            <input type="datetime-local" class="form-control" id="endDate" formControlName="endDate">
+          </div>
+
+          <div *ngIf="isSubmissionStageType()">
+            <div class="form-group">
+              <label for="extraDelaySubmission">Extra Delay Submission (HH:mm)</label>
+              <input type="time" class="form-control" id="extraDelaySubmission" formControlName="extraDelaySubmission">
+            </div>
+
+            <div class="form-group">
+              <label for="extraDelayPitch">Extra Delay Pitch (HH:mm)</label>
+              <input type="time" class="form-control" id="extraDelayPitch" formControlName="extraDelayPitch">
+            </div>
           </div>
 
           <div class="form-title">Does this stage have a delivery for any of these roles?</div>

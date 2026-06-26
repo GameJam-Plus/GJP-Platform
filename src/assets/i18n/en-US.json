@@ -212,6 +212,7 @@
 					"jointeam": "Join an existing team",
 					"myteam": "My Team:",
 					"newteam": "Create a new team",
+					"disablednewteam": "Only available during the GameJam stage.",
 					"noteamtext1": "You don't have a team yet.",
 					"noteamtext2": "Create a new team or join an existing team with the secret code.",
 					"teamleader": "Team Leader",

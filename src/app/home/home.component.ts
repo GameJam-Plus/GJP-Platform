@@ -8,7 +8,7 @@ import { SiteService } from '../services/site.service';
 import { RegionService } from '../services/region.service';
 import { LocalHomeComponent } from '../local-home/local-home.component';
 import { JammerHomeComponent } from '../jammer-home/jammer-home.component';
-import { JuezMainComponent } from '../juez-main/juez-main.component';
+import { JudgeMainComponent } from '../judge-main/judge-main.component';
 import { GlobalHomeComponent } from '../global-home/global-home.component';
 import { UserDashboardComponent } from '../user-dashboard/user-dashboard.component';
 import { User, Site, Region } from '../../types';
@@ -31,7 +31,7 @@ type NotificationLanguage = 'PT' | 'ES' | 'EN';
     ReactiveFormsModule,
     LocalHomeComponent,
     JammerHomeComponent,
-    JuezMainComponent,
+    JudgeMainComponent,
     GlobalHomeComponent,
     UserDashboardComponent,
     FontAwesomeModule

@@ -42,9 +42,6 @@ import { faPeopleRoof } from '@fortawesome/free-solid-svg-icons';
 import { faJar } from '@fortawesome/free-solid-svg-icons';
 import { faLink, faHandPointRight } from '@fortawesome/free-solid-svg-icons';
 
-// Grace period in milliseconds (default: 1 hour)
-const SUBMISSION_GRACE_PERIOD_MS = 1 * 60 * 60 * 1000;
-
 @Component({
     selector: 'app-jammer-home',
     standalone: true,
@@ -69,6 +66,7 @@ const SUBMISSION_GRACE_PERIOD_MS = 1 * 60 * 60 * 1000;
     ]
 })
 export class JammerHomeComponent implements OnInit, OnDestroy {
+  private readonly FORM_VISIBILITY_EXTENSION_MS = 2 * 24 * 60 * 60 * 1000;
   @Input() user!: User;
   @ViewChild(MessagesComponent) message!: MessagesComponent;
 
@@ -959,7 +957,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
     return 0;
   }
 
-  getStageTimeDelta(stage: JamStage, extraDelay: number = 0) {
+  getStageTimeDelta(stage: JamStage, usePitchDelay: boolean = false) {
     if (this.jam && this.site && this.team) {
       let now = new Date();
       now = new Date(now.getTime());
@@ -989,7 +987,8 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
         }
 
         if(endDate) {
-          return endDate.getTime() + (extraDelay * SUBMISSION_GRACE_PERIOD_MS) - now.getTime();
+          const extraDelayMs = this.getStageDelayInMilliseconds(targetStage, usePitchDelay);
+          return endDate.getTime() + extraDelayMs - now.getTime();
         }
       }
     }
@@ -1398,7 +1397,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
           gamejamPitchJammerId: this.user._id,
           gamejamPitch: this.submissionPitchGamejamForm.get('gamejamPitch')?.value,
           gamejamPitchTime: new Date(),
-          gamejamPitchDelta: this.getStageTimeDelta(this.JamStages.GAMEJAM_SUBMISSION, 1)
+          gamejamPitchDelta: this.getStageTimeDelta(this.JamStages.GAMEJAM_SUBMISSION, true)
         }
 
         this.submissionService.updateGamejamPitch(pitch).subscribe({
@@ -1506,7 +1505,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
           incubationPitchJammerId: this.user._id,
           incubationPitch: this.submissionPitchIncubationForm.get('incubationPitch')?.value,
           incubationPitchTime: new Date(),
-          incubationPitchDelta: this.getStageTimeDelta(this.JamStages.INCUBATION_SUBMISSION, 1),
+          incubationPitchDelta: this.getStageTimeDelta(this.JamStages.INCUBATION_SUBMISSION, true),
         };
 
         this.submissionService.updateIncubationPitch(incubationPitch).subscribe({
@@ -1615,7 +1614,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
           accelerationPitchJammerId: this.user._id,
           accelerationPitch: this.submissionPitchAccelerationForm.get('accelerationPitch')?.value,
           accelerationPitchTime: new Date(),
-          accelerationPitchDelta: this.getStageTimeDelta(this.JamStages.ACCELERATION_SUBMISSION, 1),
+          accelerationPitchDelta: this.getStageTimeDelta(this.JamStages.ACCELERATION_SUBMISSION, true),
         }
 
         this.submissionService.updateAccelerationPitch(accelerationPitch).subscribe({
@@ -1652,7 +1651,7 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
     return now >= start && now <= end;
   }
 
-  isStageActiveWithDelay(stage: JamStage, extraDelay: number = 0): boolean {
+  isStageActiveWithDelay(stage: JamStage, usePitchDelay: boolean = false): boolean {
     if (!this.jam || !this.site) return false;
   
     const targetStage = this.jam.stages.find((s: any) => s.stageName === stage);
@@ -1694,10 +1693,27 @@ export class JammerHomeComponent implements OnInit, OnDestroy {
   
     const currentTime = now.getTime();
     const startTime = startDate.getTime();
-    const endTime = endDate.getTime() + (extraDelay * SUBMISSION_GRACE_PERIOD_MS);
+    const extraDelayMs = this.getStageDelayInMilliseconds(targetStage, usePitchDelay);
+    const endTime = endDate.getTime() + extraDelayMs + this.FORM_VISIBILITY_EXTENSION_MS;
   
     return currentTime >= startTime && currentTime <= endTime;
   }  
+
+  private getStageDelayInMilliseconds(stage: any, usePitchDelay: boolean): number {
+    const delayValue = usePitchDelay ? stage?.extraDelayPitch : stage?.extraDelaySubmission;
+    return this.parseTimeDelayToMilliseconds(delayValue);
+  }
+
+  private parseTimeDelayToMilliseconds(delayValue: string | null | undefined): number {
+    if(!delayValue || typeof delayValue !== 'string') return 0;
+
+    const match = delayValue.match(/^(\d{1,2}):([0-5]\d)$/);
+    if(!match) return 0;
+
+    const hours = Number(match[1]);
+    const minutes = Number(match[2]);
+    return ((hours * 60) + minutes) * 60 * 1000;
+  }
 
   hasSubmittedOn(stage: JamStage): boolean {
     if (!this.submission) return false;

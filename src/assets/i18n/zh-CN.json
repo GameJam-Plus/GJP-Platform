@@ -212,6 +212,7 @@
 					"jointeam": "加入现有团队",
 					"myteam": "我的团队：",
 					"newteam": "创建新团队",
+					"disablednewteam": "仅在 GameJam 阶段可用。",
 					"noteamtext1": "您还没有团队。",
 					"noteamtext2": "创建新团队或使用邀请码加入现有团队。",
 					"teamleader": "团队负责人",

@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule, FormArray, FormControl } from '@angular/forms';
-import { Jam, Site, User, Team } from '../../types';
+import { Jam, Site, User, Team, StageType } from '../../types';
 import { JamService } from '../services/jam.service';
 import { SiteService } from '../services/site.service';
 import { TeamService } from '../services/team.service';
@@ -34,6 +34,7 @@ import { faFileCsv, faStar } from '@fortawesome/free-solid-svg-icons';
 })
 
 export class GlobalJamComponent {
+  stageTypeOptions = Object.values(StageType);
   activeJam: Jam | null = null;
   selectedThemeIndex: number = -1;
   selectedCategoryIndex: number = -1;
@@ -133,13 +134,18 @@ export class GlobalJamComponent {
 
     this.stageForm = this.fb.group({
       stageName: ['', Validators.required],
+      stageType: [StageType.NONE, Validators.required],
       startDate: ['', Validators.required],
       endDate: ['', Validators.required],
+      extraDelaySubmission: [''],
+      extraDelayPitch: [''],
       roleGlobal: [false],
       roleLocal: [false],
       roleJudge: [false],
       roleJammer: [false]
     });
+    this.stageForm.get('stageType')?.valueChanges.subscribe(() => this.updateStageTypeValidation());
+    this.updateStageTypeValidation();
 
     //let now = new Date();
     //let tzOffset = now.getTimezoneOffset();
@@ -674,31 +680,19 @@ export class GlobalJamComponent {
     {
       let stage = this.activeJam!.stages[index];
 
-      // Calculate the current timezone offset and remove the BRT offset
-      let now = new Date();
-      let tzOffset = (now.getTimezoneOffset() - 180) * 60000;
-
-      // Remove the BRT offset
-      let startDate = new Date(stage.startDate);
-      startDate = new Date(startDate.getTime() + tzOffset);
-
-      let endDate = new Date(stage.endDate);
-      endDate = new Date(endDate.getTime() + tzOffset);
-
-      //let startDate = stage.startDate ? formatDate(stage.startDate, 'yyyy-MM-dd', 'en', this.timeZone) : null;
-      //let endDate = stage.endDate ? formatDate(stage.endDate, 'yyyy-MM-dd', 'en', this.timeZone) : null;
-
       this.stageForm.setValue({
         stageName: stage.stageName,
-        startDate: formatDate(startDate, 'yyyy-MM-dd', 'en'),
-        endDate: formatDate(endDate, 'yyyy-MM-dd', 'en'),
+        stageType: stage.stageType ? stage.stageType : StageType.NONE,
+        startDate: this.utcIsoToLocalInputValue(stage.startDate),
+        endDate: this.utcIsoToLocalInputValue(stage.endDate),
+        extraDelaySubmission: stage.extraDelaySubmission ? stage.extraDelaySubmission : '',
+        extraDelayPitch: stage.extraDelayPitch ? stage.extraDelayPitch : '',
         roleGlobal: stage.roles.some(r => r.roleName === "GlobalOrganizer"),
         roleLocal: stage.roles.some(r => r.roleName === "LocalOrganizer"),
         roleJudge: stage.roles.some(r => r.roleName === "Judge"),
         roleJammer: stage.roles.some(r => r.roleName === "Jammer")
       });
-
-      console.log(stage.roles);
+      this.updateStageTypeValidation();
     }
     else
     {
@@ -715,19 +709,23 @@ export class GlobalJamComponent {
     // Remove the BRT offset
     date = new Date(date.getTime() + tzOffset);
 
-    return formatDate(date, 'yyyy-MM-dd', 'en');
+    return formatDate(date, 'yyyy-MM-dd HH:mm', 'en');
   }
 
   clearStageForm(): void {
     this.stageForm.setValue({
       stageName: '',
-      startDate: new Date(),
-      endDate: new Date(),
+      stageType: StageType.NONE,
+      startDate: '',
+      endDate: '',
+      extraDelaySubmission: '',
+      extraDelayPitch: '',
       roleGlobal: false,
       roleLocal: false,
       roleJudge: false,
       roleJammer: false
-    })
+    });
+    this.updateStageTypeValidation();
   }
 
   saveStage(): void{
@@ -743,8 +741,11 @@ export class GlobalJamComponent {
     if(this.stageForm.get('roleJudge')!.value) roles.push({roleName: "Judge"});
     if(this.stageForm.get('roleJammer')!.value) roles.push({roleName: "Jammer"});
 
-    const startDate = moment.tz(`${this.stageForm.get('startDate')!.value} 00:00:00`, `YYYY-MM-DD HH:mm:ss`, `America/Sao_Paulo`).toDate();
-    const endDate = moment.tz(`${this.stageForm.get('endDate')!.value} 23:59:59`, `YYYY-MM-DD HH:mm:ss`, `America/Sao_Paulo`).toDate();
+    const startDate = moment.tz(this.stageForm.get('startDate')!.value, 'YYYY-MM-DDTHH:mm', 'America/Sao_Paulo').toDate();
+    const endDate = moment.tz(this.stageForm.get('endDate')!.value, 'YYYY-MM-DDTHH:mm', 'America/Sao_Paulo').toDate();
+    const isSubmissionStage = this.stageForm.get('stageType')!.value === StageType.SUBMISSION;
+    const extraDelaySubmission = this.stageForm.get('extraDelaySubmission')!.value ? this.stageForm.get('extraDelaySubmission')!.value : null;
+    const extraDelayPitch = this.stageForm.get('extraDelayPitch')!.value ? this.stageForm.get('extraDelayPitch')!.value : null;
     const delta = endDate.getTime() - startDate.getTime();
 
     if(delta < 0)
@@ -753,13 +754,21 @@ export class GlobalJamComponent {
       return;
     }
 
-    console.log(this.stageForm.get('endDate')!.value);
-    console.log(`Start Date is: ${startDate} End Date is: ${endDate} Delta is ${endDate.getTime() - startDate.getTime()}`);
+    if(isSubmissionStage && (!extraDelaySubmission || !extraDelayPitch))
+    {
+      this.errorMessage = "Submission stages require extra delay for submission and pitch";
+      return;
+    }
+
+    //console.log(`Start Date is: ${startDate} End Date is: ${endDate} Delta is ${endDate.getTime() - startDate.getTime()}`);
 
     let stage = {
       stageName: this.stageForm.get('stageName')!.value,
+      stageType: this.stageForm.get('stageType')!.value,
       startDate: startDate,
       endDate: endDate,
+      extraDelaySubmission: isSubmissionStage ? extraDelaySubmission : null,
+      extraDelayPitch: isSubmissionStage ? extraDelayPitch : null,
       roles: roles
     }
 
@@ -886,7 +895,7 @@ export class GlobalJamComponent {
     }
   }
 
-  utcIsoToLocalInputValue(utcIso: string): string {
+  utcIsoToLocalInputValue(utcIso: string | Date): string {
     if (!utcIso) return '';
 
     const d = new Date(utcIso);
@@ -898,6 +907,35 @@ export class GlobalJamComponent {
     const min = pad(d.getMinutes());
 
     return `${yyyy}-${mm}-${dd}T${hh}:${min}`;
+  }
+
+  isSubmissionStageType(): boolean {
+    return this.stageForm?.get('stageType')?.value === StageType.SUBMISSION;
+  }
+
+  updateStageTypeValidation(): void {
+    const extraDelaySubmissionControl = this.stageForm.get('extraDelaySubmission');
+    const extraDelayPitchControl = this.stageForm.get('extraDelayPitch');
+    if(!extraDelaySubmissionControl || !extraDelayPitchControl)
+    {
+      return;
+    }
+
+    if(this.isSubmissionStageType())
+    {
+      extraDelaySubmissionControl.setValidators([Validators.required]);
+      extraDelayPitchControl.setValidators([Validators.required]);
+    }
+    else
+    {
+      extraDelaySubmissionControl.clearValidators();
+      extraDelayPitchControl.clearValidators();
+      extraDelaySubmissionControl.setValue('', { emitEvent: false });
+      extraDelayPitchControl.setValue('', { emitEvent: false });
+    }
+
+    extraDelaySubmissionControl.updateValueAndValidity({ emitEvent: false });
+    extraDelayPitchControl.updateValueAndValidity({ emitEvent: false });
   }
 // #endregion
 }

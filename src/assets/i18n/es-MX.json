@@ -212,6 +212,7 @@
 					"jointeam": "Unirse a un equipo existente",
 					"myteam": "Mi equipo:",
 					"newteam": "Crear un nuevo equipo",
+					"disablednewteam": "Solo disponible durante la etapa de GameJam.",
 					"noteamtext1": "Aún no tienes un equipo.",
 					"noteamtext2": "Crea un nuevo equipo o únete a uno existente con el código secreto.",
 					"teamleader": "Líder del equipo",

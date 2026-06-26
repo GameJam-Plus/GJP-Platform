@@ -283,7 +283,9 @@
         <div *ngIf="!team" class="warning text-center p-2">
           <p>{{ 'platform.jammer.myjam.myteam.noteamtext1' | translate}}</p>
           <p>{{ 'platform.jammer.myjam.myteam.noteamtext2' | translate}}</p>
-          <button class="btn btn-primary m-2" (click)="createTeam()">{{ 'platform.jammer.myjam.myteam.newteam' | translate}}</button>
+          <span [matTooltip]="'platform.jammer.myjam.myteam.disablednewteam' | translate" [matTooltipDisabled]="isStageActive(JamStages.GAMEJAM)">
+            <button class="btn btn-primary m-2" (click)="createTeam()" [disabled]="!isStageActive(JamStages.GAMEJAM)">{{ 'platform.jammer.myjam.myteam.newteam' | translate}}</button>
+          </span>
           <button class="btn btn-primary m-2" (click)="joinTeam()">{{ 'platform.jammer.myjam.myteam.jointeam' | translate}}</button>
         </div>
 
@@ -436,7 +438,7 @@
         <!-- Forms -->
         <div *ngIf="team">
           <!-- GAMEJAM SUBMISSION FORM -->
-          <div *ngIf="isStageActiveWithDelay(JamStages.GAMEJAM_SUBMISSION, 48)">
+          <div *ngIf="isStageActiveWithDelay(JamStages.GAMEJAM_SUBMISSION)">
             <hr class="my-2">
             <h2>{{ 'platform.jammer.myjam.mysubmission.gamesubmission' | translate}}</h2>
             <div *ngIf="getStageTimeDelta(JamStages.GAMEJAM_SUBMISSION) > 0">
@@ -760,9 +762,6 @@
                     <mat-radio-button [value]="true">
                       {{ 'platform.common.yes' | translate }}
                     </mat-radio-button>
-                    <mat-radio-button [value]="false">
-                      {{ 'platform.common.no' | translate }}
-                    </mat-radio-button>
                   </mat-radio-group>
                 </div>
 
@@ -773,11 +772,11 @@
           </div>
 
           <!-- GAMEJAM PITCH SUBMISSION FORM -->
-          <div *ngIf="isStageActiveWithDelay(JamStages.GAMEJAM_SUBMISSION, 96)">
+          <div *ngIf="isStageActiveWithDelay(JamStages.GAMEJAM_SUBMISSION, true)">
             <hr class="my-2">
             <h2>{{ 'platform.jammer.myjam.mysubmission.pitchsubmission' | translate }}</h2>
-            <div *ngIf="getStageTimeDelta(JamStages.GAMEJAM_SUBMISSION, 48) > 0">
-              <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.GAMEJAM_SUBMISSION, 48)) }}</b>
+            <div *ngIf="getStageTimeDelta(JamStages.GAMEJAM_SUBMISSION, true) > 0">
+              <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.GAMEJAM_SUBMISSION, true)) }}</b>
             </div>
 
             <form (submit)="savePitchGamejam()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionPitchGamejamForm" enctype="multipart/form-data">
@@ -806,17 +805,17 @@
                 </div>
               </div>
 
-              <button type="submit" *ngIf="getStageTimeDelta(JamStages.GAMEJAM_SUBMISSION, 48) > 0" class="btn btn-black col-12">{{ 'platform.common.sendpitch' | translate }}</button>
-              <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.GAMEJAM_SUBMISSION, 48) < 0">{{ 'platform.common.closedsubmissions' | translate }}</div>
+              <button type="submit" *ngIf="getStageTimeDelta(JamStages.GAMEJAM_SUBMISSION, true) > 0" class="btn btn-black col-12">{{ 'platform.common.sendpitch' | translate }}</button>
+              <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.GAMEJAM_SUBMISSION, true) < 0">{{ 'platform.common.closedsubmissions' | translate }}</div>
             </form>
           </div>
 
           <!-- INCUBATION SUBMISSION FORM -->
-          <div *ngIf="isStageActiveWithDelay(JamStages.INCUBATION_SUBMISSION, 48) && hasAccepetedToGoTo(JamStages.INCUBATION)">
+          <div *ngIf="isStageActiveWithDelay(JamStages.INCUBATION_SUBMISSION) && hasAccepetedToGoTo(JamStages.INCUBATION)">
             <hr class="my-2">
             <h2>{{ 'platform.jammer.myjam.mysubmission.incubationsubmission' | translate }}</h2>
-            <div *ngIf="getStageTimeDelta(JamStages.INCUBATION_SUBMISSION, 2) > 0">
-              <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.INCUBATION_SUBMISSION, 2))}}</b>
+            <div *ngIf="getStageTimeDelta(JamStages.INCUBATION_SUBMISSION) > 0">
+              <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.INCUBATION_SUBMISSION))}}</b>
             </div>
 
             <form (submit)="saveIncubationSubmission()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionIncubationForm" enctype="multipart/form-data">
@@ -1142,24 +1141,21 @@
                     <mat-radio-button [value]="true">
                       {{ 'platform.common.yes' | translate }}
                     </mat-radio-button>
-                    <mat-radio-button [value]="false">
-                      {{ 'platform.common.no' | translate }}
-                    </mat-radio-button>
                   </mat-radio-group>
                 </div>
 
-                <button type="submit" class="btn btn-black col-12" *ngIf="getStageTimeDelta(JamStages.INCUBATION_SUBMISSION, 2) > 0">{{ 'platform.common.sendgame' | translate }}</button>
-                <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.INCUBATION_SUBMISSION, 2) < 0">{{ 'platform.common.closedsubmissions' | translate }}</div>
+                <button type="submit" class="btn btn-black col-12" *ngIf="getStageTimeDelta(JamStages.INCUBATION_SUBMISSION) > 0">{{ 'platform.common.sendgame' | translate }}</button>
+                <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.INCUBATION_SUBMISSION) < 0">{{ 'platform.common.closedsubmissions' | translate }}</div>
               </div>
             </form>
           </div>
 
           <!-- INCUBATION PITCH SUBMISSION FORM -->
-          <div *ngIf="isStageActiveWithDelay(JamStages.INCUBATION_SUBMISSION, 48) && hasAccepetedToGoTo(JamStages.INCUBATION)">
+          <div *ngIf="isStageActiveWithDelay(JamStages.INCUBATION_SUBMISSION, true) && hasAccepetedToGoTo(JamStages.INCUBATION)">
             <hr class="my-2">
             <h2>{{ 'platform.jammer.myjam.mysubmission.pitchincubation' | translate }}</h2>
-            <div *ngIf="getStageTimeDelta(JamStages.INCUBATION_SUBMISSION, 2) > 0">
-              <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.INCUBATION_SUBMISSION, 2)) }}</b>
+            <div *ngIf="getStageTimeDelta(JamStages.INCUBATION_SUBMISSION, true) > 0">
+              <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.INCUBATION_SUBMISSION, true)) }}</b>
             </div>
 
             <form (submit)="savePitchIncubation()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionPitchIncubationForm" enctype="multipart/form-data">
@@ -1188,17 +1184,17 @@
                 </div>
               </div>
 
-              <button type="submit" *ngIf="getStageTimeDelta(JamStages.INCUBATION_SUBMISSION, 2) > 0" class="btn btn-black col-12">{{ 'platform.common.sendpitch' | translate }}</button>
-              <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.INCUBATION_SUBMISSION, 2) < 0">{{ 'platform.common.closedsubmissions' | translate }}</div>
+              <button type="submit" *ngIf="getStageTimeDelta(JamStages.INCUBATION_SUBMISSION, true) > 0" class="btn btn-black col-12">{{ 'platform.common.sendpitch' | translate }}</button>
+              <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.INCUBATION_SUBMISSION, true) < 0">{{ 'platform.common.closedsubmissions' | translate }}</div>
             </form>
           </div>
 
           <!-- ACCELERATION SUBMISSION FORM -->
-          <div *ngIf="isStageActiveWithDelay(JamStages.ACCELERATION_SUBMISSION, 48) && hasAccepetedToGoTo(JamStages.ACCELERATION)">
+          <div *ngIf="isStageActiveWithDelay(JamStages.ACCELERATION_SUBMISSION) && hasAccepetedToGoTo(JamStages.ACCELERATION)">
             <hr class="my-2">
             <h2>{{ 'platform.jammer.myjam.mysubmission.accelerationsubmission' | translate }}</h2>
             <div *ngIf="getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION) > 0">
-              <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION, 2)) }}</b>
+              <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION)) }}</b>
             </div>
 
             <form (submit)="saveAccelerationSubmission()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionAccelerationForm" enctype="multipart/form-data">
@@ -1509,9 +1505,6 @@
                     <mat-radio-button [value]="true">
                       {{ 'platform.common.yes' | translate }}
                     </mat-radio-button>
-                    <mat-radio-button [value]="false">
-                      {{ 'platform.common.no' | translate }}
-                    </mat-radio-button>
                   </mat-radio-group>
                 </div>
 
@@ -1522,11 +1515,11 @@
           </div>
 
           <!-- ACCELERATION PITCH SUBMISSION FORM -->
-          <div *ngIf="isStageActiveWithDelay(JamStages.ACCELERATION_SUBMISSION, 48) && hasAccepetedToGoTo(JamStages.ACCELERATION)">
+          <div *ngIf="isStageActiveWithDelay(JamStages.ACCELERATION_SUBMISSION, true) && hasAccepetedToGoTo(JamStages.ACCELERATION)">
             <hr class="my-2">
             <h2>{{ 'platform.jammer.myjam.mysubmission.pitchacceleration' | translate }}</h2>
-            <div *ngIf="getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION, 2) > 0">
-              <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION, 2)) }}</b>
+            <div *ngIf="getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION, true) > 0">
+              <b>{{ formatTimeDelta(getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION, true)) }}</b>
             </div>
 
             <form (submit)="savePitchAcceleration()" class="rounded shadow m-2 bg-light p-4" [formGroup]="submissionPitchAccelerationForm" enctype="multipart/form-data">
@@ -1555,8 +1548,8 @@
                 </div>
               </div>
 
-              <button type="submit" *ngIf="getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION, 2) > 0" class="btn btn-black col-12">{{ 'platform.common.sendpitch' | translate }}</button>
-              <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION, 2) < 0">{{ 'platform.common.closedsubmissions' | translate }}</div>
+              <button type="submit" *ngIf="getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION, true) > 0" class="btn btn-black col-12">{{ 'platform.common.sendpitch' | translate }}</button>
+              <div class="d-block p-3 text-center bg-secondary not-allowed" *ngIf="getStageTimeDelta(JamStages.ACCELERATION_SUBMISSION, true) < 0">{{ 'platform.common.closedsubmissions' | translate }}</div>
             </form>
           </div>
         </div>
