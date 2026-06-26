@@ -84,16 +84,28 @@ const jamSchema = mongoose.Schema({
             type: Boolean
         }
     }],
-    // TODO: Add startDateEvaluation and endDateEvaluation?
     stages: [{
         stageName: {
             type: String
+        },
+        stageType: {
+            type: String,
+            enum: ['None', 'Preparation', 'Development', 'Submission', 'Evaluation', 'Event'],
+            default: 'None'
         },
         startDate: {
             type: Date
         },
         endDate: {
             type: Date
+        },
+        extraDelaySubmission: {
+            type: String,
+            default: null
+        },
+        extraDelayPitch: {
+            type: String,
+            default: null
         },
         roles: [{
             roleName: {

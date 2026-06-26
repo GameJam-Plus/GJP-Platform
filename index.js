@@ -113,6 +113,10 @@ app.use('/api/theme', theme_route);
 const notification_route = require('./routes/notificationRoute');
 app.use('/api/notification', notification_route);
 
+// Rutas de evaluaciones (judge evaluation module)
+const evaluation_route = require('./routes/evaluationRoute');
+app.use('/api/evaluations', evaluation_route);
+
 app.get('/install', function (req, res){
     User.countDocuments({})
     .then(function(count) {
@@ -184,61 +188,84 @@ const Stage = require('./models/stageModel');
 const GameJam = require('./models/gameJamEventModel');
 const Submission = require('./models/submissionModel');
 const Team = require('./models/teamModel');
+const Evaluation = require('./models/evaluationModel');
+const { expireStaleEvaluations } = require('./controllers/evaluationController');
 const { sendScore } = require('./services/mailer');
 
-async function sendEvaluations() {
-    var currentStage;
-    const currentDatee = new Date();
-    const currentDate = currentDatee.toISOString().slice(0, 10);
-   
-    const allGameJams = await GameJam.find({});
+const { JamStage, EvaluationStatus } = Evaluation;
 
+// Best-effort map from a GameJam embedded stage's name to the JamStage enum the
+// Evaluation collection is keyed by. The two stage representations are not
+// formally linked (GameJam stages are free-text named; Evaluation.stage is an
+// enum) — this keyword match bridges them. Confirm against real stage names.
+function stageNameToJamStage(name) {
+    const n = (name || '').toUpperCase();
+    if (n.includes('INCUBA')) return JamStage.INCUBATION;
+    if (n.includes('ACCELER') || n.includes('ACELER')) return JamStage.ACCELERATION;
+    if (n.includes('GLOBAL') || n.includes('FINAL')) return JamStage.GLOBAL_FINAL;
+    return null;
+}
+
+// Daily job: for any stage whose evaluation window ENDS today, average each
+// submission's COMPLETED evaluations (from the Evaluation collection — NOT the
+// legacy submission.evaluators array) into submission.evaluationScore and email
+// each team their score.
+async function sendEvaluations() {
+    const currentDate = new Date().toISOString().slice(0, 10);
+
+    const allGameJams = await GameJam.find({});
+    const endingStages = [];
     for (const gameJam of allGameJams) {
         for (const stage of gameJam.stages) {
             if (currentDate === stage.endDateEvaluation.toISOString().slice(0, 10)) {
-                currentStage = stage;
-                break;
+                const jamStage = stageNameToJamStage(stage.name);
+                if (jamStage) endingStages.push(jamStage);
             }
         }
     }
-    if (currentStage) {
-        const submissions = await Submission.find({ "stageId": currentStage._id });
-        for (const sub of submissions) {
-            const criteriaAverages = {};
-            const criteriaCount = {};
-            for (const evaluator of sub.evaluators) {
-                Object.keys(evaluator._doc).forEach(key => {
-                    if (typeof evaluator[key] === 'number') {
-                        criteriaAverages[key] = (criteriaAverages[key] || 0) + (evaluator[key] || 0);
-                        criteriaCount[key] = (criteriaCount[key] || 0) + 1;
+    if (endingStages.length === 0) return;
 
+    for (const jamStage of [...new Set(endingStages)]) {
+        // Group completed evaluations by submission for this stage.
+        const completed = await Evaluation.find({
+            stage: jamStage,
+            status: EvaluationStatus.COMPLETED
+        });
+
+        const bySubmission = new Map();
+        for (const ev of completed) {
+            const key = ev.submission.toString();
+            if (!bySubmission.has(key)) bySubmission.set(key, []);
+            bySubmission.get(key).push(ev);
+        }
+
+        for (const [submissionId, evals] of bySubmission) {
+            // Grand mean of every non-N/A numeric category across all evaluators.
+            let sum = 0;
+            let count = 0;
+            for (const ev of evals) {
+                for (const cat of Evaluation.SCORE_CATEGORIES) {
+                    const s = ev.scores && ev.scores[cat];
+                    if (s && !s.na && typeof s.value === 'number') {
+                        sum += s.value;
+                        count += 1;
                     }
-                });
-
+                }
             }
+            if (count === 0) continue;
+            const score = sum / count;
 
-            for (const key in criteriaAverages) {
-                criteriaAverages[key] = criteriaAverages[key] / criteriaCount[key];
-            }
-
-
-            const score = Object.values(criteriaAverages).reduce((acc, average) => acc + average, 0) / Object.values(criteriaAverages).length;
+            const sub = await Submission.findById(submissionId);
+            if (!sub) continue;
             sub.evaluationScore = score;
             await sub.save();
-            const promises = [];
 
             const team = await Team.findById(sub.teamId);
+            if (!team) continue;
+            const promises = [];
             for (const jammer of team.jammers) {
-                const subject = 'Score Stage on GameJam Platform';
-
-                const emailPromise = sendScore(
-                    jammer.email,
-                    subject,
-                    score
-                );
-                promises.push(emailPromise);
+                promises.push(sendScore(jammer.email, 'Score Stage on GameJam Platform', score));
             }
-
             await Promise.all(promises);
         }
     }
@@ -249,8 +276,25 @@ async function checkInstall() {
     console.log(`${count} Users found`);
 }
 
+// Daily scoring + emails.
 cron.schedule('0 0 * * *', () => {
     sendEvaluations();
+}, {
+    timezone: "America/Costa_Rica"
+});
+
+// Expiry sweep (~every minute): delete STARTED evaluations past expiresAt,
+// freeing submission slots. Logged-in judges see the change on their next poll
+// of /api/evaluations/timer.
+cron.schedule('* * * * *', async () => {
+    try {
+        const expired = await expireStaleEvaluations();
+        if (expired.length > 0) {
+            console.log(`Expired ${expired.length} stale evaluation(s)`);
+        }
+    } catch (err) {
+        console.error('Evaluation expiry sweep failed:', err.message);
+    }
 }, {
     timezone: "America/Costa_Rica"
 });

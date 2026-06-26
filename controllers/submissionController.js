@@ -710,6 +710,11 @@ const deleteSubmission = async (req, res) => {
     }
 };
 
+// @deprecated — superseded by the Evaluation module
+// (controllers/evaluationController.js: saveScore + submitEvaluation, routes
+// PATCH /api/evaluations/:id/score and /submit). Scores now live in the
+// Evaluation collection, not submission.evaluators[]. Kept temporarily so the
+// current frontend keeps working until it migrates; do not extend.
 const giveRating = async (req, res) => {
     try {
         const userId = req.cookies.token ? jwt.verify(req.cookies.token, 'MY_JWT_SECRET').userId : null;
@@ -821,6 +826,9 @@ const giveRating = async (req, res) => {
     }
 }
 
+// @deprecated — reads the legacy submission.evaluators[] array, which the
+// Evaluation module no longer writes to. Use GET /api/evaluations/mine (or
+// /completed). Kept temporarily for the current frontend; will be removed.
 const getRating = async (req, res) => {
     try {
         const userId = req.cookies.token ? jwt.verify(req.cookies.token, 'MY_JWT_SECRET').userId : null;
@@ -874,6 +882,11 @@ const getRating = async (req, res) => {
     }
 };
 
+// @deprecated — superseded by the Evaluation module
+// (controllers/evaluationController.js: startEvaluation, route POST
+// /api/evaluations/start), which assigns a submission via live slot counting
+// instead of pushing into submission.evaluators[]. Kept temporarily for the
+// current frontend; do not extend.
 const setEvaluatorToSubmission = async (req, res) => {
     try {
         const evaluatorId = req.cookies.token ? jwt.verify(req.cookies.token, 'MY_JWT_SECRET').userId : null;
@@ -946,6 +959,9 @@ const setEvaluatorToSubmission = async (req, res) => {
     }
 };
 
+// @deprecated — reads the legacy submission.evaluators[] array, which the
+// Evaluation module no longer writes to. Use GET /api/evaluations/mine
+// (status STARTED). Kept temporarily for the current frontend; will be removed.
 const getSubmissionsEvaluator = async (req, res) => {
     try {
         const evaluatorID = req.params.id;
@@ -962,6 +978,9 @@ const getSubmissionsEvaluator = async (req, res) => {
     }
 };
 
+// @deprecated — reads the legacy submission.evaluators[] array, which the
+// Evaluation module no longer writes to. Use GET /api/evaluations/mine
+// (status COMPLETED). Kept temporarily for the current frontend; will be removed.
 const getRatingsEvaluator = async (req, res) => {
     try {
         const evaluatorID = req.params.id;
